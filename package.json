@@ -1,0 +1,20 @@
+{
+  "name": "fruitveg",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "package": "svelte-kit package",
+    "preview": "svelte-kit preview"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/kit": "next",
+    "carbon-components-svelte": "^0.57.1",
+    "svelte": "^3.44.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "puppeteer": "^13.2.0"
+  }
+}
