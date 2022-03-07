@@ -5,10 +5,10 @@ import { ATRIA_USERNAME, ATRIA_PASSWORD } from '$lib/env'
 // TODO: remove credentials
 
 const fetcher = new Fetcher(`https://atriacloud.wedderburn.com.au/75189`)
-const cookie = await login()
+const cookie = login()
 
 async function get(path) {
-    const headers = { cookie }
+    const headers = { cookie: await cookie }
     const response = await fetcher.fetch('api/' + path, { headers })
     // console.log(response)
     return response.json()

@@ -4,7 +4,7 @@ import { MINEW_USERNAME, MINEW_PASSWORD } from '$lib/env'
 // TODO: remove credentials
 
 const fetcher = new Fetcher(`https://esl.minew.com:9090/V1`)
-const token = await login()
+const token = login()
 
 const sample = {
     "id": "2117",
@@ -63,7 +63,7 @@ const sample = {
 }
 
 async function get(path) {
-    const headers = { 'Authorization': `Bearer ${token}` } 
+    const headers = { 'Authorization': `Bearer ${await token}` } 
     const response = await fetcher.fetch(path, { headers })
     return response.json()
 }
@@ -71,7 +71,7 @@ async function get(path) {
 async function put(path, payload) {
     const headers = { 
         "content-type": 'application/json',
-        "Authorization": `Bearer ${token}` 
+        "Authorization": `Bearer ${await token}` 
     }
     const options = { 
         method: 'PUT', 
