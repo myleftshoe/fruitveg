@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer'
+// import puppeteer from 'puppeteer'
+import chromium from 'chrome-aws-lambda'
 import Fetcher from './fetcher.js'
 import { ATRIA_USERNAME, ATRIA_PASSWORD } from '$lib/env'
 
@@ -16,7 +17,13 @@ async function get(path) {
 
 async function login() {
     console.log('login')
-    const browser = await puppeteer.launch({ headless: true })
+    const browser = await chromium.puppeteer.launch({
+        args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        headless: true,
+        ignoreHTTPSErrors: true,
+    })
     const [ page ] = await browser.pages()
 
     await page.goto(`${fetcher.root}/Account/Login/`)
