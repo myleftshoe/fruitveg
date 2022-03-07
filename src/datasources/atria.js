@@ -1,9 +1,9 @@
 // import puppeteer from 'puppeteer'
 import chrome from 'chrome-aws-lambda'
+import puppeteer from 'puppeteer-core'
 import Fetcher from './fetcher.js'
 import { ATRIA_USERNAME, ATRIA_PASSWORD } from '$lib/env'
 
-const puppeteer = require('puppeteer-core');
 
 // TODO: remove credentials
 
