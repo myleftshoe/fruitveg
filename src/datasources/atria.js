@@ -3,6 +3,8 @@ import chromium from 'chrome-aws-lambda'
 import Fetcher from './fetcher.js'
 import { ATRIA_USERNAME, ATRIA_PASSWORD } from '$lib/env'
 
+const puppeteer = require('puppeteer-core');
+
 // TODO: remove credentials
 
 const fetcher = new Fetcher(`https://atriacloud.wedderburn.com.au/75189`)
@@ -17,7 +19,7 @@ async function get(path) {
 
 async function login() {
     console.log('login')
-    const browser = await chromium.puppeteer.launch({
+    const browser = await puppeteer.launch({
         args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
         defaultViewport: chromium.defaultViewport,
         executablePath: await chromium.executablePath,
