@@ -1,4 +1,5 @@
 import Fetcher from './fetcher.js'
+import { MINEW_USERNAME, MINEW_PASSWORD } from '$lib/env'
 
 // TODO: remove credentials
 
@@ -83,8 +84,8 @@ async function put(path, payload) {
 
 async function login() {
     const payload = {
-        "username": "***REMOVED***",
-        "password": "***REMOVED***"
+        "username": MINEW_USERNAME,
+        "password": MINEW_PASSWORD
     }
     const response = await fetcher.fetch(`/pc/Login`, {
         method: 'POST',

@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer'
 import Fetcher from './fetcher.js'
+import { ATRIA_USERNAME, ATRIA_PASSWORD } from '$lib/env'
 
 // TODO: remove credentials
 
@@ -20,8 +21,8 @@ async function login() {
 
     await page.goto(`${fetcher.root}/Account/Login/`)
     await page.waitForSelector('#UserName', { timeout: 1000 })
-    await page.type('#UserName', '***REMOVED***')
-    await page.type('#Password', '***REMOVED***')
+    await page.type('#UserName', ATRIA_USERNAME)
+    await page.type('#Password', ATRIA_PASSWORD)
     await page.evaluate(() => document.querySelector('input[type=submit]').click())
     await page.waitForNavigation()
 
