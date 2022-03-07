@@ -3,8 +3,8 @@ export default class Fetcher {
         this.root = root
     }
     async fetch(path, options) {
-        console.log(`${this.root}/${path}`)
-        console.log(options)
+        // console.log(`${this.root}/${path}`)
+        // console.log(options)
         return fetch(`${this.root}/${path}`, options)
     }
 }
