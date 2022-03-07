@@ -6,7 +6,12 @@ const config = {
 		adapter: adapter(),
 		methodOverride: {
 			allowed: ['PUT', 'PATCH', 'DELETE']
-		}
+		},
+		vite: {
+            define: {
+                'process.env': process.env,
+            },
+        },
 	}
 };
 
