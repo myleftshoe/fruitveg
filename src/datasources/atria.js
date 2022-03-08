@@ -20,11 +20,7 @@ async function get(path) {
 async function login() {
     console.log('login')
     const browser = await puppeteer.launch({
-        args: [...chrome.args, "--hide-scrollbars", "--disable-web-security", "--no-sandbox"],
-        defaultViewport: chrome.defaultViewport,
-        executablePath: await chrome.executablePath,
-        headless: false,
-        ignoreHTTPSErrors: true,
+        headless: true,
     })
     const [ page ] = await browser.pages()
 
