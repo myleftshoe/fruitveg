@@ -21,6 +21,7 @@ async function login() {
     console.log('login')
     const browser = await puppeteer.launch({
         args: chrome.args,
+        executablePath: await chrome.executablePath,
         headless: true,
     })
     const [ page ] = await browser.pages()
