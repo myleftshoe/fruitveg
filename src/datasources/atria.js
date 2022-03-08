@@ -21,7 +21,7 @@ async function login() {
     console.log('login')
     const browser = await puppeteer.launch({
         args: [...chrome.args, "--no-sandbox"],
-        executablePath: '$lib/../node_modules/chrome-aws-lambda/bin/chromium.br',
+        executablePath: './chromium.br',
         headless: true,
     })
     const [ page ] = await browser.pages()
