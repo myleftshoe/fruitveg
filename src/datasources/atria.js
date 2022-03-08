@@ -1,5 +1,5 @@
 import chromium from 'chrome-aws-lambda'
-import playwright from 'playwright-core'
+import puppeteer from 'puppeteer-core'
 import Fetcher from './fetcher.js'
 import { ATRIA_USERNAME, ATRIA_PASSWORD } from '$lib/env'
 
@@ -17,13 +17,12 @@ async function get(path) {
 
 async function login() {
     console.log('login')
-    const browser = await playwright.chromium.launch({ 
+    const browser = await puppeteer.launch({ 
         args: [...chromium.args, "--font-render-hinting=none"], // This way fix rendering issues with specific fonts
         headless: true,
         executablePath: await chromium.executablePath
     })
-    const context = await browser.newContext();
-    const page = await context.newPage();
+    const [ page ] = await browser.pages();
 
     await page.goto(`${fetcher.root}/Account/Login/`)
     await page.waitForSelector('#UserName', { timeout: 1000 })
