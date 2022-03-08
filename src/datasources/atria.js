@@ -1,14 +1,9 @@
 // import puppeteer from 'puppeteer'
-import chrome from 'chrome-aws-lambda'
-import puppeteer from 'puppeteer-core'
 import Fetcher from './fetcher.js'
-import { ATRIA_USERNAME, ATRIA_PASSWORD } from '$lib/env'
-
-
-// TODO: remove credentials
+import { ATRIA_COOKIE } from '$lib/env'
 
 const fetcher = new Fetcher(`https://atriacloud.wedderburn.com.au/75189`)
-const cookie = login()
+const cookie = ATRIA_COOKIE
 
 async function get(path) {
     const headers = { cookie: await cookie }
@@ -16,31 +11,6 @@ async function get(path) {
     // console.log(response)
     return response.json()
 }
-
-async function login() {
-    console.log('login')
-    const browser = await puppeteer.launch({
-        args: [...chrome.args, "--no-sandbox"],
-        executablePath: './chromium.br',
-        headless: true,
-    })
-    const [ page ] = await browser.pages()
-
-    await page.goto(`${fetcher.root}/Account/Login/`)
-    await page.waitForSelector('#UserName', { timeout: 1000 })
-    await page.type('#UserName', ATRIA_USERNAME)
-    await page.type('#Password', ATRIA_PASSWORD)
-    await page.evaluate(() => document.querySelector('input[type=submit]').click())
-    await page.waitForNavigation()
-
-    const cookies = await page.cookies()
-    const cookie = cookies.map(({ name, value }) => `${name}=${value}`).join('; ')
-
-    // TODO: is await necessary here?
-    await browser.close()
-    return cookie
-}
-
 
 async function put(path, body) {
     const headers = { 
@@ -57,7 +27,6 @@ async function put(path, body) {
 }
 
 export default {
-    login,
     get,
     put,
 }
