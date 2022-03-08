@@ -1,4 +1,5 @@
-import puppeteer from 'puppeteer'
+import chromium from 'chrome-aws-lambda'
+import playwright from 'playwright-core'
 import Fetcher from './fetcher.js'
 import { ATRIA_USERNAME, ATRIA_PASSWORD } from '$lib/env'
 
@@ -16,8 +17,12 @@ async function get(path) {
 
 async function login() {
     console.log('login')
-    const browser = await puppeteer.launch({ headless: true })
-    const [ page ] = await browser.pages()
+    const browser = await playwright.chromium.launch({ 
+        headless: true,
+        executablePath: await chromium.executablePath
+    })
+    const context = await browser.newContext();
+    const page = await context.newPage();
 
     await page.goto(`${fetcher.root}/Account/Login/`)
     await page.waitForSelector('#UserName', { timeout: 1000 })
