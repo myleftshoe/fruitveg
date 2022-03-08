@@ -18,6 +18,7 @@ async function get(path) {
 async function login() {
     console.log('login')
     const browser = await playwright.chromium.launch({ 
+        args: [...chromium.args, "--font-render-hinting=none"], // This way fix rendering issues with specific fonts
         headless: true,
         executablePath: await chromium.executablePath
     })
