@@ -23,7 +23,7 @@ async function login() {
         args: [...chrome.args, "--hide-scrollbars", "--disable-web-security", "--no-sandbox"],
         defaultViewport: chrome.defaultViewport,
         executablePath: await chrome.executablePath,
-        headless: true,
+        headless: false,
         ignoreHTTPSErrors: true,
     })
     const [ page ] = await browser.pages()
