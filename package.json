@@ -13,5 +13,9 @@
     "carbon-components-svelte": "^0.57.1",
     "svelte": "^3.44.0"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "chrome-aws-lambda": "^10.1.0",
+    "puppeteer-core": "^13.5.0"
+  }
 }
