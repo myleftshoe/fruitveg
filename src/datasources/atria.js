@@ -17,7 +17,7 @@ async function get(path) {
 
 async function login() {
     console.log('login')
-    const browser = await puppeteer.launch({ 
+    const browser = await chromium.puppeteer.launch({ 
         args: [...chromium.args, "--font-render-hinting=none"], // This way fix rendering issues with specific fonts
         headless: true,
         executablePath: await chromium.executablePath
