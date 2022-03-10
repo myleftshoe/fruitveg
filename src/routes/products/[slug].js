@@ -26,6 +26,8 @@ const row = {
 }
 
 
+const fetched = new Map()
+
 export const get = async ({ params, request }) => {
     const { slug } = params
     console.log('slug', slug)
@@ -33,8 +35,31 @@ export const get = async ({ params, request }) => {
     if (slug === 'favicon.png') {
         return { redirect: '/', status: 302 };
     }
+
     const json = await atria.get(`/Items/${slug}`)
+    console.log(json.PLUCode)
     const body = { product: json }
+
+    const minewData = await minew.get(`/goods?page=1&size=1&storeId=123&fuzzy=${json.PLUCode}`)
+    console.log(minewData)
+    const mapped = minewData.rows.map((row) => ({ 
+            id: row.id,
+            label3: row.label3,
+            label4: row.label4,
+            label5: row.label5,
+            label6: row.label6,
+            label8: row.label8,
+            label10: row.label10,
+            label13: row.label13,
+    }))[0]
+    console.table(mapped)
+
+    fetched.set(slug, mapped)
+    console.table(fetched.get(slug))
+
+
+
+
     return { body }
 }
 
@@ -47,10 +72,10 @@ export const put = async ({params, request}) => {
     payload["StoreGroupPrices"] = []
     console.log(payload)
 
-    const json = await minew.put('goods?storeId=123')
-
-    
-    // await atria.put(`/Items/${slug}/Price`, payload)
+    const minewData = { ...fetched.get(slug), label6: payload.UnitPrice }
+    console.table(minewData)
+    await minew.put('goods?storeId=123', minewData)
+    await atria.put(`/Items/${slug}/Price`, payload)
     return {
         headers: { Location: '/products' },
         status: 302

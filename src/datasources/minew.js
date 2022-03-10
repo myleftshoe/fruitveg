@@ -76,7 +76,8 @@ async function put(path, payload) {
     const options = { 
         method: 'PUT', 
         headers, 
-        body: JSON.stringify(sample) 
+        body: JSON.stringify(payload) 
+        // body: JSON.stringify(sample) 
     }
     const response = await fetcher.fetch(path, options)
     console.log(await response.json())
