@@ -73,14 +73,14 @@ sample1 = {
 }
 
 sample2 = {
-  "id": "2117",
+  "id": "2062",
   // "barcode": "",
   // "qrcode": "",
   // "label1": "",
   // "label2": "",
-  "label3": "1742",
-  "label4": "LETTUCE",
-  "label5": "BUTTER",
+  "label3": "1689",
+  "label4": "ASPARAGUS",
+  "label5": "",
   "label6": "4.99",
   // "label7": "",
   "label8": "Organic",

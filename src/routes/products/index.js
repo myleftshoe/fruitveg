@@ -6,10 +6,12 @@ const mapper = ({ItemCode, PLUCode, Description, UnitPrice, Active, unit}) => ({
 const filter = `(indexof(MainGroupName,%20%27FRUIT%20%26%20VEG%27)%20ne%20-1)`
 
 export const get = async (event) => {
-    const _atriaData = await atria.get(`/Items/Summary?$top=999&$orderby=Description%20asc&$filter=${filter}`)
+    const _atriaData = await atria.get(`/Items/Summary?$top=999&$orderby=Description%20asc&$filter=${filter} `)
     const atriaData = [..._atriaData]
 
+    // const _minewData = await minew.get(`/goods?page=1&size=9&storeId=123&fuzzy=VEGETABLES`)
     const _minewData = await minew.get(`/goods?page=1&size=999&storeId=123`)
+    // console.table(_minewData.rows)
     const minewData = _minewData.rows.filter(row => ['FRUIT', 'VEGETABLES'].includes(row.label13)).map(row => ({
         id: row.id,
         plucode: row.label3,
