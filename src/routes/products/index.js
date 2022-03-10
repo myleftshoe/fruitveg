@@ -1,10 +1,6 @@
 import atria from '../../datasources/atria.js'
 import minew from '../../datasources/minew.js'
 
-import Logger from '../../helpers/logger.js'
-
-let log = new Logger('products/index.json')
-
 // const mapper = ({ LocationId, DepartmentName, LocationName, FormatName, Uom, HasDiscount, HasSchedule, HasStorePrice, StockItem, IsSubItem, ...rest }, i) => ({ id: i, ...rest})
 const mapper = ({ItemCode, PLUCode, Description, UnitPrice, Active, unit}) => ({id: PLUCode, ItemCode, Description, UnitPrice, unit, Active })
 const filter = `(indexof(MainGroupName,%20%27FRUIT%20%26%20VEG%27)%20ne%20-1)`
