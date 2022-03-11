@@ -40,19 +40,21 @@
 <main>
 <List threeLine>
     {#each rows as row}
-        <Item on:SMUI:action={() => (selectedRow = row)}>
-            <Text>
-                <PrimaryText>{row.Description}</PrimaryText>
-                <SecondaryText>{row.label5 || ''}</SecondaryText>
-                <SecondaryText>{row.label4 || ''}</SecondaryText>
-            </Text>
-            <Meta>
-                <div>
-                    <h4>{row.UnitPrice}</h4>
-                    <pre>{row.unit || ''}</pre>
-                </div>
-            </Meta>
-        </Item>
+        <div style={`background-color: ${row.Active ? '#0f05' : '#f005'};`}>
+            <Item on:SMUI:action={() => (selectedRow = row)}>
+                <Text>
+                    <PrimaryText>{row.Description}</PrimaryText>
+                    <SecondaryText>{row.label5 || ''}</SecondaryText>
+                    <SecondaryText>{row.label4 || ''}</SecondaryText>
+                </Text>
+                <Meta>
+                    <div class="price">
+                        <h4>{row.UnitPrice}</h4>
+                        <pre>{row.unit || ''}</pre>
+                    </div>
+                </Meta>
+            </Item>
+        </div>
     {/each}
 </List>
 </main>
@@ -63,7 +65,7 @@
         top: 40px ;
         width: 100%
     }
-    div {
+    .price {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
