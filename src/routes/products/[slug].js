@@ -137,7 +137,12 @@ export const put = async ({params, request}) => {
 
     await get({ params: { slug } })
 
-    const minewData = { ...fetched.get(slug), label6: payload.UnitPrice }
+    const minewData = { 
+        ...fetched.get(slug), 
+        label4: payload.label4,
+        label5: payload.label5,
+        label6: payload.UnitPrice,
+    }
     console.table(minewData)
     await minew.put('goods?storeId=123', minewData)
     await atria.put(`/Items/${slug}/Price`, atriaData)
