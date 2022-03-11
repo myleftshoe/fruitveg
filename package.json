@@ -5,12 +5,22 @@
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
-    "preview": "svelte-kit preview"
+    "preview": "svelte-kit preview",
+    "prepare": "npm run smui-theme-light && npm run smui-theme-dark",
+    "smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
+    "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
   },
   "devDependencies": {
+    "@smui/button": "^6.0.0-beta.15",
+    "@smui/dialog": "^6.0.0-beta.15",
+    "@smui/list": "^6.0.0-beta.15",
+    "@smui/switch": "^6.0.0-beta.15",
+    "@smui/textfield": "^6.0.0-beta.15",
+    "@smui/top-app-bar": "^6.0.0-beta.15",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "1.0.0-next.291",
     "carbon-components-svelte": "^0.57.1",
+    "smui-theme": "^6.0.0-beta.15",
     "svelte": "^3.44.0"
   },
   "type": "module"
