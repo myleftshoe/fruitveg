@@ -40,7 +40,7 @@
 <main>
 <List threeLine>
     {#each rows as row}
-        <div style={`background-color: ${row.Active ? '#0f05' : '#f005'};`}>
+        <div style={`background-color: ${row.Active ? '#0f02' : '#f002'};`}>
             <Item on:SMUI:action={() => (selectedRow = row)}>
                 <Text>
                     <PrimaryText>{row.Description}</PrimaryText>
