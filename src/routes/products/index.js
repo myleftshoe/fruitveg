@@ -2,7 +2,7 @@ import atria from '../../datasources/atria.js'
 import minew from '../../datasources/minew.js'
 
 // const mapper = ({ LocationId, DepartmentName, LocationName, FormatName, Uom, HasDiscount, HasSchedule, HasStorePrice, StockItem, IsSubItem, ...rest }, i) => ({ id: i, ...rest})
-const mapper = ({ItemCode, PLUCode, Description, UnitPrice, Active, unit, label4, label5}) => ({id: PLUCode, ItemCode, Description, label4, label5, UnitPrice, unit, Active })
+const mapper = ({ItemCode, PLUCode, Description, UnitPrice, Active, unit, label4, label5, isWeighed}) => ({id: PLUCode, ItemCode, Description, label4, label5, UnitPrice, unit, Active, isWeighed })
 const filter = `(indexof(MainGroupName,%20%27FRUIT%20%26%20VEG%27)%20ne%20-1)`
 
 export const get = async (event) => {

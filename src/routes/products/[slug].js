@@ -124,13 +124,23 @@ export const put = async ({params, request}) => {
     const { slug } = params
     const data = await request.formData()
     const payload = Object.fromEntries(data.entries())
-    payload["StoreGroupPrices"] = []
-    console.log(payload)
+
+    const { PLUCode, UnitPrice, Description, isWeighed } = payload
+    const atriaData = { 
+        PLUCode,
+        Description,
+        UnitPrice,
+        // isWeighed,
+        StoreGroupPrices: [],
+    }
+    console.log(slug, payload, atriaData)
+
+    await get({ params: { slug } })
 
     const minewData = { ...fetched.get(slug), label6: payload.UnitPrice }
     console.table(minewData)
     await minew.put('goods?storeId=123', minewData)
-    await atria.put(`/Items/${slug}/Price`, payload)
+    await atria.put(`/Items/${slug}/Price`, atriaData)
     return {
         headers: { Location: '/products' },
         status: 302
