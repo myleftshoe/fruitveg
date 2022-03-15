@@ -125,6 +125,7 @@
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
+            <form method="post" action={`/products/${item.ItemCode}?_method=PUT`}>
     <main style="min-height: 50vh; background-color:var({item.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
                 <plucode>{item.id}</plucode>
         <div style="align-self: flex-end; margin:4px;">
@@ -145,6 +146,11 @@
                     id="Description"
                     name="Description"
                     bind:value={item.Description} />
+                <input
+                    type="text"
+                    id="UnitPrice"
+                    name="UnitPrice"
+                    bind:value={item.UnitPrice} />
                 <input
                     type="text"
                     id="isWeighed"
@@ -184,4 +190,5 @@
             </Button>
         </Actions>
     </main>
+            </form>
 </Dialog>
