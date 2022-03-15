@@ -24,7 +24,7 @@
     $: console.log(value)
 </script>
 <TopAppBar>
-    <Search bind:value expanded persistent size="xl" light/>
+    <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/>
 </TopAppBar>
 <main>
     <List threeLine nonInteractive>
