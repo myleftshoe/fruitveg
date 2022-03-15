@@ -63,7 +63,6 @@
         align-items: center;
     }
 </style>
-
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
     <form method="post" action={`/products/${item.ItemCode}?_method=PUT`} on:submit|preventDefault={handleSubmit}>
         <main style="min-height: 50vh; background-color:var({item.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
@@ -99,10 +98,12 @@
                 </hidden>
                 <esl>
                     <Textfield
+                        style="text-transform: uppercase;"
                         input$id="label5"
                         input$name="label5"
                         bind:value={item.label5} />
                     <Textfield
+                        style="text-transform: uppercase;"
                         input$id="label4"
                         input$name="label4"
                         bind:value={item.label4} />
