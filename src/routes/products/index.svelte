@@ -7,6 +7,15 @@
     import { Tag } from "carbon-components-svelte";
     import fuzzy from '../../helpers/fuzzy.js'
     import getheaders from '../../helpers/headers.js'
+
+    const itemStyle = (active) => ({ 
+        square: true,
+        style: `padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7};`,
+        color: active ? 'primary' : 'secondary',
+    })
+    const metaStyle = { 
+        style : 'display:flex; flex-direction: column; align-items: flex-end;'
+    }
 </script>
 
 <script>
@@ -29,14 +38,14 @@
 <main>
     <List threeLine nonInteractive>
         {#each rows as row}
-            <Paper  square  style="padding: 0px; border-bottom: 1px solid black" color={row.Active ? 'primary' : 'secondary'}>
+            <Paper  {...itemStyle(row.Active)}>
                 <Item on:SMUI:action={() => (selectedRow = row)} >
-                    <Text>
-                        <PrimaryText style="color:{row.Active ? 'var(--mdc-theme-on-primary)' : '#000b;'}">{row.Description}</PrimaryText>
+                    <Text >
+                        <PrimaryText>{row.Description}</PrimaryText>
                         <SecondaryText>{row.label5 || ''}</SecondaryText>
                         <SecondaryText>{row.label4 || ''}</SecondaryText>
                     </Text>
-                    <Meta style="display:flex; flex-direction: column; align-items: flex-end; ">
+                    <Meta {...metaStyle}>
                         <strong>{row.id}</strong>
                         <h4>$ {row.UnitPrice}</h4>
                         {row.unit || ''}
