@@ -42,7 +42,22 @@
         e.target.style.setProperty('--cents', `"${cents}"`)
     }
 
+    function handleSubmit(e) {
+        console.log('handle')
+        var url = `/products/${item.ItemCode}?_method=PUT`
+        var request = new XMLHttpRequest();
+        request.open('POST', url, true);
+        request.onload = function() { // request successful
+        // we can use server response to our request now
+            console.log(request.responseText);
+        };
 
+        request.onerror = function() {
+            // request failed
+        };
+
+        request.send(new FormData(e.target)); // create FormData from form that triggered event
+    }
     let checked = false
 
     $: open = Boolean(item.id)
@@ -125,7 +140,7 @@
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
-    <form method="post" action={`/products/${item.ItemCode}?_method=PUT`}>
+    <form method="post" action={`/products/${item.ItemCode}?_method=PUT`} on:submit|preventDefault={handleSubmit}>
         <main style="min-height: 50vh; background-color:var({item.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
             <plucode>{item.id}</plucode>
             <div style="align-self: flex-end; margin:4px;">
