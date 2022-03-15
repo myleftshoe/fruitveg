@@ -128,6 +128,9 @@
         font-size: smaller;
         color: #000b;
     }
+    form {
+        height: 100%;
+    }
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
