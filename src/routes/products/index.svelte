@@ -1,17 +1,10 @@
 <script context="module">
-    import 'carbon-components-svelte/css/white.css'
+    import 'carbon-components-svelte/css/g100.css'
+    import Paper, { Title, Subtitle, Content } from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
-    import Dialog, { Title, Content, Actions } from '@smui/dialog'
-    import Button, { Label } from '@smui/button'
-    import Textfield from '@smui/textfield'
-    import TopAppBar, { Row, Section } from '@smui/top-app-bar';
-    import {
-        DataTable,
-        Toolbar,
-        ToolbarContent,
-        ToolbarSearch,
-        Link,
-    } from 'carbon-components-svelte'
+    import TopAppBar from '@smui/top-app-bar';
+    import { Search } from 'carbon-components-svelte'
+    import { Tag } from "carbon-components-svelte";
     import fuzzy from '../../helpers/fuzzy.js'
     import getheaders from '../../helpers/headers.js'
 </script>
@@ -22,7 +15,7 @@
     let selectedRow
     $: value = value?.toUpperCase?.() ?? ''
     $: headers = getheaders(products)
-    $: rows = fuzzy(products, value)
+    $: rows = fuzzy(products, value, ['label4', 'label5', 'Description', 'id'])
     $: { 
         const ItemCodeHeader = headers.find(({key}) => key === 'ItemCode')
         ItemCodeHeader.empty = true
@@ -31,32 +24,27 @@
     $: console.log(value)
 </script>
 <TopAppBar>
-    <Toolbar>
-        <ToolbarContent>
-            <ToolbarSearch bind:value expanded persistent/>
-        </ToolbarContent>
-    </Toolbar>
+    <Search bind:value expanded persistent size="xl" light/>
 </TopAppBar>
 <main>
-<List threeLine>
-    {#each rows as row}
-        <div style={`background-color: ${row.Active ? '#0f03' : '#f003'};`}>
-            <Item on:SMUI:action={() => (selectedRow = row)}>
-                <Text>
-                    <PrimaryText>{row.Description}</PrimaryText>
-                    <SecondaryText>{row.label5 || ''}</SecondaryText>
-                    <SecondaryText>{row.label4 || ''}</SecondaryText>
-                </Text>
-                <Meta>
-                    <div class="price">
-                        <h4>{row.UnitPrice}</h4>
-                        <pre>{row.unit || ''}</pre>
-                    </div>
-                </Meta>
-            </Item>
-        </div>
-    {/each}
-</List>
+    <List threeLine nonInteractive>
+        {#each rows as row}
+            <Paper  square  style="padding: 4px; border-bottom: 1px solid black" color={row.Active ? 'primary' : 'secondary'}>
+                <Item on:SMUI:action={() => (selectedRow = row)} disabled={!row.Active} >
+                    <Text>
+                        <PrimaryText>{row.Description}</PrimaryText>
+                        <SecondaryText>{row.label5 || ''}</SecondaryText>
+                        <SecondaryText>{row.label4 || ''}</SecondaryText>
+                    </Text>
+                    <Meta style="display:flex; flex-direction: column; align-items: flex-end; ">
+                        {row.id}
+                        <h4>$ {row.UnitPrice}</h4>
+                        {row.unit || ''}
+                    </Meta>
+                </Item>
+            </Paper>
+        {/each}
+    </List>
 </main>
 <EditDialog item={selectedRow}/>
 <style>
@@ -65,10 +53,8 @@
         top: 40px ;
         width: 100%
     }
-    .price {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        align-content: center;
+    :root {
+  --mdc-theme-primary: #ff7e00;
+  --mdc-theme-secondary: #676778;
     }
 </style>
