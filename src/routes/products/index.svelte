@@ -49,6 +49,7 @@
 <EditDialog item={selectedRow}/>
 <style>
     main { 
+        background-color: black;
         position: absolute;
         top: 40px ;
         width: 100%

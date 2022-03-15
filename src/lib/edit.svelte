@@ -105,8 +105,11 @@
         /* flex: 3ch 0 0; */
         font-weight: 600; 
         justify-content: center;
-        min-width: 2ch;
+        align-items: center;
+        min-width: 4ch;
+        height:2ch;
         margin: 18px;
+        border-radius: 2ch;
         /* padding: 0 0 0 4px; */
         font-size: 72px;
         /* background-color: #0f03; */
