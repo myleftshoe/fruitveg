@@ -134,7 +134,7 @@
         top: -1ch;
         left: 1ch;
         /* width: 2ch; */
-        content: var(--cents);
+        content: "." var(--cents);
     }
     plucode {
         position: absolute;
