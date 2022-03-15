@@ -43,20 +43,11 @@
     }
 
     function handleSubmit(e) {
-        console.log('handle')
-        var url = `/products/${item.ItemCode}?_method=PUT`
-        var request = new XMLHttpRequest();
-        request.open('POST', url, true);
-        request.onload = function() { // request successful
-        // we can use server response to our request now
-            console.log(request.responseText);
-        };
-
-        request.onerror = function() {
-            // request failed
-        };
-
-        request.send(new FormData(e.target)); // create FormData from form that triggered event
+        const request = new Request(`/products/${item.ItemCode}?_method=PUT`, { 
+            method: 'POST', 
+            body: new FormData(e.target),
+        });
+        fetch(request)
     }
     let checked = false
 
