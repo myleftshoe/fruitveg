@@ -55,7 +55,7 @@
         width: 100%
     }
     :root {
-  --mdc-theme-primary: #ff7e00;
-  --mdc-theme-secondary: #676778;
+        --mdc-theme-primary: #ff7e00;
+        --mdc-theme-secondary: #676778;
     }
 </style>
