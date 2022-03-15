@@ -73,7 +73,7 @@
     controls {
         display:flex;
         flex-direction: column;
-        gap: 1ch;
+        gap: 4ch;
         /* border:1px solid #0004; */
         border-radius:5px;
     }
