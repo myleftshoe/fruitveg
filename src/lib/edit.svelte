@@ -76,7 +76,7 @@
     controls {
         display:flex;
         flex-direction: column;
-        gap: 1ch;
+        gap: 4ch;
         /* border:1px solid #0004; */
         border-radius:5px;
     }
@@ -152,14 +152,13 @@
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
     <main style="min-height: 50vh;">
         <div style="align-self: flex-end; margin:4px;">
-            <IconButton action="close" class="material-icons" type="button">close</IconButton>
+            <IconButton action="close" style="color: #000d;" class="material-icons" type="button" on:click={() => open = false}>close</IconButton>
         </div>
         <Content style="display: flex; flex-direction: column; justify-content: space-around;">        
-        <Title style="display:flex; flex-direction: column; align-items: center;">
-            {item.Description}
-            <plucode>{item.id}</plucode>
-        </Title>
-
+            <Title style="display:flex; flex-direction: column; align-items: center;">
+                {item.Description}
+                <plucode>{item.id}</plucode>
+            </Title>
             <hidden>
                 <input
                     type="text"
