@@ -125,70 +125,70 @@
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
-            <form method="post" action={`/products/${item.ItemCode}?_method=PUT`}>
-    <main style="min-height: 50vh; background-color:var({item.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
-                <plucode>{item.id}</plucode>
-        <div style="align-self: flex-end; margin:4px;">
-            <IconButton action="close" style="color: #000d;" class="material-icons" type="button" on:click={() => open = false}>close</IconButton>
-        </div>
-        <Content style="display: flex; flex-direction: column; justify-content: space-around;">        
-            <Title style="display:flex; flex-direction: column; align-items: center;">
-                {item.Description}
-            </Title>
-            <hidden>
-                <input
-                    type="text"
-                    id="PLUCode"
-                    name="PLUCode"
-                    bind:value={item.id} />
-                <input
-                    type="text"
-                    id="Description"
-                    name="Description"
-                    bind:value={item.Description} />
-                <input
-                    type="text"
-                    id="UnitPrice"
-                    name="UnitPrice"
-                    bind:value={item.UnitPrice} />
-                <input
-                    type="text"
-                    id="isWeighed"
-                    name="isWeighed"
-                    bind:value={item.isWeighed} />
-            </hidden>
-            <esl>
-                <Textfield
-                    input$id="label5"
-                    input$name="label5"
-                    bind:value={item.label5} />
-                <Textfield
-                    input$id="label4"
-                    input$name="label4"
-                    bind:value={item.label4} />
-            </esl>
-            <price>
-                <controls>
-                    <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={incUnitPrice}>
-                        <Icon component={Svg} viewBox="0 0 24 24">
-                            <path fill="currentColor" d={mdiPlus} />
-                        </Icon>
-                    </IconButton>
-                    <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={decUnitPrice}>
-                        <Icon component={Svg} viewBox="0 0 24 24">
-                            <path fill="currentColor" d={mdiMinus} />
-                        </Icon>
-                    </IconButton>
-                </controls>
-                <dollars on:click={changeCents} style={`--cents: "${cents}";`}>{dollars}</dollars>
-                <Textfield bind:value={item.unit} style="flex-basis:20%" invalid/>
-            </price>
-        </Content>
-        <Actions>
-            <Button type="submit" variant="unelevated" color="secondary">
-                <Label>Save</Label>
-            </Button>
-        </Actions>
-    </main>
-            </form>
+    <form method="post" action={`/products/${item.ItemCode}?_method=PUT`}>
+        <main style="min-height: 50vh; background-color:var({item.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
+            <plucode>{item.id}</plucode>
+            <div style="align-self: flex-end; margin:4px;">
+                <IconButton action="close" style="color: #000d;" class="material-icons" type="button" on:click={() => open = false}>close</IconButton>
+            </div>
+            <Content style="display: flex; flex-direction: column; justify-content: space-around;">        
+                <Title style="display:flex; flex-direction: column; align-items: center;">
+                    {item.Description}
+                </Title>
+                <hidden>
+                    <input
+                        type="text"
+                        id="PLUCode"
+                        name="PLUCode"
+                        bind:value={item.id} />
+                    <input
+                        type="text"
+                        id="Description"
+                        name="Description"
+                        bind:value={item.Description} />
+                    <input
+                        type="text"
+                        id="UnitPrice"
+                        name="UnitPrice"
+                        bind:value={item.UnitPrice} />
+                    <input
+                        type="text"
+                        id="isWeighed"
+                        name="isWeighed"
+                        bind:value={item.isWeighed} />
+                </hidden>
+                <esl>
+                    <Textfield
+                        input$id="label5"
+                        input$name="label5"
+                        bind:value={item.label5} />
+                    <Textfield
+                        input$id="label4"
+                        input$name="label4"
+                        bind:value={item.label4} />
+                </esl>
+                <price>
+                    <controls>
+                        <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={incUnitPrice}>
+                            <Icon component={Svg} viewBox="0 0 24 24">
+                                <path fill="currentColor" d={mdiPlus} />
+                            </Icon>
+                        </IconButton>
+                        <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={decUnitPrice}>
+                            <Icon component={Svg} viewBox="0 0 24 24">
+                                <path fill="currentColor" d={mdiMinus} />
+                            </Icon>
+                        </IconButton>
+                    </controls>
+                    <dollars on:click={changeCents} style={`--cents: "${cents}";`}>{dollars}</dollars>
+                    <Textfield bind:value={item.unit} style="flex-basis:20%" invalid/>
+                </price>
+            </Content>
+            <Actions>
+                <Button type="submit" variant="unelevated" color="secondary">
+                    <Label>Save</Label>
+                </Button>
+            </Actions>
+        </main>
+    </form>
 </Dialog>
