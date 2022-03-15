@@ -203,7 +203,7 @@
                     <dollars on:click={changeCents} style={`--cents: "${cents}";`}>{dollars}</dollars>
                     <!-- <cents >.{cents}</cents> -->
                 </price2>
-                <Textfield bind:value={item.unit} style="flex-basis:20%"/>
+                <Textfield bind:value={item.unit} style="flex-basis:20%" invalid/>
             </price>
         </Content>
         <Actions>
