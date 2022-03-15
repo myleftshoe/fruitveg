@@ -1,16 +1,10 @@
 <script>
-    import List, {
-        Item,
-        Text,
-        PrimaryText,
-        SecondaryText,
-        Meta
-    } from '@smui/list'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
+    import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import Button, { Group, Label } from '@smui/button'
+    import IconButton, { Icon } from '@smui/icon-button'
     import Textfield from '@smui/textfield'
     import { mdiPlus, mdiMinus } from '@mdi/js'
-    import IconButton, { Icon } from '@smui/icon-button'
     import { Svg } from '@smui/common/elements'
 
     export let item = {
@@ -20,6 +14,13 @@
         unit: ''
     }
 
+
+    function split(price) {
+        return [
+            Math.trunc(price).toString(),
+            ((price % 1).toFixed(2) * 100).toString().padStart(2, '0')
+        ]
+    }
     const getCents = price => (price % 1).toFixed(2) * 100
 
     function incUnitPrice() {
@@ -35,20 +36,10 @@
     }
 
     function changeCents(e) {
-        let cents = getCents(item.UnitPrice)
-        switch (cents) {
-            case 99: 
-                cents = 0
-                break
-            case 0:
-                cents = 50
-                break
-            default: 
-                cents = 99
-        }
-        const dollars = Math.trunc(item.UnitPrice)
+        let [dollars, cents] = split(item.UnitPrice)
+        cents = cents === '99' ? '00' : cents === '00' ? '50' : '99'
         item.UnitPrice = Number(`${dollars}.${cents}`)
-        e.target.style.setProperty('--cents', `"${cents.toString().padStart(2, '0')}"`)
+        e.target.style.setProperty('--cents', `"${cents}"`)
     }
 
 
@@ -56,8 +47,7 @@
 
     $: open = Boolean(item.id)
     $: console.log(item)
-    $: dollars = Math.trunc(item.UnitPrice)
-    $: cents = getCents(item.UnitPrice).toString().padStart(2, '0')
+    $: [dollars, cents] = split(item.UnitPrice)
 </script>
 
 <style>
@@ -92,17 +82,13 @@
         display: none;
     }
     price {
-        /* background-color: #00f5; */
-        /* padding: 16px; */
         justify-content: space-between;
         display:flex;
-        /* gap: 16px; */
         flex-direction: row;
         align-items: center;
     }
     dollars {
         display:flex;
-        /* flex: 3ch 0 0; */
         font-weight: 600; 
         justify-content: center;
         align-items: center;
@@ -110,30 +96,23 @@
         height:2ch;
         margin: 18px;
         border-radius: 2ch;
-        /* padding: 0 0 0 4px; */
         font-size: 72px;
-        /* background-color: #0f03; */
         font-family: none;
     }
     dollars::before {
-        /* background-color: #f002; */
         font-size: 32px;
         font-weight: lighter;
         position: relative;
         top: -1ch;
         right: 1ch;
-        /* width: 2ch; */
         content: '$';
     }
     dollars::after {
-        /* background-color: #f002; */
-        /* margin-left: 16px; */
         font-size: 32px;
         font-weight: lighter;
         position: relative;
         top: -1ch;
         left: 1ch;
-        /* width: 2ch; */
         content: "." var(--cents);
     }
     plucode {
@@ -143,11 +122,6 @@
         font-size: smaller;
         color: #000b;
     }
-    price2 {
-        /* border: 1px solid green; */
-        display:flex;
-    }
-
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
@@ -200,10 +174,7 @@
                         </Icon>
                     </IconButton>
                 </controls>
-                <price2>
-                    <dollars on:click={changeCents} style={`--cents: "${cents}";`}>{dollars}</dollars>
-                    <!-- <cents >.{cents}</cents> -->
-                </price2>
+                <dollars on:click={changeCents} style={`--cents: "${cents}";`}>{dollars}</dollars>
                 <Textfield bind:value={item.unit} style="flex-basis:20%" invalid/>
             </price>
         </Content>
