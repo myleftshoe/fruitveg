@@ -57,9 +57,6 @@ export const get = async ({ params, request }) => {
     fetched.set(slug, mapped)
     console.table(fetched.get(slug))
 
-
-
-
     return { body }
 }
 

@@ -14,7 +14,6 @@ function fuzzy(array, value) {
 function fuzzy1(array, value, fields) {
     const picked = Array.isArray(fields) && array.map(pick(...fields)) || [...array]
     const fuzzed = picked.reduce((acc, cur, index) => {
-        console.log(cur)
         const stringified = Object.values(cur)
             .join(' ')
             .toUpperCase()

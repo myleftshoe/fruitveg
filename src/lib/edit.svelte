@@ -36,7 +36,6 @@
 
     function changeCents(e) {
         let cents = getCents(item.UnitPrice)
-        console.log(e.target.style.getPropertyValue('--cents'))
         switch (cents) {
             case 99: 
                 cents = 0
@@ -47,11 +46,9 @@
             default: 
                 cents = 99
         }
-        console.log(cents)
         const dollars = Math.trunc(item.UnitPrice)
         item.UnitPrice = Number(`${dollars}.${cents}`)
         e.target.style.setProperty('--cents', `"${cents.toString().padStart(2, '0')}"`)
-        console.log(item.UnitPrice)
     }
 
 
@@ -125,7 +122,7 @@
         content: '$';
     }
     dollars::after {
-        background-color: #f002;
+        /* background-color: #f002; */
         margin-left: 16px;
         font-size: 32px;
         font-weight: lighter;
@@ -140,7 +137,7 @@
         top: 16px;
         left:16px;
         font-size: smaller;
-        color: var(--mdc-theme-primary);
+        color: #000b;
     }
     price2 {
         /* border: 1px solid green; */
