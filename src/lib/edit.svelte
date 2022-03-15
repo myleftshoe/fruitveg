@@ -76,7 +76,8 @@
     controls {
         display:flex;
         flex-direction: column;
-        border:1px solid #0000;
+        gap: 1ch;
+        /* border:1px solid #0004; */
         border-radius:5px;
     }
     main {
