@@ -4,38 +4,13 @@
     import Button, { Group, Label } from '@smui/button'
     import IconButton, { Icon } from '@smui/icon-button'
     import Textfield from '@smui/textfield'
-    import { mdiPlus, mdiMinus } from '@mdi/js'
-    import { Svg } from '@smui/common/elements'
-    import Money, { split } from '$lib/money.svelte'
+    import Money from '$lib/money.svelte'
 
     export let item = {
         label5: '',
         label4: '',
         UnitPrice: 0,
         unit: ''
-    }
-
-
-
-    const getCents = price => (price % 1).toFixed(2) * 100
-
-    function incUnitPrice() {
-        item.UnitPrice = parseFloat(++item.UnitPrice).toFixed(2)
-    }
-
-    function decUnitPrice() {
-        --item.UnitPrice
-        if (item.UnitPrice < 1) {
-            item.UnitPrice = 0.99
-        }
-        item.UnitPrice = parseFloat(item.UnitPrice).toFixed(2)
-    }
-
-    function changeCents(e) {
-        let [dollars, cents] = split(item.UnitPrice)
-        cents = cents === '99' ? '00' : cents === '00' ? '50' : '99'
-        item.UnitPrice = Number(`${dollars}.${cents}`)
-        e.target.style.setProperty('--cents', `"${cents}"`)
     }
 
     function handleSubmit(e) {
@@ -45,7 +20,6 @@
         });
         fetch(request)
     }
-    let checked = false
 
     $: open = Boolean(item.id)
     $: console.log(item)
@@ -78,13 +52,6 @@
         padding: 18px;
         padding-top: 0px;
         background-color: #fffd;
-    }
-    controls {
-        display:flex;
-        flex-direction: column;
-        gap: 4ch;
-        /* border:1px solid #0004; */
-        border-radius:5px;
     }
     hidden {
         display: none;
@@ -141,19 +108,7 @@
                         bind:value={item.label4} />
                 </esl>
                 <price>
-                    <controls>
-                        <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={incUnitPrice}>
-                            <Icon component={Svg} viewBox="0 0 24 24">
-                                <path fill="currentColor" d={mdiPlus} />
-                            </Icon>
-                        </IconButton>
-                        <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={decUnitPrice}>
-                            <Icon component={Svg} viewBox="0 0 24 24">
-                                <path fill="currentColor" d={mdiMinus} />
-                            </Icon>
-                        </IconButton>
-                    </controls>
-                    <Money value={item.UnitPrice}/>
+                    <Money bind:value={item.UnitPrice} vertical/>
                     <Textfield bind:value={item.unit} style="flex-basis:20%" invalid/>
                 </price>
             </Content>
