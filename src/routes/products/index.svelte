@@ -1,10 +1,9 @@
 <script context="module">
     import 'carbon-components-svelte/css/g100.css'
-    import Paper, { Title, Subtitle, Content } from '@smui/paper'
+    import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import TopAppBar from '@smui/top-app-bar';
     import { Search } from 'carbon-components-svelte'
-    import { Tag } from "carbon-components-svelte";
     import fuzzy from '../../helpers/fuzzy.js'
     import getheaders from '../../helpers/headers.js'
 
@@ -40,7 +39,7 @@
         {#each rows as row}
             <Paper  {...itemStyle(row.Active)}>
                 <Item on:SMUI:action={() => (selectedRow = row)} >
-                    <Text >
+                    <Text>
                         <PrimaryText>{row.Description}</PrimaryText>
                         <SecondaryText>{row.label5 || ''}</SecondaryText>
                         <SecondaryText>{row.label4 || ''}</SecondaryText>

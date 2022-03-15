@@ -1,30 +1,30 @@
 <style>
     dollars {
         display:flex;
-        font-weight: 600; 
         justify-content: center;
         align-items: center;
         min-width: 4ch;
         height:2ch;
         margin: 18px;
         border-radius: 2ch;
-        font-size: 72px;
         font-family: none;
+        font-size: 72px;
+        font-weight: 600; 
     }
     dollars::before {
-        font-size: 32px;
-        font-weight: lighter;
         position: relative;
         top: -1ch;
         right: 1ch;
+        font-size: 32px;
+        font-weight: lighter;
         content: '$';
     }
     dollars::after {
-        font-size: 32px;
-        font-weight: lighter;
         position: relative;
         top: -1ch;
         left: 1ch;
+        font-size: 32px;
+        font-weight: lighter;
         content: "." var(--cents);
     }
     controls {
