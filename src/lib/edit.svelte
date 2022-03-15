@@ -34,8 +34,9 @@
         item.UnitPrice = parseFloat(item.UnitPrice).toFixed(2)
     }
 
-    function changeCents() {
+    function changeCents(e) {
         let cents = getCents(item.UnitPrice)
+        console.log(e.target.style.getPropertyValue('--cents'))
         switch (cents) {
             case 99: 
                 cents = 0
@@ -49,10 +50,13 @@
         console.log(cents)
         const dollars = Math.trunc(item.UnitPrice)
         item.UnitPrice = Number(`${dollars}.${cents}`)
+        e.target.style.setProperty('--cents', `"${cents.toString().padStart(2, '0')}"`)
         console.log(item.UnitPrice)
     }
 
+
     let checked = false
+
     $: open = Boolean(item.id)
     $: console.log(item)
     $: dollars = Math.trunc(item.UnitPrice)
@@ -116,7 +120,7 @@
         font-weight: lighter;
         text-align: center;
         transform: translateY(-50%) translateX(-20%);
-        width: 2ch;
+        /* width: 2ch; */
         content: '$';
     }
     dollars::after {
@@ -124,17 +128,16 @@
         margin-left: 16px;
         font-size: 32px;
         font-weight: lighter;
-        transform: translateY(-50%) translateX(-20%);
-        width: 2ch;
-        content: '99';
-    }
-    cents {
-        align-self: flex-start;
-        font-size: 28px;
-        background-color: #00f0;
-        font-family: serif
+        position: relative;
+        top: -1ch;
+        right: 0;
+        /* width: 2ch; */
+        content: var(--cents);
     }
     plucode {
+        position: fixed;
+        top: 16px;
+        left:16px;
         font-size: smaller;
         color: var(--mdc-theme-primary);
     }
@@ -142,18 +145,20 @@
         /* border: 1px solid green; */
         display:flex;
     }
+
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
     <main style="min-height: 50vh;">
         <div style="align-self: flex-end; margin:4px;">
-            <IconButton action="close" class="material-icons">close</IconButton>
+            <IconButton action="close" class="material-icons" type="button">close</IconButton>
         </div>
+        <Content style="display: flex; flex-direction: column; justify-content: space-around;">        
         <Title style="display:flex; flex-direction: column; align-items: center;">
             {item.Description}
             <plucode>{item.id}</plucode>
         </Title>
-        <Content style="display: flex; flex-direction: column; justify-content: center;">
+
             <hidden>
                 <input
                     type="text"
@@ -195,8 +200,8 @@
                     </IconButton>
                 </controls>
                 <price2>
-                    <dollars>{dollars}</dollars>
-                    <cents on:click={changeCents}>.{cents}</cents>
+                    <dollars on:click={changeCents} style={`--cents: "${cents}";`}>{dollars}</dollars>
+                    <!-- <cents >.{cents}</cents> -->
                 </price2>
                 <Textfield bind:value={item.unit} style="flex-basis:20%"/>
             </price>

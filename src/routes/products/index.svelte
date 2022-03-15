@@ -29,7 +29,7 @@
 <main>
     <List threeLine nonInteractive>
         {#each rows as row}
-            <Paper  square  style="padding: 4px; border-bottom: 1px solid black" color={row.Active ? 'primary' : 'secondary'}>
+            <Paper  square  style="padding: 0px; border-bottom: 1px solid black" color={row.Active ? 'primary' : 'secondary'}>
                 <Item on:SMUI:action={() => (selectedRow = row)} disabled={!row.Active} >
                     <Text>
                         <PrimaryText>{row.Description}</PrimaryText>
@@ -37,7 +37,7 @@
                         <SecondaryText>{row.label4 || ''}</SecondaryText>
                     </Text>
                     <Meta style="display:flex; flex-direction: column; align-items: flex-end; ">
-                        {row.id}
+                        <strong>{row.id}</strong>
                         <h4>$ {row.UnitPrice}</h4>
                         {row.unit || ''}
                     </Meta>
