@@ -73,7 +73,7 @@
     controls {
         display:flex;
         flex-direction: column;
-        gap: 4ch;
+        gap: 1ch;
         /* border:1px solid #0004; */
         border-radius:5px;
     }
@@ -117,26 +117,27 @@
     }
     dollars::before {
         /* background-color: #f002; */
-        font-size: 40px;
+        font-size: 32px;
         font-weight: lighter;
-        text-align: center;
-        transform: translateY(-50%) translateX(-20%);
+        position: relative;
+        top: -1ch;
+        right: 1ch;
         /* width: 2ch; */
         content: '$';
     }
     dollars::after {
         /* background-color: #f002; */
-        margin-left: 16px;
+        /* margin-left: 16px; */
         font-size: 32px;
         font-weight: lighter;
         position: relative;
         top: -1ch;
-        right: 0;
+        left: 1ch;
         /* width: 2ch; */
         content: var(--cents);
     }
     plucode {
-        position: fixed;
+        position: absolute;
         top: 16px;
         left:16px;
         font-size: smaller;
@@ -151,13 +152,13 @@
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
     <main style="min-height: 50vh; background-color:var({item.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
+                <plucode>{item.id}</plucode>
         <div style="align-self: flex-end; margin:4px;">
             <IconButton action="close" style="color: #000d;" class="material-icons" type="button" on:click={() => open = false}>close</IconButton>
         </div>
         <Content style="display: flex; flex-direction: column; justify-content: space-around;">        
             <Title style="display:flex; flex-direction: column; align-items: center;">
                 {item.Description}
-                <plucode>{item.id}</plucode>
             </Title>
             <hidden>
                 <input
