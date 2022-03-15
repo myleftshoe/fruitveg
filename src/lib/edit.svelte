@@ -150,7 +150,7 @@
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
-    <main style="min-height: 50vh;">
+    <main style="min-height: 50vh; background-color:var({item.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
         <div style="align-self: flex-end; margin:4px;">
             <IconButton action="close" style="color: #000d;" class="material-icons" type="button" on:click={() => open = false}>close</IconButton>
         </div>
@@ -207,7 +207,7 @@
             </price>
         </Content>
         <Actions>
-            <Button type="submit">
+            <Button type="submit" variant="unelevated" color="secondary">
                 <Label>Save</Label>
             </Button>
         </Actions>

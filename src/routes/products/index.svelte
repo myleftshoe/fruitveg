@@ -30,9 +30,9 @@
     <List threeLine nonInteractive>
         {#each rows as row}
             <Paper  square  style="padding: 0px; border-bottom: 1px solid black" color={row.Active ? 'primary' : 'secondary'}>
-                <Item on:SMUI:action={() => (selectedRow = row)} disabled={!row.Active} >
+                <Item on:SMUI:action={() => (selectedRow = row)} >
                     <Text>
-                        <PrimaryText>{row.Description}</PrimaryText>
+                        <PrimaryText style="color:{row.Active ? 'var(--mdc-theme-on-primary)' : '#000b;'}">{row.Description}</PrimaryText>
                         <SecondaryText>{row.label5 || ''}</SecondaryText>
                         <SecondaryText>{row.label4 || ''}</SecondaryText>
                     </Text>
