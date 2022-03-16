@@ -90,6 +90,7 @@
         padding: 18px;
         padding-top: 0px;
         background-color: #fffd;
+        width:100%;
         color: #000b;
     }
     hidden {
@@ -118,7 +119,7 @@
                         close
                     </IconButton>
                 </div>
-                <Content style="display:flex; flex-direction: column; align-items:center; gap: 3vh"
+                <Content style="display:flex; flex-direction: column; align-items: center; "
 >
                     <Title
                         style="display:flex; flex-direction: column;
