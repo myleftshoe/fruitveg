@@ -133,16 +133,35 @@ export const put = async ({params, request}) => {
 
     await get({ params: { slug } })
 
-    const minewData = { 
-        ...fetched.get(slug), 
+    const got = fetched.get(slug)
+    console.log({got})
+
+    let minewData = {
+        label3: payload.PLUCode, 
         label4: payload.label4.toUpperCase(),
         label5: payload.label5.toUpperCase(),
         label6: payload.UnitPrice,
+        label8: 'Organic',
         label10: payload.label10,
+        label13: 'VEGETABLES',
     }
-    console.table(minewData)
-    await minew.put('goods?storeId=123', minewData)
+    if (got) {
+        minewData = { ...got, ...minewData, 
+            label3: got.label3 || minewData.label3,
+            label8: got.label8 || minewData.label8,
+            label13: got.label13 || minewData.label13,
+        } 
+        console.table(minewData)
+        await minew.put('goods?storeId=123', minewData)
+    }
+    else { 
+        minewData = { id: payload.PLUCode, ...minewData }
+        console.table(minewData)
+        await minew.post('goods?storeId=123', minewData)
+    }
+
     await atria.put(`/Items/${slug}/Price`, atriaData)
+
     return {
         headers: { Location: '/products' },
         status: 302

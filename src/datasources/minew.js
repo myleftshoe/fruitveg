@@ -19,7 +19,22 @@ async function get(path) {
     }
     return json
 }
-    
+
+async function post(path, payload) {
+    const headers = { 
+        "content-type": 'application/json',
+        "Authorization": `Bearer ${await token}` 
+    }
+    const options = { 
+        method: 'POST', 
+        headers, 
+        body: JSON.stringify(payload) 
+        // body: JSON.stringify(sample) 
+    }
+    const response = await fetcher.fetch(path, options)
+    console.log(await response.json())
+}
+
 async function put(path, payload) {
     const headers = { 
         "content-type": 'application/json',
@@ -49,7 +64,4 @@ async function login() {
     return json.body.token
 }
 
-export default {
-    get,
-    put,
-}
+export default { get, post, put }

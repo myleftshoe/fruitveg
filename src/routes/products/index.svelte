@@ -54,7 +54,7 @@
         {/each}
     </List>
 </main>
-<EditDialog item={selectedRow}/>
+<EditDialog bind:item={selectedRow}/>
 <style>
     main { 
         background-color: black;
