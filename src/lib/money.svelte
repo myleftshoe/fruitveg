@@ -3,10 +3,8 @@
         display:flex;
         justify-content: center;
         align-items: center;
-        min-width: 4ch;
+        min-width: 5ch;
         height:2ch;
-        margin: 18px;
-        border-radius: 2ch;
         font-family: none;
         font-size: 72px;
         font-weight: 600; 
@@ -17,7 +15,7 @@
         right: 1ch;
         font-size: 32px;
         font-weight: lighter;
-        content: '$';
+        content: "$";
     }
     dollars::after {
         position: relative;
