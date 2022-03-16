@@ -54,13 +54,11 @@
         {/each}
     </List>
 </main>
-<EditDialog item={selectedRow} on:close={(e) => { 
+<EditDialog bind:item={selectedRow} on:close={(e) => { 
     console.log('closssed', e.detail)
-    const submitted = e.detail;
-    if (submitted) {
-        rows = [...rows] 
-        return
-    }
+    const item = e.detail
+    const r = rows.findIndex((row) => row.id === item.id)
+    rows[r] = item
 
 }}/>
 <style>
