@@ -23,7 +23,12 @@ async function put(path, body) {
         body: JSON.stringify(body)
     })
     console.log(response.status)
+//    send()
     return response
+}
+
+async function send() {
+    await fetcher.fetch('Data/Send')
 }
 
 export default {
