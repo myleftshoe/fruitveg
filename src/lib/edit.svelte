@@ -168,14 +168,14 @@
                     </hidden>
                     <esl>
                         <Textfield
-                            style="text-transform: uppercase; color: black;"
                             input$id="label5"
                             input$name="label5"
+                            input$style="color: black; text-transform: uppercase;"
                             bind:value={copy.label5} />
                         <Textfield
-                            style="text-transform: uppercase; color: black;"
                             input$id="label4"
                             input$name="label4"
+                            input$style="color: black; text-transform: uppercase;"
                             bind:value={copy.label4} />
                     </esl>
                     <price>
