@@ -119,13 +119,8 @@
                         close
                     </IconButton>
                 </div>
-                <Content style="display:flex; flex-direction: column; align-items: center; "
->
-                    <Title
-                        style="display:flex; flex-direction: column;
-                        align-items: center;">
-                        {copy.Description}
-                    </Title>
+                <Content style="display:flex; flex-direction: column; align-items: center; gap: 3vh;">
+                    <Title>{copy.Description}</Title>
                     <hidden>
                         <input
                             type="text"
@@ -181,7 +176,7 @@
                             bind:value={copy.label4} />
                     </esl>
                     <price>
-                        <Money bind:value={copy.UnitPrice} vertical />
+                        <Money bind:value={copy.UnitPrice} vertical/>
                         <Textfield
                             input$id="label10"
                             input$name="label10"
