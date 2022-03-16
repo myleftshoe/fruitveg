@@ -52,8 +52,9 @@
     export let vertical = false
     
     function setValue(newValue) {
-        value = newValue >= 1 ? newValue : 0.99
-        value = parseFloat(newValue).toFixed(2)
+        console.log(newValue)
+        value = newValue < 1 ? 0.99 : newValue
+        value = parseFloat(value).toFixed(2)
         return value
     }
 
