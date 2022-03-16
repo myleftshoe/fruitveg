@@ -6,11 +6,24 @@
     import Textfield from '@smui/textfield'
     import Money from '$lib/money.svelte'
 
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
+
     export let item = {
         label5: '',
         label4: '',
         UnitPrice: 0,
         unit: ''
+    }
+
+    let submitted = false;
+
+    function handleClose() {
+        console.log('closed')
+        item = {}
+
+        dispatch('close', submitted)
+        submitted = false
     }
 
     function handleSubmit(e) {
@@ -19,6 +32,7 @@
             body: new FormData(e.target),
         });
         fetch(request)
+        submitted = true;
     }
 
     $: open = Boolean(item.id)
@@ -63,12 +77,12 @@
         align-items: center;
     }
 </style>
-<Dialog fullscreen bind:open on:SMUIDialog:closed={() => (item = {})}>
+<Dialog  bind:open on:SMUIDialog:closed={handleClose}>
     <form method="post" action={`/products/${item.ItemCode}?_method=PUT`} on:submit|preventDefault={handleSubmit}>
         <main style="min-height: 50vh; background-color:var({item.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
             <plucode>{item.id}</plucode>
             <div style="align-self: flex-end; margin:4px;">
-                <IconButton action="close" style="color: #000d;" class="material-icons" type="button" on:click={() => open = false}>close</IconButton>
+                <IconButton style="color: #000d;" class="material-icons" type="button" on:click={() => open = false}>close</IconButton>
             </div>
             <Content style="display: flex; flex-direction: column; justify-content: space-around;">        
                 <Title style="display:flex; flex-direction: column; align-items: center;">

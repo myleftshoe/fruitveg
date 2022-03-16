@@ -54,7 +54,15 @@
         {/each}
     </List>
 </main>
-<EditDialog bind:item={selectedRow}/>
+<EditDialog item={selectedRow} on:close={(e) => { 
+    console.log('closssed', e.detail)
+    const submitted = e.detail;
+    if (submitted) {
+        rows = [...rows] 
+        return
+    }
+
+}}/>
 <style>
     main { 
         background-color: black;
