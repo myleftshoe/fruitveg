@@ -55,11 +55,9 @@
     </List>
 </main>
 <EditDialog bind:item={selectedRow} on:close={(e) => { 
-    console.log('closssed', e.detail)
     const item = e.detail
     const r = rows.findIndex((row) => row.id === item.id)
     rows[r] = item
-
 }}/>
 <style>
     main { 
