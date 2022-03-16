@@ -63,9 +63,9 @@
 
 <style>
     plucode {
-        position: absolute;
+        /* position: absolute;
         top: 16px;
-        left: 16px;
+        left: 16px; */
         font-size: smaller;
         color: #000b;
     }
@@ -107,9 +107,7 @@
 <Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose}>
     {#if copy}
         <form method="post" on:submit|preventDefault={handleSubmit}>
-            <main
-                style="background-color:var({copy.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
-                <plucode>{copy.id}</plucode>
+            <main style="background-color:var({copy.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
                 <div style="align-self: flex-end; margin:4px;">
                     <IconButton
                         style="color: #000d;"
@@ -120,6 +118,7 @@
                     </IconButton>
                 </div>
                 <Content style="display:flex; flex-direction: column; align-items: center; gap: 3%;">
+                    <plucode>{copy.id}</plucode>
                     <Title>{copy.Description}</Title>
                     <hidden>
                         <input
