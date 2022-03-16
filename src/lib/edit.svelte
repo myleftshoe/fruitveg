@@ -38,6 +38,7 @@
         item.label4 = item.label4.toUpperCase()
         item.label5 = item.label5.toUpperCase()
         submitted = true
+        open = false
     }
     $: console.log(copy)
     $: {
