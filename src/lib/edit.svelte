@@ -37,9 +37,23 @@
         item = copy
         submitted = true
     }
-    $: console.log(item)
+    $: console.log(copy)
     $: {
-        if (item.id && copy === null) copy = { ...item }
+        if (item.id && copy === null) copy = { 
+            id: '',
+            Description: '',
+            UnitPrice: 0,
+            isWeighed: false,
+            unit: 'kg',
+            label3: '',  // id/PLUCode 
+            label4: '',  // esl text line 2!
+            label5: '',  // esl text line 1!
+            label6: '0',  // UnitPrice
+            label8: 'Organic',  // Specification
+            label10: 'kg', // unit 
+            label13: 'VEGETABLES',
+            ...item 
+        }
     }
     $: open = Boolean(copy)
 </script>
