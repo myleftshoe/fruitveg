@@ -88,6 +88,7 @@
         padding: 18px;
         padding-top: 0px;
         background-color: #fffd;
+        color: #000b;
     }
     hidden {
         display: none;
