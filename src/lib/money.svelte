@@ -67,16 +67,26 @@
         setValue(`${dollars}.${cents}`)
         e.target.style.setProperty('--cents', `"${cents}"`)
     }
+
+    let interval
+
+    const stopLongPress = (e) => clearInterval(interval)
+
+    const startLongPress = (func) => (e) => {
+        e.preventDefault()
+        interval = setInterval(func, 100)
+    }
+
     
     $: [dollars, cents] = split(value)
 </script>
 <controls style={vertical && "flex-direction: column;"}>
-    <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={increment}>
+    <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={increment} on:contextmenu={startLongPress(increment)} on:pointerup={stopLongPress}>
         <Icon component={Svg} viewBox="0 0 24 24">
             <path fill="currentColor" d={mdiPlus} />
         </Icon>
     </IconButton>
-    <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={decrement}>
+    <IconButton class="material-icons" size="normal" variant="outlined" type="button" on:click={decrement} on:contextmenu={startLongPress(decrement)} on:pointerup={stopLongPress}>
         <Icon component={Svg} viewBox="0 0 24 24">
             <path fill="currentColor" d={mdiMinus} />
         </Icon>
