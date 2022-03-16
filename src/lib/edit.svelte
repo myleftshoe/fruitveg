@@ -119,7 +119,7 @@
                         close
                     </IconButton>
                 </div>
-                <Content style="display:flex; flex-direction: column; align-items: center; gap: 3vh;">
+                <Content style="display:flex; flex-direction: column; align-items: center; gap: 3%;">
                     <Title>{copy.Description}</Title>
                     <hidden>
                         <input
@@ -136,7 +136,7 @@
                             type="text"
                             id="UnitPrice"
                             name="UnitPrice"
-                            bind:value={copy.UnitPrice} />
+                            bind:value={copy.UnitPrice} />gap
                         <input
                             type="text"
                             id="isWeighed"
@@ -191,8 +191,6 @@
                         <Label>Save</Label>
                     </Button>
                 </Content>
-                <Actions>
-                </Actions>
             </main>
         </form>
     {/if}

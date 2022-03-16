@@ -5,7 +5,7 @@
         align-items: center;
         min-width: 5ch;
         height:2ch;
-        font-family: sans;
+        font-family: arial;
         font-size: 72px;
         font-weight: 600; 
     }
