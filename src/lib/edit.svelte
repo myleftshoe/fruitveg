@@ -110,7 +110,12 @@
                 </esl>
                 <price>
                     <Money bind:value={item.UnitPrice} vertical/>
-                    <Textfield bind:value={item.unit} style="flex-basis:20%" invalid/>
+                    <Textfield
+                        input$id="label10"
+                        input$name="label10"
+                        bind:value={item.unit}
+                        style="flex-basis:20%"
+                        invalid />
                 </price>
             </Content>
             <Actions>

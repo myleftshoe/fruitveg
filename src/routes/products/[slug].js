@@ -52,7 +52,6 @@ export const get = async ({ params, request }) => {
             label10: row.label10,
             label13: row.label13,
     }))[0]
-    console.table(mapped)
 
     fetched.set(slug, mapped)
     console.table(fetched.get(slug))
@@ -136,9 +135,10 @@ export const put = async ({params, request}) => {
 
     const minewData = { 
         ...fetched.get(slug), 
-        label4: payload.label4,
-        label5: payload.label5,
+        label4: payload.label4.toUpperCase(),
+        label5: payload.label5.toUpperCase(),
         label6: payload.UnitPrice,
+        label10: payload.label10,
     }
     console.table(minewData)
     await minew.put('goods?storeId=123', minewData)
