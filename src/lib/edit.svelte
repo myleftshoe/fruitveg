@@ -100,7 +100,7 @@
     }
 </style>
 
-<Dialog bind:open on:SMUIDialog:closed={handleClose}>
+<Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose}>
     {#if copy}
         <form method="post" on:submit|preventDefault={handleSubmit}>
             <main
