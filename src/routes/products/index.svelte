@@ -47,7 +47,7 @@
                     <Meta {...metaStyle}>
                         <strong>{row.id}</strong>
                         <h4>$ {row.UnitPrice}</h4>
-                        {row.unit || ''}
+                        {row.label10 || ''}
                     </Meta>
                 </Item>
             </Paper>

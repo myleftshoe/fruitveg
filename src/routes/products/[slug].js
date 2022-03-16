@@ -140,10 +140,10 @@ export const put = async ({params, request}) => {
         label3: payload.PLUCode, 
         label4: payload.label4.toUpperCase(),
         label5: payload.label5.toUpperCase(),
-        label6: payload.UnitPrice,
-        label8: 'Organic',
+        label6: payload.label6,
+        label8: payload.label8 || 'Organic',
         label10: payload.label10,
-        label13: 'VEGETABLES',
+        label13: payload.label13 || 'VEGETABLES',
     }
     if (got) {
         minewData = { ...got, ...minewData, 

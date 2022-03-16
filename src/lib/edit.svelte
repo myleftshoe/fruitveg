@@ -35,24 +35,27 @@
         })
         fetch(request)
         item = copy
+        item.label4 = item.label4.toUpperCase()
+        item.label5 = item.label5.toUpperCase()
         submitted = true
     }
     $: console.log(copy)
     $: {
-        if (item.id && copy === null) copy = { 
-            id: '',
-            Description: '',
-            UnitPrice: 0,
-            isWeighed: false,
-            unit: 'kg',
-            label3: '',  // id/PLUCode 
-            label4: '',  // esl text line 2!
-            label5: '',  // esl text line 1!
-            label6: '0',  // UnitPrice
-            label8: 'Organic',  // Specification
-            label10: 'kg', // unit 
-            label13: 'VEGETABLES',
-            ...item 
+        if (item.id && copy === null) {
+            copy = { 
+                id: '',
+                Description: '',
+                UnitPrice: 0,
+                isWeighed: false,
+                label3: '',  // id/PLUCode 
+                label4: '',  // esl text line 2!
+                label5: '',  // esl text line 1!
+                label6: '0',  // UnitPrice
+                label8: 'Organic',  // Specification
+                label10: 'kg', // unit 
+                label13: 'VEGETABLES',
+                ...item 
+            }
         }
     }
     $: open = Boolean(copy)
@@ -141,6 +144,26 @@
                             id="isWeighed"
                             name="isWeighed"
                             bind:value={copy.isWeighed} />
+                        <input
+                            type="text"
+                            id="label3"
+                            name="label3"
+                            bind:value={copy.label3} />
+                        <input
+                            type="text"
+                            id="label6"
+                            name="label6"
+                            bind:value={copy.UnitPrice} />
+                        <input
+                            type="text"
+                            id="label8"
+                            name="label8"
+                            bind:value={copy.label8} />
+                        <input
+                            type="text"
+                            id="label13"
+                            name="label13"
+                            bind:value={copy.label3} />
                     </hidden>
                     <esl>
                         <Textfield
@@ -159,7 +182,7 @@
                         <Textfield
                             input$id="label10"
                             input$name="label10"
-                            bind:value={copy.unit}
+                            bind:value={copy.label10}
                             style="flex-basis:20%"
                             invalid />
                     </price>
