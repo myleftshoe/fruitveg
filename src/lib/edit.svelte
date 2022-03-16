@@ -71,10 +71,12 @@
     }
     form {
         height: 100%;
+        touch-action: none;
     }
     main {
         display: flex;
         height: 100%;
+        min-height: 50vh;
         background-color: #ff00;
         flex-direction: column;
         justify-content: space-between;
@@ -99,17 +101,13 @@
         flex-direction: row;
         align-items: center;
     }
-    :root {
-        touch-action: none;
-    }
-
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose}>
     {#if copy}
         <form method="post" on:submit|preventDefault={handleSubmit}>
             <main
-                style="min-height: 50vh; background-color:var({copy.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
+                style="background-color:var({copy.Active ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
                 <plucode>{copy.id}</plucode>
                 <div style="align-self: flex-end; margin:4px;">
                     <IconButton
@@ -120,9 +118,8 @@
                         close
                     </IconButton>
                 </div>
-                <Content
-                    style="display: flex; flex-direction: column;
-                    justify-content: space-around;">
+                <Content style="display:flex; flex-direction: column; align-items:center; gap: 3vh"
+>
                     <Title
                         style="display:flex; flex-direction: column;
                         align-items: center;">
@@ -191,14 +188,14 @@
                             style="flex-basis:20%"
                             invalid />
                     </price>
-                </Content>
-                <Actions>
                     <Button
                         type="submit"
                         variant="unelevated"
                         color="secondary">
                         <Label>Save</Label>
                     </Button>
+                </Content>
+                <Actions>
                 </Actions>
             </main>
         </form>
