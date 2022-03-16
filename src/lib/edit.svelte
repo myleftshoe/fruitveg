@@ -99,6 +99,10 @@
         flex-direction: row;
         align-items: center;
     }
+    :root {
+        touch-action: none;
+    }
+
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose}>

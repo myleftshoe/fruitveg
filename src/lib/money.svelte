@@ -73,6 +73,7 @@
     const stopLongPress = (e) => clearInterval(interval)
 
     const startLongPress = (func) => (e) => {
+        e.stopPropagation()
         e.preventDefault()
         interval = setInterval(func, 100)
     }
