@@ -29,12 +29,12 @@
         console.log('handleSubmit')
     }
     async function next(e) {
-        selectedRow = rows[rows.indexOf(selectedRow) + 1]
+        selectedRow = rows[rows.indexOf(selectedRow) + 1] || rows.slice(-1)[0]
         await tick()
         qty_ref.select()
     }
     async function prev(e) {
-        selectedRow = rows[rows.indexOf(selectedRow) - 1]
+        selectedRow = rows[rows.indexOf(selectedRow) - 1] || rows[0]
         await tick()
         qty_ref.select()
     }
@@ -139,7 +139,7 @@
                     bind:value={selectedRow.Description} />
             </hidden>
             <horzflex>
-                <IconButton touch class="material-icons" on:click={prev} tabindex="-1">arrow_back_ios</IconButton>
+                <IconButton disabled={selectedRow === rows[0]} touch class="material-icons" on:click={prev} tabindex="-1">arrow_back_ios</IconButton>
                 <vertflex>
                     <input
                         bind:this={qty_ref}
@@ -165,7 +165,7 @@
                         bind:value={selectedRow.unit}
                     /> -->
                 </vertflex>
-                <IconButton touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
+                <IconButton disabled={selectedRow === rows.slice(-1)[0]} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
             </horzflex>
             <units>
                 {#each ['boxes', 'tubs', 'crates', 'nets', 'sacks'] as unit}
