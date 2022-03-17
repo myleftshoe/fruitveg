@@ -36,6 +36,7 @@
     let complete = false
     let copied = false
     let warn = false
+    let showEventGuard = false
     let text = ''
 
     function handleFabClick(e) {
@@ -71,7 +72,7 @@
     $: console.log(value)
 </script>
 <TopAppBar>
-    <Textfield bind:value variant="filled" square style="border-radius: 0; display:flex;  align-items: center; ">
+    <Textfield bind:value variant="filled" square style="border-radius: 0; display:flex;  align-items: center;" on:focus={() => showEventGuard = true}>
         <Icon class="material-icons" slot="leadingIcon" style="padding: 16px;">search</Icon>
     </Textfield>
     <!-- <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/> -->
@@ -125,7 +126,22 @@
         </Actions>
     </Dialog>
 </Dialog>
+{#if showEventGuard}
+    <eventguard on:click={(e) => { 
+        e.stopPropagation()
+        showEventGuard = false
+    }}/>
+{/if}
 <style>
+    eventguard {
+        height: calc(100vh - 48px);
+        width: 100vw;
+        position: fixed;
+        top: 48px;
+        left:0;
+        /* background-color: #f003; */
+        z-index: 1000;
+    }
     message {
         /* text-transform: uppercase; */
         transition: opacity .25s ease-in-out;
