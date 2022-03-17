@@ -1,4 +1,5 @@
 <script>
+    import { tick } from 'svelte';
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import List, {
         Item,
@@ -27,12 +28,15 @@
     function handleSubmit() {
         console.log('handleSubmit')
     }
-    function next(e) {
+    async function next(e) {
         selectedRow = rows[rows.indexOf(selectedRow) + 1]
-        qty_ref.focus()
+        await tick()
+        qty_ref.select()
     }
-    function prev(e) {
+    async function prev(e) {
         selectedRow = rows[rows.indexOf(selectedRow) - 1]
+        await tick()
+        qty_ref.select()
     }
     function handleKeyPress(e) {
         if (e.target.value.length > 2) {
@@ -108,7 +112,7 @@
         /* border-radius: 16px; */
         padding: 16px;
         color:#fffd;
-        font-family: sans; 
+        font-family: arial; 
     }
 </style>
 
@@ -156,6 +160,7 @@
                         placeholder="0"
                         bind:value={selectedRow.qty}
                         on:keypress={handleKeyPress}
+                        on:focus={(e) => {e.target.select()}}
                     />
                     <!-- <Textfield
                         label="Unit"
