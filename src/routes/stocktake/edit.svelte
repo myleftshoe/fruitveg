@@ -29,6 +29,7 @@
     }
     function next() {
         selectedRow = rows[rows.indexOf(selectedRow) + 1]
+        qty_ref.focus()
     }
     function prev() {
         selectedRow = rows[rows.indexOf(selectedRow) - 1]
@@ -40,6 +41,8 @@
         }
 
     }
+
+    let qty_ref
 
     $: open = Boolean(selectedRow)
 </script>
@@ -102,6 +105,7 @@
                         bind:value={selectedRow.notes}
                     />
                     <Textfield
+                        bind:this={qty_ref}
                         label="Quantity"
                         input$type="number"
                         input$step=1
