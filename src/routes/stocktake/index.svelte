@@ -27,21 +27,22 @@
     import EditDialog from './edit.svelte'
     export let products = []
 
-    const _products = [...products]
+    const _products = JSON.stringify(products)
     
-    products = browser && JSON.parse(localStorage.getItem('fruitveg')) || _products
+    products = browser && JSON.parse(localStorage.getItem('fruitveg')) || products
     
     let selectedRow
     let complete = false
     let copied = false
     let warn = false
+    let text = ''
 
     function handleFabClick(e) {
         complete = true
     }
 
-    function copyToClipboard() {
-        const text = rows.filter(({qty, notes}) => Boolean(qty || notes)).map(({qty, unit, Description, notes }) => `${`${qty} ${unit}`.trim() || '-'} ${Description}${notes && `\n  (${notes})`}`.trim()).join("\n")
+    async function copyToClipboard() {
+        text = rows.filter(({qty, notes}) => Boolean(qty || notes)).map(({qty, unit, Description, notes }) => `${`${qty} ${unit}`.trim() || '-'} ${Description}${notes && `\n  (${notes})`}`.trim()).join("\n")
         clipboard.copy(text)
         copied = true
         setTimeout(() => copied = false, 1250)
@@ -49,10 +50,10 @@
 
     function startOver() { 
         console.log('start over')
-        products = [..._products]
+        products = JSON.parse(_products)
         if (browser) {
             localStorage.removeItem('fruitveg')
-            localStorage.setItem('fruitveg', JSON.stringify(products))
+            localStorage.setItem('fruitveg', _products)
         }
         complete = false
     }
@@ -104,14 +105,16 @@
         <Title>Fruit & Veg Stocktake</Title>
         <buttons>
             <message style="opacity: {copied ? 1 : 0}">copied!</message>
-            <Button on on:click={copyToClipboard}>copy to clipboard</Button>
+            <Button on on:click={copyToClipboard} >copy to clipboard</Button>
             <Button color="secondary" on:click={() => warn = true}>start new</Button>
             <Button color="secondary" on:click={() => complete = false}>continue editing</Button>
         </buttons>
     </menuDialog>
-    <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px);">
-        <Title>Start new stocktake?</Title>
-        <Content>This will clear the current one!</Content>
+    <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
+        <!-- <Title>Start new stocktake?</Title> -->
+        <Content>
+            Clear current stocktake and start a new one?
+        </Content>
         <Actions>
             <Button on:click={startOver}>start new</Button>
             <Button defaultAction>cancel</Button>
