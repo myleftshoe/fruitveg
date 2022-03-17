@@ -72,8 +72,8 @@
     $: console.log(value)
 </script>
 <TopAppBar>
-    <Textfield bind:value variant="filled" square style="border-radius: 0; display:flex;  align-items: center;" on:focus={() => showEventGuard = true}>
-        <Icon class="material-icons" slot="leadingIcon" style="padding: 16px;">search</Icon>
+    <Textfield bind:value variant="filled" square style="border-radius: 0; display:flex; align-items: center;" on:focus={() => showEventGuard = true}>
+        <Icon class="material-icons" slot="leadingIcon" style="padding: 16px; color: #777;">search</Icon>
     </Textfield>
     <!-- <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/> -->
 </TopAppBar>
