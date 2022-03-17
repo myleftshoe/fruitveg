@@ -76,6 +76,15 @@
     hidden {
         display: none;
     }
+    prev {
+        position: fixed;
+        bottom: 20%;
+    }
+    next {
+        position: fixed;
+        bottom: 20%;
+        right: 0;
+    }
 </style>
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose}>
@@ -135,5 +144,11 @@
                 </Content>
             </main>
         </form>
+        <prev>
+            <IconButton class="material-icons">arrow_back_ios</IconButton>
+        </prev>
+        <next>
+            <IconButton class="material-icons">arrow_forward_ios</IconButton>
+        </next>
     {/if}
 </Dialog>
