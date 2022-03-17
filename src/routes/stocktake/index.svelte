@@ -7,6 +7,7 @@
     import TopAppBar from '@smui/top-app-bar';
     import Fab, { Icon } from '@smui/fab';
     import Button from '@smui/button'
+    import Textfield from '@smui/textfield'
     import { Search } from 'carbon-components-svelte'
     import fuzzy from '../../helpers/fuzzy.js'
     import getheaders from '../../helpers/headers.js'
@@ -70,7 +71,10 @@
     $: console.log(value)
 </script>
 <TopAppBar>
-    <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/>
+    <Textfield bind:value variant="filled" square style="border-radius: 0; display:flex;  align-items: center; ">
+        <Icon class="material-icons" slot="leadingIcon" style="padding: 16px;">search</Icon>
+    </Textfield>
+    <!-- <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/> -->
 </TopAppBar>
 <main>
     <List threeLine nonInteractive>
@@ -146,7 +150,7 @@
     main { 
         background-color: black;
         position: absolute;
-        top: 40px ;
+        top: 48px ;
         width: 100%
     }
     fab {
