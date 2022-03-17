@@ -52,8 +52,8 @@
         position: fixed;
         top:0;
         left:0;
-        height:50vh;
-        width:100vw;
+        height:50%;
+        width:100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -94,7 +94,7 @@
             </IconButton>
         </div> -->
         <Content style="display:flex; flex-direction: column; align-items: center; gap: 3%;">
-            <Title>{selectedRow.Description}</Title>
+            <Title style={parseInt(selectedRow.qty) >= 0 || selectedRow.notes ? 'color: var(--mdc-theme-primary)' : ''}>{selectedRow.Description}</Title>
             <hidden>
                 <input
                     type="text"
@@ -129,6 +129,7 @@
                         input$style='text-align:center;'
                         input$id="qty"
                         input$name="qty"
+                        input$tabindex="0"
                         bind:value={selectedRow.qty}
                         on:keypress={handleKeyPress}
                     />
