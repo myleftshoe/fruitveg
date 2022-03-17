@@ -6,7 +6,7 @@
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import TopAppBar from '@smui/top-app-bar';
     import Fab, { Icon } from '@smui/fab';
-    import Button, { Label } from '@smui/button'
+    import Button from '@smui/button'
     import { Search } from 'carbon-components-svelte'
     import fuzzy from '../../helpers/fuzzy.js'
     import getheaders from '../../helpers/headers.js'
@@ -20,22 +20,39 @@
     const metaStyle = { 
         style: 'text-align: center;',
     }
+
 </script>
 
 <script>
     import EditDialog from './edit.svelte'
     export let products = []
+
+    const _products = [...products]
     
     products = browser && JSON.parse(localStorage.getItem('fruitveg')) || products
     
     let selectedRow
     let complete = false
+    let copied = false
+    let warn = false
 
-    function handleClick(e) {
+    function handleFabClick(e) {
+        complete = true
+    }
+
+    function copyToClipboard() {
         const text = rows.filter(({qty, notes}) => Boolean(qty || notes)).map(({qty, unit, Description, notes }) => `${`${qty} ${unit}`.trim() || '-'} ${Description}${notes && `\n  (${notes})`}`.trim()).join("\n")
         clipboard.copy(text)
-        complete = true;
+        copied = true
+        setTimeout(() => copied = false, 1250)
     }
+
+    function startOver() { 
+        products = [..._products]
+        localStorage.setItem('fruitveg', JSON.stringify(products))
+        complete = false
+    }
+
 
     $: value = value?.toUpperCase?.() ?? ''
     $: headers = getheaders(products)
@@ -70,7 +87,7 @@
     </List>
 </main>
 <fab>
-    <Fab on:click={handleClick}>
+    <Fab on:click={handleFabClick}>
         <Icon class="material-icons">check</Icon>
     </Fab>
 </fab>
@@ -78,17 +95,47 @@
     rows = [...rows]
     browser && localStorage.setItem('fruitveg', JSON.stringify(rows))
 }}/>
-<Dialog bind:open={complete} on:SMUIDialog:closed={null}>
-    <Header>
-        <Title>Stocktake Complete</Title>
-    </Header>
-    <Content>Stocktake complete</Content>
-    <Actions>
-        <Button>continue editing</Button>
-    </Actions>
+<Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction="" escapeKeyAction="" >
+    <menuDialog>
+        <Title>Fruit & Veg Stocktake</Title>
+        <buttons>
+            <message style="opacity: {copied ? 1 : 0}">copied!</message>
+            <Button on on:click={copyToClipboard}>copy to clipboard</Button>
+            <Button color="secondary" on:click={() => warn = true}>start new</Button>
+            <Button color="secondary" on:click={() => complete = false}>continue editing</Button>
+        </buttons>
+    </menuDialog>
+    <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px);">
+        <Title>Start new stocktake?</Title>
+        <Content>This will clear the current one!</Content>
+        <Actions>
+            <Button on:click={startOver}>start new</Button>
+            <Button defaultAction>cancel</Button>
+        </Actions>
+    </Dialog>
 </Dialog>
-
 <style>
+    message {
+        /* text-transform: uppercase; */
+        transition: opacity .25s ease-in-out;
+        color: var(--mdc-theme-primary);
+        font-family: arial;
+        /* font-size: small; */
+    }
+    buttons {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2ch;
+    }
+    menuDialog {
+        min-height: 50vh;
+        display:flex; 
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2ch;
+    }
     main { 
         background-color: black;
         position: absolute;
