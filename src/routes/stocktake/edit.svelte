@@ -81,7 +81,7 @@
 
 <Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose} style="height: 50vh">
     {#if selectedRow}
-            <main style="background-color:var({parseInt(selectedRow.qty) >= 0 || selectedRow.notes ? '--mdc-theme-primary' : '--mdc-theme-secondary'});" on:click|stopPropagation>
+            <main style="background-color:var({parseInt(selectedRow.qty) >= 0 || selectedRow.notes ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
                 <!-- <div style="align-self: flex-end; margin:4px;">
                     <IconButton
                         style="color: #000d;"
