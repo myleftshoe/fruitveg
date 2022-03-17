@@ -150,7 +150,7 @@
                     <input
                         bind:this={qty_ref}
                         label="Quantity"
-                        type="tel"
+                        type="number"
                         style="width: 80%; text-align:center;"
                         id="qty"
                         name="qty"
