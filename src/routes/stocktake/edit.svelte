@@ -49,10 +49,15 @@
 
 <style>
     main {
+        position: fixed;
+        top:0;
+        left:0;
+        height:50vh;
+        width:100vw;
         display: flex;
-        height: 100%;
-        min-height: 70vh;
         flex-direction: column;
+        align-items: center;
+        justify-content:flex-start;
         transition: background-color 0.3s ease;
     }
     hidden {
@@ -60,20 +65,20 @@
     }
     prev {
         position: fixed;
-        left:32px;
-        bottom: 20%;
+        top: 32px;;
+        left:8px;
     }
     next {
         position: fixed;
-        bottom: 20%;
-        right: 32px;
+        top: 32px;;
+        right: 8px;
     }
 </style>
 
-<Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose}>
+<Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose} on:click={() => open = false}>
     {#if selectedRow}
-            <main style="background-color:var({parseInt(selectedRow.qty) >= 0 || selectedRow.notes ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
-                <div style="align-self: flex-end; margin:4px;">
+            <main style="background-color:var({parseInt(selectedRow.qty) >= 0 || selectedRow.notes ? '--mdc-theme-primary' : '--mdc-theme-secondary'});" on:click|stopPropagation>
+                <!-- <div style="align-self: flex-end; margin:4px;">
                     <IconButton
                         style="color: #000d;"
                         class="material-icons"
@@ -81,7 +86,7 @@
                         on:click={() => (open = false)}>
                         close
                     </IconButton>
-                </div>
+                </div> -->
                 <Content style="display:flex; flex-direction: column; align-items: center; gap: 3%;">
                     <Title>{selectedRow.Description}</Title>
                     <hidden>
