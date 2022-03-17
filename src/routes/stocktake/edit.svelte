@@ -10,7 +10,6 @@
     import Button, { Group, Label } from '@smui/button'
     import IconButton, { Icon } from '@smui/icon-button'
     import Textfield from '@smui/textfield'
-    import HelperText from '@smui/textfield/helper-text';
 
     import { createEventDispatcher } from 'svelte'
     const dispatch = createEventDispatcher()
@@ -29,6 +28,7 @@
     }
 
     function handleSubmit(e) {
+        return
         const request = new Request(`/products/${copy.ItemCode}?_method=PUT`, {
             method: 'POST',
             body: new FormData(e.target)
@@ -57,9 +57,6 @@
 
 <style>
     plucode {
-        /* position: absolute;
-        top: 16px;
-        left: 16px; */
         font-size: smaller;
         color: #000b;
     }
@@ -74,27 +71,10 @@
         background-color: #ff00;
         flex-direction: column;
         justify-content: space-between;
-        align-items: center;
-    }
-    esl {
-        display: flex;
-        flex-direction: column;
-        border: 3px solid #000b;
-        border-radius: 18px;
-        padding: 18px;
-        padding-top: 0px;
-        background-color: #fffd;
-        width:100%;
-        color: #000b;
+        align-items: stretch;
     }
     hidden {
         display: none;
-    }
-    price {
-        justify-content: space-between;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
     }
 </style>
 
@@ -126,27 +106,26 @@
                             name="Description"
                             bind:value={copy.Description} />
                     </hidden>
-                    <esl>
-                        <Textfield
-                            style="width: 100%;"
-                            helperLine$style="width: 100%;"
-                            textarea
-                            bind:value={copy.notes}
-                            label="Label"
-                        >
-                            <HelperText slot="helper">Helper Text</HelperText>
-                        </Textfield>
-
-                    </esl>
-                    <price>
-                        <Textfield bind:value={copy.qty}/>
-                        <Textfield
-                            input$id="label10"
-                            input$name="label10"
-                            bind:value={copy.label10}
-                            style="flex-basis:20%"
-                            invalid />
-                    </price>
+                    <Textfield
+                        style="width: 100%;"
+                        helperLine$style="width: 100%;"
+                        textarea
+                        bind:value={copy.notes}
+                        label="notes"
+                    />
+                    <Textfield
+                    type=number
+                        input$style='font-size:4ch; text-align:center;'
+                        input$id="qty"
+                        input$name="qty"
+                        bind:value={copy.qty}
+                    />
+                    <Textfield
+                        input$style='text-align:center;'
+                        input$id="unit"
+                        input$name="unit"
+                        bind:value={copy.unit}
+                    />
                     <Button
                         type="submit"
                         variant="unelevated"

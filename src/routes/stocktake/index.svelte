@@ -37,7 +37,7 @@
 <main>
     <List threeLine nonInteractive>
         {#each rows as row}
-            <Paper  {...itemStyle(row.Active)}>
+            <Paper  {...itemStyle(row.qty)}>
                 <Item on:SMUI:action={() => (selectedRow = row)}>
                     <Text>
                         <PrimaryText>{row.Description}</PrimaryText>
