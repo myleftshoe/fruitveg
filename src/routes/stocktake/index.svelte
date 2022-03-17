@@ -4,6 +4,7 @@ import { browser } from '$app/env';
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import TopAppBar from '@smui/top-app-bar';
+    import Fab, { Icon } from '@smui/fab';
     import { Search } from 'carbon-components-svelte'
     import fuzzy from '../../helpers/fuzzy.js'
     import getheaders from '../../helpers/headers.js'
@@ -56,6 +57,11 @@ import { browser } from '$app/env';
         {/each}
     </List>
 </main>
+<fab>
+    <Fab on:click={() => {}}>
+        <Icon class="material-icons">check</Icon>
+    </Fab>
+</fab>
 <EditDialog bind:selectedRow bind:rows on:close={() => {
     rows = [...rows]
     browser && localStorage.setItem('fruitveg', JSON.stringify(rows))
@@ -66,6 +72,11 @@ import { browser } from '$app/env';
         position: absolute;
         top: 40px ;
         width: 100%
+    }
+    fab {
+        position: fixed;
+        right: 32px;
+        bottom: 32px;
     }
     :root {
         --mdc-theme-primary: #ff7e00;
