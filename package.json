@@ -30,6 +30,8 @@
   },
   "type": "module",
   "dependencies": {
-    "@mdi/js": "^6.5.95"
+    "@babel/runtime": "^7.17.7",
+    "@mdi/js": "^6.5.95",
+    "awesome-clipboard": "^2.0.4"
   }
 }

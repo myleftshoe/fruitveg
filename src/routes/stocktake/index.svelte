@@ -1,6 +1,7 @@
 <script context="module">
-import { browser } from '$app/env';
+    import { browser } from '$app/env';
     import 'carbon-components-svelte/css/g100.css'
+    import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import TopAppBar from '@smui/top-app-bar';
@@ -8,6 +9,7 @@ import { browser } from '$app/env';
     import { Search } from 'carbon-components-svelte'
     import fuzzy from '../../helpers/fuzzy.js'
     import getheaders from '../../helpers/headers.js'
+    import clipboard from '../../helpers/clipboard.js'
 
     const itemStyle = (active) => ({ 
         square: true,
@@ -22,9 +24,18 @@ import { browser } from '$app/env';
 <script>
     import EditDialog from './edit.svelte'
     export let products = []
-    products = browser && JSON.parse(localStorage.getItem('fruitveg')) || products
-    let selectedRow
     
+    products = browser && JSON.parse(localStorage.getItem('fruitveg')) || products
+    
+    let selectedRow
+    let complete = false
+
+    function handleClick(e) {
+        const text = rows.filter(({qty, notes}) => Boolean(qty || notes)).map(({qty, unit, Description, notes }) => `${`${qty} ${unit}`.trim() || '-'} ${Description}${notes && `\n  (${notes})`}`.trim()).join("\n")
+        clipboard.copy(text)
+        complete = true;
+    }
+
     $: value = value?.toUpperCase?.() ?? ''
     $: headers = getheaders(products)
     $: rows = fuzzy(products, value, ['Description', 'id'])
@@ -50,7 +61,7 @@ import { browser } from '$app/env';
                     <Meta {...metaStyle}>
                         <!-- <strong>{row.id}</strong> -->
                         <h4>{row.qty}</h4>
-                        {row.unit || 'boxes'}
+                        {row.unit}
                     </Meta>
                 </Item>
             </Paper>
@@ -58,7 +69,7 @@ import { browser } from '$app/env';
     </List>
 </main>
 <fab>
-    <Fab on:click={() => {}}>
+    <Fab on:click={handleClick}>
         <Icon class="material-icons">check</Icon>
     </Fab>
 </fab>
@@ -66,6 +77,14 @@ import { browser } from '$app/env';
     rows = [...rows]
     browser && localStorage.setItem('fruitveg', JSON.stringify(rows))
 }}/>
+<Dialog bind:open={complete} on:SMUIDialog:closed={null}>
+<Header>
+    <Title>Stocktake Complete</Title>
+</Header>
+<Content>Stocktake complete</Content>
+<Actions></Actions>
+</Dialog>
+
 <style>
     main { 
         background-color: black;
