@@ -6,6 +6,7 @@
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import TopAppBar from '@smui/top-app-bar';
     import Fab, { Icon } from '@smui/fab';
+    import Button, { Label } from '@smui/button'
     import { Search } from 'carbon-components-svelte'
     import fuzzy from '../../helpers/fuzzy.js'
     import getheaders from '../../helpers/headers.js'
@@ -78,11 +79,13 @@
     browser && localStorage.setItem('fruitveg', JSON.stringify(rows))
 }}/>
 <Dialog bind:open={complete} on:SMUIDialog:closed={null}>
-<Header>
-    <Title>Stocktake Complete</Title>
-</Header>
-<Content>Stocktake complete</Content>
-<Actions></Actions>
+    <Header>
+        <Title>Stocktake Complete</Title>
+    </Header>
+    <Content>Stocktake complete</Content>
+    <Actions>
+        <Button>continue editing</Button>
+    </Actions>
 </Dialog>
 
 <style>
