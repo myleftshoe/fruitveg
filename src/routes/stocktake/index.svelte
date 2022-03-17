@@ -9,7 +9,7 @@
 
     const itemStyle = (active) => ({ 
         square: true,
-        style: `padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7}; `,
+        style: `padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7}; transition: background-color 0.3s ease; `,
         color: active ? 'primary' : 'secondary',
     })
     const metaStyle = { 
@@ -53,11 +53,7 @@
         {/each}
     </List>
 </main>
-<EditDialog bind:item={selectedRow} on:close={(e) => { 
-    const item = e.detail
-    const r = rows.findIndex((row) => row.id === item.id)
-    rows[r] = item
-}}/>
+<EditDialog bind:selectedRow bind:rows/>
 <style>
     main { 
         background-color: black;
