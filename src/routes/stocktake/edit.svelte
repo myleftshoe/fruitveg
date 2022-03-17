@@ -20,8 +20,8 @@
     function handleClose() {
         console.log('handleClose')
         selectedRow.qty = Number(selectedRow.qty) || '' 
-        rows = [...rows]
         selectedRow = null
+        dispatch('close')
 
     }
     function handleSubmit() {

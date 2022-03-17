@@ -1,4 +1,5 @@
 <script context="module">
+import { browser } from '$app/env';
     import 'carbon-components-svelte/css/g100.css'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
@@ -20,7 +21,9 @@
 <script>
     import EditDialog from './edit.svelte'
     export let products = []
+    products = browser && JSON.parse(localStorage.getItem('fruitveg')) || products
     let selectedRow
+    
     $: value = value?.toUpperCase?.() ?? ''
     $: headers = getheaders(products)
     $: rows = fuzzy(products, value, ['Description', 'id'])
@@ -53,7 +56,10 @@
         {/each}
     </List>
 </main>
-<EditDialog bind:selectedRow bind:rows/>
+<EditDialog bind:selectedRow bind:rows on:close={() => {
+    rows = [...rows]
+    browser && localStorage.setItem('fruitveg', JSON.stringify(rows))
+}}/>
 <style>
     main { 
         background-color: black;
