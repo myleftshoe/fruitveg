@@ -48,8 +48,12 @@
     }
 
     function startOver() { 
+        console.log('start over')
         products = [..._products]
-        localStorage.setItem('fruitveg', JSON.stringify(_products))
+        if (browser) {
+            localStorage.removeItem('fruitveg')
+            localStorage.setItem('fruitveg', JSON.stringify(products))
+        }
         complete = false
     }
 
