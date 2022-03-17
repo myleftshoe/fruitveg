@@ -124,7 +124,7 @@
                                 input$step=1
                                 input$min=0
                                 input$max=999
-                                input$style='font-size:4ch; text-align:center; line-height: 4ch;'
+                                input$style='text-align:center;'
                                 input$id="qty"
                                 input$name="qty"
                                 bind:value={selectedRow.qty}
