@@ -29,7 +29,7 @@
 
     const _products = [...products]
     
-    products = browser && JSON.parse(localStorage.getItem('fruitveg')) || products
+    products = browser && JSON.parse(localStorage.getItem('fruitveg')) || _products
     
     let selectedRow
     let complete = false
@@ -49,7 +49,7 @@
 
     function startOver() { 
         products = [..._products]
-        localStorage.setItem('fruitveg', JSON.stringify(products))
+        localStorage.setItem('fruitveg', JSON.stringify(_products))
         complete = false
     }
 
@@ -93,7 +93,7 @@
 </fab>
 <EditDialog bind:selectedRow bind:rows on:close={() => {
     rows = [...rows]
-    browser && localStorage.setItem('fruitveg', JSON.stringify(rows))
+    browser && localStorage.setItem('fruitveg', JSON.stringify(products))
 }}/>
 <Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction="" escapeKeyAction="" >
     <menuDialog>
