@@ -15,7 +15,7 @@
 
     const itemStyle = (active) => ({ 
         square: true,
-        style: `padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7}; transition: background-color 0.3s ease; `,
+        style: `padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.5}; transition: opacity .35s ease; `,
         color: active ? 'primary' : 'secondary',
     })
     const metaStyle = { 
@@ -97,7 +97,7 @@
 </main>
 <fab>
     <Fab on:click={handleFabClick}>
-        <Icon class="material-icons">check</Icon>
+        <Icon class="material-icons">menu</Icon>
     </Fab>
 </fab>
 <EditDialog bind:selectedRow bind:rows on:close={() => {
