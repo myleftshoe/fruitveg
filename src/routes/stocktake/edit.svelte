@@ -89,7 +89,7 @@
         color: white;
     }
     units {
-        transform: scale(.8) translateY(-8px);
+        transform: scale(.8);
         display:flex;
     }
     hr {
