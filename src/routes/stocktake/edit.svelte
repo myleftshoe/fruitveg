@@ -172,8 +172,7 @@
                 {#each ['boxes', 'tubs', 'crates', 'nets', 'sacks'] as unit}
                     <Button 
                         color={selectedRow.unit === unit ? "primary" : "secondary"} 
-                        on:click={() => selectedRow.unit = unit}
-                    >
+                        on:click={() => selectedRow.unit = unit} >
                         {unit}
                     </Button>
                 {/each}
