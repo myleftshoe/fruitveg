@@ -19,8 +19,10 @@
 
     function handleClose() {
         console.log('handleClose')
-        selectedRow = null
+        selectedRow.qty = Number(selectedRow.qty) || '' 
         rows = [...rows]
+        selectedRow = null
+
     }
     function handleSubmit() {
         console.log('handleSubmit')
@@ -31,41 +33,43 @@
     function prev() {
         selectedRow = rows[rows.indexOf(selectedRow) - 1]
     }
+    function handleKeyPress(e) {
+        if (e.target.value.length > 2) {
+            e.target.value = '0'
+            e.preventDefault()
+        }
+
+    }
 
     $: open = Boolean(selectedRow)
 </script>
 
 <style>
-    plucode {
-        font-size: smaller;
-        color: #000b;
-    }
     main {
         display: flex;
         height: 100%;
         min-height: 70vh;
-        background-color: #ff00;
         flex-direction: column;
-        justify-content: space-between;
-        align-items: stretch;
+        transition: background-color 0.3s ease;
     }
     hidden {
         display: none;
     }
     prev {
         position: fixed;
+        left:32px;
         bottom: 20%;
     }
     next {
         position: fixed;
         bottom: 20%;
-        right: 0;
+        right: 32px;
     }
 </style>
 
-<Dialog  bind:open on:SMUIDialog:closed={handleClose}>
+<Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose}>
     {#if selectedRow}
-            <main style="background-color:var({selectedRow.qty ? '--mdc-theme-primary' : '--mdc-theme-secondary'}); transition: background-color 0.3s ease;">
+            <main style="background-color:var({parseInt(selectedRow.qty) >= 0 || selectedRow.notes ? '--mdc-theme-primary' : '--mdc-theme-secondary'});">
                 <div style="align-self: flex-end; margin:4px;">
                     <IconButton
                         style="color: #000d;"
@@ -90,20 +94,27 @@
                             bind:value={selectedRow.Description} />
                     </hidden>
                     <Textfield
-                        style="width: 100%;"
-                        helperLine$style="width: 100%;"
                         textarea
+                        label="Notes"
+                        input$id="notes"
+                        input$name="notes"
+                        style="width: 100%;"
                         bind:value={selectedRow.notes}
-                        label="notes"
                     />
                     <Textfield
-                        type="number"
+                        label="Quantity"
+                        input$type="number"
+                        input$step=1
+                        input$min=0
+                        input$max=999
                         input$style='font-size:4ch; text-align:center;'
                         input$id="qty"
                         input$name="qty"
                         bind:value={selectedRow.qty}
+                        on:keypress={handleKeyPress}
                     />
                     <Textfield
+                        label="Unit"
                         input$style='text-align:center;'
                         input$id="unit"
                         input$name="unit"
@@ -112,10 +123,10 @@
                 </Content>
             </main>
         <prev>
-            <IconButton class="material-icons" on:click={prev}>arrow_back_ios</IconButton>
+            <IconButton touch class="material-icons" on:click={prev} style="">arrow_back_ios</IconButton>
         </prev>
         <next>
-            <IconButton class="material-icons" on:click={next}>arrow_forward_ios</IconButton>
+            <IconButton touch class="material-icons" on:click={next}>arrow_forward_ios</IconButton>
         </next>
     {/if}
 </Dialog>

@@ -37,11 +37,11 @@
 <main>
     <List threeLine nonInteractive>
         {#each rows as row}
-            <Paper  {...itemStyle(row.qty)}>
+            <Paper  {...itemStyle(row.qty || row.notes)}>
                 <Item on:SMUI:action={() => (selectedRow = row)}>
                     <Text>
                         <PrimaryText>{row.Description}</PrimaryText>
-                        <SecondaryText>This is a test</SecondaryText>
+                        <SecondaryText>{row.notes}</SecondaryText>
                     </Text>
                     <Meta {...metaStyle}>
                         <!-- <strong>{row.id}</strong> -->
