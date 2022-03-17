@@ -114,7 +114,7 @@
                         label="notes"
                     />
                     <Textfield
-                    type=number
+                        type="number"
                         input$style='font-size:4ch; text-align:center;'
                         input$id="qty"
                         input$name="qty"
