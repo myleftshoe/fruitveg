@@ -27,11 +27,11 @@
     function handleSubmit() {
         console.log('handleSubmit')
     }
-    function next() {
+    function next(e) {
         selectedRow = rows[rows.indexOf(selectedRow) + 1]
         qty_ref.focus()
     }
-    function prev() {
+    function prev(e) {
         selectedRow = rows[rows.indexOf(selectedRow) - 1]
     }
     function handleKeyPress(e) {
@@ -52,7 +52,7 @@
         position: fixed;
         top:0;
         left:0;
-        height:50vh;
+        height:45vh;
         width:100vw;
         display: flex;
         flex-direction: column;
@@ -63,15 +63,19 @@
     hidden {
         display: none;
     }
-    prev {
-        position: fixed;
-        top: 32px;;
-        left:8px;
+    horzflex {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width:100%;
     }
-    next {
-        position: fixed;
-        top: 32px;;
-        right: 8px;
+    vertflex {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-center;
+        width:100%;
     }
 </style>
 
@@ -109,33 +113,35 @@
                         style="width: 100%;"
                         bind:value={selectedRow.notes}
                     />
-                    <Textfield
-                        bind:this={qty_ref}
-                        label="Quantity"
-                        input$type="number"
-                        input$step=1
-                        input$min=0
-                        input$max=999
-                        input$style='font-size:4ch; text-align:center;'
-                        input$id="qty"
-                        input$name="qty"
-                        bind:value={selectedRow.qty}
-                        on:keypress={handleKeyPress}
-                    />
-                    <Textfield
-                        label="Unit"
-                        input$style='text-align:center;'
-                        input$id="unit"
-                        input$name="unit"
-                        bind:value={selectedRow.unit}
-                    />
+                    <horzflex>
+                        <IconButton touch class="material-icons" on:click={prev} style="">arrow_back_ios</IconButton>
+                        <vertflex>
+                            <Textfield
+                                bind:this={qty_ref}
+                                label="Quantity"
+                                input$type="number"
+                                style="width: 50%;"
+                                input$step=1
+                                input$min=0
+                                input$max=999
+                                input$style='font-size:4ch; text-align:center; line-height: 4ch;'
+                                input$id="qty"
+                                input$name="qty"
+                                bind:value={selectedRow.qty}
+                                on:keypress={handleKeyPress}
+                            />
+                            <Textfield
+                                label="Unit"
+                                input$style='text-align:center;'
+                                style="width: 50%;"
+                                input$id="unit"
+                                input$name="unit"
+                                bind:value={selectedRow.unit}
+                            />
+                            </vertflex>
+                        <IconButton touch class="material-icons" on:click={next}>arrow_forward_ios</IconButton>
+                    </horzflex>
                 </Content>
             </main>
-        <prev>
-            <IconButton touch class="material-icons" on:click={prev} style="">arrow_back_ios</IconButton>
-        </prev>
-        <next>
-            <IconButton touch class="material-icons" on:click={next}>arrow_forward_ios</IconButton>
-        </next>
     {/if}
 </Dialog>
