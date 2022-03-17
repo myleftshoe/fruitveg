@@ -93,7 +93,7 @@
         display:flex;
     }
     hr {
-        width:100%; 
+        width:100%;
         height: 1px;
         color:#fff1; 
     }
