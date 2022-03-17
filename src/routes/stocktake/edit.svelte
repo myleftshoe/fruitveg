@@ -48,11 +48,6 @@
 
     let qty_ref
 
-    $: if (qty_ref) {
-        console.log('focus', qty_ref.focus)
-        qty_ref.focus()
-    }
-
     $: open = Boolean(selectedRow)
 </script>
 
@@ -67,7 +62,6 @@
         flex-direction: column;
         align-items: center;
         justify-content:flex-start;
-        transition: background-color 0.3s ease;
     }
     hidden {
         display: none;
