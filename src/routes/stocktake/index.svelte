@@ -9,21 +9,21 @@
 
     const itemStyle = (active) => ({ 
         square: true,
-        style: `padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7};`,
+        style: `padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7}; `,
         color: active ? 'primary' : 'secondary',
     })
     const metaStyle = { 
-        style : 'display:flex; flex-direction: column; align-items: flex-end;'
+        style: 'text-align: center;',
     }
 </script>
 
 <script>
-    import EditDialog from '$lib/edit.svelte'
+    import EditDialog from './edit.svelte'
     export let products = []
     let selectedRow
     $: value = value?.toUpperCase?.() ?? ''
     $: headers = getheaders(products)
-    $: rows = fuzzy(products, value, ['label4', 'label5', 'Description', 'id'])
+    $: rows = fuzzy(products, value, ['Description', 'id'])
     $: { 
         const ItemCodeHeader = headers.find(({key}) => key === 'ItemCode')
         ItemCodeHeader.empty = true
@@ -38,16 +38,15 @@
     <List threeLine nonInteractive>
         {#each rows as row}
             <Paper  {...itemStyle(row.Active)}>
-                <Item on:SMUI:action={() => (selectedRow = row)} >
+                <Item on:SMUI:action={() => (selectedRow = row)}>
                     <Text>
                         <PrimaryText>{row.Description}</PrimaryText>
-                        <SecondaryText>{row.label5 || ''}</SecondaryText>
-                        <SecondaryText>{row.label4 || ''}</SecondaryText>
+                        <SecondaryText>This is a test</SecondaryText>
                     </Text>
                     <Meta {...metaStyle}>
-                        <strong>{row.id}</strong>
-                        <h4>$ {row.UnitPrice}</h4>
-                        {row.label10 || ''}
+                        <!-- <strong>{row.id}</strong> -->
+                        <h4>{row.qty}</h4>
+                        {row.unit || 'boxes'}
                     </Meta>
                 </Item>
             </Paper>
