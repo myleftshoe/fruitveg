@@ -20,7 +20,12 @@
 
     function handleClose() {
         console.log('handleClose')
-        selectedRow.qty = Number(selectedRow.qty) || '' 
+        const { unit } = selectedRow
+        console.log(qty_ref)
+        const qty = qty_ref.value
+        selectedRow.qty = parseInt(qty) || ''
+        const _unit = qty.split(' ')[1] || ''
+        selectedRow.unit = _unit.trim() || unit
         selectedRow = null
         dispatch('close')
 
@@ -39,16 +44,17 @@
         qty_ref.select()
     }
     function handleKeyPress(e) {
-        if (e.target.value.length > 2) {
-            e.target.value = '0'
-            e.preventDefault()
-        }
-
+        // if (e.target.value.length > 2) {
+        //     e.target.value = '0'
+        //     e.preventDefault()
+        // }
     }
 
     let qty_ref
 
     $: open = Boolean(selectedRow)
+    $: isFirst = selectedRow === rows[0]
+    $: isLast = selectedRow === rows.slice(-1)[0]
 </script>
 
 <style>
@@ -102,7 +108,7 @@
         font-size: 2ch;
         width: 100%; 
         border:none;
-        background-color: #7772;
+        background-color: #7770;
         /* border-radius: 16px; */
         padding: 16px;
         color:#fffd;
@@ -139,16 +145,13 @@
                     bind:value={selectedRow.Description} />
             </hidden>
             <horzflex>
-                <IconButton disabled={selectedRow === rows[0]} touch class="material-icons" on:click={prev} tabindex="-1">arrow_back_ios</IconButton>
+                <IconButton disabled={isFirst} touch class="material-icons" on:click={prev} tabindex="-1">arrow_back_ios</IconButton>
                 <vertflex>
                     <input
                         bind:this={qty_ref}
                         label="Quantity"
                         type="tel"
-                        style="width: 50%; text-align:center;"
-                        step=1
-                        min=0
-                        max=999
+                        style="width: 80%; text-align:center;"
                         id="qty"
                         name="qty"
                         placeholder="0"
@@ -165,7 +168,7 @@
                         bind:value={selectedRow.unit}
                     /> -->
                 </vertflex>
-                <IconButton disabled={selectedRow === rows.slice(-1)[0]} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
+                <IconButton disabled={isLast} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
             </horzflex>
             <units>
                 {#each ['boxes', 'tubs', 'crates', 'nets', 'sacks'] as unit}
@@ -176,12 +179,13 @@
                     </Button>
                 {/each}
             </units>
-            <hr/>
             <textarea 
                 id="notes"
                 name="notes"
+                rows=1
                 placeholder="Notes"
                 bind:value={selectedRow.notes}
+                style="text-align: {selectedRow.notes.length ? 'left' : 'center'};"
             />
         </Content>
     </main>
