@@ -121,7 +121,7 @@
                     <Textfield
                         bind:this={qty_ref}
                         label="Quantity"
-                        input$type="number"
+                        input$type="tel"
                         style="width: 50%;"
                         input$step=1
                         input$min=0
