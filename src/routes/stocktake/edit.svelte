@@ -151,7 +151,7 @@
                         bind:this={qty_ref}
                         label="Quantity"
                         type="number"
-                        style="width: 80%; text-align:center;"
+                        style="width: 80%; text-align:center; color: #777;"
                         id="qty"
                         name="qty"
                         placeholder="0"
