@@ -166,6 +166,11 @@
                         placeholder="0"
                         bind:value={selectedRow.quantity}
                         on:focus={(e) => {e.target.select()}}
+                        on:keypress={(e) => {
+                            console.log(e.key)
+                            if (e.key === ' ')
+                                qty_ref.pattern = ''
+                        }}
                     />
                     <!-- <Textfield
                         label="Unit"
