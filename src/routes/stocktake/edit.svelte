@@ -83,7 +83,7 @@
         position: fixed;
         top:0;
         left:0;
-        height:50vh;
+        height: 75vh;
         width:100vw;
         display: flex;
         flex-direction: column;
@@ -132,7 +132,8 @@
         padding-right: 16px;
     }
     textarea {
-        color: #777; 
+        color: #f77; 
+        width:50vw
     }
     #qty {
         font-size: 5ch;
@@ -245,17 +246,18 @@
                 bind:value={selectedRow.notes}
                 id="notes"
                 name="notes"
-                rows=2
+                rows=6
                 placeholder="NOTES"
-                style="text-align: {selectedRow.notes.length ? 'left' : 'center'};"
+                style="width: 84%; text-align: {selectedRow.notes.length ? 'left' : 'center'};"
                 on:focus={(e) => {
                     lastFocusedElement = e.target
                 }}
 
             />
-            <units>
-            </units>
         </Content>
+        <Actions>
+            <Button>close</Button>
+        </Actions>
     </main>
 {/if}
 </Dialog>
