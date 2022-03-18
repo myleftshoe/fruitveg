@@ -1,2 +1,7 @@
-1 APPLES - GALA
-1 APPLES - GRANNY SMITH
+ 22 5           ALL PUMPKINS
+ 22 crates      APPLE BAG - 2KG
+                gfg
+ 22 tubs        APPLES - DISCOVERY
+  2 trolleys    APPLES - GALA 
+ 12 boxes       APPLES - GRANNY SMITH
+  2             APPLES - SPARTAN
