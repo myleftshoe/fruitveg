@@ -18,7 +18,8 @@
     export let selectedRow = null
     export let rows = []
 
-    const buttons = ['boxes', 'tubs', 'crates', 'nets', 'sacks']
+    const qtyButtons = ['boxes', 'tubs', 'crates', 'nets', 'sacks', 'bin', 'shelf']
+    const unitButtons = [0x00BC, 0x00BD, 0x00BE, 0x2153, 0x2154].map(charCode => String.fromCharCode(charCode))
 
     function handleClose() {
         console.log('handleClose')
@@ -47,10 +48,16 @@
         // }
     }
 
-    const handleButtonClick = (text) => (e) => {
+    const handleUnitButtonClick = (text) => (e) => {
         selectedRow.unit = text
         unit_ref.focus()
         unit_ref.select()
+    }
+
+    const handleQtyButtonClick = (text) => (e) => {
+        selectedRow.qty = text
+        qty_ref.focus()
+        qty_ref.select()
     }
 
     let qty_ref, unit_ref
@@ -113,7 +120,7 @@
         font-size: 5ch;
         text-align: center;
         color: #777; 
-        width: 2.5ch;
+        width: 100%;
     }
     #unit {
         font-size: 16px;
@@ -197,8 +204,17 @@
                 <IconButton disabled={isLast} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
             </horzflex>
             <units>
-                {#each buttons as text}
-                    <Button color="secondary" on:click={handleButtonClick(text)} >
+                <horzflex>
+                {#each unitButtons as text}
+                    <Button color="secondary" on:click={handleQtyButtonClick(text)} >
+                        {text}
+                    </Button>
+                {/each}
+                </horzflex>
+            </units>
+            <units>
+                {#each qtyButtons as text}
+                    <Button color="secondary" on:click={handleUnitButtonClick(text)} >
                         {text}
                     </Button>
                 {/each}
@@ -211,6 +227,8 @@
                 bind:value={selectedRow.notes}
                 style="color: #777; text-align: {selectedRow.notes.length ? 'left' : 'center'};"
             />
+            <units>
+            </units>
         </Content>
     </main>
 {/if}
