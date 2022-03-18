@@ -39,7 +39,7 @@
     }
 
     async function copyToClipboard() {
-        text = rows
+        text = products
             .filter(({qty, notes}) => Boolean(qty || notes))
             .map(({qty = '', unit = '', Description = '', notes = '' }) => `[${qty} ${unit}] ${Description}${notes && `\n${notes}`}`).join('\n').replaceAll('  ', ' ')
         clipboard.copy(text)
