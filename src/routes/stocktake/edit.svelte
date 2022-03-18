@@ -24,6 +24,7 @@
     function handleClose() {
         console.log('handleClose')
         selectedRow = null
+        lastFocusedElement = null
         dispatch('close')
 
     }
@@ -50,17 +51,27 @@
 
     const handleUnitButtonClick = (text) => (e) => {
         selectedRow.unit = text
-        unit_ref.focus()
-        unit_ref.select()
+        if (lastFocusedElement === notes_ref) {
+            selectedRow.notes = `${selectedRow.notes.trim()} ${text}`
+            notes_ref.focus()
+            return
+        }
+        qty_ref.focus()
     }
 
     const handleQtyButtonClick = (text) => (e) => {
         selectedRow.qty = text
+        if (lastFocusedElement === notes_ref) {
+            selectedRow.notes = `${selectedRow.notes.trim()} ${text}`
+            notes_ref.focus()
+            return
+        }
         qty_ref.focus()
-        qty_ref.select()
+        // qty_ref.select()
     }
 
-    let qty_ref, unit_ref
+    let qty_ref, unit_ref, notes_ref
+    let lastFocusedElement
 
     $: open = Boolean(selectedRow)
     $: isFirst = selectedRow === rows[0]
@@ -187,7 +198,10 @@
                         name="qty"
                         placeholder="0"
                         bind:value={selectedRow.qty}
-                        on:focus={(e) => {e.target.select()}}
+                        on:focus={(e) => {
+                            e.target.select()
+                            lastFocusedElement = e.target
+                        }}
                         on:keypress={handleKeyPress}
                     />
                     <input
@@ -201,8 +215,10 @@
                         maxlength="20" 
                         pattern="[a-z]*"
                         onkeydown="return /[a-z]/i.test(event.key)"
-                        onfocus="event.target.select()"
-                        style="color: #777;"
+                        on:focus={(e) => {
+                            e.target.select()
+                            lastFocusedElement = e.target
+                        }}
                     />
                 </vertflex>
                 <IconButton disabled={isLast} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
@@ -222,12 +238,17 @@
                 {/each}
             </units>
             <textarea 
+                bind:this={notes_ref}
+                bind:value={selectedRow.notes}
                 id="notes"
                 name="notes"
                 rows=1
                 placeholder="NOTES"
-                bind:value={selectedRow.notes}
                 style="color: #777; text-align: {selectedRow.notes.length ? 'left' : 'center'};"
+                on:focus={(e) => {
+                    lastFocusedElement = e.target
+                }}
+
             />
             <units>
             </units>

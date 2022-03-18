@@ -67,7 +67,7 @@
         ItemCodeHeader.empty = true
         ItemCodeHeader.sort = false
     }
-    $: console.table(rows)
+    // $: console.table(rows)
 </script>
 <TopAppBar>
     <Textfield bind:value variant="filled" square style="border-radius: 0; display:flex; align-items: center;" on:focus={() => showEventGuard = true}>
