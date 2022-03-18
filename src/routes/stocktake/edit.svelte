@@ -49,6 +49,8 @@
 
     const handleButtonClick = (text) => (e) => {
         selectedRow.unit = text
+        unit_ref.focus()
+        unit_ref.select()
     }
 
     let qty_ref, unit_ref
