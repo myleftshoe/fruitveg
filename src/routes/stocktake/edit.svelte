@@ -18,6 +18,8 @@
     export let selectedRow = null
     export let rows = []
 
+    const buttons = ['boxes', 'tubs', 'crates', 'nets', 'sacks']
+
     function handleClose() {
         console.log('handleClose')
         const { unit } = selectedRow
@@ -48,6 +50,12 @@
         //     e.target.value = '0'
         //     e.preventDefault()
         // }
+    }
+
+    const handleButtonClick = (text) => (e) => {
+        const { quantity } = selectedRow
+        const qty = quantity.split(' ')[0] || ''
+        selectedRow.quantity = qty + ' ' + text
     }
 
     let qty_ref
@@ -101,7 +109,7 @@
         height: 1px;
         color:#fff1; 
     }
-    #qty {
+    #quantity {
         font-size: 5ch;
     }
     #notes {
@@ -150,13 +158,12 @@
                     <input
                         bind:this={qty_ref}
                         label="Quantity"
-                        type="number"
+                        type="text"
                         style="width: 80%; text-align:center; color: #777;"
-                        id="qty"
-                        name="qty"
+                        id="quantity"
+                        name="quantity"
                         placeholder="0"
-                        bind:value={selectedRow.qty}
-                        on:keypress={handleKeyPress}
+                        bind:value={selectedRow.quantity}
                         on:focus={(e) => {e.target.select()}}
                     />
                     <!-- <Textfield
@@ -171,11 +178,10 @@
                 <IconButton disabled={isLast} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
             </horzflex>
             <units>
-                {#each ['boxes', 'tubs', 'crates', 'nets', 'sacks'] as unit}
+                {#each buttons as text}
                     <Button 
-                        color={selectedRow.unit === unit ? "primary" : "secondary"} 
-                        on:click={() => selectedRow.unit = unit} >
-                        {unit}
+                        on:click={handleButtonClick(text)} >
+                        {text}
                     </Button>
                 {/each}
             </units>
@@ -185,7 +191,7 @@
                 rows=1
                 placeholder="Notes"
                 bind:value={selectedRow.notes}
-                style="text-align: {selectedRow.notes.length ? 'left' : 'center'};"
+                style="color: #777; text-align: {selectedRow.notes.length ? 'left' : 'center'};"
             />
         </Content>
     </main>

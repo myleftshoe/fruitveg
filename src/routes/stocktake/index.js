@@ -1,6 +1,6 @@
 import atria from '../../datasources/atria.js'
 
-const mapper = ({PLUCode, ItemCode, Description}) => ({id: PLUCode, ItemCode, Description, qty: '', unit: '', notes:'' })
+const mapper = ({PLUCode, ItemCode, Description}) => ({id: PLUCode, ItemCode, Description, quantity: '', notes:'' })
 const filter = `(MainGroupName%20eq%20%27FRUIT%20%26%20VEG%27)%20and%20(Active%20eq%20true)`
 
 export const get = async (event) => {
