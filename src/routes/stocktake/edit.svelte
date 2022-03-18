@@ -40,8 +40,9 @@
         qty_ref.select()
     }
     function handleKeyPress(e) {
-        // if (e.target.value.length > 2) {
-        //     e.target.value = '0'
+        // if (e.target.value.length === 2) {
+        //     unit_ref.focus()
+        //     unit_ref.select()
         //     e.preventDefault()
         // }
     }
@@ -50,7 +51,7 @@
         selectedRow.unit = text
     }
 
-    let qty_ref
+    let qty_ref, unit_ref
 
     $: open = Boolean(selectedRow)
     $: isFirst = selectedRow === rows[0]
@@ -68,6 +69,7 @@
         flex-direction: column;
         align-items: center;
         justify-content:flex-start;
+        gap: 0ch;
     }
     hidden {
         display: none;
@@ -86,7 +88,7 @@
         align-items: center;
         justify-content: flex-center;
         width:100%;
-        gap: 0ch;
+        gap: 1ch;
     }
     input {
         border: none;
@@ -112,8 +114,11 @@
         width: 2.5ch;
     }
     #unit {
-        font-size: 2ch;
+        font-size: 16px;
+        font-variant: small-caps;
         text-align: center;
+        /* text-transform: uppercase; */
+        font-family: arial;
     }
     #notes {
         font-size: 2ch;
@@ -155,45 +160,40 @@
                     name="Description"
                     bind:value={selectedRow.Description} />
             </hidden>
-            <vertflex>
-                <input
-                    bind:this={qty_ref}
-                    type="text"
-                    maxlength="2" 
-                    size="2"
-                    pattern="[0-9]*"
-                    inputmode=numeric
-                    id="qty"
-                    name="qty"
-                    placeholder="0"
-                    bind:value={selectedRow.qty}
-                    on:focus={(e) => {e.target.select()}}
-                    on:keypress={(e) => {
-                        console.log(e.key)
-                        if (e.target.value.length)
-                            qty_ref.pattern = ''
-                    }}
-                />
-                <input
-                    type="text"
-                    maxlength="20" 
-                    size="20"
-                    pattern="[a-z]*"
-                    style="color: #777;"
-                    id="unit"
-                    name="unit"
-                    placeholder="other"
-                    bind:value={selectedRow.unit}
-                />
-                <!-- <Textfield
-                    label="Unit"
-                    input$style='text-align:center;'
-                    style="width: 50%;"
-                    input$id="unit"
-                    input$name="unit"
-                    bind:value={selectedRow.unit}
-                /> -->
-            </vertflex>
+            <horzflex>
+                <IconButton disabled={isFirst} touch class="material-icons" on:click={prev} tabindex="-1">arrow_back_ios</IconButton>
+                <vertflex>
+                    <input
+                        bind:this={qty_ref}
+                        type="text"
+                        maxlength="2" 
+                        size="2"
+                        pattern="[0-9]*"
+                        inputmode=numeric
+                        id="qty"
+                        name="qty"
+                        placeholder="0"
+                        bind:value={selectedRow.qty}
+                        on:focus={(e) => {e.target.select()}}
+                        on:keypress={handleKeyPress}
+                    />
+                    <input
+                        bind:this={unit_ref}
+                        bind:value={selectedRow.unit}
+                        id="unit"
+                        name="unit"
+                        type="text"
+                        placeholder="[unit]"
+                        size="20"
+                        maxlength="20" 
+                        pattern="[a-z]*"
+                        onkeydown="return /[a-z]/i.test(event.key)"
+                        onfocus="event.target.select()"
+                        style="color: #777;"
+                    />
+                </vertflex>
+                <IconButton disabled={isLast} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
+            </horzflex>
             <units>
                 {#each buttons as text}
                     <Button color="secondary" on:click={handleButtonClick(text)} >
@@ -205,17 +205,11 @@
                 id="notes"
                 name="notes"
                 rows=1
-                placeholder="Notes"
+                placeholder="NOTES"
                 bind:value={selectedRow.notes}
                 style="color: #777; text-align: {selectedRow.notes.length ? 'left' : 'center'};"
             />
         </Content>
-        <Actions>
-            <actions>
-                <IconButton disabled={isFirst} touch class="material-icons" on:click={prev} tabindex="-1">arrow_back_ios</IconButton>
-                <IconButton disabled={isLast} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
-            </actions>
-        </Actions>
     </main>
 {/if}
 </Dialog>
