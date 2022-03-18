@@ -22,12 +22,6 @@
 
     function handleClose() {
         console.log('handleClose')
-        const { unit } = selectedRow
-        console.log(qty_ref)
-        const qty = qty_ref.value
-        selectedRow.qty = parseInt(qty) || ''
-        const _unit = qty.split(' ')[1] || ''
-        selectedRow.unit = _unit.trim() || unit
         selectedRow = null
         dispatch('close')
 
@@ -53,9 +47,7 @@
     }
 
     const handleButtonClick = (text) => (e) => {
-        const { quantity } = selectedRow
-        const qty = quantity.split(' ')[0] || ''
-        selectedRow.quantity = qty + ' ' + text
+        selectedRow.unit = text
     }
 
     let qty_ref
@@ -82,10 +74,11 @@
     }
     horzflex {
         display: flex;
+        flex-basis: 100%;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        width:100%;
+        gap: 2ch;
     }
     vertflex {
         display: flex;
@@ -93,24 +86,34 @@
         align-items: center;
         justify-content: flex-center;
         width:100%;
+        gap: 0ch;
     }
     input {
         border: none;
         outline:none;
         background-color: transparent;
-        color: white;
+        color: #777;
     }
     units {
         transform: scale(.8);
         display:flex;
     }
-    hr {
-        width:100%;
-        height: 1px;
-        color:#fff1; 
+    actions {
+        display: flex;
+        width: 100vw;
+        justify-content: space-between;
+        padding-left: 16px;
+        padding-right: 16px;
     }
-    #quantity {
+    #qty {
         font-size: 5ch;
+        text-align: center;
+        color: #777; 
+        width: 2.5ch;
+    }
+    #unit {
+        font-size: 2ch;
+        text-align: center;
     }
     #notes {
         font-size: 2ch;
@@ -152,41 +155,48 @@
                     name="Description"
                     bind:value={selectedRow.Description} />
             </hidden>
-            <horzflex>
-                <IconButton disabled={isFirst} touch class="material-icons" on:click={prev} tabindex="-1">arrow_back_ios</IconButton>
-                <vertflex>
-                    <input
-                        bind:this={qty_ref}
-                        label="Quantity"
-                        type="text"
-                        pattern="\d*"
-                        style="width: 80%; text-align:center; color: #777;"
-                        id="quantity"
-                        name="quantity"
-                        placeholder="0"
-                        bind:value={selectedRow.quantity}
-                        on:focus={(e) => {e.target.select()}}
-                        on:keypress={(e) => {
-                            console.log(e.key)
-                            if (e.target.value.length)
-                                qty_ref.pattern = ''
-                        }}
-                    />
-                    <!-- <Textfield
-                        label="Unit"
-                        input$style='text-align:center;'
-                        style="width: 50%;"
-                        input$id="unit"
-                        input$name="unit"
-                        bind:value={selectedRow.unit}
-                    /> -->
-                </vertflex>
-                <IconButton disabled={isLast} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
-            </horzflex>
+            <vertflex>
+                <input
+                    bind:this={qty_ref}
+                    type="text"
+                    maxlength="2" 
+                    size="2"
+                    pattern="[0-9]*"
+                    inputmode=numeric
+                    id="qty"
+                    name="qty"
+                    placeholder="0"
+                    bind:value={selectedRow.qty}
+                    on:focus={(e) => {e.target.select()}}
+                    on:keypress={(e) => {
+                        console.log(e.key)
+                        if (e.target.value.length)
+                            qty_ref.pattern = ''
+                    }}
+                />
+                <input
+                    type="text"
+                    maxlength="20" 
+                    size="20"
+                    pattern="[a-z]*"
+                    style="color: #777;"
+                    id="unit"
+                    name="unit"
+                    placeholder="other"
+                    bind:value={selectedRow.unit}
+                />
+                <!-- <Textfield
+                    label="Unit"
+                    input$style='text-align:center;'
+                    style="width: 50%;"
+                    input$id="unit"
+                    input$name="unit"
+                    bind:value={selectedRow.unit}
+                /> -->
+            </vertflex>
             <units>
                 {#each buttons as text}
-                    <Button 
-                        on:click={handleButtonClick(text)} >
+                    <Button color="secondary" on:click={handleButtonClick(text)} >
                         {text}
                     </Button>
                 {/each}
@@ -200,6 +210,12 @@
                 style="color: #777; text-align: {selectedRow.notes.length ? 'left' : 'center'};"
             />
         </Content>
+        <Actions>
+            <actions>
+                <IconButton disabled={isFirst} touch class="material-icons" on:click={prev} tabindex="-1">arrow_back_ios</IconButton>
+                <IconButton disabled={isLast} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
+            </actions>
+        </Actions>
     </main>
 {/if}
 </Dialog>

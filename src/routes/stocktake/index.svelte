@@ -40,7 +40,7 @@
     }
 
     async function copyToClipboard() {
-        text = rows.filter(({quantity, notes}) => Boolean(quantity || notes)).map(({quantity, Description, notes }) => `${`${quantity}`.trim() || '-'} ${Description}${notes && `\n  (${notes})`}`.trim()).join("\n")
+        text = rows.filter(({qty, notes}) => Boolean(qty || notes)).map(({qty, Description, notes }) => `${`${qty}`.trim() || '-'} ${Description}${notes && `\n  (${notes})`}`.trim()).join("\n")
         clipboard.copy(text)
         copied = true
         setTimeout(() => copied = false, 1250)
@@ -76,15 +76,15 @@
 <main>
     <List threeLine nonInteractive>
         {#each rows as row}
-            <Paper  {...itemStyle(row.quantity || row.notes)}>
+            <Paper  {...itemStyle(row.qty || row.notes)}>
                 <Item on:SMUI:action={() => (selectedRow = row)}>
                     <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
                         <PrimaryText>{row.Description}</PrimaryText>
                         <SecondaryText>{row.notes}</SecondaryText>
                     </div>
                     <Meta>
-                            <PrimaryText style="text-align: right; font-size: 24px; font-weight: bold;">{row.quantity.split(' ')[0] || ''}</PrimaryText>
-                            <SecondaryText>{row.quantity.substring(row.quantity.indexOf(' ') + 1) || ''}</SecondaryText>
+                        <PrimaryText style="text-align: right; font-size: 24px; font-weight: bold;">{row.qty || ''}</PrimaryText>
+                        <SecondaryText>{row.unit || ''}</SecondaryText>
                     </Meta>
                 </Item>
             </Paper>
