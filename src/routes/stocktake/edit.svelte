@@ -131,6 +131,9 @@
         padding-left: 16px;
         padding-right: 16px;
     }
+    textarea {
+        color: #777; 
+    }
     #qty {
         font-size: 5ch;
         text-align: center;
@@ -145,7 +148,7 @@
         font-family: arial;
     }
     #notes {
-        font-size: 2ch;
+        font-size: 16px;
         width: 100%; 
         border:none;
         background-color: #7770;
@@ -242,9 +245,9 @@
                 bind:value={selectedRow.notes}
                 id="notes"
                 name="notes"
-                rows=1
+                rows=2
                 placeholder="NOTES"
-                style="color: #777; text-align: {selectedRow.notes.length ? 'left' : 'center'};"
+                style="text-align: {selectedRow.notes.length ? 'left' : 'center'};"
                 on:focus={(e) => {
                     lastFocusedElement = e.target
                 }}
