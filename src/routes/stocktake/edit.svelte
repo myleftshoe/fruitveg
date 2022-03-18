@@ -159,6 +159,7 @@
                         bind:this={qty_ref}
                         label="Quantity"
                         type="text"
+                        pattern="\d*"
                         style="width: 80%; text-align:center; color: #777;"
                         id="quantity"
                         name="quantity"
