@@ -168,7 +168,7 @@
                         on:focus={(e) => {e.target.select()}}
                         on:keypress={(e) => {
                             console.log(e.key)
-                            if (e.key === ' ')
+                            if (e.target.value.length)
                                 qty_ref.pattern = ''
                         }}
                     />
