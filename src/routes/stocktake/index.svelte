@@ -8,7 +8,6 @@
     import Fab, { Icon } from '@smui/fab';
     import Button from '@smui/button'
     import Textfield from '@smui/textfield'
-    import { Search } from 'carbon-components-svelte'
     import fuzzy from '../../helpers/fuzzy.js'
     import getheaders from '../../helpers/headers.js'
     import clipboard from '../../helpers/clipboard.js'
