@@ -19,7 +19,7 @@
     export let rows = []
 
     const qtyButtons = [0x00BC, 0x00BD, 0x00BE, 0x2153, 0x2154].map(charCode => String.fromCharCode(charCode))
-    const unitButtons = ['boxes', 'tubs', 'crates', 'nets', 'sacks', 'bin']
+    const unitButtons = ['boxes', 'tubs', 'crates', 'trays', 'nets', 'sacks', 'bin']
 
     function handleClose() {
         console.log('handleClose')
@@ -117,8 +117,9 @@
         color: #777;
     }
     units {
-        transform: scale(.8);
+        transform: scale(.70);
         display:flex;
+        flex-wrap: nowrap;
     }
     qtys {
         /* transform: scale(.8); */
@@ -140,7 +141,7 @@
     }
     #notes {
         font-size: 16px;
-        width: 84%; 
+        width: 75%; 
         border: 1px solid #7777 ;
         background-color: #7770;
         /* border-radius: 16px; */
