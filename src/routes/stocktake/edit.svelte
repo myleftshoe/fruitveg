@@ -159,7 +159,7 @@
     }
 </style>
 
-<Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose} style="height: 50vh; width: 100vw;">
+<Dialog fullscreen bind:open on:SMUIDialog:closed={handleClose} style="height: 100vh; width: 100vw;">
 {#if selectedRow}
     <main 
         _style="background-color:var({parseInt(selectedRow.qty) >= 0 || selectedRow.notes ? '--mdc-theme-primary' : ''});"
