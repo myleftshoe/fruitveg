@@ -124,13 +124,6 @@
         /* transform: scale(.8); */
         display:flex;
     }
-    actions {
-        display: flex;
-        width: 100vw;
-        justify-content: space-between;
-        padding-left: 16px;
-        padding-right: 16px;
-    }
     #qty {
         font-size: 5ch;
         text-align: center;
