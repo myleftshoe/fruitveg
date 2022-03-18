@@ -42,7 +42,7 @@
     async function copyToClipboard() {
         text = rows
             .filter(({qty, notes}) => Boolean(qty || notes))
-            .map(({qty = '', unit = '', Description = '', notes = '' }) => `${qty.trim().padStart(2)} ${unit.trim()} ${Description.trim()}${notes && `\n${notes}`}`).join('\n').replace('  ', ' ')
+            .map(({qty = '', unit = '', Description = '', notes = '' }) => `${qty.trim()} ${unit.trim()} : ${Description.trim()}${notes && `\n${notes}`}`).join('\n').replace('  ', ' ')
         clipboard.copy(text)
         copied = true
         setTimeout(() => copied = false, 1250)

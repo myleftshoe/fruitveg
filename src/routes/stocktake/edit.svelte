@@ -18,8 +18,8 @@
     export let selectedRow = null
     export let rows = []
 
-    const qtyButtons = ['boxes', 'tubs', 'crates', 'nets', 'sacks', 'bin', 'shelf']
-    const unitButtons = [0x00BC, 0x00BD, 0x00BE, 0x2153, 0x2154].map(charCode => String.fromCharCode(charCode))
+    const qtyButtons = [0x00BC, 0x00BD, 0x00BE, 0x2153, 0x2154].map(charCode => String.fromCharCode(charCode))
+    const unitButtons = ['boxes', 'tubs', 'crates', 'nets', 'sacks', 'bin']
 
     function handleClose() {
         console.log('handleClose')
@@ -107,6 +107,10 @@
     }
     units {
         transform: scale(.8);
+        display:flex;
+    }
+    qtys {
+        /* transform: scale(.8); */
         display:flex;
     }
     actions {
@@ -203,17 +207,15 @@
                 </vertflex>
                 <IconButton disabled={isLast} touch class="material-icons" on:click={next} tabindex="-1">arrow_forward_ios</IconButton>
             </horzflex>
-            <units>
-                <horzflex>
-                {#each unitButtons as text}
+            <qtys>
+                {#each qtyButtons as text}
                     <Button color="secondary" on:click={handleQtyButtonClick(text)} >
                         {text}
                     </Button>
                 {/each}
-                </horzflex>
-            </units>
+            </qtys>
             <units>
-                {#each qtyButtons as text}
+                {#each unitButtons as text}
                     <Button color="secondary" on:click={handleUnitButtonClick(text)} >
                         {text}
                     </Button>
