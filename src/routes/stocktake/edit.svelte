@@ -83,7 +83,7 @@
         position: fixed;
         top:0;
         left:0;
-        height: 75vh;
+        height: 80vh;
         width:100vw;
         display: flex;
         flex-direction: column;
@@ -106,7 +106,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-center;
+        justify-content: center;
         width:100%;
         gap: 1ch;
     }
@@ -117,9 +117,12 @@
         color: #777;
     }
     units {
-        transform: scale(.70);
+        transform: scale(.8);
         display:flex;
-        flex-wrap: nowrap;
+        width: 100vw;
+        flex-wrap: wrap;
+        gap: 1ch;
+        justify-content: center;
     }
     qtys {
         /* transform: scale(.8); */
@@ -141,7 +144,7 @@
     }
     #notes {
         font-size: 16px;
-        width: 75%; 
+        width: 90%; 
         border: 1px solid #7777 ;
         background-color: #7770;
         /* border-radius: 16px; */
@@ -165,7 +168,7 @@
                 close
             </IconButton>
         </div> -->
-        <Content style="display:flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 3%;">
+        <Content style="display:flex; flex-direction: column; align-items: center; justify-content: flex-start; ">
             <Title style={parseInt(selectedRow.qty) >= 0 || selectedRow.notes ? 'color: var(--mdc-theme-primary)' : ''}>{selectedRow.Description}</Title>
             <hidden>
                 <input
