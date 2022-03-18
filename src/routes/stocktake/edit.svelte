@@ -131,10 +131,6 @@
         padding-left: 16px;
         padding-right: 16px;
     }
-    textarea {
-        color: #f77; 
-        width:50vw
-    }
     #qty {
         font-size: 5ch;
         text-align: center;
@@ -147,15 +143,16 @@
         text-align: center;
         /* text-transform: uppercase; */
         font-family: arial;
+        color:var(--mdc-theme-primary)
     }
     #notes {
         font-size: 16px;
-        width: 100%; 
-        border:none;
+        width: 84%; 
+        border: 1px solid #7777 ;
         background-color: #7770;
         /* border-radius: 16px; */
         padding: 16px;
-        color:#fffd;
+        color:#777;
         font-family: arial; 
     }
 </style>
@@ -248,7 +245,7 @@
                 name="notes"
                 rows=6
                 placeholder="NOTES"
-                style="width: 84%; text-align: {selectedRow.notes.length ? 'left' : 'center'};"
+                style="text-align: {selectedRow.notes.length ? 'left' : 'center'};"
                 on:focus={(e) => {
                     lastFocusedElement = e.target
                 }}
