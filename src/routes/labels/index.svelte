@@ -70,6 +70,11 @@
     }
     main {
         touch-action: none;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #000f;
+        font-family: arial;
+        font-weight: bold;
     }
 </style>
 
@@ -84,7 +89,7 @@
             on:drop={event => drop(event, basketIndex)}
             ondragover="return false">
             {#each basket.items as item, itemIndex (item)}
-                <div class="item" animate:flip>
+                <div class="item" animate:flip="{{duration: 100}}">
                     <li
                         draggable={true}
                         on:dragstart={event => dragStart(event, basketIndex, itemIndex)}>
