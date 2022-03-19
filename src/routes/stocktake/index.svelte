@@ -39,9 +39,12 @@
     }
 
     async function copyToClipboard() {
-        text = products
+        text = "```\n" + products
             .filter(({qty, notes}) => Boolean(qty || notes))
-            .map(({qty = '', unit = '', Description = '', notes = '' }) => "```" + `[${(qty + ' ' + unit).trim()}] ${Description.toLowerCase()}${notes && `\n${notes}`}`).join('\n').replaceAll('  ', ' ') + "```"
+            .map(({qty = '', unit = '', Description = '', notes = '' }) => `${qty.padStart(4)} ${unit.padEnd(8)} ${Description.toLowerCase()}${notes && '\n' + notes.split('\n').map(line => ''.padStart(14) + line + `\n`).join('')}`)
+            .join('\n')
+            // .replaceAll('  ', ' ')
+            + "\n```" 
         clipboard.copy(text)
         copied = true
         setTimeout(() => copied = false, 1250)

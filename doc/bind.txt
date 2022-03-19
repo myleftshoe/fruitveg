@@ -1,0 +1,22 @@
+Bind from label page
+url: https://esl.minew.com:9090/V1/label/save
+method: 'POST',
+body = {
+    "mac": "ac233fd0b591",
+    "only": "1620",
+    "storeId": "123",
+    "templets": [
+        {
+            "demoId": "ae7ed1bb2d724c07a0076bef6d075120",
+            "demoName": "Barcode Product",
+            "templateType": "1",
+            "effect": true,
+            "mac": "ac233fd0b591"
+        }
+    ]
+} 
+
+
+Delete binding (Product Page Drawer - Click trash can)
+https://esl.minew.com:9090/V1/label/delete?mac=ac233fd0a3f5&storeId=123
+method: 'POST',
