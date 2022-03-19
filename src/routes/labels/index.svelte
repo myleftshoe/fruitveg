@@ -5,7 +5,10 @@
     let baskets = [
         {
             name: 'Basket 1',
-            items: ['Orange', 'Pineapple']
+            items: [
+                'mangoes',
+                'mangoes'
+            ].reverse()
         },
         {
             name: 'Basket 2',
