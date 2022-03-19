@@ -64,4 +64,38 @@ async function login() {
     return json.body.token
 }
 
-export default { get, post, put }
+
+async function bind(path, payload) {
+    path = 'label/save'
+    payload = {
+        "mac": "ac233fd0b591",
+        "only": "2084",
+        "storeId": "123",
+        "templets": [
+            {
+                "demoId": "ae7ed1bb2d724c07a0076bef6d075120",
+                "demoName": "Barcode Product",
+                "templateType": "1",
+                "effect": true,
+                "mac": "ac233fd0b591"
+            }
+        ]
+    } 
+    const headers = { 
+        "content-type": 'application/json',
+        "Authorization": `Bearer ${await token}` 
+    }
+    const options = { 
+        method: 'POST', 
+        headers, 
+        body: JSON.stringify(payload) 
+        // body: JSON.stringify(sample) 
+    }
+    const response = await fetcher.fetch(path, options)
+    console.log(await response.json())
+}
+
+
+
+
+export default { get, post, put, bind }
