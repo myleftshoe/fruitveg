@@ -68,10 +68,12 @@
         height: 40px; /* needed when empty */
         padding: 10px;
     }
+    main {
+        touch-action: none;
+    }
 </style>
 
-<p>Drag a fruit from one basket to another.</p>
-
+<main>
 {#each baskets as basket, basketIndex (basket)}
     <div animate:flip>
         <b>{basket.name}</b>
@@ -93,3 +95,4 @@
         </ul>
     </div>
 {/each}
+</main>
