@@ -41,29 +41,17 @@
 
     let hoveringOverBasket
 
-    function dragStart(event, groupIndex, tagIndex) {
-        console.log(event)
-
-        // The data we want to make available when the element is dropped
-        // is the index of the item being dragged and
-        // the index of the basket from which it is leaving.
-        const data = { groupIndex, tagIndex }
-        event.dataTransfer.setData('text/plain', JSON.stringify(data))
+    function dragStart(e, tag) {
+        console.log(tag)
+        const data = { }
+        e.dataTransfer.setData('text/plain', tag.pluCode)
     }
 
-    function drop(event, groupIndex) {
-        event.preventDefault()
-        const json = event.dataTransfer.getData('text/plain')
-        const data = JSON.parse(json)
-
-        // Remove the item from one basket.
-        // Splice returns an array of the deleted elements, just one in this case.
-        const [item] = tagGroups[data.groupIndex].tags.splice(data.tagIndex, 1)
-
-        // Add the item to the drop target basket.
-        tagGroups[groupIndex].tags.push(item)
-        tagGroups = tagGroups
-
+    function drop(e, toTag) {
+        console.log(e)
+        e.preventDefault() 
+        const pluCode = e.dataTransfer.getData('text/plain')
+        console.log('dropped', pluCode, toTag)
         hoveringOverBasket = null
     }
     console.log(tagGroups)
@@ -111,7 +99,6 @@
                 class:hovering={hoveringOverBasket === group.name}
                 on:dragenter={() => (hoveringOverBasket = group.name)}
                 on:dragleave={() => (hoveringOverBasket = null)}
-                on:drop={event => drop(event, groupIndex)}
                 ondragover="return false"
             >
                 {#each group.tags as tag, tagIndex (tag.macAddress)}
@@ -119,7 +106,8 @@
                         <li
                             {tag}
                             draggable={true}
-                            on:dragstart={event => dragStart(event, groupIndex, tagIndex)}
+                            on:dragstart={e => dragStart(e, tag)}
+                            on:drop={e => drop(e, tag)}
                         >
                             {tag.pluCode}
                         </li>
