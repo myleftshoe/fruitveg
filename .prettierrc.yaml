@@ -1,3 +1,6 @@
 tabWidth: 4
 semi: false
 singleQuote: true
+bracketSameLine: false
+svelteBracketNewLine: true
+parse: html
