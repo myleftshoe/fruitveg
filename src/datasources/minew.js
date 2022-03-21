@@ -65,11 +65,11 @@ async function login() {
 }
 
 
-async function bind(path, payload) {
-    path = 'label/save'
-    payload = {
-        "mac": "ac233fd0b591",
-        "only": "2084",
+async function bind(macAddress = "ac233fd0b591", pluCode = 2084) {
+    const path = 'label/save'
+    const payload = {
+        "mac": macAddress,
+        "only": pluCode,
         "storeId": "123",
         "templets": [
             {
@@ -77,7 +77,7 @@ async function bind(path, payload) {
                 "demoName": "Barcode Product",
                 "templateType": "1",
                 "effect": true,
-                "mac": "ac233fd0b591"
+                "mac": macAddress
             }
         ]
     } 
@@ -94,8 +94,6 @@ async function bind(path, payload) {
     const response = await fetcher.fetch(path, options)
     console.log(await response.json())
 }
-
-
 
 
 export default { get, post, put, bind }
