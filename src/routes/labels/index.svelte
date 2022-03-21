@@ -7,37 +7,69 @@
         {
             name: 'MainFridge',
             tags: [
-                {
-                    macAddress: 'AD4FC9X4D1',
-                    pluCode: '2000'
-                },
-                {
-                    macAddress: 'AD4FC9X4D2',
-                    pluCode: '2001'
-                },
-                {
-                    macAddress: 'AD4FC9X4D3',
-                    pluCode: '2002'
-                }
+                { macAddress: 'MF4FC9X4D1', pluCode: '1001' },
+                { macAddress: 'MF4FC9X4D2', pluCode: '1002' },
+                { macAddress: 'MF4FC9X4D3', pluCode: '1003' },
+                { macAddress: 'MF4FC9X4D4', pluCode: '1004' },
+                { macAddress: 'MF4FC9X4D5', pluCode: '1005' },
+                { macAddress: 'MF4FC9X4D6', pluCode: '1006' },
+                { macAddress: 'MF4FC9X4D7', pluCode: '1007' },
+                { macAddress: 'MF4FC9X4D8', pluCode: '1008' },
+                { macAddress: 'MF4FC9X4D9', pluCode: '1009' },
+                { macAddress: 'MF4FC9X4E0', pluCode: '1010' },
+                { macAddress: 'MF4FC9X4E1', pluCode: '1011' },
+                { macAddress: 'MF4FC9X4E2', pluCode: '1012' },
+                { macAddress: 'MF4FC9X4E3', pluCode: '1013' },
+                { macAddress: 'MF4FC9X4E4', pluCode: '1014' },
+                { macAddress: 'MF4FC9X4E5', pluCode: '1015' },
+                { macAddress: 'MF4FC9X4E6', pluCode: '1016' },
+                { macAddress: 'MF4FC9X4E7', pluCode: '1017' },
+                { macAddress: 'MF4FC9X4E8', pluCode: '1018' },
+                { macAddress: 'MF4FC9X4E9', pluCode: '1019' },
             ]
         },
         {
-            name: 'FruitTop',
-            tags: [
-                {
-                    macAddress: 'AD4FC9X4E1',
-                    pluCode: '3000'
-                },
-                {
-                    macAddress: 'AD4FC9X4E2',
-                    pluCode: '3001'
-                },
-                {
-                    macAddress: 'AD4FC9X4E3',
-                    pluCode: '3002'
-                }
+            name: 'FruitTop', tags: [
+                { macAddress: 'FT4FC9X4D1', pluCode: '2001' },
+                { macAddress: 'FT4FC9X4D2', pluCode: '2002' },
+                { macAddress: 'FT4FC9X4D3', pluCode: '2003' },
+                { macAddress: 'FT4FC9X4D4', pluCode: '2004' },
+                { macAddress: 'FT4FC9X4D5', pluCode: '2005' },
+                { macAddress: 'FT4FC9X4D6', pluCode: '2006' },
+                { macAddress: 'FT4FC9X4D7', pluCode: '2007' },
+                { macAddress: 'FT4FC9X4D8', pluCode: '2008' },
+                { macAddress: 'FT4FC9X4D9', pluCode: '2009' },
+                { macAddress: 'FT4FC9X4E0', pluCode: '2010' },
             ]
-        }
+        },
+        {
+            name: 'FruitMiddle', tags: [
+                { macAddress: 'FM4FC9X4D1', pluCode: '3001' },
+                { macAddress: 'FM4FC9X4D2', pluCode: '3002' },
+                { macAddress: 'FM4FC9X4D3', pluCode: '3003' },
+                { macAddress: 'FM4FC9X4D4', pluCode: '3004' },
+                { macAddress: 'FM4FC9X4D5', pluCode: '3005' },
+                { macAddress: 'FM4FC9X4D6', pluCode: '3006' },
+                { macAddress: 'FM4FC9X4D7', pluCode: '3007' },
+                { macAddress: 'FM4FC9X4D8', pluCode: '3008' },
+                { macAddress: 'FM4FC9X4D9', pluCode: '3009' },
+                { macAddress: 'FM4FC9X4E0', pluCode: '3010' },
+            ]
+        },
+        {
+            name: 'FruitBottom', tags: [
+                { macAddress: 'FB4FC9X4D1', pluCode: '4001' },
+                { macAddress: 'FB4FC9X4D2', pluCode: '4002' },
+                { macAddress: 'FB4FC9X4D3', pluCode: '4003' },
+                { macAddress: 'FB4FC9X4D4', pluCode: '4004' },
+                { macAddress: 'FB4FC9X4D5', pluCode: '4005' },
+                { macAddress: 'FB4FC9X4D6', pluCode: '4006' },
+                { macAddress: 'FB4FC9X4D7', pluCode: '4007' },
+                { macAddress: 'FB4FC9X4D8', pluCode: '4008' },
+                { macAddress: 'FB4FC9X4D9', pluCode: '4009' },
+                { macAddress: 'FB4FC9X4E0', pluCode: '4010' },
+            ]
+        },
     ]
 
     let hoveringOverBasket
