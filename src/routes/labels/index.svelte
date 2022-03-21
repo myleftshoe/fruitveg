@@ -185,9 +185,9 @@
         </div>
     {/each}
 </main>
-    <float bind:this={floatRef} style={float && 'display: block;'} {float}
-        draggable={true}
-        on:dragstart={e => dragStart(e, float)}
-    >
-        {float}
-    </float>
+<float bind:this={floatRef} style={float && 'display: block;'} {float}
+    draggable={true}
+    on:dragstart={e => dragStart(e, float)}
+>
+    {float}
+</float>
