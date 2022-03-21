@@ -1,8 +1,9 @@
 <script>
     // Inspired by https://svelte.dev/repl/810b0f1e16ac4bbd8af8ba25d5e0deff?version=3.4.2.
     import { flip } from 'svelte/animate'
+    import { tick } from 'svelte'
 
-    const tagGroups = [
+    let tagGroups = [
         {
             name: 'MainFridge',
             tags: [
@@ -33,28 +34,53 @@
                 },
                 {
                     macAddress: 'AD4FC9X4E3',
-                    pluCode: '3001'
+                    pluCode: '3002'
                 }
             ]
         }
     ]
 
     let hoveringOverBasket
+    let float, floatRef
 
-    function dragStart(e, tag) {
-        console.log(tag)
-        const data = { }
-        e.dataTransfer.setData('text/plain', tag.pluCode)
+    function forceRerender() {
+        tagGroups = [...tagGroups]
+    }
+
+    function dragStart(e, pluCode) {
+        console.log(pluCode)
+        e.dataTransfer.setData('text/plain', pluCode)
+    }
+
+    async function remove(e) {
+        e.preventDefault()
+        float = e.dataTransfer.getData('text/plain')
+        console.log(floatRef)
+        
+        floatRef.style.top = "100px"
+        floatRef.style.backgroundColor = '#00f';
+        await tick()
+        console.log('remove', float, e.target)
+        hoveringOverBasket = null
+
+        floatRef.style.left = e.clientX + 'px';
+        floatRef.style.top = e.clientY + 'px';
+    console.log(top)
     }
 
     function drop(e, toTag) {
         console.log(e)
-        e.preventDefault() 
+        e.preventDefault()
+        e.stopPropagation()
         const pluCode = e.dataTransfer.getData('text/plain')
         console.log('dropped', pluCode, toTag)
+        float = toTag.pluCode
+        toTag.pluCode = pluCode
         hoveringOverBasket = null
+        forceRerender()
     }
     console.log(tagGroups)
+
 </script>
 
 <style>
@@ -82,6 +108,8 @@
         padding: 10px;
     }
     main {
+        background-color: #0f07;
+        height:100vh;
         touch-action: none;
         font-size: 12px;
         text-transform: uppercase;
@@ -89,9 +117,17 @@
         font-family: arial;
         font-weight: bold;
     }
+    float {
+        /* display: none; */
+        position: absolute;
+        top:0;
+        height: 50px;
+        width: 50px;
+        background-color: #f00;
+    }
 </style>
 
-<main>
+<main ondragover="return false" on:drop={remove}>
     {#each tagGroups as group, groupIndex (group.name)}
         <div animate:flip>
             <b>{group.name}</b>
@@ -106,7 +142,7 @@
                         <li
                             {tag}
                             draggable={true}
-                            on:dragstart={e => dragStart(e, tag)}
+                            on:dragstart={e => dragStart(e, tag.pluCode)}
                             on:drop={e => drop(e, tag)}
                         >
                             {tag.pluCode}
@@ -117,3 +153,9 @@
         </div>
     {/each}
 </main>
+    <float bind:this={floatRef} style={float && 'display: block;'} {float}
+        draggable={true}
+        on:dragstart={e => dragStart(e, float)}
+    >
+        {float}
+    </float>
