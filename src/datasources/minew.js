@@ -32,7 +32,8 @@ async function post(path, payload) {
         // body: JSON.stringify(sample) 
     }
     const response = await fetcher.fetch(path, options)
-    console.log(await response.json())
+    const json = await response.json()
+    return json
 }
 
 async function put(path, payload) {
@@ -66,6 +67,8 @@ async function login() {
 
 
 async function bind(macAddress = "ac233fd0b591", pluCode = 2084) {
+    console.log('minew bind!!!!', macAddress, pluCode)
+    return
     const path = 'label/save'
     const payload = {
         "mac": macAddress,
@@ -97,3 +100,4 @@ async function bind(macAddress = "ac233fd0b591", pluCode = 2084) {
 
 
 export default { get, post, put, bind }
+export { bind }
