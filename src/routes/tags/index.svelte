@@ -2,6 +2,7 @@
     // Inspired by https://svelte.dev/repl/810b0f1e16ac4bbd8af8ba25d5e0deff?version=3.4.2.
     import { flip } from 'svelte/animate'
     import { tick } from 'svelte'
+    import { tagStore } from '$lib/stores/tagStore'
 
 
     const products = [
@@ -488,33 +489,33 @@
         //         { macAddress: 'MF4FC9X4E9', pluCode: '1019' }
         //     ]
         // },
-        // {
-        //     name: 'FruitTop',
-        //     tags: [
-        //         { macAddress: 'FT4FC9X4D1', pluCode: '2001' },
-        //         { macAddress: 'FT4FC9X4D2', pluCode: '2002' },pluCode
-        //         { macAddress: 'FT4FC9X4D6', pluCode: '2006' },
-        //         { macAddress: 'FT4FC9X4D7', pluCode: '2007' },
-        //         { macAddress: 'FT4FC9X4D8', pluCode: '2008' },
-        //         { macAddress: 'FT4FC9X4D9', pluCode: '2009' },
-        //         { macAddress: 'FT4FC9X4E0', pluCode: '2010' }
-        //     ]
-        // },
-        // {
-        //     name: 'FruitMiddle',
-        //     tags: [
-        //         { macAddress: 'FM4FC9X4D1', pluCode: '3001' },
-        //         { macAddress: 'FM4FC9X4D2', pluCode: '3002' },
-        //         { macAddress: 'FM4FC9X4D3', pluCode: '3003' },
-        //         { macAddress: 'FM4FC9X4D4', pluCode: '3004' },
-        //         { macAddress: 'FM4FC9X4D5', pluCode: '3005' },
-        //         { macAddress: 'FM4FC9X4D6', pluCode: '3006' },
-        //         { macAddress: 'FM4FC9X4D7', pluCode: '3007' },
-        //         { macAddress: 'FM4FC9X4D8', pluCode: '3008' },
-        //         { macAddress: 'FM4FC9X4D9', pluCode: '3009' },
-        //         { macAddress: 'FM4FC9X4E0', pluCode: '3010' }
-        //     ]
-        // },
+        {
+            name: 'FruitTop',
+            tags: [
+                { macAddress: 'AC233FD0A0FF', pluCode: '1683' },
+                { macAddress: 'AC233FD0A474', pluCode: '1637' },
+                { macAddress: 'AC233FD09EFF', pluCode: '1637' },
+                { macAddress: 'AC233FD0A2AC', pluCode: '1637' },
+                { macAddress: 'AC233FD0A2EF', pluCode: '2008' },
+                { macAddress: 'AC233FD09FD7', pluCode: '2009' },
+                { macAddress: 'FT4FC9X4E0', pluCode: '2010' }
+            ]
+        },
+        {
+            name: 'FruitMiddle',
+            tags: [
+                { macAddress: 'FM4FC9X4D1', pluCode: '3001' },
+                { macAddress: 'FM4FC9X4D2', pluCode: '3002' },
+                { macAddress: 'FM4FC9X4D3', pluCode: '3003' },
+                { macAddress: 'FM4FC9X4D4', pluCode: '3004' },
+                { macAddress: 'FM4FC9X4D5', pluCode: '3005' },
+                { macAddress: 'FM4FC9X4D6', pluCode: '3006' },
+                { macAddress: 'FM4FC9X4D7', pluCode: '3007' },
+                { macAddress: 'FM4FC9X4D8', pluCode: '3008' },
+                { macAddress: 'FM4FC9X4D9', pluCode: '3009' },
+                { macAddress: 'FM4FC9X4E0', pluCode: '3010' }
+            ]
+        },
         {
             name: 'FruitBottom',
             tags: [
@@ -585,7 +586,13 @@
     let hoveringOverBasket
     let float, floatRef
 
-    export let tags = []
+    let tags = new Map()
+
+    const { unsubscribe } = tagStore.subscribe(value => {
+        tags = new Map(value)
+        forceRerender()
+    })
+
 
     function forceRerender() {
         tagGroups = [...tagGroups]
@@ -635,7 +642,7 @@
     }
     console.log(tagGroups)
 
-    $: tags && console.table(tags)
+    $: tags && console.log([...tags.values()])
 </script>
 
 <style>
@@ -700,7 +707,7 @@
                             on:dragstart={e => dragStart(e, tag.id)}
                             on:drop={e => drop(e, tag)}
                         >
-                            {tag.description || tag.pluCode}
+                            {tags.get(tag.macAddress)?.description}
                         </li>
                     </div>
                 {/each}

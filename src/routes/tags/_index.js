@@ -1,3 +1,4 @@
+import { RateLimit } from "async-sema";
 import minew from '../../datasources/minew.js'
 import translate from '../../translations.js'
 import { appendFile } from 'fs'
@@ -33,31 +34,46 @@ export const get = async ({ params, request }) => {
     // return { body }
 
     const bindings = []
-    await Promise.all(boundProducts.slice(35,39).map(async (row) => {
-        const response = await getTagBinding(row.id)
-        console.log(row.id)
+
+    const limit = RateLimit(5)
+
+    for (const product of boundProducts) {
+        await limit()
+        const response = await getTagBinding(product.id)
+        console.log(product.id)
         console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', response)
-        // if (!response) return
-        // if (!response.length) return
         response.forEach((data) => {
             console.log('fsdfsfds', data.mac)
-            bindings.push({ macAddress: data.mac, id: row.id, pluCode: row.pluCode, description: `${row.label5} ${row.label4}`.trim() })
+            bindings.push({ macAddress: data.mac, id: product.id, pluCode: product.pluCode, description: `${product.label5} ${product.label4}`.trim() })
         })
-        return response
-    }))
-    // preview(ycap)
-    console.table('bindings', bindings)
+    }
 
-    appendFile('./bindings.json', JSON.stringify(bindings), err => {
-        if (err) {
-            console.error(err)
-            return
-        }
-    })
+
+    // await Promise.all(boundProducts.slice(35, 39).map(async (row) => {
+    //     const response = await getTagBinding(row.id)
+    //     console.log(row.id)
+    //     console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', response)
+    //     // if (!response) return
+    //     // if (!response.length) return
+    //     response.forEach((data) => {
+    //         console.log('fsdfsfds', data.mac)
+    //         bindings.push({ macAddress: data.mac, id: row.id, pluCode: row.pluCode, description: `${row.label5} ${row.label4}`.trim() })
+    //     })
+    //     return response
+    // }))
+    // // preview(ycap)
+    // console.table('bindings', bindings)
+
+    // appendFile('./bindings.json', JSON.stringify(bindings), err => {
+    //     if (err) {
+    //         console.error(err)
+    //         return
+    //     }
+    // })
 
 
     return { body: { tags: bindings } }
-} 
+}
 
 async function preview(macAddress) {
     console.log('preview', macAddress)
@@ -65,7 +81,7 @@ async function preview(macAddress) {
     console.log('preview', response)
     if (response?.errcode == 10000330) return null
     const { id, label3, label4, label5 } = response.body
-    console.log({ id, label3, label4, label5 } )
+    console.log({ id, label3, label4, label5 })
     const demoData = response.demoData
     return { id, label3, label4, label5 }
 }
