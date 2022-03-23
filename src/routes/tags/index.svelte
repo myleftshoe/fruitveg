@@ -636,7 +636,7 @@
         tags.set(toTag.macAddress, { ...toTag })
         tags = new Map(tags)
     }
-    console.log(tagGroups)
+    // console.log(tagGroups)
 
     $: tags && console.log([...tags.values()])
 </script>

@@ -42,9 +42,10 @@ export const tagStore = readable([], async (set) => {
     for (const product of boundProducts) {
         const response = await getTagBinding(product.id)
         console.log(product.id)
-        console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', response)
+        // console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', response)
         response.forEach((data) => {
-            console.log('fsdfsfds', data.mac)
+            if (data.mac === 'AC233FD09EFF')
+                console.log('fsdfsfds', data)
             if (labels.find(label => label.mac.toLowerCase() === data.mac.toLowerCase())) 
                 bindings.set(data.mac, { macAddress: data.mac, id: product.id, pluCode: product.pluCode, description: `${product.label5} ${product.label4}`.trim() })
         })
@@ -62,7 +63,7 @@ async function getTagBinding(id = '2084') {
 
     const json = await minew.get(`/TagBinging/label?storeId=123&ean13=${id}`)
 
-    console.log(json.body.data[0])
+    // console.log(json.body.data[0])
     return json.body.data
 }
 
