@@ -66,21 +66,26 @@ async function login() {
 }
 
 
-async function bind(macAddress = "ac233fd0b591", pluCode = 2084) {
-    console.log('minew bind!!!!', macAddress, pluCode)
-    return
-    const path = 'label/save'
+async function bind(macAddress = "ac233fd0b591", id = 2084) {
+    console.log('minew bind!!!!', macAddress, id)
+    const token = await login()
+
+    // return Promise.resolve(`bound ${id} to ${macAddress}`)
+    const path = 'label/update'
     const payload = {
         "mac": macAddress,
-        "only": pluCode,
+        "only": id,
         "storeId": "123",
         "templets": [
             {
-                "demoId": "ae7ed1bb2d724c07a0076bef6d075120",
-                "demoName": "Barcode Product",
+                "demoId": "164cb6d35ac8407484bb88c8b0bdcf1c",
+                "demoName": "Bulk Bins",
                 "templateType": "1",
                 "effect": true,
-                "mac": macAddress
+                "mac": "ac233fd0a0ff",
+                "promotionStartTime": 1619672348299,
+                "promotionEndTime": 1619672348299,
+                "use": false
             }
         ]
     } 

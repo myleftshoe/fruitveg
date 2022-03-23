@@ -31,14 +31,22 @@ export const tagStore = readable([], async (set) => {
 
     const bindings = new Map()
 
-    
+
+    const tags = await minew.get(`/label?page=1&size=999&storeId=123`)
+    console.log(tags.list.length)
+    const labels = tags.list.filter(tag => tag.correspond?.gatewayMac === 'AC233FC05922')
+    console.log('labels', labels.length)
+
+    console.log('***********tags', labels)
+
     for (const product of boundProducts) {
         const response = await getTagBinding(product.id)
         console.log(product.id)
         console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', response)
         response.forEach((data) => {
             console.log('fsdfsfds', data.mac)
-            bindings.set(data.mac, { macAddress: data.mac, id: product.id, pluCode: product.pluCode, description: `${product.label5} ${product.label4}`.trim() })
+            if (labels.find(label => label.mac.toLowerCase() === data.mac.toLowerCase())) 
+                bindings.set(data.mac, { macAddress: data.mac, id: product.id, pluCode: product.pluCode, description: `${product.label5} ${product.label4}`.trim() })
         })
         set(new Map(bindings))
 
@@ -47,12 +55,12 @@ export const tagStore = readable([], async (set) => {
 })
 
 
-async function getTagBinding(pluCode = '2084') {
+async function getTagBinding(id = '2084') {
     const permit = await semaphore.acquire()
-    console.log('minew getTagBinding', pluCode, `/TagBinging/label?storeId=123&ean13=${pluCode}`)
+    console.log('minew getTagBinding', id, `/TagBinging/label?storeId=123&ean13=${id}`)
     permit.release()
 
-    const json = await minew.get(`/TagBinging/label?storeId=123&ean13=${pluCode}`)
+    const json = await minew.get(`/TagBinging/label?storeId=123&ean13=${id}`)
 
     console.log(json.body.data[0])
     return json.body.data

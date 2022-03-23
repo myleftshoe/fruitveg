@@ -414,7 +414,7 @@
             "pluCode": "8536",
             "description": "WATERMELON"
         },
-        {
+                {
             "macAddress": "AC233FD0996F",
             "id": "2059",
             "pluCode": "8536",
@@ -492,37 +492,37 @@
         {
             name: 'FruitTop',
             tags: [
-                { macAddress: 'AC233FD0A0FF', pluCode: '1683' },
-                { macAddress: 'AC233FD0A474', pluCode: '1637' },
-                { macAddress: 'AC233FD09EFF', pluCode: '1637' },
-                { macAddress: 'AC233FD0A2AC', pluCode: '1637' },
-                { macAddress: 'AC233FD0A2EF', pluCode: '2008' },
-                { macAddress: 'AC233FD09FD7', pluCode: '2009' },
-                { macAddress: 'FT4FC9X4E0', pluCode: '2010' }
+                { macAddress: 'AC233FD0A0FF', id: '2019' },
+                { macAddress: 'AC233FD0A134', id: '2000' },
+                { macAddress: 'AC233FD0A2B6', id: '2000' },
+                { macAddress: 'AC233FD0A2AC', id: '2000' },
+                { macAddress: 'AC233FD09D4A', id: '2038' },
+                { macAddress: 'AC233FD09D44', id: '2038' },
+                { macAddress: 'FT4FC9X4E0', id: '2010' }
             ]
         },
         {
             name: 'FruitMiddle',
             tags: [
-                { macAddress: 'FM4FC9X4D1', pluCode: '3001' },
-                { macAddress: 'FM4FC9X4D2', pluCode: '3002' },
-                { macAddress: 'FM4FC9X4D3', pluCode: '3003' },
-                { macAddress: 'FM4FC9X4D4', pluCode: '3004' },
-                { macAddress: 'FM4FC9X4D5', pluCode: '3005' },
-                { macAddress: 'FM4FC9X4D6', pluCode: '3006' },
-                { macAddress: 'FM4FC9X4D7', pluCode: '3007' },
-                { macAddress: 'FM4FC9X4D8', pluCode: '3008' },
-                { macAddress: 'FM4FC9X4D9', pluCode: '3009' },
-                { macAddress: 'FM4FC9X4E0', pluCode: '3010' }
+                { macAddress: 'AC233FD0A29F', id: '2004' },
+                { macAddress: 'AC233FD0A2EC', id: '3002' },
+                { macAddress: 'FM4FC9X4D3', id: '3003' },
+                { macAddress: 'AC233FD0A2A2', id: '2047' },
+                { macAddress: 'FM4FC9X4D5', id: '3005' },
+                { macAddress: 'AC233FD0A30E', id: '2036' },
+                { macAddress: 'AC233FD0A11C', id: '2025' },
+                { macAddress: 'FM4FC9X4D8', id: '3008' },
+                { macAddress: 'FM4FC9X4D9', id: '3009' },
+                { macAddress: 'FM4FC9X4E0', id: '3010' }
             ]
         },
         {
             name: 'FruitBottom',
             tags: [
                 {
-                    macAddress: 'AC233FD09F3E',
-                    id: '2005',
-                    pluCode: '9115',
+                    macAddress: 'AC233FD0A08F',
+                    id: '2002',
+                    pluCode: '1639',
                     description: 'GOLDEN DEL APPLES'
                 },
                 {
@@ -544,7 +544,7 @@
                     description: 'FUJI APPLES'
                 },
                 {
-                    macAddress: 'AC233FD0A457',
+                    macAddress: 'AC233FD0A465',
                     id: '2049',
                     pluCode: '1676',
                     description: 'NASHI PEARS'
@@ -556,13 +556,13 @@
                     description: 'RED SENSATION PEARS'
                 },
                 {
-                    macAddress: 'AC233FD0A3F4',
+                    macAddress: 'AC233FD099A5',
                     id: '2033',
                     pluCode: '1664',
                     description: 'LIMES'
                 },
                 {
-                    macAddress: 'AC233FD09B2B',
+                    macAddress: 'AC233FD0692E',
                     id: '2032',
                     pluCode: '1663',
                     description: 'LEMONS'
@@ -588,15 +588,9 @@
 
     let tags = new Map()
 
-    const { unsubscribe } = tagStore.subscribe(value => {
+    const { unsubscribe } = tagStore.subscribe(value => { 
         tags = new Map(value)
-        forceRerender()
     })
-
-
-    function forceRerender() {
-        tagGroups = [...tagGroups]
-    }
 
     function dragStart(e, id) {
         console.log(id)
@@ -620,25 +614,27 @@
     }
 
     async function bind(macAddress, id) {
-        const response = fetch(`./${macAddress}/${id}`)
+        const response = await fetch(`tags/${macAddress}/${id}`)
         console.log('bind', response)
     }
 
-    function drop(e, toTag) {
+    async function drop(e, toTag) {
         console.log(e)
         e.preventDefault()
         e.stopPropagation()
         const id = e.dataTransfer.getData('text/plain')
         console.log('dropped', id, toTag)
         float = toTag.id
-        bind(toTag.macAddress, id)
+        await bind(toTag.macAddress, id)
         // TODO: on success only
         const product = products.find(product => product.id == id)
         toTag.id = product.id
         toTag.pluCode = product.pluCode
         toTag.description = product.description
+        console.log('dropped', id, toTag)
         hoveringOverBasket = null
-        forceRerender()
+        tags.set(toTag.macAddress, { ...toTag })
+        tags = new Map(tags)
     }
     console.log(tagGroups)
 
@@ -658,6 +654,7 @@
         display: inline-block;
         margin-right: 10px;
         padding: 10px;
+        /* font-family: WqyBitmapSong_AlibabaPuhui; */
     }
     li:hover {
         background: orange;
@@ -702,7 +699,6 @@
                 {#each group.tags as tag, tagIndex (tag.macAddress)}
                     <div class="item" animate:flip={{ duration: 300 }}>
                         <li
-                            {tag}
                             draggable={true}
                             on:dragstart={e => dragStart(e, tag.id)}
                             on:drop={e => drop(e, tag)}
