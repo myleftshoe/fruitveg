@@ -68,7 +68,7 @@ async function login() {
 
 async function bind(macAddress = "ac233fd0b591", id = 2084) {
     console.log('minew bind!!!!', macAddress, id)
-    const token = await login()
+    // const token = await login()
 
     return Promise.resolve(`bound ${id} to ${macAddress}`)
     const path = 'label/update'

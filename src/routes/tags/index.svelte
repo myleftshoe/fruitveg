@@ -2,9 +2,7 @@
     // Inspired by https://svelte.dev/repl/810b0f1e16ac4bbd8af8ba25d5e0deff?version=3.4.2.
     import { flip } from 'svelte/animate'
     import { tick } from 'svelte'
-    import { tagStore } from '$lib/stores/tagStore'
-
-
+    import tags from './tagStore'
 
     let tagGroups = [
         // {
@@ -40,7 +38,6 @@
                 { macAddress: 'AC233FD0A2AC', id: '2000' },
                 { macAddress: 'AC233FD09D4A', id: '2038' },
                 { macAddress: 'AC233FD09D44', id: '2038' },
-                { macAddress: 'FT4FC9X4E0', id: '2010' }
             ]
         },
         {
@@ -48,14 +45,9 @@
             tags: [
                 { macAddress: 'AC233FD0A29F', id: '2004' },
                 { macAddress: 'AC233FD0A2EC', id: '3002' },
-                { macAddress: 'FM4FC9X4D3', id: '3003' },
                 { macAddress: 'AC233FD0A2A2', id: '2047' },
-                { macAddress: 'FM4FC9X4D5', id: '3005' },
                 { macAddress: 'AC233FD0A30E', id: '2036' },
                 { macAddress: 'AC233FD0A11C', id: '2025' },
-                { macAddress: 'FM4FC9X4D8', id: '3008' },
-                { macAddress: 'FM4FC9X4D9', id: '3009' },
-                { macAddress: 'FM4FC9X4E0', id: '3010' }
             ]
         },
         {
@@ -75,20 +67,18 @@
         }
     ]
 
-    export let products = []
-
 
     let hoveringOverBasket
-    let float, floatRef
+    let float = 'id,loading...'
+    let floatRef
 
-    let tags = new Map()
-
-    const { unsubscribe } = tagStore.subscribe(value => { 
-        tags = new Map(value)
-    })
+    function getDescription(mac) {
+        const tag = tags && tags.get(mac.toUpperCase()) || {}
+        return tag.Description || '???'
+    }
 
     function dragStart(e, info) {
-        console.log(info)
+        console.log('llllllll', info)
         e.dataTransfer.setData('text/plain', info)
     }
 
@@ -112,27 +102,30 @@
         console.log('bind', response)
     }
 
-    async function drop(e, toTag) {
+    async function drop(e, tag) {
         console.log(e)
         e.preventDefault()
         e.stopPropagation()
-        const [id, descripiton] = e.dataTransfer.getData('text/plain').split(',')
-        console.log('dropped', id, toTag)
-        float = `${toTag.id},${toTag.descripiton}`
+        const [id, Description] = e.dataTransfer.getData('text/plain').split(',')
+        console.log('dropped', tag.macAddress, id, Description)
+        const _tags = new Map($tags)
+        const toTag = _tags.get(tag.macAddress.toUpperCase())
+        float = `${toTag.id},${toTag.Description}`
+        console.log({float})
+        console.log(JSON.parse(JSON.stringify(toTag)))
         await bind(toTag.macAddress, id)
         // TODO: on success only
-        const product = products.get(toTag.id)
-        toTag.id = product.id
-        toTag.pluCode = product.pluCode
-        toTag.description = product.description
+        _tags.set(tag.macAddress.toUpperCase(), { ...toTag, id, Description })
+        tags.update(value => new Map(_tags))
         console.log('dropped', id, toTag)
         hoveringOverBasket = null
-        tags.set(toTag.macAddress, { ...toTag })
-        tags = new Map(tags)
+        // tags.set(toTag.macAddress, { ...toTag })
+        // tags = new Map(tags)
     }
     // console.log(tagGroups)
+    // $: otags = Array.from(tags).map(([k, v]) => ({ k, v }))
 
-    $: tags && console.log([...tags.values()])
+    $: console.log($tags)
 </script>
 
 <style>
@@ -188,7 +181,6 @@
         background-color: #f00;
     }
 </style>
-
 <main ondragover="return false" on:drop={remove}>
     {#each tagGroups as group, groupIndex (group.name)}
         <div animate:flip>
@@ -203,10 +195,10 @@
                     <div class="item" animate:flip={{ duration: 300 }}>
                         <li
                             draggable={true}
-                            on:dragstart={e => dragStart(e, `${tag.id},${tag.description || 'loading...'}`)}
+                            on:dragstart={e => dragStart(e, `${$tags.get(tag.macAddress)?.id},${$tags.get(tag.macAddress)?.Description}`)}
                             on:drop={e => drop(e, tag)}
                         >
-                            {tags.get(tag.macAddress)?.description}
+                            {$tags.get(tag.macAddress)?.Description || '-'}
                         </li>
                     </div>
                 {/each}
@@ -220,5 +212,5 @@
     draggable={true}
     on:dragstart={e => dragStart(e, float)}
 >
-    {float?.split(',')[1]}
+    {float.split(',')[1]}
 </float>

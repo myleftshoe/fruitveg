@@ -1,49 +1,50 @@
-import { RateLimit } from "async-sema";
+import { RateLimit } from 'async-sema'
 import minew from '../../datasources/minew.js'
-import translate from '../../translations.js'
-import { appendFile } from 'fs'
-// https://esl.minew.com:9090/V1/label?page=1&size=10&storeId=123
 
-const fvGateway = 'AC233FC05828'
-const ycap = 'ac233fd0b592'
+const macs = [
+    'AC233FD0A0FF',
+    'AC233FD0A134',
+    'AC233FD0A2B6',
+    'AC233FD0A2AC',
+    'AC233FD09D4A',
+    'AC233FD09D44',
+    'AC233FD0A29F',
+    'AC233FD0A2EC',
+    'AC233FD0A2A2',
+    'AC233FD0A30E',
+    'AC233FD0A11C',
+    'AC233FD0A08F',
+    'AC233FD0A263',
+    'AC233FD0A45D',
+    'AC233FD0A345',
+    'AC233FD0A465',
+    'AC233FD0A2C4',
+    'AC233FD099A5',
+    'AC233FD0692E',
+    'AC233FD0A33B',
+    'AC233FD0A055'
+]
 
-export const get = async ({ params, request }) => {
-    console.log('tags.index.js.get')
+const rateLimit = RateLimit(2)
 
-    const response = await minew.get(`/goods?page=1&size=999&storeId=123`)
-    const products = response.rows.filter(row => ['FRUIT'].includes(row.label13)).map(row => ({
-        id: row.id,
-        pluCode: row.label3,
-        label4: row.label4,
-        label5: row.label5,
-        name: `${row.label5} ${row.label4}`.trim(),
-        price: row.label6,
-        label8: row.label8,
-        label9: row.label9,
-        label10: row.label10,
-        label11: row.label11,
-        label13: row.label13,
-        status: translate(row.status) || row.status,
-    })).filter(row => row.status === 'bound')
+export const get = async (event) => {
 
-    // return {}
-    console.log(products.length)
+    const previews = await Promise.all(macs.map(preview))
+    const tags = new Map (previews.map(preview => ([preview.macAddress, { ...preview }])) )
 
-    const body = { products }
-
-    return { body }
-
+    return { body: { tags } }
 }
 
 async function preview(macAddress) {
     console.log('preview', macAddress)
+    await rateLimit()
     const response = await minew.post(`/label/preview?storeId=123&mac=${macAddress}`)
-    console.log('preview', response)
+    // console.log('preview', response)
     if (response?.errcode == 10000330) return null
     const { id, label3, label4, label5 } = response.body
     console.log({ id, label3, label4, label5 })
     const demoData = response.demoData
-    return { id, label3, label4, label5 }
+    return { macAddress, id, label3, label4, label5, description: `${label5} ${label4}`.trim() }
 }
 
 

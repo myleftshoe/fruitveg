@@ -1,33 +1,21 @@
 import { readable } from 'svelte/store'
-// import { RateLimit } from "async-sema"
 import { Semaphore } from "@shopify/semaphore"
 import minew from '../../datasources/minew.js'
 import translate from '../../translations.js'
 
-// const limit = RateLimit(5)
+
+import { get } from 'svelte/store'
+
+import { productStore } from '$lib/stores/productStore'
+
 
 const semaphore = new Semaphore(5)
 
 export const tagStore = readable([], async (set) => {
-    console.log('tagStore.set')
+    console.log('tagStore')
 
-    const response = await minew.get(`/goods?page=1&size=9999&storeId=123`)
-    const boundProducts = response.rows.filter(row => ['FRUIT'].includes(row.label13)).map(row => ({
-        id: row.id,
-        pluCode: row.label3,
-        label4: row.label4,
-        label5: row.label5,
-        name: `${row.label5} ${row.label4}`.trim(),
-        price: row.label6,
-        label8: row.label8,
-        label9: row.label9,
-        label10: row.label10,
-        label11: row.label11,
-        label13: row.label13,
-        status: translate(row.status) || row.status,
-    })).filter(row => row.status === 'bound')
-
-    console.log(boundProducts.length)
+    const products = get(productStore)
+    console.log(products.size)
 
     const bindings = new Map()
 
@@ -39,7 +27,7 @@ export const tagStore = readable([], async (set) => {
 
     console.log('***********tags', labels)
 
-    for (const product of boundProducts) {
+    for (const [key, product] of products) {
         const response = await getTagBinding(product.id)
         console.log(product.id)
         // console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr', response)
