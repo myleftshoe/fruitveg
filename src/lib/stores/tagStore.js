@@ -33,7 +33,7 @@ export const tagStore = readable([], async (set) => {
 
 
     const tags = await minew.get(`/label?page=1&size=999&storeId=123`)
-    console.log(tags.list.length)
+    // console.log(tags.list.length)
     const labels = tags.list.filter(tag => tag.correspond?.gatewayMac === 'AC233FC05922')
     console.log('labels', labels.length)
 

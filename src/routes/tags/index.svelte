@@ -60,67 +60,17 @@
         },
         {
             name: 'FruitBottom',
-            tags: [
-                {
-                    macAddress: 'AC233FD0A08F',
-                    id: '2002',
-                    pluCode: '1639',
-                    description: 'GOLDEN DEL APPLES'
-                },
-                {
-                    macAddress: 'AC233FD0A263',
-                    id: '2005',
-                    pluCode: '9115',
-                    description: 'GOLDEN DEL APPLES'
-                },
-                {
-                    macAddress: 'AC233FD0A45D',
-                    id: '2013',
-                    pluCode: '1651',
-                    description: 'FUJI APPLES'
-                },
-                {
-                    macAddress: 'AC233FD0A345',
-                    id: '2013',
-                    pluCode: '1651',
-                    description: 'FUJI APPLES'
-                },
-                {
-                    macAddress: 'AC233FD0A465',
-                    id: '2049',
-                    pluCode: '1676',
-                    description: 'NASHI PEARS'
-                },
-                {
-                    macAddress: 'AC233FD0A2C4',
-                    id: '2006',
-                    pluCode: '9116',
-                    description: 'RED SENSATION PEARS'
-                },
-                {
-                    macAddress: 'AC233FD099A5',
-                    id: '2033',
-                    pluCode: '1664',
-                    description: 'LIMES'
-                },
-                {
-                    macAddress: 'AC233FD0692E',
-                    id: '2032',
-                    pluCode: '1663',
-                    description: 'LEMONS'
-                },
-                {
-                    macAddress: 'AC233FD0A33B',
-                    id: '2032',
-                    pluCode: '1663',
-                    description: 'LEMONS'
-                },
-                {
-                    "macAddress": "AC233FD0A055",
-                    "id": "2037",
-                    "pluCode": "1668",
-                    "description": "LOOSE ORANGES"
-                },
+            tags: [ 
+                { macAddress: 'AC233FD0A08F', id: '2002' },
+                { macAddress: 'AC233FD0A263', id: '2005' },
+                { macAddress: 'AC233FD0A45D', id: '2013' },
+                { macAddress: 'AC233FD0A345', id: '2013' },
+                { macAddress: 'AC233FD0A465', id: '2049' },
+                { macAddress: 'AC233FD0A2C4', id: '2006' },
+                { macAddress: 'AC233FD099A5', id: '2033' },
+                { macAddress: 'AC233FD0692E', id: '2032' },
+                { macAddress: 'AC233FD0A33B', id: '2032' },
+                { macAddress: 'AC233FD0A055', id: '2037' },
             ]
         }
     ]
