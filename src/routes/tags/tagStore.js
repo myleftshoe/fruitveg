@@ -13,19 +13,28 @@ const macs = [
     'AC233FD09D44',
     'AC233FD0A29F',
     'AC233FD0A2EC',
-    'AC233FD0A2A2',
-    'AC233FD0A30E',
-    'AC233FD0A11C',
-    'AC233FD0A08F',
-    'AC233FD0A263',
-    'AC233FD0A45D',
-    'AC233FD0A345',
-    'AC233FD0A465',
-    'AC233FD0A2C4',
-    'AC233FD099A5',
-    'AC233FD0692E',
-    'AC233FD0A33B',
-    'AC233FD0A055'
+    // 'AC233FD0A2A2',
+    // 'AC233FD0A30E',
+    // 'AC233FD0A11C',
+    // 'AC233FD0A08F',
+    // 'AC233FD0A263',
+    // 'AC233FD0A45D',
+    // 'AC233FD0A345',
+    // 'AC233FD0A465',
+    // 'AC233FD0A2C4',
+    // 'AC233FD099A5',
+    // 'AC233FD0692E',
+    // 'AC233FD0A33B',
+    // 'AC233FD0A055',
+    // 'AC233FD0A38F', ///// leb q
+    // 'AC233FD09FBE', 'AC233FD09FB5', ////// brocolli
+    // 'AC233FD09FBA', 'AC233FD0A034', 'AC233FD0A1CF', 'AC233FD0A142', 'AC233FD09F07', // /////CARROTS
+    // 'AC233FD0A39D', 'AC233FD0A489', ///// cauli
+    // 'AC233FD0A290',// //green beans
+    // 'AC233FD0A3A4', 'AC233FD0A39C', ////// beetroot
+    // 'AC233FD09F52', //// crimson grapes
+    // 'AC233FD0A22C', 'AC233FD0A201', //// green grapes
+    // 'AC233FD0A0AC', 'AC233FD0A235', 'AC233FD0A39B' // mangoes
 ]
 
 // const rateLimit = RateLimit(2)
