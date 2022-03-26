@@ -3,69 +3,83 @@
     import { flip } from 'svelte/animate'
     import { slide } from 'svelte/transition'
     import { tick } from 'svelte'
-import IconButton, { Icon } from '@smui/icon-button';
+    import IconButton, { Icon } from '@smui/icon-button';
     import tags from './tagStore'
-    import ProductDrawer from '$lib/productDrawer.svelte'
+    // import ProductDrawer from '$lib/productDrawer.svelte'
     
     let tagGroups = [
         {
-            name: 'MainFridge',
+            name: 'MainFridge', // 19
             tags: [
-                { macAddress: 'AC233FD0A38F', id: '2098' }, // lebq
-                { macAddress: 'AC233FD0A290', id: '1013' }, // green beans
-                { macAddress: 'AC233FD0A3A4', id: '1002' }, // beetroot
-                // { macAddress: 'AC233FD0A39C', id: '1003' }, // beetroot
-                // { macAddress: 'AC233FD0A39D', id: '1004' }, // cauli
-                // { macAddress: 'AC233FD0A489', id: '1005' }, // cauii
-                // { macAddress: 'AC233FD09FBE', id: '1006' }, // broc
-                // { macAddress: 'AC233FD09FB5', id: '1007' }, // broc
-                // { macAddress: 'AC233FD09FBA', id: '1008' }, // carrrots
-                // { macAddress: 'AC233FD0A034', id: '1009' }, // carrrots
-                // { macAddress: 'AC233FD0A1CF', id: '1010' }, // carrrots
-                // { macAddress: 'AC233FD0A142', id: '1011' }, // carrots
-                // { macAddress: 'AC233FD09F07', id: '1012' }, // carrots
-                // { macAddress: 'AC233FD09F52', id: '1016' }, // crimson grapes
-                // { macAddress: 'AC233FD0A22C', id: '1017' }, // greep grapes
-                // { macAddress: 'AC233FD0A201', id: '1018' }, // green grapes
-                // { macAddress: 'AC233FD0A0AC', id: '1014' }, // mangoes
-                // { macAddress: 'AC233FD0A235', id: '1015' }, // mandoes
-                // { macAddress: 'AC233FD0A39B', id: '1019' } // mangoes
+                { macAddress: 'AC233FD0A38F', id: '1723' }, // lebq
+                { macAddress: 'AC233FD0A290', id: '1692' }, // green beans
+                { macAddress: 'AC233FD0A100', id: '1695' }, // butter beans
+                { macAddress: 'AC233FD0A39C', id: '1697' }, // beet
+                { macAddress: 'AC233FD0A3A4', id: '1697' }, // beet
+                { macAddress: 'AC233FD0A39D', id: '1772' }, // cauii
+                { macAddress: 'AC233FD0A489', id: '1772' }, // cauii
+                { macAddress: 'AC233FD09FB5', id: '1688' }, // baby broc
+                { macAddress: 'AC233FD09FBE', id: '1698' }, // broc
+                { macAddress: 'AC233FD09FBA', id: '1698' }, // broc
+                { macAddress: 'AC233FD0A034', id: '1698' }, // broc
+                { macAddress: 'AC233FD0A1CF', id: '1711' }, // carrrots
+                { macAddress: 'AC233FD0A142', id: '1711' }, // carrrots
+                { macAddress: 'AC233FD09F07', id: '1711' }, // carrrots
+                { macAddress: 'AC233FD09F52', id: '1658' }, // green grapes
+                { macAddress: 'AC233FD0A22C', id: '1659' }, // crimson grapes
+                { macAddress: 'AC233FD0A201', id: '1659' }, // crimson grapes
+                { macAddress: 'AC233FD0A0AC', id: '1684' }, // mangoes
+                { macAddress: 'AC233FD0A235', id: '1684' }, // mangoes
             ]
         },
         {
-            name: 'FruitTop',
+            name: 'FruitTop', // 10        
+
             tags: [
-                { macAddress: 'AC233FD0A0FF', id: '2019' },
-                { macAddress: 'AC233FD0A134', id: '2000' },
-                { macAddress: 'AC233FD0A2B6', id: '2000' },
-                // { macAddress: 'AC233FD0A2AC', id: '2000' },
-                // { macAddress: 'AC233FD09D4A', id: '2038' },
-                // { macAddress: 'AC233FD09D44', id: '2038' },
+                { macAddress: 'AC233FD0A0FF', id: '1683' }, // Rock
+                { macAddress: 'AC233FD0A134', id: '1637' }, // AB
+                { macAddress: 'AC233FD0A2B6', id: '1637' }, // AB
+                { macAddress: 'AC233FD0A2AC', id: '1637' }, // AB
+                { macAddress: 'AC233FD09D4A', id: '1669' }, // ON
+                { macAddress: 'AC233FD09D44', id: '1669' }, // ON 
+                { macAddress: 'AC233FD09F97', id: '1779' }, // Basil
+                { macAddress: 'AC233FD0A202', id: '1779' }, // Basil
+                { macAddress: 'AC233FD09D46', id: '1775' }, // Cherry Tom
+                { macAddress: 'AC233FD09D4C', id: '1775' }, // Cherry Tom
             ]
         },
         {
-            name: 'FruitMiddle',
+            name: 'FruitMiddle', // 10 
+
             tags: [
-                { macAddress: 'AC233FD0A29F', id: '2004' },
-                { macAddress: 'AC233FD0A2EC', id: '3002' },
-                { macAddress: 'AC233FD0A2A2', id: '2047' },
-                { macAddress: 'AC233FD0A30E', id: '2036' },
-                { macAddress: 'AC233FD0A11C', id: '2025' },
+                { macAddress: 'AC233FD0A263', id: '9115' }, // Gold Del
+                { macAddress: 'AC233FD0A08F', id: '1639' }, // Granny
+                { macAddress: 'AC233FD0A133', id: '1675' }, // Packham
+                { macAddress: 'AC233FD0A2A2', or: 'AC233FD0A109', id: '1674' }, // Beurre Bosc 
+                { macAddress: 'AC233FD0A30E', id: '1667' }, // White Nect
+                { macAddress: '????????????', id: '7420' }, // plum TODO
+                { macAddress: 'AC233FD0A11C', id: '7420' }, // plum
+                { macAddress: 'AC233FD0A132', id: '????' }, // Ruby Grapefruit
+                { macAddress: 'AC233FD0A2B1', id: '1773' }, // round
+                { macAddress: 'AC233FD09A82', id: '1773' }, // round
             ]
         },
         {
-            name: 'FruitBottom',
+            name: 'FruitBottom', // 13  
             tags: [ 
-                { macAddress: 'AC233FD0A08F', id: '2002' },
-                { macAddress: 'AC233FD0A263', id: '2005' },
-                // { macAddress: 'AC233FD0A45D', id: '2013' },
-                // { macAddress: 'AC233FD0A345', id: '2013' },
-                // { macAddress: 'AC233FD0A465', id: '2049' },
-                // { macAddress: 'AC233FD0A2C4', id: '2006' },
-                // { macAddress: 'AC233FD099A5', id: '2033' },
-                // { macAddress: 'AC233FD0692E', id: '2032' },
-                // { macAddress: 'AC233FD0A33B', id: '2032' },
-                // { macAddress: 'AC233FD0A055', id: '2037' },
+                { macAddress: 'AC233FD0A2EC', id: '9114' }, // Gala
+                { macAddress: 'AC233FD0A29F', id: '9114' }, // Gala
+                { macAddress: 'AC233FD0A345', id: '1651' }, // Fuji
+                { macAddress: 'AC233FD0A45D', id: '7824' }, // Cox Pippin
+                { macAddress: 'AC233FD0A011', id: '1676' }, // Nashi
+                { macAddress: 'AC233FD0A2C4', id: '9116' }, // Red Sensation 
+                { macAddress: 'AC233FD099A5', id: '1664' }, // Lime
+                { macAddress: 'AC233FD0692E', id: '1663' }, // Lemon
+                { macAddress: 'AC233FD0A33B', id: '1663' }, // Lemon
+                { macAddress: 'AC233FD0A055', id: '1668' }, // Oranges
+                { macAddress: 'AC233FD09B29', id: '1749' }, // red
+                { macAddress: 'AC233FD09B2C', id: '2132' }, // brown
+                { macAddress: 'AC233FD09B27', id: '2132' }, // brown
             ]
         }
     ]
@@ -173,7 +187,7 @@ import IconButton, { Icon } from '@smui/icon-button';
         padding: 10px;
     }
     main {
-        /* background-color: #0f07; */
+        background-color: #7777;
         height: 100vh;
         touch-action: none;
         font-size: 12px;
@@ -208,7 +222,7 @@ import IconButton, { Icon } from '@smui/icon-button';
 <main ondragover="return false" on:drop={remove}>
     {#each tagGroups as group, groupIndex (group.name)}
         <div animate:flip>
-            <b>{group.name}</b>
+            <b style="color: #fff;">{group.name}</b>
             <ul
                 class:hovering={hoveringOverBasket === group.name}
                 on:dragenter={() => (hoveringOverBasket = group.name)}
@@ -240,4 +254,4 @@ import IconButton, { Icon } from '@smui/icon-button';
     {float.split(',')[1]}
         <!-- <Icon class="material-icons">add</Icon> -->
 </float>
-<ProductDrawer bind:open bind:selectedRow/>
+<!-- <ProductDrawer bind:open bind:selectedRow/> -->
