@@ -56,7 +56,7 @@ const macs = [
     'AC233FD0A055',
     'AC233FD09B29',
     'AC233FD09B2C',
-    'AC233FD09B27',
+    'AC233FD09B27'
 ]
 
 // const rateLimit = RateLimit(2)
@@ -93,9 +93,9 @@ async function fetchPreview(macAddress, token) {
     // console.log('preview', response)
     if (response?.errcode == 10000330) return null
     if (!response.body) return null
-    const { id, label3, label4, label5 } = response.body.goods
-    console.log({ id, label3, label4, label5 })
+    const { id, label3, label4, label5, label6 } = response.body.goods
+    console.log({ id, label3, label4, label5, label6 })
     // const demoData = response.demoData
-    return { macAddress, id, label3, Description: `${label5} ${label4}`.trim() }
+    return { macAddress, id, label3, label4, label5, label6, Description: `${label5} ${label4}`.trim() }
 }
 

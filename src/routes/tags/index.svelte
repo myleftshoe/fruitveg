@@ -5,11 +5,13 @@
     import { tick } from 'svelte'
     import IconButton, { Icon } from '@smui/icon-button';
     import tags from './tagStore'
+    import Tag from './tag.svelte'
+
     // import ProductDrawer from '$lib/productDrawer.svelte'
     
     let tagGroups = [
         {
-            name: 'MainFridge', // 19
+            name: 'Main Fridge', // 19
             tags: [
                 { macAddress: 'AC233FD0A38F', id: '1723' }, // lebq
                 { macAddress: 'AC233FD0A290', id: '1692' }, // green beans
@@ -33,7 +35,7 @@
             ]
         },
         {
-            name: 'FruitTop', // 10        
+            name: 'Fruit Top', // 10        
 
             tags: [
                 { macAddress: 'AC233FD0A0FF', id: '1683' }, // Rock
@@ -49,7 +51,7 @@
             ]
         },
         {
-            name: 'FruitMiddle', // 10 
+            name: 'Fruit Middle', // 10 
 
             tags: [
                 { macAddress: 'AC233FD0A263', id: '9115' }, // Gold Del
@@ -65,7 +67,7 @@
             ]
         },
         {
-            name: 'FruitBottom', // 13  
+            name: 'Fruit Bottom', // 13  
             tags: [ 
                 { macAddress: 'AC233FD0A2EC', id: '9114' }, // Gala
                 { macAddress: 'AC233FD0A29F', id: '9114' }, // Gala
@@ -101,7 +103,8 @@
 
     async function remove(e) {
         e.preventDefault()
-        float = e.dataTransfer.getData('text/plain')
+        const json = e.dataTransfer.getData('text/plain')
+        float = JSON.parse(json)
         console.log(float)
         floatRef.style.top = '100px'
         floatRef.style.backgroundColor = '#00f'
@@ -123,18 +126,21 @@
         console.log(e)
         e.preventDefault()
         e.stopPropagation()
-        const [id, Description] = e.dataTransfer.getData('text/plain').split(',')
-        console.log('dropped', tag.macAddress, id, Description)
+
+        const data = e.dataTransfer.getData('text/plain')
+        const product = JSON.parse(data) 
+
+        console.log('dropped', tag.macAddress, product)
         const _tags = new Map($tags)
         const toTag = _tags.get(tag.macAddress.toUpperCase())
-        float = `${toTag.id},${toTag.Description}`
+        float = {...toTag}
         console.log({float})
         console.log(JSON.parse(JSON.stringify(toTag)))
-        await bind(toTag.macAddress, id)
+        await bind(toTag.macAddress, product.id)
         // TODO: on success only
-        _tags.set(tag.macAddress.toUpperCase(), { ...toTag, id, Description })
+        _tags.set(tag.macAddress.toUpperCase(), { ...toTag, ...product })
         tags.update(value => new Map(_tags))
-        console.log('dropped', id, toTag)
+        console.log('dropped', product.id, toTag)
         hoveringOverBasket = null
         // tags.set(toTag.macAddress, { ...toTag })
         // tags = new Map(tags)
@@ -147,7 +153,7 @@
 
     $: console.log({selectedRow})
     $: if (selectedRow.id) {
-        float = selectedRow.id && `${selectedRow.id},${selectedRow.Description}`
+        // float = selectedRow.id && `${selectedRow.id},${selectedRow.Description}`
         selectedRow = null
     }
 </script>
@@ -160,39 +166,18 @@
         display: inline; /* required for flip to work */
     }
     li {
-        background-color: green;
-        cursor: pointer;
         display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
-        /* margin-right: 10px; */
-        padding: 5px;
-        margin-bottom: 16px;
-        width: calc( 100vw / 9 );
-        height: 80%;
-        font-size: 12px;
-        font-family: 'Roboto Condensed';
-        font-weight: 500;
-        text-transform: lowercase;
-        overflow: hidden;
-    }
-    li:hover {
-        background: orange;
-        color: white;
     }
     ul {
-        border: solid lightgray 1px;
-        display: block; /* required for drag & drop to work when .item display is inline */
+        /* display: flex; /* required for drag & drop to work when .item display is inline */
+        display: flex;
         /* height: 40px; needed when empty */
-        padding: 10px;
+        padding: 0;
+        gap: 10px;
     }
     main {
-        height: 100vh;
         touch-action: none;
-        font-size: 12px;
-        text-transform: uppercase;
+        font-size: 16px;
         color: #000f;
         font-family: arial;
         font-weight: bold;
@@ -202,21 +187,7 @@
         position: absolute;
         top: 50%;
         left:25%;
-        height: 50px;
-        width: 75px;
-        color: #fff;
-        background-color: #ff3e00;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-family: 'Roboto Condensed';
-        font-weight: 500;
-        text-transform: lowercase;
-        /* overflow: hidden; */
-        box-shadow: 4px 4px 4px #0009;
+        box-shadow: 8px 8px 16px #000d;
         border-radius: 7px;
     }
     :global(html) { 
@@ -240,10 +211,10 @@
                     <div class="item" animate:flip={{ duration: 300 }}>
                         <li
                             draggable={true}
-                            on:dragstart={e => dragStart(e, `${$tags.get(tag.macAddress)?.id},${$tags.get(tag.macAddress)?.Description}`)}
+                            on:dragstart={e => dragStart(e, JSON.stringify($tags.get(tag.macAddress)))}
                             on:drop={e => drop(e, tag)}
                         >
-                            {$tags.get(tag.macAddress)?.Description || '-'}
+                            <Tag product={$tags.get(tag.macAddress)}/>
                         </li>
                     </div>
                 {/each}
@@ -255,10 +226,12 @@
 <float {float}
     bind:this={floatRef}
     draggable={true}
-    on:dragstart={e => dragStart(e, float)}
+    on:dragstart={e => dragStart(e, JSON.stringify(float))}
     on:click={() => open = true}
 >
-    {float.split(',')[1]}
+    <Tag product={float} 
+        style="border: 10px solid red; background-color: orange;"
+    />
         <!-- <Icon class="material-icons">add</Icon> -->
 </float>
 <!-- <ProductDrawer bind:open bind:selectedRow/> -->
