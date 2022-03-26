@@ -176,7 +176,7 @@
         gap: 20px;
     }
     main {
-        touch-action: none;
+        user-select: none;
         font-size: 16px;
         color: #000f;
         font-family: arial;
