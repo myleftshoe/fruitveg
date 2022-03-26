@@ -173,7 +173,7 @@
         display: flex;
         /* height: 40px; needed when empty */
         padding: 0;
-        gap: 10px;
+        gap: 20px;
     }
     main {
         touch-action: none;
@@ -200,7 +200,7 @@
 <main ondragover="return false" on:drop={remove}>
     {#each tagGroups as group, groupIndex (group.name)}
         <div animate:flip>
-            <b style="color: #fff;">{group.name}</b>
+            <p style="color: #fff; margin-top: 10vh;">{group.name}</p>
             <ul
                 class:hovering={hoveringOverBasket === group.name}
                 on:dragenter={() => (hoveringOverBasket = group.name)}
