@@ -152,7 +152,7 @@
     }
 </script>
 
-<style>
+<style lang="scss">
     .hovering {
         border-color: orange;
     }
@@ -160,20 +160,22 @@
         display: inline; /* required for flip to work */
     }
     li {
-        background-color: lightgray;
+        background-color: green;
         cursor: pointer;
-        display: flex;
+        display: inline-flex;
+        justify-content: center;
         align-items: center;
-        /* justify-content: center; */
-        margin-right: 10px;
+        flex-wrap: wrap;
+        gap: 10px;
+        /* margin-right: 10px; */
         padding: 5px;
-        width: calc( 100vw / 20 );
+        margin-bottom: 16px;
+        width: calc( 100vw / 9 );
         height: 80%;
         font-size: 12px;
         font-family: 'Roboto Condensed';
         font-weight: 500;
         text-transform: lowercase;
-        justify-self: center;
         overflow: hidden;
     }
     li:hover {
@@ -182,12 +184,11 @@
     }
     ul {
         border: solid lightgray 1px;
-        display: flex; /* required for drag & drop to work when .item display is inline */
+        display: block; /* required for drag & drop to work when .item display is inline */
         /* height: 40px; needed when empty */
         padding: 10px;
     }
     main {
-        background-color: #7777;
         height: 100vh;
         touch-action: none;
         font-size: 12px;
@@ -217,6 +218,12 @@
         /* overflow: hidden; */
         box-shadow: 4px 4px 4px #0009;
         border-radius: 7px;
+    }
+    :global(html) { 
+        background-color: #333; 
+    }
+    :global(body) { 
+        background-color: transparent; 
     }
 </style>
 <main ondragover="return false" on:drop={remove}>

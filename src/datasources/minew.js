@@ -4,18 +4,20 @@ import { MINEW_USERNAME, MINEW_PASSWORD } from '$lib/env'
 // TODO: remove credentials
 
 const fetcher = new Fetcher(`https://esl.minew.com:9090/V1`)
-let token = login()
+let token
 
 
-async function get(path) {
-    let headers = { 'Authorization': `Bearer ${await token}` } 
+async function get(path, token) {
+    console.log('get')
+    let headers = { 'Authorization': `Bearer ${token}` } 
     let response = await fetcher.fetch(path, { headers })
     let json = await response.json()
     if (json.errcode == '10000100') {
-        token=login()
-        headers = { 'Authorization': `Bearer ${await token}` } 
-        response = await fetcher.fetch(path, { headers })
-        json = await response.json()
+        console.log('relogin')
+        // token=await login()
+        // headers = { 'Authorization': `Bearer ${token}` } 
+        // response = await fetcher.fetch(path, { headers })
+        // json = await response.json()
     }
     return json
 }
@@ -68,9 +70,9 @@ async function login() {
 
 async function bind(macAddress = "ac233fd0b591", id = 2084) {
     console.log('minew bind!!!!', macAddress, id)
-    // const token = await login()
+    const token = await login()
 
-    return Promise.resolve(`bound ${id} to ${macAddress}`)
+    // return Promise.resolve(`bound ${id} to ${macAddress}`)
     const path = 'label/update'
     const payload = {
         "mac": macAddress,
@@ -91,7 +93,7 @@ async function bind(macAddress = "ac233fd0b591", id = 2084) {
     } 
     const headers = { 
         "content-type": 'application/json',
-        "Authorization": `Bearer ${await token}` 
+        "Authorization": `Bearer ${token}` 
     }
     const options = { 
         method: 'POST', 
@@ -104,5 +106,5 @@ async function bind(macAddress = "ac233fd0b591", id = 2084) {
 }
 
 
-export default { get, post, put, bind }
+export default { get, post, put, bind, login }
 export { bind }
