@@ -234,8 +234,7 @@
     />
         <!-- <Icon class="material-icons">add</Icon> -->
 </float>
-<ProductDrawer bind:open bind:selectedRow/>
 
 {#if open}
-
+    <ProductDrawer bind:open bind:selectedRow/>
 {/if}
