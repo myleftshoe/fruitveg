@@ -10,7 +10,8 @@ export const get = async (event) => {
     const _atriaData = await atria.get(`/Items/Summary?$top=999&$orderby=Description%20asc&$filter=${filter} `)
     const atriaData = [..._atriaData]
     // const _minewData = await minew.get(`/goods?page=1&size=9&storeId=123&fuzzy=VEGETABLES`)
-    const _minewData = await minew.get(`/goods?page=1&size=9999&storeId=123`)
+    const token = await minew.login()
+    const _minewData = await minew.get(`/goods?page=1&size=9999&storeId=123`, token)
     // console.table(_minewData.rows)
     const minewData = _minewData.rows.filter(row => ['FRUIT', 'VEGETABLES'].includes(row.label13)).map(row => ({
         id: row.id,

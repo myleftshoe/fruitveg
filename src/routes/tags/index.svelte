@@ -7,7 +7,7 @@
     import tags from './tagStore'
     import Tag from './tag.svelte'
 
-    // import ProductDrawer from '$lib/productDrawer.svelte'
+    import ProductDrawer from '$lib/productDrawer.svelte'
     
     let tagGroups = [
         {
@@ -15,7 +15,7 @@
             tags: [
                 { macAddress: 'AC233FD0A38F', id: '1723' }, // lebq
                 { macAddress: 'AC233FD0A290', id: '1692' }, // green beans
-                { macAddress: 'AC233FD0A100', id: '1695' }, // butter beans
+                { macAddress: 'AC233FD0A100', id: '1695' }, // butter beans ///// TAG NOT WORKIKNG
                 { macAddress: 'AC233FD0A39C', id: '1697' }, // beet
                 { macAddress: 'AC233FD0A3A4', id: '1697' }, // beet
                 { macAddress: 'AC233FD0A39D', id: '1772' }, // cauii
@@ -30,18 +30,18 @@
                 { macAddress: 'AC233FD09F52', id: '1658' }, // green grapes
                 { macAddress: 'AC233FD0A22C', id: '1659' }, // crimson grapes
                 { macAddress: 'AC233FD0A201', id: '1659' }, // crimson grapes
-                { macAddress: 'AC233FD0A0AC', id: '1684' }, // mangoes
                 { macAddress: 'AC233FD0A235', id: '1684' }, // mangoes
+                { macAddress: 'AC233FD0A0AC', id: '1684' } // mangoes
             ]
         },
         {
             name: 'Fruit Top', // 10        
 
             tags: [
-                { macAddress: 'AC233FD0A0FF', id: '1683' }, // Rock
-                { macAddress: 'AC233FD0A134', id: '1637' }, // AB
-                { macAddress: 'AC233FD0A2B6', id: '1637' }, // AB
-                { macAddress: 'AC233FD0A2AC', id: '1637' }, // AB
+                { macAddress: 'AC233FD0A0FF', id: '2019' }, // Rock
+                { macAddress: 'AC233FD0A134', id: '2000' }, // AB
+                { macAddress: 'AC233FD0A2B6', id: '2000' }, // AB
+                { macAddress: 'AC233FD0A2AC', id: '2000' }, // AB
                 { macAddress: 'AC233FD09D4A', id: '1669' }, // ON
                 { macAddress: 'AC233FD09D44', id: '1669' }, // ON 
                 { macAddress: 'AC233FD09F97', id: '1779' }, // Basil
@@ -79,7 +79,7 @@
                 { macAddress: 'AC233FD0692E', id: '1663' }, // Lemon
                 { macAddress: 'AC233FD0A33B', id: '1663' }, // Lemon
                 { macAddress: 'AC233FD0A055', id: '1668' }, // Oranges
-                { macAddress: 'AC233FD09B29', id: '1749' }, // red
+                { macAddress: 'AC233FD09B29', id: '2133' }, // red
                 { macAddress: 'AC233FD09B2C', id: '2132' }, // brown
                 { macAddress: 'AC233FD09B27', id: '2132' }, // brown
             ]
@@ -152,8 +152,8 @@
     let selectedRow = {}
 
     $: console.log({selectedRow})
-    $: if (selectedRow.id) {
-        // float = selectedRow.id && `${selectedRow.id},${selectedRow.Description}`
+    $: if (selectedRow) {
+        float = selectedRow
         selectedRow = null
     }
 </script>
@@ -234,4 +234,8 @@
     />
         <!-- <Icon class="material-icons">add</Icon> -->
 </float>
-<!-- <ProductDrawer bind:open bind:selectedRow/> -->
+<ProductDrawer bind:open bind:selectedRow/>
+
+{#if open}
+
+{/if}

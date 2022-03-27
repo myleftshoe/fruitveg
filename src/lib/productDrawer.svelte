@@ -8,58 +8,56 @@
     import { Search } from 'carbon-components-svelte'
     import fuzzy from '../helpers/fuzzy.js'
     import getheaders from '../helpers/headers.js'
-
+    import products from './productStore'
+    
     export let open = false
     export let selectedRow = {}
     let value = ''
 
-    let products = []
-    onMount(async () => {
-        const response = await fetch('/products/__data.json')
-        const json = await response.json()
-        products = json.products
-        console.table(products)
-    })
 
     const itemStyle = (active) => ({ 
         square: true,
-        style: `padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7};`,
+        style: `background-color: #a53; padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7};`,
         color: active ? 'primary' : 'secondary',
     })
     const metaStyle = { 
         style : 'display:flex; flex-direction: column; align-items: flex-end;'
     }
 
-    $: value = value?.toUpperCase?.() ?? ''
+    $: value = value?.toUpperCase?.() ?? '';
     // $: headers = getheaders(products)
-    $: rows = fuzzy(products, value, ['label4', 'label5', 'Description', 'id'])
-
-
+    $: rows = $products && fuzzy($products, value, ['label4', 'label5', 'Description', 'id'])
 </script>
-<Drawer {open} size='40vw' placement='right' on:clickAway={() => open = false}>
-    <TopAppBar>
-        <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/>
-    </TopAppBar>
-    <List threeLine nonInteractive dense>
-        {#each rows as row}
-            <Paper  {...itemStyle(row.Active)}>
-                <Item on:SMUI:action={() => {
-                    selectedRow = row
-                    open = false
-                }}>
-                    <Text>
-                        <PrimaryText>{row.Description}</PrimaryText>
-                        <SecondaryText>{row.label5 || ''}</SecondaryText>
-                        <SecondaryText>{row.label4 || ''}</SecondaryText>
-                    </Text>
-                    <Meta {...metaStyle}>
-                        <strong>{row.id}</strong>
-                        <h4>$ {row.UnitPrice}</h4>
-                        {row.label10 || ''}
-                    </Meta>
-                </Item>
-            </Paper>
-        {/each}
-    </List>
-    <button on:click={() => open = false}>close</button>
+<Drawer {open} size='40vw' placement='right'  on:clickAway={() => open = false}>
+    <div style="background-color: #111;">
+        <TopAppBar>
+            <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/>
+        </TopAppBar>
+        <p></p>
+        <List  nonInteractive twoLine>
+            {#each rows as row}
+                <Paper  {...itemStyle(true)}>
+                    <Item on:SMUI:action={() => {
+                        selectedRow = row
+                        open = false
+                    }}>
+                        <Text>
+                            <PrimaryText>{row.name}</PrimaryText>
+                            <SecondaryText>{row.id}</SecondaryText>
+                        </Text>
+                        <Meta {...metaStyle}>
+                            <strong>{row.plucode}</strong>
+                            <h4>$ {row.price}</h4>
+                            {row.label10 || ''}
+                        </Meta>
+                    </Item>
+                </Paper>
+            {/each}
+        </List>
+    </div>
 </Drawer>
+<style>
+    p { 
+        height: 40px;
+    }
+</style>
