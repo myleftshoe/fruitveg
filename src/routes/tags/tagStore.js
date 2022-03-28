@@ -2,7 +2,7 @@ import { writable } from 'svelte/store'
 import { Semaphore } from "@shopify/semaphore"
 // import { RateLimit } from 'async-sema'
 import minew from '../../datasources/minew.js'
-
+import { browser } from '$app/env'; 
 
 const macs = [
     'AC233FD0A38F',
@@ -64,6 +64,7 @@ const semaphore = new Semaphore(3)
 
 
 export default writable(new Map(), (set) => {
+    if (!browser) return
     (async function asyncWrapper() {
         const token = await minew.login()
         console.log('tagStore')

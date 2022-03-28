@@ -1,7 +1,6 @@
 <script>
     import { onMount } from 'svelte'
-    import { slide as transition } from 'svelte/transition'
-    import Drawer from 'svelte-drawer-component'
+    import { fade as transition } from 'svelte/transition'
     import 'carbon-components-svelte/css/g100.css'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
@@ -30,48 +29,48 @@
     $: rows = $products && fuzzy($products, value, ['label4', 'label5', 'Description', 'id'])
 </script>
 <container on:click={() => open = false}>
-    <main transition:transition>
-            <TopAppBar>
-                <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/>
-            </TopAppBar>
-            <p></p>
-            <List nonInteractive twoLine>
-                {#each rows as row}
-                    <Paper  {...itemStyle(true)}>
-                        <Item on:SMUI:action={() => {
-                            selectedRow = row
-                            open = false
-                        }}>
-                            <Text>
-                                <PrimaryText>{row.name}</PrimaryText>
-                                <SecondaryText>{row.id}</SecondaryText>
-                            </Text>
-                            <Meta {...metaStyle}>
-                                <strong>{row.plucode}</strong>
-                                <h4>$ {row.price}</h4>
-                                {row.label10 || ''}
-                            </Meta>
-                        </Item>
-                    </Paper>
-                {/each}
-            </List>
+    <TopAppBar>
+        <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/>
+    </TopAppBar>
+    <p></p>
+    <main transition>
+        <List nonInteractive twoLine>
+            {#each rows as row}
+                <Paper  {...itemStyle(true)}>
+                    <Item on:SMUI:action={() => {
+                        selectedRow = row
+                        open = false
+                    }}>
+                        <Text>
+                            <PrimaryText>{row.name}</PrimaryText>
+                            <SecondaryText>{row.id}</SecondaryText>
+                        </Text>
+                        <Meta {...metaStyle}>
+                            <strong>{row.plucode}</strong>
+                            <h4>$ {row.price}</h4>
+                            {row.label10 || ''}
+                        </Meta>
+                    </Item>
+                </Paper>
+            {/each}
+        </List>
     </main>
 </container>
 <style>
     main { 
-        width: 40vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
     }
     p { 
         height: 40px;
     }
     container { 
         position: fixed;
-        top:0;
+        top:0px;
         left:0px;
         width: 100vw;
         height: 100vh;
         background-color: #0007;
-        overflow: scroll;
+        overflow: auto;
     }
 </style>

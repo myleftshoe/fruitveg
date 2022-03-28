@@ -155,6 +155,8 @@
 
     let open = false
     let selectedRow = {}
+    let width
+    let height
 
     $: console.log({selectedRow})
     $: if (selectedRow) {
@@ -202,6 +204,7 @@
         background-color: transparent; 
     }
 </style>
+<svelte:window bind:outerWidth={width} bind:outerHeight={height}/>
 <main ondragover="return false" on:drop={remove}>
     {#each tagGroups as group, groupIndex (group.name)}
         <div animate:flip>
@@ -219,7 +222,7 @@
                             on:dragstart={e => dragStart(e, JSON.stringify($tags.get(tag.macAddress)))}
                             on:drop={e => drop(e, tag)}
                         >
-                            <Tag product={$tags.get(tag.macAddress)}/>
+                            <Tag product={$tags.get(tag.macAddress)} on:click={() => open = true } />
                         </li>
                     </div>
                 {/each}
@@ -233,13 +236,14 @@
     draggable={true}
     on:dragstart={e => dragStart(e, JSON.stringify(float))}
     on:click={() => open = true}
+    on:drag={e => e.target.style.opacity = 0 }
 >
     <Tag product={float} 
         style="border: 10px solid red; background-color: orange;"
     />
         <!-- <Icon class="material-icons">add</Icon> -->
 </float>
-
-{#if open}
+{#if width < height}
+<!-- {#if open} -->
     <ProductDrawer bind:open bind:selectedRow/>
 {/if}

@@ -1,7 +1,7 @@
 <script>
     export let product = {}
 </script>
-<tag  {...$$restProps}>
+<tag  {...$$restProps} on:click>
     <product>
         <div>{product?.label5 || ''}</div>
         <div>{product?.label4 || ''}</div>
