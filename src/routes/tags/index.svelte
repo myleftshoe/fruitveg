@@ -205,7 +205,7 @@
     }
 </style>
 <svelte:window bind:outerWidth={width} bind:outerHeight={height}/>
-<main ondragover="return false" on:drop={remove}>
+<main ondragover="return false" on:drop={remove}  style={`${width < height && "display: none;"}`}>
     {#each tagGroups as group, groupIndex (group.name)}
         <div animate:flip>
             <p style="color: #fff; margin-top: 10vh;">{group.name}</p>
