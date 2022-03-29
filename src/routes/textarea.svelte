@@ -31,7 +31,10 @@
     let textarea = ''
 
     function handleQtyClick(e) {
-        if (e.key === ' ') refs.name.focus()
+        if (e.key === ' ') {
+            e.preventDefault()
+            refs.name.focus()
+        }
     }
 
     function handleKeyPress(e) {
