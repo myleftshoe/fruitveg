@@ -34,7 +34,7 @@
     </TopAppBar>
     <p></p>
     <main transition>
-        <List nonInteractive twoLine>
+        <List twoLine>
             {#each rows as row}
                 <Paper  {...itemStyle(true)}>
                     <Item on:SMUI:action={() => {
