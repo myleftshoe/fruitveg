@@ -1,6 +1,7 @@
 <script>
     import { tick } from 'svelte'
     import Autocomplete from '@smui-extra/autocomplete'
+    import Select, { Option } from '@smui/select'
     import Paper from '@smui/paper'
     import Textfield from '@smui/textfield'
 
@@ -13,6 +14,7 @@
 
     let fruits = ['Apple', 'Orange', 'Banana', 'Mango']
     let units = [
+        '',
         'bags',
         'boxes',
         'crates',
@@ -26,21 +28,25 @@
     let name = ''
     let unit = ''
     let qty = ''
-    let value = ''
     let textarea = ''
 
     function handleQtyClick(e) {
         if (e.key === ' ') refs.name.focus()
     }
 
-    function next(e) {
+    function handleKeyPress(e) {
         console.log(e.key)
-        if (e.key !== 'Enter') return
+        if (e.key === 'Enter') {
+            next()
+        }
+    }
+
+    async function next(e) {
+        console.log('next')
         textarea = `${textarea}\n${qty} ${name} ${unit}` 
-        qty = ''
-        name = ''
-        unit = ''
         refs.form.reset()
+        name = "testset"
+        unit = 'boxes'
         refs.qty.focus()
         // refs.qty.select()
     }
@@ -62,6 +68,7 @@
         outline: none;
         resize: none;
         width:100%;
+        height: 100%;
         /* background-color: #0002;
         border-radius: 16px;
         padding: 16px; */
@@ -70,6 +77,10 @@
     hr {
         flex-basis: 5vh;
         visibility: hidden;;
+    }
+    select {
+        border: none;
+        background: none;
     }
 </style>
 <main>
@@ -80,9 +91,9 @@
             bind:this={refs.qty}
             bind:value={qty}
             input$id="qty"
-            input$type="tel"
+            input$type="number"
             input$min="1"
-            input$max="99"
+            input$max="999"
             on:keypress={handleQtyClick}
             style="width: 6ch;"
         />
@@ -93,23 +104,26 @@
             bind:value={name}
             combobox
             options={fruits}
-            on:keydown={next}
+            on:keydown={handleKeyPress}
         />
-        <Autocomplete
+        <select
             name="unit"
             bind:this={refs.unit}
             bind:value={unit}
             combobox
             options={units}
             style="width: 10ch;"
-            on:keydown={next}
-        />
+            on:change={next}
+        >
+            {#each units as unit}
+                <option value={unit}>{unit}</option>
+            {/each}
+        </select>
     </form>
     <hr>
-    <Paper style="flex:1; align-self: stretch;">
     <textarea 
+        disabled
         bind:this={refs.textarea} 
         bind:value={textarea} 
     />
-    </Paper>
 </main>
