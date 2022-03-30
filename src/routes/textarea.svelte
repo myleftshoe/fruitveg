@@ -1,6 +1,6 @@
 <script>
     import { tick } from 'svelte'
-    import { fade as transition } from 'svelte/transition'
+    import { slide as transition } from 'svelte/transition'
         import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
         import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -147,7 +147,14 @@
         text-decoration-color: orange;       
         /* background-color: #7777 */
         /* text-shadow: 3px 3px 8px #000f; */
+        text-decoration-thickness: 5px;
+        text-underline-offset: 0.2em;
     }
+    input[name="name"]::placeholder {
+        text-decoration: underline;
+        text-decoration-color: orange;
+    }
+
     input[name="qty"] {
         background-color: #7773;
         font-size: 1.8em;
@@ -162,7 +169,7 @@
     units {
         position: fixed;
         top:0;
-        right:0;
+        left:0;
         display: flex;
         width:30vw;
         height:100%;
@@ -170,7 +177,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: #7777;
+        background-color: #777;
         z-index:101;
         /* margin-bottom: 40px; */
     }
@@ -186,8 +193,8 @@
     }
     nothingtosee {
         margin-top: 10vh;
-        background-color: #fa07;
-        border-radius: 8px;
+        /* background-color: #fa07;
+        border-radius: 8px; */
         padding: 32px;
     }
 </style>
@@ -213,7 +220,7 @@
     </search>
     <form>
         {#each options as option}
-            <Item nonInteractive style="display:flex; gap: 20px;">
+            <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden;">
                 <input
                     name="qty"
                     bind:value={option.qty}
@@ -254,7 +261,7 @@
     </form>
     {#if !options.length}
         <nothingtosee>
-            <i>Nothing to see here</i>
+            <pre>Nothing to see here.</pre>
         </nothingtosee>
     {/if}
 </main>
