@@ -180,15 +180,17 @@
         text-align: center;
         padding: 4px;
         border-radius: 8px;
+        color:orange;
     }
     header {
         position: sticky;
         top:0;
         display: flex;
         gap: 16px;
-        background-color: white;
+        background-color: #7777;
         border-radius: 8px;
         z-index:101;
+        margin-bottom: 16px;
     }
 </style>
 
