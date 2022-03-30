@@ -3,6 +3,7 @@
     import { slide as transition } from 'svelte/transition'
         import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
         import Button from '@smui/button'
+    import IconButton from '@smui/icon-button'
 
     import Autocomplete from '@smui-extra/autocomplete'
     import Select, { Option } from '@smui/select'
@@ -88,7 +89,7 @@
     }
                 
 
-    $: options = items.filter((product) => product.name.startsWith(name))
+    $: options = items.filter((product) => product.name.includes(name.toLowerCase()))
 
 
 
@@ -166,6 +167,8 @@
     }
     input[name="name"] {
         font-size: 2em;
+        text-align: left;
+        text-transform: lowercase;
         border-bottom: 2px solid orange;
         background: none;
         width: 100%;
@@ -178,16 +181,26 @@
         padding: 4px;
         border-radius: 8px;
     }
-
+    header {
+        position: sticky;
+        top:0;
+        display: flex;
+        gap: 16px;
+        background-color: white;
+        border-radius: 8px;
+        z-index:101;
+    }
 </style>
 
 <main>
-    <input
-        variant="outlined"
-        name="name"
-        bind:this={refs.name}
-        bind:value={name}
-    />
+    <header>
+        <input
+            name="name"
+            bind:this={refs.name}
+            bind:value={name}
+        />
+        <IconButton class="material-icons">close</IconButton>
+    </header>
         {#each options as option}
             <Item style="display:flex; gap: 16px; width: 100%;">
                 <input
@@ -219,3 +232,4 @@
             </Item>
         {/each}
 </main>
+<Button>close</Button>
