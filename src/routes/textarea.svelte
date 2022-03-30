@@ -17,6 +17,7 @@
         qty: null,
         name: null,
         unit: null,
+        hidden: null,
     }
 
     let fruits = ['Apple', 'Orange', 'Banana', 'Mango']
@@ -46,7 +47,7 @@
         }
     }
 
-    function handleKeyPress(e) {
+    async function handleKeyPress(e) {
         console.log(e.key)
         if (e.key === 'Enter') {
             refs.name.focus()
@@ -54,6 +55,8 @@
         }
         if (e.key === ' ') {
             showUnits = true;
+            await tick()
+            e.target.blur()
         }
     }
 
@@ -249,11 +252,13 @@
 {#if showUnits}
 <units transition:transition>
     <Paper>
+    <form>
         <wrap>
         {#each units as unit}
             <Button on:click={() => showUnits = false}>{unit}</Button>
         {/each}
         </wrap>
+</form>        
     </Paper>
 </units>
 {/if}
