@@ -209,7 +209,7 @@
     {/if}
 </header>
 <main>
-    <form >
+    <form>
         {#each options as option}
             <Item nonInteractive style="display:flex; gap: 20px;">
                 <input
@@ -222,7 +222,10 @@
                     step="1"
                     on:keypress={handleKeyPress}
                 />
-                <pre value={option.name}>{option.name}</pre>
+                <pre value={option.name} on:click={() => {
+    name = ''
+    refs.name.focus()
+}}>{option.name}</pre>
                 <!-- <select
                     name="unit"
                     bind:this={refs.unit}
