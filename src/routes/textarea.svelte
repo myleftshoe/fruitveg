@@ -136,8 +136,8 @@
         color:darkorange;
     }
     header {
-        position: fixed;
-        top:30vh;
+        position: sticky;
+        top:0;
         height: 20vh;
         display: flex;
         align-items: center;
