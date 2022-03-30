@@ -146,15 +146,15 @@
         color:darkorange;
     }
     header {
-        position: sticky;
-        top:0;
+        position: fixed;
+        bottom:0;
         height: 20vh;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        /* justify-content: space-between; */
         background-color: #7777;
         z-index:101;
-        margin-bottom: 40px;
+        /* margin-bottom: 40px; */
     }
     :global(body) {
         margin: 0;
