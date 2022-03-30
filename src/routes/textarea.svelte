@@ -108,6 +108,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-top: 20vh;
     }
     pre {
         flex-grow: 1;
@@ -119,7 +120,7 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 2vh;
-        padding: 16px;
+        /* padding: 16px; */
     }
     input {
         border: none;
@@ -133,6 +134,7 @@
         color: white;
         text-align: center;
         text-transform: lowercase;
+        text-shadow: 3px 3px #000a;
     }
     input[name="qty"] {
         background-color: #7773;
