@@ -1,6 +1,6 @@
 <script>
     import { tick } from 'svelte'
-    import { slide as transition } from 'svelte/transition'
+    import { fade as transition } from 'svelte/transition'
         import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
         import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -36,6 +36,9 @@
     let qty = ''
     let textarea = ''
 
+    let showUnits = false
+
+
     function handleQtyClick(e) {
         if (e.key === ' ') {
             e.preventDefault()
@@ -46,7 +49,11 @@
     function handleKeyPress(e) {
         console.log(e.key)
         if (e.key === 'Enter') {
-            refs.form.submit()
+            refs.name.focus()
+            return
+        }
+        if (e.key === ' ') {
+            showUnits = true;
         }
     }
 
@@ -120,7 +127,10 @@
         background: none;
     }
     input[name="name"] {
-        font-size: 2em;
+        font-size: 3em;
+        font-weight: bold;
+        font-family: arial;
+        color: white;
         text-align: center;
         text-transform: lowercase;
     }
@@ -154,10 +164,25 @@
         top: 40vh;
         right: 16px;
     }
+    units {
+        /* background-color: #7773; */
+        position: fixed;
+        top: 20%;
+        right : 12%;
+        width: 60%;
+    }
+    wrap {
+        display: flex;
+        flex-wrap:wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+    }
 </style>
 <header>
     <input 
         name="name" 
+        bind:this={refs.name}
         bind:value={name} 
         style="width:100%; padding:16px;"
         on:focus={()=> {
@@ -178,6 +203,7 @@
                     min="0"
                     max="99"
                     step="1"
+                    on:keypress={handleKeyPress}
                 />
                 <pre value={option.name}>{option.name}</pre>
                 <!-- <select
@@ -206,3 +232,15 @@
 <!-- <fab>
     <IconButton class="material-icons">search</IconButton>
 </fab> -->
+
+{#if showUnits}
+<units transition:transition>
+    <Paper>
+        <wrap>
+        {#each units as unit}
+            <Button on:click={() => showUnits = false}>{unit}</Button>
+        {/each}
+        </wrap>
+    </Paper>
+</units>
+{/if}
