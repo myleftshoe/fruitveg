@@ -1,6 +1,6 @@
 <script>
     import { tick } from 'svelte'
-    import { slide as transition } from 'svelte/transition'
+    import { fade as transition } from 'svelte/transition'
         import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
         import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -54,8 +54,6 @@
             return
         }
         if (e.key === ' ') {
-            e.target.blur()
-            await tick()
             showUnits = true;
         }
     }
@@ -172,7 +170,7 @@
     units {
         /* background-color: #7773; */
         position: fixed;
-        bottom: 0;
+        top: 0;
         /* right : 12%; */
         width: 100%;
     }
@@ -181,7 +179,7 @@
         flex-wrap:wrap;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 16px;
+        padding: 8px;
     }
     nothingtosee {
         margin-top: 10vh;
@@ -191,16 +189,21 @@
     }
 </style>
 <header>
-    <input 
-        name="name" 
-        bind:this={refs.name}
-        bind:value={name} 
-        style="width:100%; padding:16px;"
-        on:focus={()=> {
-            refs.name.select()
-        }}
-    />
-    <Icon class="material-icons" slot="trailingIcon">close</Icon>
+    {#if showUnits}
+    <wrap>
+        {#each units as unit}
+            <Button on:click={() => showUnits = false}>{unit}</Button>
+        {/each}
+        </wrap>
+    {:else}
+        <input 
+            name="name" 
+            bind:this={refs.name}
+            bind:value={name} 
+            style="width:100%; padding:16px;"
+        />
+        <Icon class="material-icons" slot="trailingIcon">close</Icon>
+    {/if}
 </header>
 <main>
     <form >
@@ -249,16 +252,14 @@
     <IconButton class="material-icons">search</IconButton>
 </fab> -->
 
-{#if showUnits}
+<!-- {#if showUnits}
 <units transition:transition>
     <Paper>
-    <form>
         <wrap>
         {#each units as unit}
             <Button on:click={() => showUnits = false}>{unit}</Button>
         {/each}
         </wrap>
-</form>        
     </Paper>
 </units>
-{/if}
+{/if} -->
