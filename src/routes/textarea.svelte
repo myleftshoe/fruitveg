@@ -192,7 +192,6 @@
         justify-content: flex-end;
     }
     nothingtosee {
-        margin-top: 10vh;
         /* background-color: #fa07;
         border-radius: 8px; */
         padding: 32px;
@@ -232,8 +231,11 @@
                     on:keypress={handleKeyPress}
                 />
                 <pre value={option.name} on:click={() => {
+                    if (showUnits) {
+                        showUnits = false;
+                        return;
+                    }
                     name = ''
-                    showUnits = false;
                     refs.name.scrollIntoView({behavior: "smooth"})
                     refs.name.focus()
                 }}>{option.name}</pre>
