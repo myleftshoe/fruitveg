@@ -100,7 +100,9 @@
     }
                 
 
-    $: options = items.filter((product) => product.name.includes(name.toLowerCase()))
+    $: options = name && 
+        items.filter((product) => product.name.includes(name.toLowerCase())) || 
+        items.filter((product) => product.qty !== '')
 
 
 
@@ -108,10 +110,11 @@
 
 <style>
     main {
+        /* width:100vw; */
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 22vh;
+        /* margin-top: 22vh; */
     }
     pre {
         flex-grow: 1;
@@ -131,13 +134,17 @@
         background: none;
     }
     input[name="name"] {
-        font-size: 3em;
+        /* width:100%;  */
+        /* padding:16px; */
+        flex-grow: 1;
+        font-size: 2.8em;
         font-weight: bold;
-        font-family: arial;
-        color: white;
+        font-family: courier;
+        /* color: white; */
         text-align: center;
         text-transform: lowercase;
-        text-shadow: 3px 3px 8px #000f;
+        /* background-color: #7777 */
+        /* text-shadow: 3px 3px 8px #000f; */
     }
     input[name="qty"] {
         background-color: #7773;
@@ -183,11 +190,18 @@
         align-items: flex-start;
         padding: 8px;
     }
+    search {
+        display: flex;
+        height: 18vh;
+        width:100%;
+        /* align-items: stretch; */
+        justify-content: flex-end;
+    }
     nothingtosee {
         margin-top: 10vh;
         background-color: #fa07;
         border-radius: 8px;
-        padding: 16px;
+        padding: 32px;
     }
 </style>
 <header>
@@ -198,17 +212,21 @@
         {/each}
         </wrap>
     {:else}
+    {/if}
+</header>
+<main>
+    <search>
         <input 
             name="name" 
             bind:this={refs.name}
             bind:value={name} 
-            style="width:100%; padding:16px;"
-            placeholder="[ type here ]"
+            placeholder="search"
+            size="11"
         />
-        <Icon class="material-icons" slot="trailingIcon">close</Icon>
-    {/if}
-</header>
-<main>
+        <IconButton class="material-icons" slot="trailingIcon" on:click={() => {
+            name = ''
+        }}>close</IconButton>
+    </search>
     <form>
         {#each options as option}
             <Item nonInteractive style="display:flex; gap: 20px;">
