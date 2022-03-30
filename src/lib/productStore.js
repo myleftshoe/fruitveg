@@ -28,7 +28,7 @@ export default readable([], (set) => {
             .filter(row => row.status === 'bound')
             .sort((a, b) => a.name.localeCompare(b.name))
     
-        console.table(products)
+        // console.table(products)
         set(products)
     })()
 })
