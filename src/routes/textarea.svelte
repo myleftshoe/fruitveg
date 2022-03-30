@@ -111,7 +111,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 20vh;
+        margin-top: 22vh;
     }
     pre {
         flex-grow: 1;
@@ -137,7 +137,7 @@
         color: white;
         text-align: center;
         text-transform: lowercase;
-        text-shadow: 3px 3px #000a;
+        text-shadow: 3px 3px 8px #000f;
     }
     input[name="qty"] {
         background-color: #7773;
@@ -153,7 +153,7 @@
     header {
         position: fixed;
         top:0;
-        height: 16vh;
+        height: 20vh;
         display: flex;
         align-items: center;
         /* justify-content: space-between; */
@@ -203,6 +203,7 @@
             bind:this={refs.name}
             bind:value={name} 
             style="width:100%; padding:16px;"
+            placeholder="[ type here ]"
         />
         <Icon class="material-icons" slot="trailingIcon">close</Icon>
     {/if}
