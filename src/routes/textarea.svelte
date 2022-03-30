@@ -147,8 +147,8 @@
     }
     header {
         position: fixed;
-        bottom:50%;
-        height: 20vh;
+        top:0;
+        height: 16vh;
         display: flex;
         align-items: center;
         /* justify-content: space-between; */
