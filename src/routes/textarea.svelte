@@ -223,9 +223,10 @@
                     on:keypress={handleKeyPress}
                 />
                 <pre value={option.name} on:click={() => {
-    name = ''
-    refs.name.focus()
-}}>{option.name}</pre>
+                    name = ''
+                    refs.name.focus()
+                    refs.name.scrollIntoView(true)
+                }}>{option.name}</pre>
                 <!-- <select
                     name="unit"
                     bind:this={refs.unit}
