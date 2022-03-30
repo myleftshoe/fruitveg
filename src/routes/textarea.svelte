@@ -143,6 +143,8 @@
         /* color: white; */
         text-align: center;
         text-transform: lowercase;
+        text-decoration: underline;
+        text-decoration-color: orange;       
         /* background-color: #7777 */
         /* text-shadow: 3px 3px 8px #000f; */
     }
@@ -150,45 +152,30 @@
         background-color: #7773;
         font-size: 1.8em;
         font-weight: bold;
-        font-family: mono;
+        font-family: sans;
         width: 4ch;
         height: 2.6ch;
         text-align: center;
         border-radius: 8px;
         color:darkorange;
     }
-    header {
+    units {
         position: fixed;
         top:0;
-        height: 20vh;
+        right:0;
         display: flex;
+        width:30vw;
+        height:100%;
+        gap: 16px;
+        flex-direction: column;
         align-items: center;
-        /* justify-content: space-between; */
+        justify-content: center;
         background-color: #7777;
         z-index:101;
         /* margin-bottom: 40px; */
     }
     :global(body) {
         margin: 0;
-    }
-    fab {
-        position: fixed;
-        top: 40vh;
-        right: 16px;
-    }
-    units {
-        /* background-color: #7773; */
-        position: fixed;
-        top: 0;
-        /* right : 12%; */
-        width: 100%;
-    }
-    wrap {
-        display: flex;
-        flex-wrap:wrap;
-        justify-content: space-between;
-        align-items: flex-start;
-        padding: 8px;
     }
     search {
         display: flex;
@@ -204,28 +191,25 @@
         padding: 32px;
     }
 </style>
-<header>
-    {#if showUnits}
-    <wrap>
+{#if showUnits}
+    <units transition:transition={{duration: 250}}>
         {#each units as unit}
             <Button on:click={() => showUnits = false}>{unit}</Button>
         {/each}
-        </wrap>
-    {:else}
-    {/if}
-</header>
+    </units>
+{/if}
 <main>
     <search>
         <input 
             name="name" 
             bind:this={refs.name}
             bind:value={name} 
-            placeholder="stoktayk"
+            placeholder="stocktake"
             size="11"
         />
-        <IconButton class="material-icons" slot="trailingIcon" on:click={() => {
+        <!-- <IconButton class="material-icons" slot="trailingIcon" on:click={() => {
             name = ''
-        }}>close</IconButton>
+        }}>close</IconButton> -->
     </search>
     <form>
         {#each options as option}
@@ -242,8 +226,9 @@
                 />
                 <pre value={option.name} on:click={() => {
                     name = ''
+                    showUnits = false;
+                    refs.name.scrollIntoView({behavior: "smooth"})
                     refs.name.focus()
-                    refs.name.scrollIntoView(true)
                 }}>{option.name}</pre>
                 <!-- <select
                     name="unit"
