@@ -107,10 +107,12 @@
         font-size: 1.5em;
     }
     form {
+        width:100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         gap: 2vh;
+        padding: 16px;
     }
     input {
         border: none;
@@ -119,11 +121,8 @@
     }
     input[name="name"] {
         font-size: 2em;
-        text-align: left;
+        text-align: center;
         text-transform: lowercase;
-        border-bottom: 2px solid orange;
-        background: none;
-        width: 100%;
     }
     input[name="qty"] {
         background-color: #7773;
@@ -137,8 +136,9 @@
         color:darkorange;
     }
     header {
-        position: sticky;
-        top:0;
+        position: fixed;
+        top:30vh;
+        height: 20vh;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -149,14 +149,25 @@
     :global(body) {
         margin: 0;
     }
+    fab {
+        position: fixed;
+        top: 40vh;
+        right: 16px;
+    }
 </style>
 <header>
-    <Textfield bind:value={name} style="width:100%; padding:16px;">
-        <Icon class="material-icons" slot="trailingIcon">close</Icon>
-    </Textfield>
+    <input 
+        name="name" 
+        bind:value={name} 
+        style="width:100%; padding:16px;"
+        on:focus={()=> {
+            name=''
+        }}
+    />
+    <Icon class="material-icons" slot="trailingIcon">close</Icon>
 </header>
 <main>
-    <form>
+    <form >
         {#each options as option}
             <Item nonInteractive style="display:flex; gap: 20px;">
                 <input
@@ -164,6 +175,9 @@
                     bind:value={option.qty}
                     id="qty"
                     type="number"
+                    min="0"
+                    max="99"
+                    step="1"
                 />
                 <pre value={option.name}>{option.name}</pre>
                 <!-- <select
@@ -189,4 +203,6 @@
         {/each}
     </form>
 </main>
-<Button>close</Button>
+<!-- <fab>
+    <IconButton class="material-icons">search</IconButton>
+</fab> -->
