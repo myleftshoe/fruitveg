@@ -54,7 +54,9 @@
             return
         }
         if (e.key === ' ') {
-            showUnits = true;
+            e.preventDefault()
+            showUnits = true
+            e.target.blur()
         }
     }
 
