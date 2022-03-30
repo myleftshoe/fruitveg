@@ -220,7 +220,7 @@
             name="name" 
             bind:this={refs.name}
             bind:value={name} 
-            placeholder="search"
+            placeholder="stoktayk"
             size="11"
         />
         <IconButton class="material-icons" slot="trailingIcon" on:click={() => {
