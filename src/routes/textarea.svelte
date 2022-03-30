@@ -9,6 +9,7 @@
     import Select, { Option } from '@smui/select'
     import Paper from '@smui/paper'
     import Textfield from '@smui/textfield'
+    import Icon from '@smui/textfield/icon'
     import products from '$lib/productStore'
 
     const refs = {
@@ -103,14 +104,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 16px;
         /* background-color:green;
         border-radius: 32px; */
-        padding: 16px;
     }
     form {
         display:flex;
-        gap: 5vw;
+        /* gap: 5vw; */
     }
     textarea {
         border: none;
@@ -138,6 +137,7 @@
     }
     pre {
         flex-grow: 1;
+        font-size: 1.5em;
     }
     items { 
         width: 100%;
@@ -159,6 +159,8 @@
     form {
         display: flex;
         flex-direction: column;
+        width: 100%;
+        justify-content: space-between;
     }
     input {
         border: none;
@@ -175,7 +177,9 @@
     }
     input[name="qty"] {
         background-color: #7773;
-        font-size: 1.5em;
+        font-size: 1.6em;
+        font-weight: bold;
+        font-family: sans;
         width: 3ch;
         text-align: center;
         padding: 4px;
@@ -185,26 +189,27 @@
     header {
         position: sticky;
         top:0;
+        width:100%;
         display: flex;
-        gap: 16px;
+        align-items: center;
+        justify-content: space-between;
         background-color: #7777;
-        border-radius: 8px;
+        border-radius: 0 0 8px 8px;
         z-index:101;
-        margin-bottom: 16px;
+    }
+    :global(body) {
+        margin: 0;
     }
 </style>
-
+<header>
+    <Textfield bind:value={name} style="width:100%; padding:16px;">
+      <Icon class="material-icons" slot="trailingIcon">close</Icon>
+    </Textfield>
+</header>
 <main>
-    <header>
-        <input
-            name="name"
-            bind:this={refs.name}
-            bind:value={name}
-        />
-        <IconButton class="material-icons">close</IconButton>
-    </header>
+    <form>
         {#each options as option}
-            <Item style="display:flex; gap: 16px; width: 100%;">
+            <Item nonInteractive style="display:flex; gap: 16px; width: 100%;">
                 <input
                     name="qty"
                     bind:value={option.qty}
@@ -233,5 +238,6 @@
                 </select> -->
             </Item>
         {/each}
+    </form>
 </main>
 <Button>close</Button>
