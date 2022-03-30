@@ -54,9 +54,9 @@
             return
         }
         if (e.key === ' ') {
-            showUnits = true;
-            await tick()
             e.target.blur()
+            await tick()
+            showUnits = true;
         }
     }
 
