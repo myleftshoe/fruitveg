@@ -180,6 +180,12 @@
         align-items: flex-start;
         gap: 16px;
     }
+    nothingtosee {
+        margin-top: 10vh;
+        background-color: #fa07;
+        border-radius: 8px;
+        padding: 16px;
+    }
 </style>
 <header>
     <input 
@@ -188,7 +194,7 @@
         bind:value={name} 
         style="width:100%; padding:16px;"
         on:focus={()=> {
-            name=''
+            refs.name.select()
         }}
     />
     <Icon class="material-icons" slot="trailingIcon">close</Icon>
@@ -230,6 +236,11 @@
             </Item>
         {/each}
     </form>
+    {#if !options.length}
+        <nothingtosee>
+            <i>Nothing to see here</i>
+        </nothingtosee>
+    {/if}
 </main>
 <!-- <fab>
     <IconButton class="material-icons">search</IconButton>
