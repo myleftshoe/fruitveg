@@ -97,70 +97,20 @@
 </script>
 
 <style>
-    /* :global(body) {
-        margin:10px;
-    } */
     main {
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* background-color:green;
-        border-radius: 32px; */
-    }
-    form {
-        display:flex;
-        /* gap: 5vw; */
-    }
-    textarea {
-        border: none;
-        outline: none;
-        resize: none;
-        width:100%;
-        height: 100%;
-        background: none;
-        /* background-color: #0002;
-        border-radius: 16px;
-        padding: 16px; */
-        font-family: monospace;
-    }
-    hr {
-        flex-basis: 5vh;
-        visibility: hidden;
-    }
-    select {
-        border: none;
-        background: none;
-    }
-    select:focus {
-        background-color:red;
-        width: 100vw;
     }
     pre {
         flex-grow: 1;
         font-size: 1.5em;
     }
-    items { 
-        width: 100%;
-        background-color: #7773;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        padding: 16px;
-    }
-
-    item { 
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10vw;
-        border-bottom: 1px solid black;
-    }
     form {
         display: flex;
         flex-direction: column;
-        width: 100%;
         justify-content: space-between;
+        gap: 2vh;
     }
     input {
         border: none;
@@ -177,25 +127,24 @@
     }
     input[name="qty"] {
         background-color: #7773;
-        font-size: 1.6em;
+        font-size: 1.8em;
         font-weight: bold;
-        font-family: sans;
-        width: 3ch;
+        font-family: mono;
+        width: 4ch;
+        height: 2.6ch;
         text-align: center;
-        padding: 4px;
         border-radius: 8px;
-        color:orange;
+        color:darkorange;
     }
     header {
         position: sticky;
         top:0;
-        width:100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
         background-color: #7777;
-        border-radius: 0 0 8px 8px;
         z-index:101;
+        margin-bottom: 40px;
     }
     :global(body) {
         margin: 0;
@@ -203,18 +152,18 @@
 </style>
 <header>
     <Textfield bind:value={name} style="width:100%; padding:16px;">
-      <Icon class="material-icons" slot="trailingIcon">close</Icon>
+        <Icon class="material-icons" slot="trailingIcon">close</Icon>
     </Textfield>
 </header>
 <main>
     <form>
         {#each options as option}
-            <Item nonInteractive style="display:flex; gap: 16px; width: 100%;">
+            <Item nonInteractive style="display:flex; gap: 20px;">
                 <input
                     name="qty"
                     bind:value={option.qty}
                     id="qty"
-                    type="tel"
+                    type="number"
                 />
                 <pre value={option.name}>{option.name}</pre>
                 <!-- <select
