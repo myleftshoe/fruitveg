@@ -1,6 +1,6 @@
 <script>
     import { tick } from 'svelte'
-    import { fade as transition } from 'svelte/transition'
+    import { slide as transition } from 'svelte/transition'
         import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
         import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -169,9 +169,9 @@
     units {
         /* background-color: #7773; */
         position: fixed;
-        top: 20%;
-        right : 12%;
-        width: 60%;
+        bottom: 0;
+        /* right : 12%; */
+        width: 100%;
     }
     wrap {
         display: flex;
