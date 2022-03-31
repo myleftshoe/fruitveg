@@ -231,7 +231,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 50px;
+        gap: 80px;
     }
 </style>
 {#if selectedItem}
@@ -320,11 +320,10 @@
     {#if !options.length}
         {#if !options.length}
             <nothingtosee transition>
-                <pre>---</pre>
+                <pre>by IKEA</pre>
             </nothingtosee>
         {/if}
-    {/if}
-    {#if options.some(({qty}) => qty !== '')}
+    {:else if !options.some(({qty}) => qty == '')}
         <Button variant="raised" on:click={copyToClipboard}>copy to clipboard</Button>
         <Button color="secondary">start over</Button>
     {/if}
