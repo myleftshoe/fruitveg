@@ -279,7 +279,7 @@
             name = ''
         }}>close</IconButton> -->
     </search>
-    <form id="mainform">
+    <form id="mainform" on:submit|preventDefault>
         {#each options as option}
             <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden; height: 100%;">
                 <qtyunit>
@@ -328,7 +328,7 @@
                 </select> -->
             </Item>
         {/each}
-    <button type="submit" style="visibility:hidden;"/>
+        <input type="submit" style="visibility:hidden;"/>
     </form>
 </main>
 <footer>
