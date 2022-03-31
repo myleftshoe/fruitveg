@@ -339,7 +339,7 @@
         {/each}
     </form>
 </main>
-<footer>
+<footer on:click={() => {refs.name.blur()}}>
     {#if !options.length}
         {#if !options.length}
             <nothingtosee transition>
