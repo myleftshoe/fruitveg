@@ -271,7 +271,7 @@
             name="name" 
             bind:this={refs.name}
             bind:value={name} 
-            placeholder="stoktayk"
+            placeholder="stöktayk"
             on:focus={() => refs.name.select()}
             size="11"
         />
