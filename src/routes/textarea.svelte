@@ -199,6 +199,14 @@
         font-family: mono;
         font-weight: bold;
     }
+    footer {
+        margin-top: 15vh;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+    }
 </style>
 {#if selectedItem}
     <Drawer bind:item={selectedItem} on:change={() => {
@@ -267,12 +275,21 @@
             </Item>
         {/each}
     </form>
-    {#if !options.length}
-        <nothingtosee transition>
-            <pre>---</pre>
-        </nothingtosee>
-    {/if}
 </main>
+<footer>
+    {#if !options.length}
+        {#if !options.length}
+            <nothingtosee transition>
+                <pre>---</pre>
+            </nothingtosee>
+        {/if}
+    {/if}
+    {#if options.some(({qty}) => qty !== '')}
+        <Button variant="raised">copy to clipboard</Button>
+        <Button color="secondary">start over</Button>
+    {/if}
+</footer>
+
 <!-- <fab>
     <IconButton class="material-icons">search</IconButton>
 </fab> -->
