@@ -228,17 +228,11 @@
                         name="qty"
                         bind:value={option.qty}
                         id="qty"
-                        type="text"
+                        type="number"
                         min="0"
                         max="99"
                         step="1"
                         on:keypress={(e) => handleKeyPress(e, option)}
-                        on:focus={(e) => {
-                            e.target.type="number"
-                        }}
-                        on:blur={(e) => {
-                            e.target.type="text"
-                        }}
                     />
                     <sup>{option.unit}</sup>
                 </qtyunit>
