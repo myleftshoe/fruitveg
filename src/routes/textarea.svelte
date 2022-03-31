@@ -124,9 +124,9 @@
     let showItems = false
     let selectedItem
     let focused
+    const localStorageId = 'fruitveg-localStorage'
 
-
-    let items = browser && JSON.parse(localStorage.getItem('fruitveg-textarea')) || []
+    let items = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
 
 
     $: if (!items.length && $products.length) {   
@@ -278,7 +278,7 @@
             bind:value={name} 
             placeholder="stöktayk"
             on:focus={() => {
-                browser && localStorage.setItem('fruitveg-textarea', JSON.stringify(items))
+                browser && localStorage.setItem(localStorageId, JSON.stringify(items))
                 refs.name.select()
             }}
             size="11"
@@ -363,7 +363,7 @@
         <Button on:click={() => {
             items.length = 0
             if (browser) {
-                localStorage.removeItem('fruitveg-textarea')
+                localStorage.removeItem(localStorageId)
                 items = []
             }
         }}
