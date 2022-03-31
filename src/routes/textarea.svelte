@@ -352,7 +352,7 @@
         Clear current stocktake and start a new one?
     </Content>
     <Actions>
-        <Button on:click={() => {}}>start new</Button>
+        <Button on:click={() => {items.length = 0}}>start new</Button>
         <Button defaultAction>cancel</Button>
     </Actions>
 </Dialog>
