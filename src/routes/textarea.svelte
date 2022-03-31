@@ -1,8 +1,8 @@
 <script>
     import { tick } from 'svelte'
     import { slide as transition } from 'svelte/transition'
-        import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
-        import Button from '@smui/button'
+    import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
+    import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
 
     import Autocomplete from '@smui-extra/autocomplete'
@@ -11,6 +11,8 @@
     import Textfield from '@smui/textfield'
     import Icon from '@smui/textfield/icon'
     import products from '$lib/productStore'
+
+    import Drawer from './drawer.svelte'
 
     const refs = {
         form: null,
@@ -21,23 +23,10 @@
     }
 
     let fruits = ['Apple', 'Orange', 'Banana', 'Mango']
-    let units = [
-        'bags',
-        'boxes',
-        'crates',
-        'tubs',
-        'bin',
-        'shelf',
-        'trolley',
-        'nets',
-        'sacks'
-    ]
     let name = ''
     let unit = ''
     let qty = ''
     let textarea = ''
-
-    let showUnits = false
 
 
     function handleQtyClick(e) {
@@ -55,7 +44,6 @@
         }
         if (e.key === ' ') {
             e.preventDefault()
-            showUnits = true
             e.target.blur()
         }
     }
@@ -86,25 +74,29 @@
         console.table(fields)
     }
 
+
+    let label = ''
     let showItems = false
     let items = []
+    let selectedItem
 
     $: if (!items.length && $products.length) {   
             items = $products
                 .map(({name}) => ({
                     name: name.toLowerCase(),
                     qty: '',
-                    unit: '',
+                    unit: '---',
                 })) || []
                 console.table(items)
     }
                 
 
-    $: options = name && 
+    $: options = items.length && name && 
         items.filter((product) => product.name.includes(name.toLowerCase())) || 
         items.filter((product) => product.qty !== '')
 
 
+    $: console.log(selectedItem)
 
 </script>
 
@@ -154,32 +146,17 @@
         text-decoration: underline;
         text-decoration-color: orange;
     }
-
     input[name="qty"] {
-        background-color: #7773;
+        /* background-color: #7773; */
         font-size: 1.8em;
         font-weight: bold;
         font-family: sans;
         width: 4ch;
         height: 2.6ch;
         text-align: center;
-        border-radius: 8px;
+        /* border-radius: 8px; */
+        margin-bottom: -12px;
         color:darkorange;
-    }
-    units {
-        position: fixed;
-        top:0;
-        left:0;
-        display: flex;
-        width:30vw;
-        height:100%;
-        gap: 16px;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: #777;
-        z-index:101;
-        /* margin-bottom: 40px; */
     }
     :global(body) {
         margin: 0;
@@ -196,13 +173,36 @@
         border-radius: 8px; */
         padding: 32px;
     }
+    qtyunit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #7773;
+        border-radius: 8px;
+    }
+    tab {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 20%;
+        right:0;
+        height: 15vh;
+        width: 64px;
+        background-color: #7777;
+        border-radius: 8px 0 0 8px;
+    }
+    sup {
+        font-variant: small-caps;
+        font-family: mono;
+        font-weight: bold;
+    }
 </style>
-{#if showUnits}
-    <units transition:transition={{duration: 250}}>
-        {#each units as unit}
-            <Button on:click={() => showUnits = false}>{unit}</Button>
-        {/each}
-    </units>
+{#if selectedItem}
+    <Drawer bind:item={selectedItem} on:change={() => {
+        console.log('change')
+        items=[...items]
+    }}/>
 {/if}
 <main>
     <search>
@@ -218,22 +218,32 @@
         }}>close</IconButton> -->
     </search>
     <form>
-        {#each options as option}
-            <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden;">
-                <input
-                    name="qty"
-                    bind:value={option.qty}
-                    id="qty"
-                    type="number"
-                    min="0"
-                    max="99"
-                    step="1"
-                    on:keypress={handleKeyPress}
-                />
-                <pre value={option.name} on:click={() => {
-                    if (showUnits) {
-                        showUnits = false;
-                        return;
+        {#each options as option, index (option)}
+            <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden; height: 100%;">
+                <qtyunit>
+                    <input
+                        name="qty"
+                        bind:value={option.qty}
+                        id="qty"
+                        type="tel"
+                        min="0"
+                        max="99"
+                        step="1"
+                        on:keypress={handleKeyPress}
+                        on:focus={() => {
+                            selectedItem = option
+                        }}
+                        on:blur={() => {
+                            selectedItem = null
+                        }}
+                    />
+                    <sup>{option.unit}</sup>
+                </qtyunit>
+                <pre value={option.name} on:click={(e) => {
+                    if (selectedItem) {
+                        items = [...items]
+                        return
+
                     }
                     name = ''
                     refs.name.scrollIntoView({behavior: "smooth"})
@@ -262,8 +272,8 @@
         {/each}
     </form>
     {#if !options.length}
-        <nothingtosee>
-            <pre>Nothing to see here.</pre>
+        <nothingtosee transition>
+            <pre>---</pre>
         </nothingtosee>
     {/if}
 </main>
@@ -282,3 +292,6 @@
     </Paper>
 </units>
 {/if} -->
+<!-- <tab>
+tab
+</tab> -->
