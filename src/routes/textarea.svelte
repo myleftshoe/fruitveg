@@ -270,8 +270,8 @@
         selectedItem = null
     }}/>
 {/if}
-<main>
-    <search>
+<main on:click={() => {refs.name.blur()}}>
+    <search on:click|stopPropagation>
         <input 
             name="name" 
             bind:this={refs.name}
