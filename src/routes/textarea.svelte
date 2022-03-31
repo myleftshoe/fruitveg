@@ -1,5 +1,7 @@
 <script>
     import { tick } from 'svelte'
+    import { browser } from '$app/env';
+
     import { slide as transition } from 'svelte/transition'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
@@ -120,9 +122,12 @@
 
     let label = ''
     let showItems = false
-    let items = []
     let selectedItem
     let focused
+
+
+    let items = browser && JSON.parse(localStorage.getItem('fruitveg-textarea')) || []
+
 
     $: if (!items.length && $products.length) {   
             items = $products
@@ -272,7 +277,10 @@
             bind:this={refs.name}
             bind:value={name} 
             placeholder="stöktayk"
-            on:focus={() => refs.name.select()}
+            on:focus={() => {
+                browser && localStorage.setItem('fruitveg-textarea', JSON.stringify(items))
+                refs.name.select()
+            }}
             size="11"
         />
         <!-- <IconButton class="material-icons" slot="trailingIcon" on:click={() => {
@@ -352,7 +360,16 @@
         Clear current stocktake and start a new one?
     </Content>
     <Actions>
-        <Button on:click={() => {items.length = 0}}>start new</Button>
+        <Button on:click={() => {
+            items.length = 0
+            if (browser) {
+                localStorage.removeItem('fruitveg-textarea')
+                items = []
+            }
+        }}
+        >
+            start new
+        </Button>
         <Button defaultAction>cancel</Button>
     </Actions>
 </Dialog>
