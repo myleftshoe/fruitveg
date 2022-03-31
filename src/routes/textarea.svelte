@@ -214,7 +214,7 @@
     }
     qtyunit {
         display: flex;
-        height: 6ch;
+        height: 3.8em;
         flex-direction: column;
         align-items: center;
         background-color: #7773;
@@ -225,13 +225,13 @@
         font-weight: bold;
     }
     footer {
-        margin-top: 15vh;
-        margin-bottom: 15vh;
+        margin-top: 10vh;
+        margin-bottom: 10vh;
         display:flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 80px;
+        gap: 10vh;
     }
 </style>
 {#if selectedItem}
