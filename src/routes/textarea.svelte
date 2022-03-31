@@ -279,10 +279,9 @@
             name = ''
         }}>close</IconButton> -->
     </search>
-    <form id="mainform" on:submit|preventDefault>
+    <form id="mainform" on:submit|preventDefault={() => {}}>
         {#each options as option}
-            <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden; height: 100%;">
-                <qtyunit>
+            <Item  style="display:flex; gap: 20px; overflow: hidden; height: 100%;">
                     <input
                         form="mainform" 
                         name="qty"
@@ -292,8 +291,6 @@
                         on:focus={() => focused = option}
                         on:keypress={(e) => handleKeyPress(e, option)}
                     />
-                    <sup>{option.unit}</sup>
-                </qtyunit>
                 <pre value={option.name} on:click={(e) => {
                     if (focused) {
                         selectedItem = focused
