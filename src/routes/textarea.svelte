@@ -221,7 +221,7 @@
         }}>close</IconButton> -->
     </search>
     <form>
-        {#each options as option, index (option)}
+        {#each options as option}
             <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden; height: 100%;">
                 <qtyunit>
                     <input
