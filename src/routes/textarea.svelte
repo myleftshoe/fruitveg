@@ -2,6 +2,7 @@
     import { tick } from 'svelte'
     import { slide as transition } from 'svelte/transition'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
+    import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
 
@@ -30,6 +31,8 @@
     let qty = ''
     let textarea = ''
 
+    let copied = false
+    let warn = false
 
     async function copyToClipboard() {
         const text = items
@@ -38,8 +41,8 @@
             .join('\n')
         clipboard.copy(text)
         console.log(text)
-        // copied = true
-        // setTimeout(() => copied = false, 1250)
+        copied = true
+        setTimeout(() => copied = false, 1250)
     }
 
 
@@ -233,6 +236,14 @@
         align-items: center;
         gap: 10vh;
     }
+    message {
+        /* text-transform: uppercase; */
+        transition: opacity .25s ease-in-out;
+        color: orangered;
+        font-family: arial;
+        /* font-size: small; */
+    }
+
 </style>
 {#if selectedItem}
     <Drawer bind:item={selectedItem} on:change={() => {
@@ -324,10 +335,25 @@
             </nothingtosee>
         {/if}
     {:else if !options.some(({qty}) => qty == '')}
+                <message style="opacity: {copied ? 1 : 0}">copied!</message>
+
         <Button variant="raised" on:click={copyToClipboard}>copy to clipboard</Button>
-        <Button color="secondary">start over</Button>
+        <Button color="secondary" on:click={() => { warn = true }}>start over</Button>
     {/if}
 </footer>
+
+
+<Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
+    <!-- <Title>Start new stocktake?</Title> -->
+    <Content>
+        Clear current stocktake and start a new one?
+    </Content>
+    <Actions>
+        <Button on:click={() => {}}>start new</Button>
+        <Button defaultAction>cancel</Button>
+    </Actions>
+</Dialog>
+
 
 <!-- <fab>
     <IconButton class="material-icons">search</IconButton>
