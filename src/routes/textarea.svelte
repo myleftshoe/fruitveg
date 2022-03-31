@@ -328,6 +328,7 @@
                 </select> -->
             </Item>
         {/each}
+    <button type="submit" style="visibility:hidden;"/>
     </form>
 </main>
 <footer>
