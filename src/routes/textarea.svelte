@@ -265,11 +265,12 @@
             name = ''
         }}>close</IconButton> -->
     </search>
-    <form>
+    <form id="mainform">
         {#each options as option}
             <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden; height: 100%;">
                 <qtyunit>
                     <input
+                        form="mainform" 
                         name="qty"
                         bind:value={option.qty}
                         type="tel"
