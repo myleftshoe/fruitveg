@@ -1,7 +1,7 @@
 {
-    "short_name": "svelte-pwa",
-    "name": "svelte-test-pwa",
-    "start_url": "/tags",
+    "short_name": "stöktayk",
+    "name": "stöktayk",
+    "start_url": "/textarea",
     "icons": [{
         "src": "logo_512.png",
         "type": "image/png",
@@ -10,7 +10,7 @@
     "background_color": "#3367D6",
     "display": "standalone",
     "orientation": "landscape",
-    "scope": "/tags",
+    "scope": "/textarea",
     "theme_color": "#3367D6",
-    "description": "Lofi to lofi beats, while using the scratchpad to list down tasks and thoughts"
+    "description": "stöktayk by IKEA"
 }
