@@ -227,7 +227,6 @@
                     <input
                         name="qty"
                         bind:value={option.qty}
-                        id="qty"
                         type="number"
                         min="0"
                         max="99"
@@ -244,7 +243,6 @@
 
                     }
                     name = ''
-                    refs.name.scrollIntoView({behavior: "smooth"})
                     refs.name.focus()
                 }}>{option.name}</pre>
                 <!-- <select
