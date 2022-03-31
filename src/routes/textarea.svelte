@@ -213,7 +213,8 @@
             name="name" 
             bind:this={refs.name}
             bind:value={name} 
-            placeholder="stocktake"
+            placeholder="stoktayk"
+            on:focus={() => refs.name.select()}
             size="11"
         />
         <!-- <IconButton class="material-icons" slot="trailingIcon" on:click={() => {
@@ -243,7 +244,6 @@
 
                     }
                     refs.name.focus()
-                    refs.name.select()
                 }}>{option.name}</pre>
                 <!-- <select
                     name="unit"
