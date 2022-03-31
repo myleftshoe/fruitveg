@@ -60,6 +60,28 @@
             e.preventDefault()
             e.target.blur()
             selectedItem = option
+            return
+        }
+
+        const value = e.target.value
+        if (value.length === 2) {
+            const convert = {
+                '12': '1/2',
+                '14': '1/4',
+                '24': '1/2',
+                '34': '3/4',
+                '13': '1/3',
+                '23': '2/3',
+                '0': 'bin',
+                '1': 'shelf',
+            }
+            const frac = convert[value]
+            if (frac) {
+                focused.qty = frac
+                focused.unit = convert[e.key] || focused.unit
+                items = [...items]
+                e.preventDefault()
+            }
         }
     }
 
@@ -215,6 +237,16 @@
 {#if selectedItem}
     <Drawer bind:item={selectedItem} on:change={() => {
         console.log('change')
+        const convert = { 
+            '12': '1/2',
+            '14': '1/4',
+            '24': '2/4',
+            '13': '1/3',
+            '23': '2/3',
+        }
+        if (['bin', 'shelf', 'trolley'].includes(selectedItem.unit)) {
+            selectedItem.qty = convert[selectedItem.qty]
+        }
         items=[...items]
         selectedItem = null
     }}/>

@@ -15,7 +15,8 @@
         'shelf',
         'trolley',
         'nets',
-        'sacks'
+        'sacks',
+        'pcs'
     ]
 
     export let item = {}
