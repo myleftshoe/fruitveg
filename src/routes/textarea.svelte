@@ -223,7 +223,7 @@
     <form>
         {#each options as option}
             <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden; height: 100%;">
-                <qtyunit>
+                <!-- <qtyunit> -->
                     <input
                         name="qty"
                         bind:value={option.qty}
@@ -233,8 +233,8 @@
                         step="1"
                         on:keypress={(e) => handleKeyPress(e, option)}
                     />
-                    <sup>{option.unit}</sup>
-                </qtyunit>
+                    <!-- <sup>{option.unit}</sup> -->
+                <!-- </qtyunit> -->
                 <pre value={option.name} on:click={(e) => {
                     if (selectedItem) {
                         items = [...items]
@@ -242,7 +242,6 @@
                         return
 
                     }
-                    name = ''
                     refs.name.focus()
                 }}>{option.name}</pre>
                 <!-- <select
