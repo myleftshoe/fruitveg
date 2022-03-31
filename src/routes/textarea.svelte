@@ -302,7 +302,7 @@
                     />
                     <sup>{option.unit}</sup>
                 </qtyunit>
-                <pre value={option.name} on:click={(e) => {
+                <pre value={option.name} on:click|stopPropagation={(e) => {
                     refs.name.blur()
                     if (focused) {
                         selectedItem = focused
