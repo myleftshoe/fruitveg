@@ -11,6 +11,8 @@
     import Textfield from '@smui/textfield'
     import Icon from '@smui/textfield/icon'
     import products from '$lib/productStore'
+    import clipboard from '../helpers/clipboard.js'
+
 
     import Drawer from './drawer.svelte'
 
@@ -27,6 +29,18 @@
     let unit = ''
     let qty = ''
     let textarea = ''
+
+
+    async function copyToClipboard() {
+        const text = items
+            .filter((item) => item.qty !== '')
+            .map(({name, qty, unit}) => `${qty} ${name}${unit && ` (${unit})`}`)
+            .join('\n')
+        clipboard.copy(text)
+        console.log(text)
+        // copied = true
+        // setTimeout(() => copied = false, 1250)
+    }
 
 
     function handleQtyClick(e) {
@@ -80,13 +94,14 @@
     let showItems = false
     let items = []
     let selectedItem
+    let focused
 
     $: if (!items.length && $products.length) {   
             items = $products
                 .map(({name}) => ({
                     name: name.toLowerCase(),
                     qty: '',
-                    unit: '-',
+                    unit: '',
                 })) || []
                 console.table(items)
     }
@@ -177,26 +192,14 @@
     }
     qtyunit {
         display: flex;
+        height: 6ch;
         flex-direction: column;
         align-items: center;
         background-color: #7773;
         border-radius: 8px;
     }
-    tab {
-        position: fixed;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        top: 20%;
-        right:0;
-        height: 15vh;
-        width: 64px;
-        background-color: #7777;
-        border-radius: 8px 0 0 8px;
-    }
     sup {
-        font-variant: small-caps;
-        font-family: mono;
+        font-family: monospace;
         font-weight: bold;
     }
     footer {
@@ -236,20 +239,23 @@
                     <input
                         name="qty"
                         bind:value={option.qty}
-                        type="number"
-                        min="0"
-                        max="99"
-                        step="1"
+                        type="tel"
+                        step="any"
+                        on:focus={() => focused = option}
                         on:keypress={(e) => handleKeyPress(e, option)}
                     />
                     <sup>{option.unit}</sup>
                 </qtyunit>
                 <pre value={option.name} on:click={(e) => {
+                    if (focused) {
+                        selectedItem = focused
+                        focused = null
+                        return
+                    }
                     if (selectedItem) {
                         items = [...items]
                         selectedItem = null
                         return
-
                     }
                     refs.name.focus()
                 }}>{option.name}</pre>
@@ -285,7 +291,7 @@
         {/if}
     {/if}
     {#if options.some(({qty}) => qty !== '')}
-        <Button variant="raised">copy to clipboard</Button>
+        <Button variant="raised" on:click={copyToClipboard}>copy to clipboard</Button>
         <Button color="secondary">start over</Button>
     {/if}
 </footer>
