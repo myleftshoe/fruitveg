@@ -204,6 +204,7 @@
     <Drawer bind:item={selectedItem} on:change={() => {
         console.log('change')
         items=[...items]
+        selectedItem = null
     }}/>
 {/if}
 <main>
