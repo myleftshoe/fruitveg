@@ -36,7 +36,7 @@
         }
     }
 
-    async function handleKeyPress(e) {
+    async function handleKeyPress(e, option) {
         console.log(e.key)
         if (e.key === 'Enter') {
             refs.name.focus()
@@ -45,6 +45,7 @@
         if (e.key === ' ') {
             e.preventDefault()
             e.target.blur()
+            selectedItem = option
         }
     }
 
@@ -128,6 +129,7 @@
     input[name="name"] {
         /* width:100%;  */
         /* padding:16px; */
+        color:#7777;
         flex-grow: 1;
         font-size: 2.8em;
         font-weight: bold;
@@ -225,16 +227,16 @@
                         name="qty"
                         bind:value={option.qty}
                         id="qty"
-                        type="tel"
+                        type="text"
                         min="0"
                         max="99"
                         step="1"
-                        on:keypress={handleKeyPress}
-                        on:focus={() => {
-                            selectedItem = option
+                        on:keypress={(e) => handleKeyPress(e, option)}
+                        on:focus={(e) => {
+                            e.target.type="number"
                         }}
-                        on:blur={() => {
-                            selectedItem = null
+                        on:blur={(e) => {
+                            e.target.type="text"
                         }}
                     />
                     <sup>{option.unit}</sup>
@@ -242,6 +244,7 @@
                 <pre value={option.name} on:click={(e) => {
                     if (selectedItem) {
                         items = [...items]
+                        selectedItem = null
                         return
 
                     }

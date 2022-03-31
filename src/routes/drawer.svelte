@@ -38,7 +38,7 @@
         top:0;
         right:0;
         display: flex;
-        width:50vw;
+        /* width:50vw; */
         height:100%;
         background-color: #777e;
         z-index:101;
@@ -46,12 +46,12 @@
         /* margin-bottom: 40px; */
     }
     special {
-        width: 50%;
+        /* width: 50%; */
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        gap: 16px;
-        align-items: flex-start;
+        /* gap: 2px; */
+        align-items: center;
     }
     button {
         background:none;
@@ -63,11 +63,11 @@
 
 </style>
 <drawer transition:transition={{duration: 250}}>
-    <special>
+    <!-- <special>
         {#each ['1/4', '3/4', '1/3', '2/3'] as value}
             <button {value} style="width: 100%; color:orange;" on:click={handleFracClick}>{value}</button>
         {/each}
-    </special>
+    </special> -->
     <special>
         {#each units as value}
             <button {value} style="width: 100%; color:orange;" on:click={handleUnitClick}>{value}</button>
