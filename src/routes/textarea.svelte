@@ -86,6 +86,9 @@
                 e.preventDefault()
             }
         }
+        if (value.length > 1) {
+            e.preventDefault()
+        }
     }
 
     function handleSelectChange(e) {
