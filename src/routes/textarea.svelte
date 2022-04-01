@@ -364,7 +364,7 @@
         await tick()
         refs.name.focus()
         name = ''
-    }}>home</IconButton>
+    }}>search</IconButton>
 </float>
 <!-- <fab>
     <IconButton class="material-icons">search</IconButton>
