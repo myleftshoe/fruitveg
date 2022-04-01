@@ -159,7 +159,7 @@
     main {
         /* width:100vw; */
         display: flex;
-        margin-top: 25vh;
+        margin-top: 20vh;
         flex-direction: column;
         align-items: center;
         /* margin-top: 22vh; */
@@ -184,6 +184,7 @@
     input[name="name"] {
         /* width:100%;  */
         /* padding:16px; */
+        transform: translateY(8px);
         color:#000;
         flex-grow: 1;
         font-size: 2.8em;
@@ -194,7 +195,7 @@
         text-transform: lowercase;
         text-decoration: underline;
         text-decoration-color: orange;       
-        /* background-color: #7777 */
+        /* background-color: #7777; */
         /* text-shadow: 3px 3px 8px #000f; */
         text-decoration-thickness: 5px;
         text-underline-offset: 0.2em;
@@ -225,11 +226,6 @@
         align-items: center;
         justify-content: center;
     }
-    nothingtosee {
-        /* background-color: #fa07;
-        border-radius: 8px; */
-        padding: 32px;
-    }
     qtyunit {
         display: flex;
         height: 3.8em;
@@ -241,14 +237,6 @@
     sup {
         font-family: monospace;
         font-weight: bold;
-    }
-    message {
-        /* text-transform: uppercase; */
-        transition: opacity .25s ease-in-out;
-        color: orange;
-        font-family: monospace;
-        text-transform: uppercase;
-        /* font-size: small; */
     }
     float {
         position: fixed;
@@ -269,15 +257,11 @@
         display:flex;
         flex-direction: column;
         align-items: center;
-        height: 22vh;
+        justify-content:flex-end;
+        height: 17vh;
     }
     buttons {
-        display:flex;
-        /* flex-direction: column; */
-        justify-content: space-between;
         width:calc( 100% - 8px );
-        gap: 8px;
-        padding: 0px 4px 4px 4px;
     }
 
 </style>
@@ -401,6 +385,11 @@
 tab
 </tab> -->
 <stickybottom>
+    <buttons>
+        <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
+        <IconButton class="material-icons" size="button" on:click={() => { warn = true }} style="position: absolute; top: 4px; left 4px">replay</IconButton>
+        <IconButton class="material-icons" size="button" on:click={copyToClipboard} style="position: absolute; top: 4px; right: 4px;">{copied ? "check": "content_copy" }</IconButton>
+    </buttons>
     <search on:click|stopPropagation>
         <input 
             name="name" 
@@ -415,9 +404,4 @@ tab
         />
         <IconButton class="material-icons" size="button" slot="trailingIcon" disabled={!name} on:click={() => { name = '' }}>close</IconButton>
     </search>
-        <buttons>
-            <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
-            <IconButton class="material-icons" size="button" on:click={() => { warn = true }}>replay</IconButton>
-            <IconButton class="material-icons" size="button" on:click={copyToClipboard}>{copied ? "check": "content_copy" }</IconButton>
-        </buttons>
 </stickybottom>
