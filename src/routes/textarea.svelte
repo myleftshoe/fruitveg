@@ -160,6 +160,7 @@
         /* width:100vw; */
         display: flex;
         margin-top: 5vh;
+        margin-bottom: 40vh;
         flex-direction: column;
         align-items: center;
         /* margin-top: 22vh; */
@@ -262,7 +263,7 @@
     }
     stickybottom {
         position: fixed;
-        bottom:0;
+        top:0;
         background-color: #7773;
         width: 100%;
         display:flex;
