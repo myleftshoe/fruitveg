@@ -16,7 +16,7 @@ export default readable([], (set) => {
                 label4: row.label4,
                 label5: row.label5,
                 label6: row.label6,
-                name: `${row.label5} ${row.label4}`.trim(),
+                name: `${row.label4} ${row.label5}`.trim(),
                 price: row.label6,
                 label8: row.label8,
                 label9: row.label9,
