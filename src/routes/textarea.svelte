@@ -319,10 +319,6 @@
                         step="any"
                         on:focus={() => focused = option}
                         on:keypress={(e) => handleKeyPress(e, option)}
-                        on:click={(e) => {
-                            if (focused === option)
-                                selectedItem = option
-                        }}
                     />
                     <sup>{option.unit}</sup>
                 </qtyunit>
