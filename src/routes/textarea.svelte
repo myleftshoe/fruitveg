@@ -400,7 +400,7 @@
         await tick()
         refs.name.focus()
         name = ''
-    }}>arrow_upward</IconButton>
+    }}>home</IconButton>
     <!-- <IconButton class="material-icons" on:click={() => selectedItem = focused}>arrow_back</IconButton> -->
 </float>
 <!-- <fab>
