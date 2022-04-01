@@ -86,6 +86,12 @@
                 focused.unit = convert[e.key] || focused.unit
                 items = [...items]
                 e.preventDefault()
+                return
+            }
+            if (e.key === '0') {
+                e.preventDefault()
+                selectedItem = option
+                return
             }
         }
         if (value.length > 1) {
