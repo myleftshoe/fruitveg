@@ -221,9 +221,9 @@
     search {
         display: flex;
         height: 18vh;
-        width:100%;
-        /* align-items: stretch; */
-        /* justify-content: flex-end; */
+        /* width:100%; */
+        align-items: center;
+        justify-content: center;
     }
     nothingtosee {
         /* background-color: #fa07;
@@ -372,14 +372,14 @@
         <Button defaultAction>cancel</Button>
     </Actions>
 </Dialog>
-<!-- <float>
+<float>
     <IconButton class="material-icons" on:click={async () => { 
         refs.name.blur()
         await tick()
         refs.name.focus()
         name = ''
     }}>home</IconButton>
-</float> -->
+</float>
 <!-- <fab>
     <IconButton class="material-icons">search</IconButton>
 </fab> -->
@@ -409,9 +409,9 @@ tab
                 browser && localStorage.setItem(localStorageId, JSON.stringify(items))
                 selectedItem = null
             }}
-            size="11"
+            size="8"
         />
-        <IconButton class="material-icons" size="button" slot="trailingIcon" style="margin: 4px;" on:click={() => { name = '' }}>close</IconButton>
+        <IconButton class="material-icons" size="button" slot="trailingIcon" disabled={!name} on:click={() => { name = '' }}>close</IconButton>
     </search>
     {#if !options.length}
         {#if !options.length}
