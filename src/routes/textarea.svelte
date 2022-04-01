@@ -159,6 +159,7 @@
     main {
         /* width:100vw; */
         display: flex;
+        margin-top: 5vh;
         flex-direction: column;
         align-items: center;
         /* margin-top: 22vh; */
@@ -183,7 +184,7 @@
     input[name="name"] {
         /* width:100%;  */
         /* padding:16px; */
-        color:#7777;
+        color:#555;
         flex-grow: 1;
         font-size: 2.8em;
         font-weight: bold;
@@ -273,6 +274,7 @@
         bottom:0;
         background-color: #7773;
         width: 100%;
+        height: 40vh;
     }
 
 </style>
