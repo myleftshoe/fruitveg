@@ -400,8 +400,9 @@
 </Dialog>
 <float>
     <IconButton class="material-icons" on:click={async () => { 
-        refs.name.focus()
+        refs.name.blur()
         await tick()
+        refs.name.focus()
         name = ''
     }}>arrow_upward</IconButton>
     <!-- <IconButton class="material-icons" on:click={() => selectedItem = focused}>arrow_back</IconButton> -->
