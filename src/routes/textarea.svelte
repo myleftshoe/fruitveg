@@ -271,10 +271,10 @@
     }
     stickybottom {
         position: fixed;
-        top:0;
+        bottom:0;
         background-color: #7773;
         width: 100%;
-        height: 40vh;
+        /* height: 25vh; */
     }
 
 </style>
@@ -420,7 +420,6 @@ tab
             placeholder="stöktayk"
             on:focus={() => {
                 browser && localStorage.setItem(localStorageId, JSON.stringify(items))
-                refs.name.select()
                 selectedItem = null
             }}
             size="11"
