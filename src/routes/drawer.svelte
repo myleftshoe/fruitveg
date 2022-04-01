@@ -61,8 +61,12 @@
         border:none;
         padding:16px;
         cursor: pointer;
+        width: 100%; 
+        color:orange;
+        font-family: arial;
+        font-size: 16px;
+        font-weight: bold;
     }
-
 </style>
 <drawer transition:transition={{duration: 250}}>
     <!-- <special>
@@ -72,7 +76,7 @@
     </special> -->
     <special>
         {#each units as value}
-            <button {value} style="width: 100%; color:orange;" on:click={handleUnitClick}>{value}</button>
+            <button {value} on:click={handleUnitClick}>{value}</button>
         {/each}
     </special>
 </drawer>

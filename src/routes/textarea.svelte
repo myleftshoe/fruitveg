@@ -245,8 +245,9 @@
     message {
         /* text-transform: uppercase; */
         transition: opacity .25s ease-in-out;
-        color: orangered;
-        font-family: arial;
+        color: orange;
+        font-family: monospace;
+        text-transform: uppercase;
         /* font-size: small; */
     }
     float {
@@ -268,7 +269,6 @@
         display:flex;
         flex-direction: column;
         align-items: center;
-        padding-bottom: 5vh;
         /* height: 25vh; */
     }
     buttons {
@@ -425,7 +425,8 @@ tab
         <buttons>
             <message style="opacity: {copied ? 1 : 0}">copied!</message>
             <Button variant="raised" on:click={copyToClipboard}>copy to clipboard</Button>
-            <Button color="secondary" on:click={() => { warn = true }}>start over</Button>
+            <Button style="color: #000;" on:click={() => { warn = true }}>start over</Button>
+            <div></div>
         </buttons>
     {/if}
 </stickybottom>
