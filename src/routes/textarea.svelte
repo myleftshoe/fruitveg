@@ -385,11 +385,6 @@
 tab
 </tab> -->
 <stickybottom>
-    <buttons>
-        <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
-        <IconButton class="material-icons" size="button" on:click={() => { warn = true }} style="position: absolute; top: 4px; left 4px">replay</IconButton>
-        <IconButton class="material-icons" size="button" on:click={copyToClipboard} style="position: absolute; top: 4px; right: 4px;">{copied ? "check": "content_copy" }</IconButton>
-    </buttons>
     <search on:click|stopPropagation>
         <input 
             name="name" 
@@ -405,3 +400,9 @@ tab
         <IconButton class="material-icons" size="button" slot="trailingIcon" disabled={!name} on:click={() => { name = '' }}>close</IconButton>
     </search>
 </stickybottom>
+
+    <buttons>
+        <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
+        <IconButton class="material-icons" size="button" on:click={() => { warn = true }} style="position: absolute; bottom: 20px; right: 130px;">replay</IconButton>
+        <IconButton class="material-icons" size="button" on:click={copyToClipboard} style="position: absolute; bottom: 130px; right: 20px;">{copied ? "check": "content_copy" }</IconButton>
+    </buttons>
