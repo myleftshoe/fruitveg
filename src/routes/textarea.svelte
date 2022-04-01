@@ -251,6 +251,17 @@
         font-family: arial;
         /* font-size: small; */
     }
+    float {
+        position: fixed;
+        top: 20vh;
+        padding: 16px;
+        gap: 32px;
+        right: 60px;
+        background-color: #7773;
+        border-radius: 40px;
+        display:flex;
+        flex-direction: column;
+    }
 
 </style>
 {#if selectedItem}
@@ -374,8 +385,14 @@
         <Button defaultAction>cancel</Button>
     </Actions>
 </Dialog>
-
-
+<float>
+    <IconButton class="material-icons" on:click={async () => { 
+        refs.name.focus()
+        await tick()
+        name = ''
+    }}>arrow_upward</IconButton>
+    <IconButton class="material-icons" on:click={() => selectedItem = focused}>arrow_back</IconButton>
+</float>
 <!-- <fab>
     <IconButton class="material-icons">search</IconButton>
 </fab> -->
