@@ -159,8 +159,7 @@
     main {
         /* width:100vw; */
         display: flex;
-        margin-top: 40vh;
-        margin-bottom: 40vh;
+        margin-top: 25vh;
         flex-direction: column;
         align-items: center;
         /* margin-top: 22vh; */
