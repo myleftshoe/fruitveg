@@ -13,10 +13,10 @@ export default readable([], (set) => {
             .map(row => ({
                 id: row.id,
                 plucode: row.label3,
-                label4: row.label4,
-                label5: row.label5,
+                label4: row.label4.trim(),
+                label5: row.label5.trim(),
                 label6: row.label6,
-                name: `${row.label4} ${row.label5}`.trim(),
+                name: `${row.label4.trim()} ${row.label5.trim()}`.trim(),
                 price: row.label6,
                 label8: row.label8,
                 label9: row.label9,
