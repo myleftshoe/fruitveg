@@ -1,3 +1,19 @@
+<script context="module">
+    const units = [
+        '[none]',
+        'bags',
+        'boxes',
+        'crates',
+        'tubs',
+        'trays',
+        'bin',
+        'shelf',
+        'trolley',
+        'nets',
+        'sacks',
+        'pcs'
+    ]
+</script>
 <script>
     import { tick } from 'svelte'
     import { browser } from '$app/env';
@@ -96,6 +112,7 @@
         }
         if (value.length > 1) {
             e.preventDefault()
+            return
         }
     }
 
@@ -125,7 +142,14 @@
         console.table(fields)
     }
 
+    const blankOption = {
+        name: '',
+        qty: '',
+        unit: '',
+    }
 
+    let option = { ...blankOption }
+    let typed = ''
     let label = ''
     let showItems = false
     let selectedItem
@@ -133,6 +157,15 @@
     const localStorageId = 'fruitveg-localStorage'
 
     let items = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
+
+    let added = []
+
+    function add(e) {
+        added = [ ...added, { ...option } ]
+        option = { ...blankOption }
+        option.name = typed
+        refs.qty.focus()
+    }
 
 
     $: if (!items.length && $products.length) {   
@@ -153,15 +186,18 @@
 
     $: console.log(selectedItem)
 
+    $: names = items.map(({name}) => name)
+
 </script>
 
 <style>
     main {
         /* width:100vw; */
         display: flex;
+        margin: 16px;
         margin-top: 20vh;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         /* margin-top: 22vh; */
     }
     pre {
@@ -171,72 +207,29 @@
     form {
         width:100%;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        flex-direction: row;
+        justify-content: center;
         gap: 2vh;
         /* padding: 16px; */
     }
-    input {
-        border: none;
+    input, select {
+        border: 2px solid orange;
+        border-radius: 8px;
         outline:none;
-        background: none;
-    }
-    input[name="name"] {
-        /* width:100%;  */
-        /* padding:16px; */
-        transform: translateY(8px);
-        color:#000;
-        flex-grow: 1;
-        font-size: 2.8em;
-        font-weight: bold;
-        font-family: courier;
-        /* color: white; */
-        text-align: center;
-        text-transform: lowercase;
-        text-decoration: underline;
-        text-decoration-color: orange;       
-        /* background-color: #7777; */
-        /* text-shadow: 3px 3px 8px #000f; */
-        text-decoration-thickness: 5px;
-        text-underline-offset: 0.2em;
-    }
-    input[name="name"]::placeholder {
-        text-decoration: underline;
-        text-decoration-color: orange;
+        background-color: transparent;
     }
     input[name="qty"] {
-        /* background-color: #7773; */
         font-size: 1.8em;
         font-weight: bold;
         font-family: sans;
         width: 4ch;
         height: 2.6ch;
         text-align: center;
-        /* border-radius: 8px; */
         margin-bottom: -12px;
-        color:darkorange;
+        color:orange;
     }
     :global(body) {
         margin: 0;
-    }
-    search {
-        display: flex;
-        height: 18vh;
-        /* width:100%; */
-        align-items: center;
-        justify-content: center;
-    }
-    qtyunit {
-        display: flex;
-        height: 3.8em;
-        flex-direction: column;
-        align-items: center;
-        background-color: #7773;
-        border-radius: 8px;
-    }
-    sup {
-        font-family: monospace;
-        font-weight: bold;
     }
     float {
         position: fixed;
@@ -264,79 +257,17 @@
         width:calc( 100% - 8px );
     }
 
+    select {  
+        padding: 16px;
+    }
+
 </style>
-{#if selectedItem}
-    <Drawer bind:item={selectedItem} on:change={() => {
-        console.log('change')
-        const convert = { 
-            '12': '1/2',
-            '14': '1/4',
-            '24': '2/4',
-            '13': '1/3',
-            '23': '2/3',
-        }
-        if (['bin', 'shelf', 'trolley'].includes(selectedItem.unit)) {
-            selectedItem.qty = convert[selectedItem.qty]
-        }
-        if (selectedItem.unit === '[none]')
-            selectedItem.unit = ''
-        items=[...items]
-        selectedItem = null
-    }}/>
-{/if}
 <main on:click={() => {refs.name.blur()}}>
-    <form id="mainform">
-        {#each options as option}
-            <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden; height: 100%;">
-                <qtyunit>
-                    <input
-                        form="mainform" 
-                        name="qty"
-                        bind:value={option.qty}
-                        type="tel"
-                        step="any"
-                        on:focus={() => focused = option}
-                        on:keypress={(e) => handleKeyPress(e, option)}
-                    />
-                    <sup>{option.unit}</sup>
-                </qtyunit>
-                <pre value={option.name} on:click|stopPropagation={(e) => {
-                    refs.name.blur()
-                    if (focused) {
-                        selectedItem = focused
-                        focused = null
-                        return
-                    }
-                    if (selectedItem) {
-                        items = [...items]
-                        selectedItem = null
-                        return
-                    }
-                    refs.name.focus()
-                }}>{option.name}</pre>
-                <!-- <select
-                    name="unit"
-                    bind:this={refs.unit}
-                    bind:value={option.unit}
-                    combobox
-                    options={units}
-                    on:focus={() => {
-                        console.log('fff')
-                        multiple=true
-                    }}
-                                on:blur={() => {
-                        console.log('bbb')
-                        multiple=false
-                    }}
-                >
-                    {#each units as unit}
-                        <option>{unit}</option>
-                    {/each}
-                </select> -->
-            </Item>
-        {/each}
-    </form>
+    {#each added as item}
+        <pre>{item.qty} {item.name} {item.unit}</pre>
+    {/each}
 </main>
+
 
 
 <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
@@ -366,47 +297,52 @@
         name = ''
     }}>search</IconButton>
 </float>
-<!-- <fab>
-    <IconButton class="material-icons">search</IconButton>
-</fab> -->
-
-<!-- {#if showUnits}
-<units transition:transition>
-    <Paper>
-        <wrap>
-        {#each units as unit}
-            <Button on:click={() => showUnits = false}>{unit}</Button>
-        {/each}
-        </wrap>
-    </Paper>
-</units>
-{/if} -->
-<!-- <tab>
-tab
-</tab> -->
 <stickybottom>
-    <search on:click|stopPropagation>
-        <input 
-            name="name" 
-            bind:this={refs.name}
-            bind:value={name} 
-            placeholder="stöktayk"
-            on:focus={() => {
-                browser && localStorage.setItem(localStorageId, JSON.stringify(items))
-                selectedItem = null
-            }}
-            size="8"
+    <form>
+        <input
+            name="qty"
+            bind:this={refs.qty}
+            bind:value={option.qty}
+            type="tel"
+            step="any"
+            on:focus={() => focused = option}
+            on:keypress={(e) => handleKeyPress(e, option)}
         />
-        <IconButton class="material-icons" size="button" slot="trailingIcon" disabled={!name} on:click={() => { name = '' }}>close</IconButton>
-    </search>
+        <Autocomplete  options={names} bind:value={option.name} on:keydown={(e) => {
+            typed = e.target.value
+            if (e.key.match(/[a-z]/i)) {
+                 typed = typed + e.key
+            }
+        }}/>
+        <select
+            name="unit"
+            bind:this={refs.unit}
+            bind:value={option.unit}
+            combobox
+            options={units}
+            on:focus={() => {
+                console.log('fff')
+                multiple=true
+            }}
+                        on:blur={() => {
+                console.log('bbb')
+                multiple=false
+            }}
+        >
+            {#each units as unit}
+                <option>{unit}</option>
+            {/each}
+        </select>
+    </form>
+    <IconButton class="material-icons" disabled={!option.name || !option.qty} on:click={add}>add</IconButton>
 </stickybottom>
 
-    <buttons>
-        <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
-        <IconButton class="material-icons" size="button" on:click={() => { warn = true }} 
-            style="position: fixed; bottom: 20px; right: 130px; background-color:#7773; border-radius: 50%;"
-        >replay</IconButton>
-        <IconButton class="material-icons" size="button" on:click={copyToClipboard} 
-            style="position: fixed; bottom: 130px; right: 20px; background-color:#7773; border-radius: 50%;"
-        >{copied ? "check": "content_copy" }</IconButton>
-    </buttons>
+<buttons>
+    <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
+    <IconButton class="material-icons" size="button" on:click={() => { warn = true }} 
+        style="position: fixed; bottom: 20px; right: 130px; background-color:#7773; border-radius: 50%;"
+    >replay</IconButton>
+    <IconButton class="material-icons" size="button" on:click={copyToClipboard} 
+        style="position: fixed; bottom: 130px; right: 20px; background-color:#7773; border-radius: 50%;"
+    >{copied ? "check": "content_copy" }</IconButton>
+</buttons>
