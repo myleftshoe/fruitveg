@@ -81,14 +81,14 @@
                 '1': 'shelf',
             }
             const frac = convert[value]
-            if (frac) {
+            if (frac && ['0','1'].includes(e.key)) {
                 focused.qty = frac
                 focused.unit = convert[e.key] || focused.unit
                 items = [...items]
                 e.preventDefault()
                 return
             }
-            if (e.key === '0') {
+            if (e.key === '9') {
                 e.preventDefault()
                 selectedItem = option
                 return
@@ -259,10 +259,10 @@
     }
     float {
         position: fixed;
-        bottom: 20vh;
+        bottom: 40px;
         padding: 16px;
         gap: 32px;
-        right: 60px;
+        right: 40px;
         background-color: #7773;
         border-radius: 40px;
         display:flex;
@@ -283,6 +283,8 @@
         if (['bin', 'shelf', 'trolley'].includes(selectedItem.unit)) {
             selectedItem.qty = convert[selectedItem.qty]
         }
+        if (selectedItem.unit === '[none]')
+            selectedItem.unit = ''
         items=[...items]
         selectedItem = null
     }}/>
@@ -297,6 +299,7 @@
             on:focus={() => {
                 browser && localStorage.setItem(localStorageId, JSON.stringify(items))
                 refs.name.select()
+                selectedItem = null
             }}
             size="11"
         />
@@ -316,6 +319,10 @@
                         step="any"
                         on:focus={() => focused = option}
                         on:keypress={(e) => handleKeyPress(e, option)}
+                        on:click={(e) => {
+                            if (focused === option)
+                                selectedItem = option
+                        }}
                     />
                     <sup>{option.unit}</sup>
                 </qtyunit>
@@ -397,7 +404,7 @@
         await tick()
         name = ''
     }}>arrow_upward</IconButton>
-    <IconButton class="material-icons" on:click={() => selectedItem = focused}>arrow_back</IconButton>
+    <!-- <IconButton class="material-icons" on:click={() => selectedItem = focused}>arrow_back</IconButton> -->
 </float>
 <!-- <fab>
     <IconButton class="material-icons">search</IconButton>

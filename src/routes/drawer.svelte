@@ -6,6 +6,7 @@
     const dispatch = createEventDispatcher()
 
     const units = [
+        '[none]',
         'bags',
         'boxes',
         'crates',
