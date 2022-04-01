@@ -44,7 +44,7 @@
         clipboard.copy(text)
         console.log(text)
         copied = true
-        setTimeout(() => copied = false, 1250)
+        setTimeout(() => copied = false, 1500)
     }
 
 
@@ -425,7 +425,7 @@ tab
         <buttons>
             <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
             <IconButton class="material-icons" size="button" on:click={() => { warn = true }}>replay</IconButton>
-            <IconButton class="material-icons" size="button" on:click={copyToClipboard}>content_copy</IconButton>
+            <IconButton class="material-icons" size="button" on:click={copyToClipboard}>{copied ? "check": "content_copy" }</IconButton>
         </buttons>
     {/if}
 </stickybottom>
