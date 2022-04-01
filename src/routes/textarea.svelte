@@ -242,15 +242,6 @@
         font-family: monospace;
         font-weight: bold;
     }
-    footer {
-        margin-top: 10vh;
-        margin-bottom: 10vh;
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 10vh;
-    }
     message {
         /* text-transform: uppercase; */
         transition: opacity .25s ease-in-out;
@@ -274,7 +265,17 @@
         bottom:0;
         background-color: #7773;
         width: 100%;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 5vh;
         /* height: 25vh; */
+    }
+    buttons {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
     }
 
 </style>
@@ -350,20 +351,6 @@
         {/each}
     </form>
 </main>
-<footer on:click={() => {refs.name.blur()}}>
-    {#if !options.length}
-        {#if !options.length}
-            <nothingtosee transition>
-                <pre>by IKEA</pre>
-            </nothingtosee>
-        {/if}
-    {:else if !options.some(({qty}) => qty == '')}
-                <message style="opacity: {copied ? 1 : 0}">copied!</message>
-
-        <Button variant="raised" on:click={copyToClipboard}>copy to clipboard</Button>
-        <Button color="secondary" on:click={() => { warn = true }}>start over</Button>
-    {/if}
-</footer>
 
 
 <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
@@ -428,4 +415,17 @@ tab
             name = ''
         }}>close</IconButton> -->
     </search>
+    {#if !options.length}
+        {#if !options.length}
+            <nothingtosee transition>
+                <pre>by IKEA</pre>
+            </nothingtosee>
+        {/if}
+    {:else if !options.some(({qty}) => qty == '')}
+        <buttons>
+            <message style="opacity: {copied ? 1 : 0}">copied!</message>
+            <Button variant="raised" on:click={copyToClipboard}>copy to clipboard</Button>
+            <Button color="secondary" on:click={() => { warn = true }}>start over</Button>
+        </buttons>
+    {/if}
 </stickybottom>
