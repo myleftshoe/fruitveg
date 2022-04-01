@@ -268,6 +268,12 @@
         display:flex;
         flex-direction: column;
     }
+    stickybottom {
+        position: fixed;
+        bottom:0;
+        background-color: #7773;
+        width: 100%;
+    }
 
 </style>
 {#if selectedItem}
@@ -290,23 +296,6 @@
     }}/>
 {/if}
 <main on:click={() => {refs.name.blur()}}>
-    <search on:click|stopPropagation>
-        <input 
-            name="name" 
-            bind:this={refs.name}
-            bind:value={name} 
-            placeholder="stöktayk"
-            on:focus={() => {
-                browser && localStorage.setItem(localStorageId, JSON.stringify(items))
-                refs.name.select()
-                selectedItem = null
-            }}
-            size="11"
-        />
-        <!-- <IconButton class="material-icons" slot="trailingIcon" on:click={() => {
-            name = ''
-        }}>close</IconButton> -->
-    </search>
     <form id="mainform">
         {#each options as option}
             <Item nonInteractive style="display:flex; gap: 20px; overflow: hidden; height: 100%;">
@@ -394,15 +383,14 @@
         <Button defaultAction>cancel</Button>
     </Actions>
 </Dialog>
-<float>
+<!-- <float>
     <IconButton class="material-icons" on:click={async () => { 
         refs.name.blur()
         await tick()
         refs.name.focus()
         name = ''
     }}>home</IconButton>
-    <!-- <IconButton class="material-icons" on:click={() => selectedItem = focused}>arrow_back</IconButton> -->
-</float>
+</float> -->
 <!-- <fab>
     <IconButton class="material-icons">search</IconButton>
 </fab> -->
@@ -421,3 +409,22 @@
 <!-- <tab>
 tab
 </tab> -->
+<stickybottom>
+    <search on:click|stopPropagation>
+        <input 
+            name="name" 
+            bind:this={refs.name}
+            bind:value={name} 
+            placeholder="stöktayk"
+            on:focus={() => {
+                browser && localStorage.setItem(localStorageId, JSON.stringify(items))
+                refs.name.select()
+                selectedItem = null
+            }}
+            size="11"
+        />
+        <!-- <IconButton class="material-icons" slot="trailingIcon" on:click={() => {
+            name = ''
+        }}>close</IconButton> -->
+    </search>
+</stickybottom>
