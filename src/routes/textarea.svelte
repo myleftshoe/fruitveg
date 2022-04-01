@@ -403,6 +403,6 @@ tab
 
     <buttons>
         <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
-        <IconButton class="material-icons" size="button" on:click={() => { warn = true }} style="position: absolute; bottom: 20px; right: 130px;">replay</IconButton>
-        <IconButton class="material-icons" size="button" on:click={copyToClipboard} style="position: absolute; bottom: 130px; right: 20px;">{copied ? "check": "content_copy" }</IconButton>
+        <IconButton class="material-icons" size="button" on:click={() => { warn = true }} style="position: fixed; bottom: 20px; right: 130px;">replay</IconButton>
+        <IconButton class="material-icons" size="button" on:click={copyToClipboard} style="position: fixed; bottom: 130px; right: 20px;">{copied ? "check": "content_copy" }</IconButton>
     </buttons>
