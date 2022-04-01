@@ -273,9 +273,11 @@
     }
     buttons {
         display:flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 40px;
+        /* flex-direction: column; */
+        justify-content: space-between;
+        width:calc( 100% - 8px );
+        gap: 8px;
+        padding: 0px 4px 4px 4px;
     }
 
 </style>
@@ -421,10 +423,9 @@ tab
         {/if}
     {:else if !options.some(({qty}) => qty == '')}
         <buttons>
-            <message style="opacity: {copied ? 1 : 0}">copied!</message>
-            <Button variant="raised" on:click={copyToClipboard}>copy to clipboard</Button>
-            <Button style="color: #000;" on:click={() => { warn = true }}>start over</Button>
-            <div></div>
+            <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
+            <IconButton class="material-icons" size="button" on:click={() => { warn = true }}>replay</IconButton>
+            <IconButton class="material-icons" size="button" on:click={copyToClipboard}>content_copy</IconButton>
         </buttons>
     {/if}
 </stickybottom>
