@@ -159,7 +159,7 @@
     main {
         /* width:100vw; */
         display: flex;
-        margin-top: 5vh;
+        margin-top: 40vh;
         margin-bottom: 40vh;
         flex-direction: column;
         align-items: center;
@@ -185,7 +185,7 @@
     input[name="name"] {
         /* width:100%;  */
         /* padding:16px; */
-        color:#555;
+        color:#000;
         flex-grow: 1;
         font-size: 2.8em;
         font-weight: bold;
@@ -264,7 +264,7 @@
     stickybottom {
         position: fixed;
         top:0;
-        background-color: #7773;
+        background-color: #777d;
         width: 100%;
         display:flex;
         flex-direction: column;
