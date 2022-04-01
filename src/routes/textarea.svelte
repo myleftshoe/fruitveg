@@ -253,7 +253,7 @@
     }
     float {
         position: fixed;
-        top: 20vh;
+        bottom: 20vh;
         padding: 16px;
         gap: 32px;
         right: 60px;
