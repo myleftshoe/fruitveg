@@ -223,7 +223,7 @@
         height: 18vh;
         width:100%;
         /* align-items: stretch; */
-        justify-content: flex-end;
+        /* justify-content: flex-end; */
     }
     nothingtosee {
         /* background-color: #fa07;
@@ -411,9 +411,7 @@ tab
             }}
             size="11"
         />
-        <!-- <IconButton class="material-icons" slot="trailingIcon" on:click={() => {
-            name = ''
-        }}>close</IconButton> -->
+        <IconButton class="material-icons" size="button" slot="trailingIcon" style="margin: 4px;" on:click={() => { name = '' }}>close</IconButton>
     </search>
     {#if !options.length}
         {#if !options.length}
