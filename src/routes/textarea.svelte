@@ -269,7 +269,7 @@
         display:flex;
         flex-direction: column;
         align-items: center;
-        /* height: 25vh; */
+        height: 22vh;
     }
     buttons {
         display:flex;
@@ -415,17 +415,9 @@ tab
         />
         <IconButton class="material-icons" size="button" slot="trailingIcon" disabled={!name} on:click={() => { name = '' }}>close</IconButton>
     </search>
-    {#if !options.length}
-        {#if !options.length}
-            <nothingtosee transition>
-                <pre>by IKEA</pre>
-            </nothingtosee>
-        {/if}
-    {:else if !options.some(({qty}) => qty == '')}
         <buttons>
             <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
             <IconButton class="material-icons" size="button" on:click={() => { warn = true }}>replay</IconButton>
             <IconButton class="material-icons" size="button" on:click={copyToClipboard}>{copied ? "check": "content_copy" }</IconButton>
         </buttons>
-    {/if}
 </stickybottom>
