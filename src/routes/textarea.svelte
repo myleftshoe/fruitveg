@@ -271,7 +271,7 @@
     }
     stickybottom {
         position: fixed;
-        bottom:0;
+        top:0;
         background-color: #7773;
         width: 100%;
         height: 40vh;
