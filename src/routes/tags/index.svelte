@@ -204,7 +204,7 @@
         background-color: transparent; 
     }
 </style>
-<svelte:window bind:outerWidth={width} bind:outerHeight={height}/>
+<svelte:window bind:innerWidth={width} bind:innerHeight={height}/>
 <main ondragover="return false" on:drop={remove}  style={`${width < height && "display: none;"}`}>
     {#each tagGroups as group, groupIndex (group.name)}
         <div animate:flip>
