@@ -165,7 +165,6 @@
         added = [  { ...option }, ...added ]
         // option = { ...blankOption }
         // option.name = typed
-        refs.qty.focus()
     }
 
     function remove(e) {
@@ -173,7 +172,6 @@
         added = added.slice(1)
         // option = { ...blankOption }
         // option.name = typed
-        refs.qty.focus()
     }
 
 
@@ -225,6 +223,8 @@
         gap: 2vh;
     }
     input, select {
+        color: #777;
+        font-size: 16px;
         border:none;
         border: 2px solid orange;
         border-radius: 8px;
@@ -301,6 +301,13 @@
         flex-direction: column;
         justify-content: space-between;
     }
+    addremove {
+        display: flex;
+        flex-direction:row;
+        width: 100%;
+        justify-content: space-around;
+        /* align-items: space-between; */
+    }
 
 </style>
 <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
@@ -322,15 +329,6 @@
         <Button defaultAction>cancel</Button>
     </Actions>
 </Dialog>
-<float>
-    <IconButton class="material-icons" on:click={async () => { 
-        refs.name.blur()
-        await tick()
-        refs.name.focus()
-        name = ''
-
-    }}>search</IconButton>
-</float>
 <form>
 <p></p>
     <qty>
@@ -382,13 +380,17 @@
             <option>{unit}</option>
         {/each}
     </select>
-<IconButton class="material-icons" disabled={!option.name || !option.qty} on:click={add}>add</IconButton>
+<addremove>
+    <IconButton class="material-icons" disabled={!added.length} on:click={remove}>remove</IconButton>
+    <IconButton class="material-icons" disabled={
+        !option.name || !option.qty || added.find(a => a.name === option.name)
+    } on:click={add}>add</IconButton>
+</addremove>
 <main on:click={() => {refs.name.blur()}}>
     {#each added as item}
         <pre>{item.qty} {item.name} {item.unit}</pre>
     {/each}
 </main>
-<IconButton class="material-icons" disabled={!option.name || !option.qty} on:click={remove}>remove</IconButton>
 
 
 <products>
@@ -410,9 +412,9 @@
                             console.log(document.activeElement)
 
         }} 
-        style="position: fixed; bottom: 20px; right: 130px; background-color:#7773; border-radius: 50%;"
+        style="position: fixed; bottom: 20px; left: 130px; background-color:#7773; border-radius: 50%;"
     >replay</IconButton>
     <IconButton class="material-icons" size="button" on:click={copyToClipboard} 
-        style="position: fixed; bottom: 130px; right: 20px; background-color:#7773; border-radius: 50%;"
+        style="position: fixed; bottom: 20px; left: 20px; background-color:#7773; border-radius: 50%;"
     >{copied ? "check": "content_copy" }</IconButton>
 </buttons>
