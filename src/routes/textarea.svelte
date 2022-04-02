@@ -168,6 +168,14 @@
         refs.qty.focus()
     }
 
+    function remove(e) {
+        e.preventDefault()
+        added = added.slice(1)
+        // option = { ...blankOption }
+        // option.name = typed
+        refs.qty.focus()
+    }
+
 
     $: if (!items.length && $products.length) {   
             items = $products
@@ -210,13 +218,14 @@
         /* padding: 16px; */
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: center;;
         justify-content: flex-start;
         /* background-color: red; */
         height: 100vh;
         gap: 2vh;
     }
     input, select {
+        border:none;
         border: 2px solid orange;
         border-radius: 8px;
         outline:none;
@@ -224,13 +233,13 @@
         padding: 16px;
     }
     input[name="name"] {
-        width: 70%;
+        width: 38vw;
     }
     input[name="qty"] {
         font-size: 2.8em;
         font-weight: bold;
         font-family: sans;
-        width: 70%;
+        width: 40%;
         height: 2.6ch;
         text-align: center;
         color:orange;
@@ -266,7 +275,7 @@
 
     select {  
         padding: 16px;
-        width: 70%;
+        width: 48vw;
     }
     products {
         position: fixed;
@@ -280,6 +289,17 @@
         overflow-x: hidden;
         background-color: #7773;
         /* padding: 16px; */
+    }
+    qty {
+        /* background: #7774; */
+        display: flex;
+        width:50vw;
+        justify-content: space-around;
+    }
+    updown {
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
 </style>
@@ -312,18 +332,31 @@
     }}>search</IconButton>
 </float>
 <form>
-    <p></p>
-    <input
-        name="qty"
-        bind:this={refs.qty}
-        bind:value={option.qty}
-        type="tel"
-        step="any"
-        on:focus={() => {
-            focused = option
-        }}
-        on:keypress={(e) => handleKeyPress(e, option)}
-    />
+<p></p>
+    <qty>
+        <input
+            name="qty"
+            bind:this={refs.qty}
+            bind:value={option.qty}
+            type="tel"
+            step="any"
+            on:focus={() => {
+                focused = option
+            }}
+            on:keypress={(e) => handleKeyPress(e, option)}
+        >
+        <updown>
+            <IconButton class="material-icons" on:click={ (e) => { 
+                e.preventDefault()
+                option.qty++ 
+            }}>add</IconButton>
+            <IconButton class="material-icons" on:click={ (e) => { 
+                e.preventDefault()
+                option.qty-- 
+            }}>remove</IconButton>
+        </updown>
+    </qty>
+
     <input name="name" type="text" bind:this={refs.name} bind:value={option.name} on:keydown={(e) => {
         typed = e.target.value
         if (e.key.match(/[a-z]/i)) {
@@ -355,6 +388,7 @@
         <pre>{item.qty} {item.name} {item.unit}</pre>
     {/each}
 </main>
+<IconButton class="material-icons" disabled={!option.name || !option.qty} on:click={remove}>remove</IconButton>
 
 
 <products>
