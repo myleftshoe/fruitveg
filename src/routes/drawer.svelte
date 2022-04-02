@@ -43,7 +43,7 @@
         /* width:50vw; */
         height:100%;
         background-color: #777e;
-        z-index:101;
+        z-index:1;
         padding: 16px;
         /* margin-bottom: 40px; */
     }
