@@ -161,9 +161,10 @@
     let added = []
 
     function add(e) {
-        added = [ ...added, { ...option } ]
-        option = { ...blankOption }
-        option.name = typed
+        e.preventDefault()
+        added = [  { ...option }, ...added ]
+        // option = { ...blankOption }
+        // option.name = typed
         refs.qty.focus()
     }
 
@@ -184,48 +185,54 @@
         items.filter((product) => product.qty !== '')
 
 
-    $: console.log(selectedItem)
+    $: selectedItem &&  console.log(selectedItem, browser, browser && document.activeElement)
 
     $: names = items.map(({name}) => name)
+
+    $: if (browser && document.activeElement === refs.name) {
+        console.log('fsfdssdfsdfsfsdf')
+         name = option.name
+    }
 
 </script>
 
 <style>
     main {
-        /* width:100vw; */
-        display: flex;
-        margin: 16px;
-        margin-top: 20vh;
-        flex-direction: column;
-        align-items: flex-start;
-        /* margin-top: 22vh; */
+        align-self: flex-start;
+        margin-left: 16px;
     }
     pre {
-        flex-grow: 1;
-        font-size: 1.5em;
+        /* flex-grow: 1; */
+        font-size: .8em;
     }
     form {
-        width:100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        gap: 2vh;
+        width: 50vw;
         /* padding: 16px; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        /* background-color: red; */
+        height: 100vh;
+        gap: 2vh;
     }
     input, select {
         border: 2px solid orange;
         border-radius: 8px;
         outline:none;
         background-color: transparent;
+        padding: 16px;
+    }
+    input[name="name"] {
+        width: 70%;
     }
     input[name="qty"] {
-        font-size: 1.8em;
+        font-size: 2.8em;
         font-weight: bold;
         font-family: sans;
-        width: 4ch;
+        width: 70%;
         height: 2.6ch;
         text-align: center;
-        margin-bottom: -12px;
         color:orange;
     }
     :global(body) {
@@ -259,17 +266,23 @@
 
     select {  
         padding: 16px;
+        width: 70%;
+    }
+    products {
+        position: fixed;
+        width: 50%;
+        top: 0;
+        right: 0;
+        height: 100%;  
+        display:flex;
+        flex-direction: column;
+        overflow: scroll;
+        overflow-x: hidden;
+        background-color: #7773;
+        /* padding: 16px; */
     }
 
 </style>
-<main on:click={() => {refs.name.blur()}}>
-    {#each added as item}
-        <pre>{item.qty} {item.name} {item.unit}</pre>
-    {/each}
-</main>
-
-
-
 <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
     <!-- <Title>Start new stocktake?</Title> -->
     <Content>
@@ -295,51 +308,74 @@
         await tick()
         refs.name.focus()
         name = ''
+
     }}>search</IconButton>
 </float>
-<stickybottom>
-    <form>
-        <input
-            name="qty"
-            bind:this={refs.qty}
-            bind:value={option.qty}
-            type="tel"
-            step="any"
-            on:focus={() => focused = option}
-            on:keypress={(e) => handleKeyPress(e, option)}
-        />
-        <Autocomplete  options={names} bind:value={option.name} on:keydown={(e) => {
-            typed = e.target.value
-            if (e.key.match(/[a-z]/i)) {
-                 typed = typed + e.key
-            }
-        }}/>
-        <select
-            name="unit"
-            bind:this={refs.unit}
-            bind:value={option.unit}
-            combobox
-            options={units}
-            on:focus={() => {
-                console.log('fff')
-                multiple=true
-            }}
-                        on:blur={() => {
-                console.log('bbb')
-                multiple=false
-            }}
-        >
-            {#each units as unit}
-                <option>{unit}</option>
-            {/each}
-        </select>
-    </form>
-    <IconButton class="material-icons" disabled={!option.name || !option.qty} on:click={add}>add</IconButton>
-</stickybottom>
+<form>
+    <p></p>
+    <input
+        name="qty"
+        bind:this={refs.qty}
+        bind:value={option.qty}
+        type="tel"
+        step="any"
+        on:focus={() => {
+            focused = option
+        }}
+        on:keypress={(e) => handleKeyPress(e, option)}
+    />
+    <input name="name" type="text" bind:this={refs.name} bind:value={option.name} on:keydown={(e) => {
+        typed = e.target.value
+        if (e.key.match(/[a-z]/i)) {
+                typed = typed + e.key
+        }
+    }}/>
+    <select
+        name="unit"
+        bind:this={refs.unit}
+        bind:value={option.unit}
+        combobox
+        options={units}
+        on:focus={() => {
+            console.log('fff')
+            multiple=true
+        }}
+                    on:blur={() => {
+            console.log('bbb')
+            multiple=false
+        }}
+    >
+        {#each units as unit}
+            <option>{unit}</option>
+        {/each}
+    </select>
+<IconButton class="material-icons" disabled={!option.name || !option.qty} on:click={add}>add</IconButton>
+<main on:click={() => {refs.name.blur()}}>
+    {#each added as item}
+        <pre>{item.qty} {item.name} {item.unit}</pre>
+    {/each}
+</main>
 
+
+<products>
+<p></p>
+<input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
+    {#each options as item}
+        <Button style="justify-content: flex-end" value={item.name} on:click={(e) => {
+            e.preventDefault()
+            console.log(e.currentTarget)
+            option.name = e.currentTarget.value
+        }}><pre>{item.name}</pre></Button>
+    {/each}
+</products>
+</form>
 <buttons>
     <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
-    <IconButton class="material-icons" size="button" on:click={() => { warn = true }} 
+    <IconButton class="material-icons" size="button" on:click={() => { 
+        warn = true 
+                            console.log(document.activeElement)
+
+        }} 
         style="position: fixed; bottom: 20px; right: 130px; background-color:#7773; border-radius: 50%;"
     >replay</IconButton>
     <IconButton class="material-icons" size="button" on:click={copyToClipboard} 
