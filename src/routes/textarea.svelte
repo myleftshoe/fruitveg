@@ -130,6 +130,10 @@
         option.unit = unit
     }
 
+    function handleOptionClick(e) {
+        option.name = e.currentTarget.value
+    }
+
     const doNothing = () => {}
 
     
@@ -318,10 +322,7 @@
         {:else}
             <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
             {#each options as item}
-                <Button style="justify-content: flex-end" value={item.name} on:click={(e) => {
-                    console.log(e.currentTarget)
-                    option.name = e.currentTarget.value
-                }}><pre>{item.name}</pre></Button>
+                <Button style="justify-content: flex-end;" value={item.name} on:click={handleOptionClick}><pre>{item.name}</pre></Button>
             {/each}
         {/if}
     </drawer>
