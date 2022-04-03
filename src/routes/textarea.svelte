@@ -1,4 +1,5 @@
 <script context="module">
+    const localStorageId = 'fruitveg-localStorage'
     const units = [
         '[none]',
         'bags',
@@ -115,12 +116,8 @@
     }
 
     let option = { ...blankOption }
-    let typed = ''
-    let label = ''
-    let showItems = false
     let selectedItem
     let focused
-    const localStorageId = 'fruitveg-localStorage'
 
     let items = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
 
@@ -172,10 +169,7 @@
 
     $: selectedItem &&  console.log(selectedItem, browser, browser && document.activeElement)
 
-    $: names = items.map(({name}) => name)
-
     $: if (browser && document.activeElement === refs.name) {
-        console.log('fsfdssdfsdfsfsdf')
         name = option.name
     }
 
@@ -308,15 +302,7 @@
             <IconButton class="material-icons" on:click={decrement}>remove</IconButton>
         </updown>
     </qty>
-    <input name="name" type="text" bind:this={refs.name} bind:value={option.name} 
-        on:keydown={(e) => {
-            typed = e.target.value
-            if (e.key.match(/[a-z]/i)) {
-                typed = typed + e.key
-            }
-        }}
-        on:focus={setDrawerContent('products')}
-    />
+    <input name="name" type="text" bind:this={refs.name} bind:value={option.name} on:focus={setDrawerContent('products')} />
     <Button on:click={setDrawerContent('units')}>{option.unit === '[none]' ? '[unit]' : option.unit || '[unit]'}</Button>
     <addremove>
         <Button class="material-icons" disabled={!added.length} on:click={remove} style="font-weight: bold;">—</Button>
