@@ -381,10 +381,10 @@
         {/each}
     </select>
 <addremove>
-    <IconButton class="material-icons" disabled={!added.length} on:click={remove}>remove</IconButton>
-    <IconButton class="material-icons" disabled={
+    <Button class="material-icons" disabled={!added.length} on:click={remove} style="font-weight: bold;">—</Button>
+    <Button class="material-icons" disabled={
         !option.name || !option.qty || added.find(a => a.name === option.name)
-    } on:click={add}>add</IconButton>
+    } on:click={add}>add</Button>
 </addremove>
 <main on:click={() => {refs.name.blur()}}>
     {#each added as item}
@@ -409,9 +409,9 @@
     <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
     <IconButton class="material-icons" size="button" on:click={() => { 
         warn = true 
-                            console.log(document.activeElement)
+        console.log(document.activeElement)
 
-        }} 
+    }} 
         style="position: fixed; bottom: 20px; left: 130px; background-color:#7773; border-radius: 50%;"
     >replay</IconButton>
     <IconButton class="material-icons" size="button" on:click={copyToClipboard} 
