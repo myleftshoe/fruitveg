@@ -48,19 +48,12 @@
         setTimeout(() => copied = false, 1500)
     }
 
-    async function handleKeyPress(e, option) {
-        console.log(e.key)
-        if (e.key === 'Enter') {
+    function handleKeyPress(e) {
+        if ([' ', 'Enter'].includes(e.key)) {
+            e.preventDefault()
             refs.name.focus()
             return
         }
-        if (e.key === ' ') {
-            e.preventDefault()
-            e.target.blur()
-            selectedItem = option
-            return
-        }
-
         const value = e.target.value
         if (value.length === 2) {
             const convert = {
@@ -75,13 +68,10 @@
             }
             const frac = convert[value]
             if (frac && ['0','1'].includes(e.key)) {
-                focused.qty = frac
-                focused.unit = convert[e.key] || focused.unit
-                items = [...items]
-                return
-            }
-            if (e.key === '9') {
-                selectedItem = option
+                e.preventDefault()
+                option.qty = frac
+                option.unit = convert[e.key] || option.unit
+                option = { ...option }
                 return
             }
         }
@@ -109,8 +99,6 @@
     }
 
     let option = { ...blankOption }
-    let selectedItem
-    let focused
 
     let items = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
 
@@ -144,6 +132,7 @@
 
     const doNothing = () => {}
 
+    
     $: if (!items.length && $products.length) {   
             items = $products
                 .map(({name}) => ({
@@ -153,15 +142,11 @@
                 })) || []
                 console.table(items)
     }
-                
 
     $: options = items.length && name && 
         items.filter((product) => product.name.includes(name.toLowerCase())) || 
         items.filter((product) => product.qty !== '')
-
-
-    $: selectedItem &&  console.log(selectedItem, browser, browser && document.activeElement)
-
+    
     $: if (browser && document.activeElement === refs.name) {
         name = option.name
     }
@@ -285,10 +270,7 @@
             bind:value={option.qty}
             type="tel"
             step="any"
-            on:focus={() => {
-                focused = option
-            }}
-            on:keypress={(e) => handleKeyPress(e, option)}
+            on:keypress={handleKeyPress}
         >
         <updown>
             <IconButton class="material-icons" on:click={increment}>add</IconButton>
