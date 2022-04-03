@@ -115,7 +115,7 @@
     let added = []
 
     function add(e) {
-        added = [  { ...option }, ...added ]
+        added = [ { ...option }, ...added ]
     }
 
     function remove() {
