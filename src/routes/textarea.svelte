@@ -96,6 +96,18 @@
         }
     }
 
+    function increment() {
+        option.qty++
+    }
+
+    function decrement() {
+        if (option.qty < '1') {
+            option.qty = ''
+            return
+        }
+        option.qty--
+    }
+
     const blankOption = {
         name: '',
         qty: '',
@@ -292,12 +304,8 @@
             on:keypress={(e) => handleKeyPress(e, option)}
         >
         <updown>
-            <IconButton class="material-icons" on:click={ (e) => { 
-                option.qty++ 
-            }}>add</IconButton>
-            <IconButton class="material-icons" on:click={ (e) => { 
-                option.qty-- 
-            }}>remove</IconButton>
+            <IconButton class="material-icons" on:click={increment}>add</IconButton>
+            <IconButton class="material-icons" on:click={decrement}>remove</IconButton>
         </updown>
     </qty>
     <input name="name" type="text" bind:this={refs.name} bind:value={option.name} 
