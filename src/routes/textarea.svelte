@@ -126,6 +126,15 @@
     let drawerContent = 'products'
     const setDrawerContent = (name = 'products') => (e) => { drawerContent = name }
 
+    function handleNameFocus() {
+        if (exists) {
+            option.name = ''
+            option.unit = ''
+            option = {...option}
+        }
+        setDrawerContent('products')
+    }
+
     function handleUnitClick(e, unit = '') {
         option.unit = unit
     }
@@ -155,6 +164,7 @@
         name = option.name
     }
 
+    $: exists = !option.name || !option.qty || added.find(a => a.name === option.name)
 </script>
 
 <style>
@@ -281,13 +291,11 @@
             <IconButton class="material-icons" on:click={decrement}>remove</IconButton>
         </updown>
     </qty>
-    <input name="name" type="text" bind:this={refs.name} bind:value={option.name} on:focus={setDrawerContent('products')} />
+    <input name="name" type="text" bind:this={refs.name} bind:value={option.name} on:focus={handleNameFocus} />
     <Button on:click={setDrawerContent('units')}>{option.unit === '[none]' ? '[unit]' : option.unit || '[unit]'}</Button>
     <addremove>
         <Button class="material-icons" disabled={!added.length} on:click={remove} style="font-weight: bold;">—</Button>
-        <Button class="material-icons" disabled={
-            !option.name || !option.qty || added.find(a => a.name === option.name)
-        } on:click={add}>add</Button>
+        <Button class="material-icons" disabled={exists} on:click={add}>add</Button>
     </addremove>
     <stocktake on:click={() => {refs.name.blur()}}>
         {#each added as item}
