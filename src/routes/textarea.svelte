@@ -38,9 +38,8 @@
     let warn = false
 
     async function copyToClipboard() {
-        const text = items
-            .filter((item) => item.qty !== '')
-            .map(({name, qty, unit}) => `${qty} ${name}${unit && ` (${unit})`}`)
+        const text = added
+            .map(({name, qty, unit}) => `${qty} ${name}${unit && ` [${unit}]`}`)
             .join('\n')
         clipboard.copy(text)
         console.log(text)
