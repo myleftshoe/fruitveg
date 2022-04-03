@@ -48,13 +48,6 @@
         setTimeout(() => copied = false, 1500)
     }
 
-    function handleQtyClick(e) {
-        if (e.key === ' ') {
-            e.preventDefault()
-            refs.name.focus()
-        }
-    }
-
     async function handleKeyPress(e, option) {
         console.log(e.key)
         if (e.key === 'Enter') {
