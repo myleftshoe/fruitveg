@@ -202,9 +202,6 @@
     :global(body) {
         margin: 0;
     }
-    buttons {
-        width: calc( 100% - 8px );
-    }
     drawer {
         position: fixed;
         width: 50%;
@@ -235,9 +232,11 @@
         justify-content: space-around;
     }
     units {
+        margin-top: 10px;
         display:flex;
         flex-wrap: wrap;
         justify-content: space-around;
+        gap:20px;
     }
     more {
         display: flex;
@@ -251,6 +250,10 @@
         flex-direction: column;
         gap: 16px;
         align-items: center;
+    }
+    copied {
+        position: absolute;
+        bottom: 40px;
     }
 
 </style>
@@ -333,14 +336,13 @@
                     <Button class="material-icons" size="button" on:click={doNothing}>zuccs, cukes, caps</Button>
                 </section>
                 <section>
-                    <Button class="material-icons" size="button" on:click={() => { 
-                        warn = true 
-                    }}
-                    >copy to clipboard</Button>
-                    <Button class="material-icons" size="button" on:click={() => { 
-                        warn = true 
-                    }}
-                    >start over</Button>
+                    <Button class="material-icons" size="button" on:click={() => { warn = true }}>start over</Button>
+                    <Button class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
+                    {#if copied}
+                        <copied transition:transition>
+                            <Button disabled style="color:darkorange; font-size: .8em">copied!</Button>
+                        </copied>
+                    {/if}
                 </section>
             </more>
         {:else}
@@ -355,16 +357,3 @@
     </drawer>
 </main>
 
-<buttons>
-    <!-- <message style="opacity: {copied ? 1 : 0}">copied!</message> -->
-    <IconButton class="material-icons" size="button" on:click={() => { 
-        warn = true 
-        console.log(document.activeElement)
-
-    }} 
-        style="position: fixed; bottom: 20px; left: 130px; background-color:#7773; border-radius: 50%;"
-    >replay</IconButton>
-    <IconButton class="material-icons" size="button" on:click={copyToClipboard} 
-        style="position: fixed; bottom: 20px; left: 20px; background-color:#7773; border-radius: 50%;"
-    >{copied ? "check": "content_copy" }</IconButton>
-</buttons>
