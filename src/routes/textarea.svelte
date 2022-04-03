@@ -132,7 +132,7 @@
             option.unit = ''
             option = {...option}
         }
-        setDrawerContent('products')
+        drawContent = 'products'
     }
 
     function handleUnitClick(e, unit = '') {
