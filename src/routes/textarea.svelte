@@ -123,6 +123,11 @@
         added = added.slice(1)
     }
 
+    function clear(e) {
+        option = { ...blankOption }
+    }
+
+
     let drawerContent = 'products'
     const setDrawerContent = (name = 'products') => (e) => { drawerContent = name }
 
@@ -277,7 +282,7 @@
     </Actions>
 </Dialog>
 <main>
-    <IconButton size="button" class="material-icons" style="align-self: flex-start;">clear</IconButton>
+    <IconButton size="button" class="material-icons" style="align-self: flex-start;" on:click={clear}>clear</IconButton>
     <qty>
         <input
             name="qty"
