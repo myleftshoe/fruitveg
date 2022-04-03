@@ -118,14 +118,20 @@
         added = [  { ...option }, ...added ]
     }
 
-    function remove(e) {
+    function remove() {
         added = added.slice(1)
     }
 
-    function clear(e) {
+    function clear() {
         option = { ...blankOption }
     }
 
+    function startNew() {
+        items.length = 0
+        added.length = 0
+        clear()
+        browser && localStorage.removeItem(localStorageId)
+    }
 
     let drawerContent = 'products'
     const setDrawerContent = (name = 'products') => (e) => { drawerContent = name }
@@ -267,16 +273,7 @@
         Clear current stocktake and start a new one?
     </Content>
     <Actions>
-        <Button on:click={() => {
-            items.length = 0
-            if (browser) {
-                localStorage.removeItem(localStorageId)
-                items = []
-            }
-        }}
-        >
-            start new
-        </Button>
+        <Button on:click={startNew}>start new</Button>
         <Button defaultAction>cancel</Button>
     </Actions>
 </Dialog>
