@@ -210,6 +210,7 @@
         height: 100%;  
         display:flex;
         flex-direction: column;
+        gap: 20px;
         overflow: scroll;
         overflow-x: hidden;
         background-color: #7773;
@@ -232,7 +233,6 @@
         justify-content: space-around;
     }
     units {
-        margin-top: 10px;
         display:flex;
         flex-wrap: wrap;
         justify-content: space-around;
@@ -248,7 +248,7 @@
     section {
         display:flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 20px;
         align-items: center;
     }
     copied {
