@@ -196,11 +196,13 @@
 
 <style>
     stocktake {
-        align-self: flex-start;
+        width: 100%;
+        outline: none;
+        /* align-self: flex-start; */
         /* background-color: yellow; */
     }
     pre {
-        font-size: 13px;
+        font-size: 12px;
     }
     main {
         --margin: 10px;
@@ -276,6 +278,14 @@
         position: absolute;
         bottom: 40px;
     }
+    copyToClipboard {
+        display:flex;
+        width:100%;
+        position: absolute;
+        bottom: 60px;
+        justify-content: center;
+    }
+
 </style>
 <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
     <!-- <Title>Start new stocktake?</Title> -->
@@ -288,7 +298,7 @@
     </Actions>
 </Dialog>
 <main>
-    <stocktake on:click={() => {refs.name.blur()}}>
+    <stocktake contenteditable="true" on:click={() => {refs.name.blur()}} on:input={() => console.log('fffff')}>
         {#each added as item}
             <pre>{item.qty} {item.name} {item.unit}</pre>
         {/each}
@@ -348,3 +358,8 @@
         {/if}
     </drawer>
 </main>
+{#if added.length}
+    <copyToClipboard transition:transition>
+        <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
+    </copyToClipboard>
+{/if}
