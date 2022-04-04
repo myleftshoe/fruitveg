@@ -84,7 +84,11 @@
             }
         }
         if (value.length > 1) {
+            option.qty = option.qty + e.key
             refs.name.focus()
+        }
+        if (value.length > 1) {
+            return
         }
     }
 
@@ -114,6 +118,14 @@
 
     function add(e) {
         // if (option.name.length < 3) return
+        if (option.qty.trim() === '') {
+            refs.qty.select()
+            return
+        }
+        if (option.name.trim() === '') {
+            refs.name.select()
+            return
+        }
         added = [ ...added, { ...option } ]
         option = { ...blankOption }
         refs.qty.focus()
@@ -185,7 +197,7 @@
 <style>
     stocktake {
         align-self: flex-start;
-        margin-left: 16px;
+        /* background-color: yellow; */
     }
     pre {
         font-size: .8em;
