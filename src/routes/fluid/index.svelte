@@ -285,6 +285,13 @@
         bottom: 60px;
         justify-content: center;
     }
+    footer {
+        position: fixed;
+        bottom:0;
+        height: 40px;
+        width: 100%;
+        background-color: #7773;
+    }
 
 </style>
 <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
@@ -325,6 +332,7 @@
             }}
         />
     </form>
+    <IconButton class="material-icons" style="left: 17.5%;">add</IconButton>
     <drawer>
         <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton>
         {#if drawerContent === 'units'}
@@ -363,3 +371,5 @@
         <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
     </copyToClipboard>
 {/if}
+<footer>
+</footer>
