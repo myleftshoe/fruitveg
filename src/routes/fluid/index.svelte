@@ -83,7 +83,7 @@
                 return
             }
         }
-        if (value.length > 1) {
+        if (value.length > 1 && e.key !== ' ') {
             option.qty = option.qty + e.key
             refs.name.focus()
         }
@@ -200,7 +200,7 @@
         /* background-color: yellow; */
     }
     pre {
-        font-size: .8em;
+        font-size: 13px;
     }
     main {
         --margin: 10px;
@@ -226,6 +226,7 @@
         outline:none;
         font-size: 16px;
         font-family: monospace;
+        color: #777;
     }
     input:focus {
     }
