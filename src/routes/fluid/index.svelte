@@ -276,7 +276,6 @@
         position: absolute;
         bottom: 40px;
     }
-
 </style>
 <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
     <!-- <Title>Start new stocktake?</Title> -->
@@ -349,4 +348,3 @@
         {/if}
     </drawer>
 </main>
-
