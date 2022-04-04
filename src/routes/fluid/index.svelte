@@ -217,18 +217,21 @@
         gap: 2vh;
     }
     form {
+        position: fixed;
+        top:0;
         display: flex;
         width:100%;
-        border-bottom: 1px solid orange;
+        height: 10vh;
         /* padding: 20px; */
     }
     input {
         background: none;
         border: none;
         outline:none;
-        font-size: 16px;
+        font-size: 24px;
         font-family: monospace;
         color: #777;
+        border-bottom: 1px solid orange;
     }
     input:focus {
     }
@@ -237,7 +240,7 @@
     }
     input[name="qty"] {
         width: 3ch;
-        text-align: right;
+        text-align: center;
     }
     :global(body) {
         margin: 0;
@@ -286,7 +289,7 @@
         justify-content: center;
     }
     footer {
-        position: fixed;
+        position: sticky;
         bottom:0;
         height: 40px;
         width: 100%;
@@ -311,14 +314,6 @@
         {/each}
     </stocktake>
     <form on:submit|preventDefault>
-        <input
-            name="qty"
-            bind:this={refs.qty}
-            bind:value={option.qty}
-            type="tel"
-            step="any"
-            on:keypress={handleKeyPress}
-        >
         <input 
             name="name" 
             type="text" 
@@ -332,6 +327,14 @@
             }}
         />
     </form>
+    <input
+            name="qty"
+            bind:this={refs.qty}
+            bind:value={option.qty}
+            type="tel"
+            step="any"
+            on:keypress={handleKeyPress}
+        >
     <IconButton class="material-icons" style="left: 17.5%;">add</IconButton>
     <drawer>
         <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton>
