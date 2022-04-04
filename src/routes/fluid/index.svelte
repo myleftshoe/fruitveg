@@ -84,7 +84,7 @@
             }
         }
         if (value.length > 1) {
-            return
+            refs.name.focus()
         }
     }
 
@@ -199,10 +199,10 @@
         align-items: flex-start;
         justify-content: flex-start;
         /* background-color: red; */
-        height: calc( 100vh - 2 * var(--margin) );
+        /* height: calc( 100vh - 6 * var(--margin) ); */
         gap: 2vh;
     }
-    active {
+    form {
         display: flex;
         width:100%;
         border-bottom: 1px solid orange;
@@ -212,7 +212,7 @@
         background: none;
         border: none;
         outline:none;
-        font-size: 1em;
+        font-size: 16px;
         font-family: monospace;
     }
     input:focus {
@@ -281,7 +281,7 @@
             <pre>{item.qty} {item.name} {item.unit}</pre>
         {/each}
     </stocktake>
-    <active>
+    <form on:submit|preventDefault>
         <input
             name="qty"
             bind:this={refs.qty}
@@ -297,8 +297,12 @@
             bind:value={option.name} 
             on:focus={handleNameFocus} 
             on:keypress={handleNameKeyPress}
+            on:click={() => {
+                if ((option.qty + option.name).trim() === '')
+                    refs.qty.focus()
+            }}
         />
-    </active>
+    </form>
     <drawer>
         <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton>
         {#if drawerContent === 'units'}
