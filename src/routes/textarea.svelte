@@ -127,12 +127,12 @@
     const setDrawerContent = (name = 'products') => (e) => { drawerContent = name }
 
     function handleNameFocus() {
+        drawContent = 'products'
         if (exists) {
             option.name = ''
             option.unit = ''
             option = {...option}
         }
-        drawContent = 'products'
     }
 
     function handleUnitClick(e, unit = '') {
