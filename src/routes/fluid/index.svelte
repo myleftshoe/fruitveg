@@ -53,6 +53,9 @@
 
     function handleNameKeyPress(e) {
         if (e.key === 'Enter') {
+            if (options.length === 1) {
+                option.name = options[0].name
+            }
             refs.qty.focus()
         }
     }
@@ -164,6 +167,10 @@
 
     function handleNameFocus() {
         drawerContent = 'products'
+        refs.name.placeholder = !options.length && 'type...'
+    }
+    function handleNameBlur() {
+        refs.name.placeholder = !options.length && ''
     }
 
     function handleUnitClick(e, unit = '') {
@@ -173,6 +180,10 @@
     function handleOptionClick(e) {
         option.name = e.currentTarget.value
         refs.qty.focus()
+    }
+
+    function handleStartClick() {
+        refs.name.focus()
     }
 
     const doNothing = () => {}
@@ -198,17 +209,16 @@
         options = items.length && name && 
         items.filter((product) => product.name.includes(name.toLowerCase())) || 
         items.filter((product) => product.qty !== '')
-        if (options.length === 1) {
-            option = { ...option, name: options[0].name }
-            refs.qty.focus()
-        } 
-    
+
+        // if (options.length === 1) {
+        //     option = { ...option, name: options[0].name }
+        //     refs.qty.focus()
+        // } 
     }
     $: modifiedItems = [...items].filter(withQtys)
 
-    $:         console.log('here2', drawerContent, options.length, name)
+    $: console.log('here2', drawerContent, options.length, name)
     $: console.table(modifiedItems) 
-
 
 </script>
 
@@ -221,6 +231,7 @@
     }
     pre {
         font-size: 12px;
+        text-transform: lowercase;
     }
     main {
         /* border: 10px solid black; */
@@ -260,17 +271,19 @@
         font-size: 24px;
         font-family: monospace;
         color: orange;
+        /* text-decoration: underline; */
         /* border-bottom: 2px solid orange; */
 
     }
     input:focus {
     }
     input[name="name"] {
-        max-width: 60vw
+        max-width: 60vw;
+        text-overflow: clip;
     }
     input[name="qty"] {
         width: 4ch;
-        text-align: center;
+        text-align: right;
     }
     :global(body) {
         /* border: 10px solid blue; */
@@ -286,7 +299,7 @@
         height: 90vh;
         flex-direction: column;
         align-items:stretch;
-        gap: 20px;
+        /* gap: 20px; */
         overflow: scroll;
         padding-left: 20px;
         padding-right: 20px;
@@ -343,6 +356,10 @@
         /* background: #ffa50055; */
         /* border-radius: 5px; */
     }
+    start {
+        justify-self: center;
+        align-self: center;
+    }
 
 </style>
 <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
@@ -358,11 +375,11 @@
 <topbar>
         <input 
             name="name" 
-            
-               type="text" 
+            type="text" 
             bind:this={refs.name} 
             bind:value={option.name} 
             on:focus={handleNameFocus} 
+            on:blur={handleNameBlur} 
             on:keypress={handleNameKeyPress}
         />
         <input
@@ -379,12 +396,13 @@
         >
 </topbar>
 <main>
-    <actions>
+    <!-- <actions>
         <IconButton class="material-icons">add</IconButton>
-    </actions>
+    </actions> -->
     {#if options.length}
         <drawer>
-            <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton>
+            <!-- <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton> -->
+            <p></p>
             {#if drawerContent === 'units'}
                 <units>
                     {#each units as unit}
@@ -417,6 +435,10 @@
                 {/each}
             {/if}
         </drawer>
+    {:else}
+        <start transition:transition>
+            <Button class="material-icons" on:click={handleStartClick}>start</Button>
+        </start>
     {/if}
 </main>
 {#if modifiedItems.length}
