@@ -143,7 +143,6 @@
         option.name = name
         option.qty = ''
         option.unit = ''
-        refs.name.focus()
         refs.name.select()
     }
 
@@ -165,9 +164,17 @@
     let drawerContent = 'products'
     const setDrawerContent = (name = 'products') => (e) => { drawerContent = name }
 
-    function handleNameFocus() {
+    async function handleQtyFocus() {
         drawerContent = 'products'
-        refs.name.placeholder = !options.length && 'type...'
+        await tick()
+        refs.qty.select()
+    }
+
+    async function handleNameFocus() {
+        drawerContent = 'products'
+        refs.name.placeholder = !options.length && 'type...' || ''
+        await tick()
+        refs.name.select()
     }
     function handleNameBlur() {
         refs.name.placeholder = !options.length && ''
@@ -177,9 +184,10 @@
         option.unit = unit
     }
 
-    function handleOptionClick(e) {
-        option.name = e.currentTarget.value
-        refs.qty.focus()
+    async function handleOptionClick(e, item) {
+        option = { ...item }
+        await tick()
+        refs.qty.select()
     }
 
     function handleStartClick() {
@@ -381,6 +389,7 @@
             on:focus={handleNameFocus} 
             on:blur={handleNameBlur} 
             on:keypress={handleNameKeyPress}
+            on:change={() => console.log('onchange')}
         />
         <input
             name="qty"
@@ -389,6 +398,7 @@
             type="number"
             step="any"
             on:keypress={handleKeyPress}
+            on:focus={handleQtyFocus} 
             on:click={() => {
     //            if ((option.qty + option.name).trim() === '')
     //                refs.name.focus()
@@ -430,7 +440,7 @@
                 <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
                 {#each options as item}
                     <item>
-                        <Button value={item.name} on:click={handleOptionClick} style="width: 100%; display: flex; justify-content: space-between; color: black;"><pre>{item.name}</pre><pre>{item.qty} {item.unit}</pre></Button>
+                        <Button value={item.name} on:click={(e) => handleOptionClick(e, item)} style="width: 100%; display: flex; justify-content: space-between; color: black;"><pre>{item.name}</pre><pre>{item.qty} {item.unit}</pre></Button>
                     </item>
                 {/each}
             {/if}
