@@ -235,7 +235,7 @@
     }
     topbar {
         position: fixed;
-        top:0;
+        bottom:0;
         display: flex;
         width:100%;
         justify-content: center;
