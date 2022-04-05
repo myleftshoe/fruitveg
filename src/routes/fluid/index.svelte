@@ -239,9 +239,10 @@
         display: flex;
         width:100%;
         justify-content: center;
-        height: 10vh;
+        height: 11vh;
         gap: 10px;
         background-color: #333;
+        box-shadow: 0px 4px 8px #000a
     }
     form {
         width:80%;
@@ -264,7 +265,7 @@
     input:focus {
     }
     input[name="name"] {
-        max-width: 70vw
+        max-width: 60vw
     }
     input[name="qty"] {
         width: 4ch;
@@ -338,8 +339,8 @@
     item {
         display: flex;
         justify-content: space-between;
-        background: #ffa50055;
-        border-radius: 5px;
+        /* background: #ffa50055; */
+        /* border-radius: 5px; */
     }
 
 </style>
