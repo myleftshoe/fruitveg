@@ -403,8 +403,7 @@
                 <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
                 {#each options as item}
                     <item>
-                        <Button value={item.name} on:click={handleOptionClick}><pre>{item.name}</pre></Button>
-                        <pre>{item.qty} {item.unit}</pre>
+                        <Button value={item.name} on:click={handleOptionClick} style="width: 100%; display: flex; justify-content: space-between;"><pre>{item.name}</pre><pre>{item.qty} {item.unit}</pre></Button>
                     </item>
                 {/each}
             {/if}
