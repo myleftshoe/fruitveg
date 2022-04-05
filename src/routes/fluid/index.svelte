@@ -198,6 +198,10 @@
         options = items.length && name && 
         items.filter((product) => product.name.includes(name.toLowerCase())) || 
         items.filter((product) => product.qty !== '')
+        if (options.length === 1) {
+            option = { ...option, name: options[0].name }
+            refs.qty.focus()
+        } 
     
     }
     $: modifiedItems = [...items].filter(withQtys)
@@ -229,16 +233,23 @@
         justify-content: flex-start;
         gap: 2vh;
     }
-    form {
+    topbar {
         position: fixed;
         top:0;
         display: flex;
+        width:100%;
         justify-content: center;
-        width: 100%;
         height: 10vh;
+        gap: 10px;
+        background-color: #333;
+    }
+    form {
+        width:80%;
+        height:100px;
+        /* background:red; */
+        display: flex;
+        justify-content: center;
         gap:16px;
-        /* background-color: green; */
-        /* padding: 20px; */
     }
     input {
         background: none;
@@ -246,14 +257,14 @@
         outline:none;
         font-size: 24px;
         font-family: monospace;
-        color: #777;
-        border-bottom: 2px solid orange;
+        color: orange;
+        /* border-bottom: 2px solid orange; */
 
     }
     input:focus {
     }
     input[name="name"] {
-        /* max-width: calc( 100vw - 4ch ); */
+        max-width: 70vw
     }
     input[name="qty"] {
         width: 4ch;
@@ -262,20 +273,22 @@
     :global(body) {
         /* border: 10px solid blue; */
         margin:0;
-        height:50vh;
     }
     drawer {
         position: fixed;
-        width: 100%;
+        width: calc(100% - 40px);
         top: 10vh;
         right: 0;
         /* height: 100%;   */
         display:flex;
         height: 90vh;
         flex-direction: column;
+        align-items:stretch;
         gap: 20px;
         overflow: scroll;
-        overflow-x: hidden;
+        padding-left: 20px;
+        padding-right: 20px;
+        /* overflow-x: hidden; */
         /* background-color: #ddd; */
     }
     units {
@@ -325,6 +338,8 @@
     item {
         display: flex;
         justify-content: space-between;
+        background: #ffa50055;
+        border-radius: 5px;
     }
 
 </style>
@@ -338,28 +353,29 @@
         <Button defaultAction>cancel</Button>
     </Actions>
 </Dialog>
-<form on:submit|preventDefault>
-    <input 
-        name="name" 
-        type="text" 
-        bind:this={refs.name} 
-        bind:value={option.name} 
-        on:focus={handleNameFocus} 
-        on:keypress={handleNameKeyPress}
-    />
-    <input
-        name="qty"
-        bind:this={refs.qty}
-        bind:value={option.qty}
-        type="number"
-        step="any"
-        on:keypress={handleKeyPress}
-        on:click={() => {
-//            if ((option.qty + option.name).trim() === '')
-//                refs.name.focus()
-        }}
-    >
-</form>
+<topbar>
+        <input 
+            name="name" 
+            
+               type="text" 
+            bind:this={refs.name} 
+            bind:value={option.name} 
+            on:focus={handleNameFocus} 
+            on:keypress={handleNameKeyPress}
+        />
+        <input
+            name="qty"
+            bind:this={refs.qty}
+            bind:value={option.qty}
+            type="number"
+            step="any"
+            on:keypress={handleKeyPress}
+            on:click={() => {
+    //            if ((option.qty + option.name).trim() === '')
+    //                refs.name.focus()
+            }}
+        >
+</topbar>
 <main>
     <actions>
         <IconButton class="material-icons">add</IconButton>
@@ -394,7 +410,7 @@
                 <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
                 {#each options as item}
                     <item>
-                        <Button value={item.name} on:click={handleOptionClick} style="width: 100%; display: flex; justify-content: space-between;"><pre>{item.name}</pre><pre>{item.qty} {item.unit}</pre></Button>
+                        <Button value={item.name} on:click={handleOptionClick} style="width: 100%; display: flex; justify-content: space-between; color: black;"><pre>{item.name}</pre><pre>{item.qty} {item.unit}</pre></Button>
                     </item>
                 {/each}
             {/if}
