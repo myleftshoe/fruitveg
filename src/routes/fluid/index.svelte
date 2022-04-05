@@ -234,8 +234,9 @@
         gap: 2vh;
     }
     topbar {
-        position: fixed;
-        bottom:0;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
         display: flex;
         width:100%;
         justify-content: center;
