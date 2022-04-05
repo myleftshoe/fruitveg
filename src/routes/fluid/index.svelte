@@ -170,12 +170,17 @@
         refs.qty.select()
     }
 
+    function handleQtyBlur() {
+        add()
+    }
+
     async function handleNameFocus() {
         drawerContent = 'products'
         refs.name.placeholder = !options.length && 'type...' || ''
         await tick()
         refs.name.select()
     }
+    
     function handleNameBlur() {
         refs.name.placeholder = !options.length && ''
     }
@@ -296,7 +301,7 @@
     input[name="name"] {
         max-width: 16ch;
         text-overflow: clip;
-        transition: max-width 0.5s ease;
+        transition: max-width 0.1s linear;
     }
     input[name="qty"] {
         width: 4ch;
@@ -408,6 +413,7 @@
             step="any"
             on:keypress={handleKeyPress}
             on:focus={handleQtyFocus} 
+            on:blur={handleQtyBlur} 
             on:click={() => {
     //            if ((option.qty + option.name).trim() === '')
     //                refs.name.focus()
