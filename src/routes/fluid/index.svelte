@@ -57,9 +57,11 @@
     }
 
     function handleKeyPress(e) {
+        console.log(e.key, e.code)
         if ([' ', 'Enter'].includes(e.key)) {
             e.preventDefault()
             add()
+            refs.name.focus()
             return
         }
         const value = e.target.value
@@ -128,8 +130,9 @@
             return
         }
         added = [ ...added, { ...option } ]
-        option = { ...blankOption }
-        refs.qty.focus()
+        // option = { ...blankOption }
+        // option.name = name
+        refs.name.focus()
     }
 
     function remove() {
@@ -165,7 +168,7 @@
 
     function handleOptionClick(e) {
         option.name = e.currentTarget.value
-        refs.name.focus()
+        refs.qty.focus()
     }
 
     const doNothing = () => {}
@@ -184,8 +187,10 @@
     let options = []
     $: if (options) {
         if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
+            console.log('setting name to' , option,name)
             name = option.name
         }
+        console.log('a', options.length)
         options = items.length && name && 
         items.filter((product) => product.name.includes(name.toLowerCase())) || 
         items.filter((product) => product.qty !== '')
@@ -194,7 +199,7 @@
 
     $: exists = !option.name || !option.qty || added.find(a => a.name === option.name)
 
-    $:         console.log('here2', drawerContent, options.length) 
+    $:         console.log('here2', drawerContent, options.length, name) 
 
 
 </script>
@@ -304,6 +309,9 @@
         bottom:0;
         height: 40px;
         width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: #7773;
     }
     actions {
@@ -396,4 +404,5 @@
     </copyToClipboard>
 {/if}
 <footer>
+    {added.length}    
 </footer>
