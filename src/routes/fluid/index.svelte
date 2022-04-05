@@ -18,7 +18,7 @@
 <script>
     import { browser } from '$app/env';
     import { tick } from 'svelte'
-    import { slide as transition } from 'svelte/transition'
+    import { fade as transition } from 'svelte/transition'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -50,7 +50,7 @@
 
     function handleNameKeyPress(e) {
         if (e.key === 'Enter') {
-            add()
+            refs.qty.focus()
         }
 
 
@@ -59,7 +59,7 @@
     function handleKeyPress(e) {
         if ([' ', 'Enter'].includes(e.key)) {
             e.preventDefault()
-            refs.name.focus()
+            add()
             return
         }
         const value = e.target.value
@@ -90,6 +90,7 @@
         if (value.length > 1) {
             return
         }
+        console.log('here', drawerContent, options.length)
     }
 
     function increment() {
@@ -116,14 +117,14 @@
 
     let added = []
 
-    function add(e) {
+    function add() {
         // if (option.name.length < 3) return
-        if (option.qty.trim() === '') {
-            refs.qty.select()
-            return
-        }
         if (option.name.trim() === '') {
             refs.name.select()
+            return
+        }
+        if (!option.qty) {
+            refs.qty.select()
             return
         }
         added = [ ...added, { ...option } ]
@@ -192,36 +193,42 @@
     }
 
     $: exists = !option.name || !option.qty || added.find(a => a.name === option.name)
+
+    $:         console.log('here2', drawerContent, options.length) 
+
+
 </script>
 
 <style>
     stocktake {
-        width: 100%;
+        width: calc( 100% - 0px );
         outline: none;
         /* align-self: flex-start; */
-        /* background-color: yellow; */
+        background-color: yellow;
     }
     pre {
         font-size: 12px;
     }
     main {
-        --margin: 10px;
-        margin: var(--margin);
-        margin-top: calc( 5 * var(--margin) );
+        /* border: 10px solid black; */
+        position: absolute;
+        margin-top: 10vh;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
-        /* background-color: red; */
-        /* height: calc( 100vh - 6 * var(--margin) ); */
         gap: 2vh;
     }
     form {
         position: fixed;
         top:0;
         display: flex;
-        width:100%;
+        justify-content: center;
+        width: 100%;
         height: 10vh;
+        gap:16px;
+        /* background-color: green; */
         /* padding: 20px; */
     }
     input {
@@ -231,32 +238,36 @@
         font-size: 24px;
         font-family: monospace;
         color: #777;
-        border-bottom: 1px solid orange;
+        border-bottom: 2px solid orange;
+
     }
     input:focus {
     }
     input[name="name"] {
-        flex-grow: 1;
+        /* max-width: calc( 100vw - 4ch ); */
     }
     input[name="qty"] {
-        width: 3ch;
+        width: 4ch;
         text-align: center;
     }
     :global(body) {
-        margin: 0;
+        /* border: 10px solid blue; */
+        margin:0;
+        height:50vh;
     }
     drawer {
         position: fixed;
-        width: 50%;
-        top: 0;
+        width: 100%;
+        top: 10vh;
         right: 0;
-        height: 100%;  
+        /* height: 100%;   */
         display:flex;
+        height: 90vh;
         flex-direction: column;
         gap: 20px;
         overflow: scroll;
         overflow-x: hidden;
-        background-color: #7773;
+        background-color: #ddd;
     }
     units {
         display:flex;
@@ -289,11 +300,15 @@
         justify-content: center;
     }
     footer {
-        position: sticky;
+        position: fixed;
         bottom:0;
         height: 40px;
         width: 100%;
         background-color: #7773;
+    }
+    actions {
+        display: flex;
+        align-self: center;
     }
 
 </style>
@@ -307,67 +322,73 @@
         <Button defaultAction>cancel</Button>
     </Actions>
 </Dialog>
+<form on:submit|preventDefault>
+    <input 
+        name="name" 
+        type="text" 
+        bind:this={refs.name} 
+        bind:value={option.name} 
+        on:focus={handleNameFocus} 
+        on:keypress={handleNameKeyPress}
+    />
+    <input
+        name="qty"
+        bind:this={refs.qty}
+        bind:value={option.qty}
+        type="number"
+        step="any"
+        on:keypress={handleKeyPress}
+        on:click={() => {
+//            if ((option.qty + option.name).trim() === '')
+//                refs.name.focus()
+        }}
+    >
+</form>
 <main>
+    <actions>
+        <IconButton class="material-icons">add</IconButton>
+    </actions>
     <stocktake contenteditable="true" on:click={() => {refs.name.blur()}} on:input={() => console.log('fffff')}>
         {#each added as item}
             <pre>{item.qty} {item.name} {item.unit}</pre>
         {/each}
     </stocktake>
-    <form on:submit|preventDefault>
-        <input 
-            name="name" 
-            type="text" 
-            bind:this={refs.name} 
-            bind:value={option.name} 
-            on:focus={handleNameFocus} 
-            on:keypress={handleNameKeyPress}
-            on:click={() => {
-                if ((option.qty + option.name).trim() === '')
-                    refs.qty.focus()
-            }}
-        />
-    </form>
-    <input
-            name="qty"
-            bind:this={refs.qty}
-            bind:value={option.qty}
-            type="tel"
-            step="any"
-            on:keypress={handleKeyPress}
-        >
-    <IconButton class="material-icons" style="left: 17.5%;">add</IconButton>
-    <drawer>
-        <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton>
-        {#if drawerContent === 'units'}
-            <units>
-                {#each units as unit}
-                    <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
+    {#if options.length}
+        <drawer>
+            <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton>
+            {#if drawerContent === 'units'}
+                <units>
+                    {#each units as unit}
+                        <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
+                    {/each}
+                </units>
+            {:else if drawerContent === 'more'}
+                <more>
+                    <section>
+                        <Button class="material-icons" size="button" on:click={doNothing}>outside stock</Button>
+                        <Button class="material-icons" size="button" on:click={doNothing}>coolibah</Button>
+                        <Button class="material-icons" size="button" on:click={doNothing}>zuccs, cukes, caps</Button>
+                    </section>
+                    <section>
+                        <Button class="material-icons" size="button" on:click={() => { warn = true }}>start over</Button>
+                        <Button class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
+                        {#if copied}
+                            <copied transition:transition>
+                                <Button disabled style="color:darkorange; font-size: .8em">copied!</Button>
+                            </copied>
+                        {/if}
+                    </section>
+                </more>
+            {:else}
+                <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
+                {#each options as item}
+                    <div>
+                        <Button style="justify-content: flex-end;" value={item.name} on:click={handleOptionClick}><pre>{item.name}</pre></Button>
+                    </div>
                 {/each}
-            </units>
-        {:else if drawerContent === 'more'}
-            <more>
-                <section>
-                    <Button class="material-icons" size="button" on:click={doNothing}>outside stock</Button>
-                    <Button class="material-icons" size="button" on:click={doNothing}>coolibah</Button>
-                    <Button class="material-icons" size="button" on:click={doNothing}>zuccs, cukes, caps</Button>
-                </section>
-                <section>
-                    <Button class="material-icons" size="button" on:click={() => { warn = true }}>start over</Button>
-                    <Button class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
-                    {#if copied}
-                        <copied transition:transition>
-                            <Button disabled style="color:darkorange; font-size: .8em">copied!</Button>
-                        </copied>
-                    {/if}
-                </section>
-            </more>
-        {:else}
-            <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
-            {#each options as item}
-                <Button style="justify-content: flex-end;" value={item.name} on:click={handleOptionClick}><pre>{item.name}</pre></Button>
-            {/each}
-        {/if}
-    </drawer>
+            {/if}
+        </drawer>
+    {/if}
 </main>
 {#if added.length}
     <copyToClipboard transition:transition>
