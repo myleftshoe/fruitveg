@@ -129,7 +129,12 @@
             refs.qty.select()
             return
         }
-        added = [ ...added, { ...option } ]
+        const index = items.findIndex(({name}) => name === option.name)
+        if (index > -1)
+            items[index] = { ...option }
+        else
+            items = [ ...items, { ...option }]
+        // added = [ ...added, { ...option } ]
         // option = { ...blankOption }
         option.name = name
         option.qty = ''
@@ -321,6 +326,10 @@
         display: flex;
         align-self: center;
     }
+    item {
+        display: flex;
+        justify-content: space-between;
+    }
 
 </style>
 <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
@@ -393,9 +402,10 @@
             {:else}
                 <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
                 {#each options as item}
-                    <div>
-                        <Button style="justify-content: flex-end;" value={item.name} on:click={handleOptionClick}><pre>{item.name}</pre></Button>
-                    </div>
+                    <item>
+                        <Button value={item.name} on:click={handleOptionClick}><pre>{item.name}</pre></Button>
+                        <pre>{item.qty} {item.unit}</pre>
+                    </item>
                 {/each}
             {/if}
         </drawer>
