@@ -38,8 +38,11 @@
     let copied = false
     let warn = false
 
+
+    const withQtys = (item) => item.qty?.toString().trim() || '' !== ''
+
     async function copyToClipboard() {
-        const text = added
+        const text = items.filter(withQtys)
             .map(({name, qty, unit}) => `${qty} ${name}${unit && ` [${unit}]`}`)
             .join('\n')
         clipboard.copy(text)
@@ -52,8 +55,6 @@
         if (e.key === 'Enter') {
             refs.qty.focus()
         }
-
-
     }
 
     function handleKeyPress(e) {
@@ -163,11 +164,6 @@
 
     function handleNameFocus() {
         drawerContent = 'products'
-        // if (exists) {
-        //     option.name = ''
-        //     option.unit = ''
-        //     option = {...option}
-        // }
     }
 
     function handleUnitClick(e, unit = '') {
@@ -180,7 +176,6 @@
     }
 
     const doNothing = () => {}
-
     
     $: if (!items.length && $products.length) {   
             items = $products
@@ -193,6 +188,7 @@
     }
 
     let options = []
+    let modifiedItems = []
     $: if (options) {
         if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
             console.log('setting name to' , option,name)
@@ -204,10 +200,10 @@
         items.filter((product) => product.qty !== '')
     
     }
+    $: modifiedItems = [...items].filter(withQtys)
 
-    $: exists = !option.name || !option.qty || added.find(a => a.name === option.name)
-
-    $:         console.log('here2', drawerContent, options.length, name) 
+    $:         console.log('here2', drawerContent, options.length, name)
+    $: console.table(modifiedItems) 
 
 
 </script>
@@ -280,7 +276,7 @@
         gap: 20px;
         overflow: scroll;
         overflow-x: hidden;
-        background-color: #ddd;
+        /* background-color: #ddd; */
     }
     units {
         display:flex;
@@ -368,11 +364,6 @@
     <actions>
         <IconButton class="material-icons">add</IconButton>
     </actions>
-    <stocktake contenteditable="true" on:click={() => {refs.name.blur()}} on:input={() => console.log('fffff')}>
-        {#each added as item}
-            <pre>{item.qty} {item.name} {item.unit}</pre>
-        {/each}
-    </stocktake>
     {#if options.length}
         <drawer>
             <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton>
@@ -410,11 +401,11 @@
         </drawer>
     {/if}
 </main>
-{#if added.length}
+{#if modifiedItems.length}
     <copyToClipboard transition:transition>
         <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
     </copyToClipboard>
 {/if}
-<footer>
+<!-- <footer>
     {added.length}    
-</footer>
+</footer> -->
