@@ -217,7 +217,15 @@
         options = items.length && name && 
         items.filter((product) => product.name.includes(name.toLowerCase())) || 
         items.filter((product) => product.qty !== '')
-
+        const length = option.name.length 
+        if (refs.name) {
+            if (length > 20)
+                refs.name.style.maxWidth = '20ch'
+            else if (length > 16)
+                refs.name.style.maxWidth = `${length}ch`
+            else
+                refs.name.style.maxWidth = '16ch'
+        }
         // if (options.length === 1) {
         //     option = { ...option, name: options[0].name }
         //     refs.qty.focus()
@@ -286,8 +294,9 @@
     input:focus {
     }
     input[name="name"] {
-        max-width: 60vw;
+        max-width: 16ch;
         text-overflow: clip;
+        transition: max-width 0.5s ease;
     }
     input[name="qty"] {
         width: 4ch;
