@@ -131,8 +131,11 @@
         }
         added = [ ...added, { ...option } ]
         // option = { ...blankOption }
-        // option.name = name
+        option.name = name
+        option.qty = ''
+        option.unit = ''
         refs.name.focus()
+        refs.name.select()
     }
 
     function remove() {
