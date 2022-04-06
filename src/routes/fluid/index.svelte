@@ -18,7 +18,7 @@
 <script>
     import { browser } from '$app/env';
     import { tick } from 'svelte'
-    import { blur as transition } from 'svelte/transition'
+    import { slide as transition } from 'svelte/transition'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -68,6 +68,8 @@
     }
 
     function handleKeyPress(e) {
+        if (option.qty)
+            drawerContent = 'units'
         console.log(e.key, e.code)
         if ([' ', 'Enter'].includes(e.key)) {
             e.preventDefault()
@@ -179,7 +181,7 @@
     const setDrawerContent = (name = 'products') => (e) => { drawerContent = name }
 
     async function handleQtyFocus() {
-        drawerContent = 'units'
+        // drawerContent = 'units'
         await tick()
         refs.qty.select()
     }
@@ -255,39 +257,51 @@
 </script>
 <svelte:window bind:scrollY={y}/>
 <topbar>
-    <input 
-        name="name" 
-        type="text" 
-        bind:this={refs.name} 
-        bind:value={option.name} 
-        on:focus={handleNameFocus} 
-        on:blur={handleNameBlur} 
-        on:keypress={handleNameKeyPress}
-        on:change={() => console.log('onchange')}
-    />
-    <input
-        name="qty"
-        bind:this={refs.qty}
-        bind:value={option.qty}
-        type="number"
-        step="1"
-        min="0"
-        max="99"
-        on:keypress={handleKeyPress}
-        on:focus={handleQtyFocus} 
-        on:blur={handleQtyBlur} 
-    >
+    <row>
+        <input 
+            name="name" 
+            type="text" 
+            bind:this={refs.name} 
+            bind:value={option.name} 
+            on:focus={handleNameFocus} 
+            on:blur={handleNameBlur} 
+            on:keypress={handleNameKeyPress}
+            on:change={() => console.log('onchange')}
+        />
+        <input
+            name="qty"
+            bind:this={refs.qty}
+            bind:value={option.qty}
+            type="number"
+            step="1"
+            min="0"
+            max="99"
+            on:keypress={handleKeyPress}
+            on:focus={handleQtyFocus} 
+            on:blur={handleQtyBlur} 
+        >
+    </row>
+    {#if drawerContent === 'units'}
+        <expanded  in:transition>
+            <units>
+                {#each units as unit}
+                    <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
+                {/each}
+            </units>
+        </expanded>
+    {/if}
 </topbar>
     {#if options.length}
         <!-- <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton> -->
         <p></p>
-        {#if drawerContent === 'units'}
+        <!-- {#if drawerContent === 'units'}
             <units in:transition>
                 {#each units as unit}
                     <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
                 {/each}
             </units>
-        {:else if drawerContent === 'more'}
+        {:else if drawerContent === 'more'} -->
+        {#if drawerContent === 'more'} 
             <more>
                 <section>
                     <Button class="material-icons" size="button" on:click={doNothing}>outside stock</Button>
@@ -369,12 +383,17 @@
         position: sticky;
         top: 0;
         display: flex;
+        flex-direction: column;
         width:100%;
         justify-content: center;
-        height: 11vh;
+        align-items: center;
         gap: 10px;
         background-color: #333;
         box-shadow: 0px 4px 8px #000a
+    }
+    row {
+        display: flex;
+        min-height: 12vh;
     }
     input {
         background: none;
@@ -400,20 +419,6 @@
         margin:0;
         background-color: #fff;
         overflow: scroll;
-    }
-    main {
-        position: fixed;
-        width: calc(100% - 40px);
-        top: 10%;
-        right: 0;
-        display:flex;
-        height: 90%;
-        flex-direction: column;
-        /* overflow: scroll; */
-        padding-left: 20px;
-        padding-right: 20px;
-        background-color: #fff;
-        padding-bottom: 20vh;
     }
     units {
         display:flex;
