@@ -359,8 +359,8 @@
     start, copyToClipboard {
         display:flex;
         width:100%;
-        position: absolute;
-        bottom: 60px;
+        /* position: absolute; */
+        /* bottom: 60px; */
         justify-content: center;
     }
     footer {
@@ -470,18 +470,18 @@
                     </item>
                 {/each}
             {/if}
+            {#if !options.some(({qty}) => qty === '')}
+                <copyToClipboard transition:transition>
+                    <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
+                </copyToClipboard>
+            {/if}
         </drawer>
+    {:else if !options.length}
+        <start transition:transition>
+            <Button class="material-icons" on:click={handleStartClick}>start</Button>
+        </start>
     {/if}
 </main>
-{#if options.length && !options.some(({qty}) => qty === '')}
-    <copyToClipboard transition:transition>
-        <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
-    </copyToClipboard>
-{:else if !options.length}
-    <start transition:transition>
-        <Button class="material-icons" on:click={handleStartClick}>start</Button>
-    </start>
-{/if}
 <!-- <footer>
     {added.length}    
 </footer> -->
