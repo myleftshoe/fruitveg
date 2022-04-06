@@ -288,6 +288,7 @@
     :global(body) {
         margin:0;
         background-color: #fff;
+        overflow: visible;
     }
     main {
         position: fixed;
@@ -352,7 +353,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #7773;
+        background-color: red;
     }
     item {
         display: flex;
