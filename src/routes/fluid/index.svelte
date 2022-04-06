@@ -333,6 +333,17 @@
         /* bottom: 60px; */
         justify-content: center;
     }
+    start {
+        position: fixed;
+        width: 100vw;
+        height:100vh;
+        top:0;
+        left:0;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+    }
     footer {
         position: fixed;
         bottom: -20px;
@@ -431,7 +442,7 @@
                 <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
             </copyToClipboard>
         {/if}
-    {:else if !option.name && !option.qty && !option.unit}
+    {:else if !option.name && !option.qty && !option.unit && browser && document.activeElement !== refs.name}
         <start transition:transition>
             <Button class="material-icons" on:click={handleStartClick}>start</Button>
         </start>
