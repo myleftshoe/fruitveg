@@ -315,7 +315,8 @@
         text-align: right;
     }
     :global(body) {
-        /* border: 10px solid blue; */
+        border: 10px solid blue;
+        background: white;
         margin:0;
     }
     drawer {
@@ -399,32 +400,32 @@
     </Actions>
 </Dialog>
 <topbar>
-        <input 
-            name="name" 
-            type="text" 
-            bind:this={refs.name} 
-            bind:value={option.name} 
-            on:focus={handleNameFocus} 
-            on:blur={handleNameBlur} 
-            on:keypress={handleNameKeyPress}
-            on:change={() => console.log('onchange')}
-        />
-        <input
-            name="qty"
-            bind:this={refs.qty}
-            bind:value={option.qty}
-            type="number"
-            step="1"
-            min="0"
-            max="99"
-            on:keypress={handleKeyPress}
-            on:focus={handleQtyFocus} 
-            on:blur={handleQtyBlur} 
-            on:click={() => {
-    //            if ((option.qty + option.name).trim() === '')
-    //                refs.name.focus()
-            }}
-        >
+    <input 
+        name="name" 
+        type="text" 
+        bind:this={refs.name} 
+        bind:value={option.name} 
+        on:focus={handleNameFocus} 
+        on:blur={handleNameBlur} 
+        on:keypress={handleNameKeyPress}
+        on:change={() => console.log('onchange')}
+    />
+    <input
+        name="qty"
+        bind:this={refs.qty}
+        bind:value={option.qty}
+        type="number"
+        step="1"
+        min="0"
+        max="99"
+        on:keypress={handleKeyPress}
+        on:focus={handleQtyFocus} 
+        on:blur={handleQtyBlur} 
+        on:click={() => {
+//            if ((option.qty + option.name).trim() === '')
+//                refs.name.focus()
+        }}
+    >
 </topbar>
 <main>
     <!-- <actions>
