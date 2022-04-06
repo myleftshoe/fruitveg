@@ -274,8 +274,8 @@
         gap: 2vh;
     }
     topbar {
-        position: sticky;
         position: -webkit-sticky;
+        position: sticky;
         top: 0;
         display: flex;
         width:100%;
@@ -316,28 +316,25 @@
         text-align: right;
     }
     :global(body) {
-        /* border: 10px solid blue; */
         margin:0;
-        /* height: calc( 500vh - 20px); */
-        overflow: scroll;
+        background-color: #fff;
     }
     drawer {
-        /* position: fixed; */
+        position: fixed;
         width: calc(100% - 40px);
-        /* top: 10vh; */
+        top: 10vh;
         right: 0;
         /* height: 100%;   */
         display:flex;
-        /* height: 50vh; */
+        height: 90vh;
         flex-direction: column;
         align-items:stretch;
         /* gap: 20px; */
-        /* overflow: scroll; */
-        /* height: auto; */
+        overflow: scroll;
         padding-left: 20px;
         padding-right: 20px;
         /* overflow-x: hidden; */
-        background-color: #ddd;
+        background-color: #fff;
     }
     units {
         display:flex;
