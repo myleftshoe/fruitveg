@@ -226,7 +226,7 @@
                 })) || []
                 console.table(items)
     }
-
+    let y;
     let options = []
     let modifiedItems = []
     $: if (options) {
@@ -253,6 +253,111 @@
     $: console.table(modifiedItems) 
 
 </script>
+<svelte:window bind:scrollY={y}/>
+<topbar>
+    <input 
+        name="name" 
+        type="text" 
+        bind:this={refs.name} 
+        bind:value={option.name} 
+        on:focus={handleNameFocus} 
+        on:blur={handleNameBlur} 
+        on:keypress={handleNameKeyPress}
+        on:change={() => console.log('onchange')}
+    />
+    <input
+        name="qty"
+        bind:this={refs.qty}
+        bind:value={option.qty}
+        type="number"
+        step="1"
+        min="0"
+        max="99"
+        on:keypress={handleKeyPress}
+        on:focus={handleQtyFocus} 
+        on:blur={handleQtyBlur} 
+    >
+</topbar>
+    {#if options.length}
+        <!-- <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton> -->
+        <p></p>
+        {#if drawerContent === 'units'}
+            <units in:transition>
+                {#each units as unit}
+                    <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
+                {/each}
+            </units>
+        {:else if drawerContent === 'more'}
+            <more>
+                <section>
+                    <Button class="material-icons" size="button" on:click={doNothing}>outside stock</Button>
+                    <Button class="material-icons" size="button" on:click={doNothing}>coolibah</Button>
+                    <Button class="material-icons" size="button" on:click={doNothing}>zuccs, cukes, caps</Button>
+                </section>
+                <section>
+                    <Button class="material-icons" size="button" on:click={() => { warn = true }}>start over</Button>
+                    <Button class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
+                    {#if copied}
+                        <copied transition:transition>
+                            <Button disabled style="color:darkorange; font-size: .8em">copied!</Button>
+                        </copied>
+                    {/if}
+                </section>
+            </more>
+        {:else}
+            <div in:transition>
+                {#each options as item}
+                    <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
+                        <Button 
+                            value={item.name} 
+                            on:click={(e) => handleOptionClick(e, item)} 
+                            style="width: 100%; display: flex; justify-content: space-between; color: black;"
+                        >
+                            <pre>{item.name}</pre>
+                            <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
+                        </Button>
+                    </item>
+                {/each}
+            </div>
+        {/if}
+        {#if !options.some(({qty}) => qty === '')}
+            <copyToClipboard transition:transition>
+                <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
+            </copyToClipboard>
+        {/if}
+    {:else if !option.name && !option.qty && !option.unit && browser && document.activeElement !== refs.name}
+        <start transition:transition>
+            <Button class="material-icons" on:click={handleStartClick}>start</Button>
+        </start>
+    {/if}
+<fab>
+    <Fab on:click={handleFabClick}>
+        <Icon class="material-icons">menu</Icon>
+    </Fab>
+</fab>
+<footer>{y}</footer>
+<Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction="" escapeKeyAction="" >
+    <menuDialog>
+        <Title>Fruit & Veg Stocktake</Title>
+        <buttons>
+            <message style="opacity: {copied ? 1 : 0}">copied!</message>
+            <Button on on:click={copyToClipboard} >copy to clipboard</Button>
+            <Button color="secondary" on:click={() => warn = true}>start new</Button>
+            <Button color="secondary" on:click={() => complete = false}>continue editing</Button>
+        </buttons>
+    </menuDialog>
+    <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
+        <!-- <Title>Start new stocktake?</Title> -->
+        <Content>
+            Clear current stocktake and start a new one?
+        </Content>
+        <Actions>
+            <Button on:click={startNew}>start new</Button>
+            <Button defaultAction>cancel</Button>
+        </Actions>
+    </Dialog>
+</Dialog>
+
 
 <style>
     pre {
@@ -294,7 +399,7 @@
     :global(body) {
         margin:0;
         background-color: #fff;
-        overflow: visible;
+        overflow: scroll;
     }
     main {
         position: fixed;
@@ -304,7 +409,7 @@
         display:flex;
         height: 90%;
         flex-direction: column;
-        overflow: scroll;
+        /* overflow: scroll; */
         padding-left: 20px;
         padding-right: 20px;
         background-color: #fff;
@@ -386,108 +491,3 @@
         gap: 2ch;
     }
 </style>
-<topbar>
-    <input 
-        name="name" 
-        type="text" 
-        bind:this={refs.name} 
-        bind:value={option.name} 
-        on:focus={handleNameFocus} 
-        on:blur={handleNameBlur} 
-        on:keypress={handleNameKeyPress}
-        on:change={() => console.log('onchange')}
-    />
-    <input
-        name="qty"
-        bind:this={refs.qty}
-        bind:value={option.qty}
-        type="number"
-        step="1"
-        min="0"
-        max="99"
-        on:keypress={handleKeyPress}
-        on:focus={handleQtyFocus} 
-        on:blur={handleQtyBlur} 
-    >
-</topbar>
-<main>
-    {#if options.length}
-        <!-- <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton> -->
-        <p></p>
-        {#if drawerContent === 'units'}
-            <units in:transition>
-                {#each units as unit}
-                    <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
-                {/each}
-            </units>
-        {:else if drawerContent === 'more'}
-            <more>
-                <section>
-                    <Button class="material-icons" size="button" on:click={doNothing}>outside stock</Button>
-                    <Button class="material-icons" size="button" on:click={doNothing}>coolibah</Button>
-                    <Button class="material-icons" size="button" on:click={doNothing}>zuccs, cukes, caps</Button>
-                </section>
-                <section>
-                    <Button class="material-icons" size="button" on:click={() => { warn = true }}>start over</Button>
-                    <Button class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
-                    {#if copied}
-                        <copied transition:transition>
-                            <Button disabled style="color:darkorange; font-size: .8em">copied!</Button>
-                        </copied>
-                    {/if}
-                </section>
-            </more>
-        {:else}
-            <div in:transition>
-                {#each options as item}
-                    <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
-                        <Button 
-                            value={item.name} 
-                            on:click={(e) => handleOptionClick(e, item)} 
-                            style="width: 100%; display: flex; justify-content: space-between; color: black;"
-                        >
-                            <pre>{item.name}</pre>
-                            <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
-                        </Button>
-                    </item>
-                {/each}
-            </div>
-        {/if}
-        {#if !options.some(({qty}) => qty === '')}
-            <copyToClipboard transition:transition>
-                <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
-            </copyToClipboard>
-        {/if}
-    {:else if !option.name && !option.qty && !option.unit && browser && document.activeElement !== refs.name}
-        <start transition:transition>
-            <Button class="material-icons" on:click={handleStartClick}>start</Button>
-        </start>
-    {/if}
-</main>
-<fab>
-    <Fab on:click={handleFabClick}>
-        <Icon class="material-icons">menu</Icon>
-    </Fab>
-</fab>
-<Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction="" escapeKeyAction="" >
-    <menuDialog>
-        <Title>Fruit & Veg Stocktake</Title>
-        <buttons>
-            <message style="opacity: {copied ? 1 : 0}">copied!</message>
-            <Button on on:click={copyToClipboard} >copy to clipboard</Button>
-            <Button color="secondary" on:click={() => warn = true}>start new</Button>
-            <Button color="secondary" on:click={() => complete = false}>continue editing</Button>
-        </buttons>
-    </menuDialog>
-    <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
-        <!-- <Title>Start new stocktake?</Title> -->
-        <Content>
-            Clear current stocktake and start a new one?
-        </Content>
-        <Actions>
-            <Button on:click={startNew}>start new</Button>
-            <Button defaultAction>cancel</Button>
-        </Actions>
-    </Dialog>
-</Dialog>
-
