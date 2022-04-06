@@ -18,7 +18,7 @@
 <script>
     import { browser } from '$app/env';
     import { tick } from 'svelte'
-    import { fade as transition } from 'svelte/transition'
+    import { blur as transition } from 'svelte/transition'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -173,7 +173,7 @@
     const setDrawerContent = (name = 'products') => (e) => { drawerContent = name }
 
     async function handleQtyFocus() {
-        drawerContent = 'products'
+        drawerContent = 'units'
         await tick()
         refs.qty.select()
     }
@@ -360,18 +360,7 @@
         justify-content: space-between;
         transition: background-color .35s ease;
     }
-
 </style>
-<Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
-    <!-- <Title>Start new stocktake?</Title> -->
-    <Content>
-        Clear current stocktake and start a new one?
-    </Content>
-    <Actions>
-        <Button on:click={startNew}>start new</Button>
-        <Button defaultAction>cancel</Button>
-    </Actions>
-</Dialog>
 <topbar>
     <input 
         name="name" 
@@ -401,7 +390,7 @@
         <!-- <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton> -->
         <p></p>
         {#if drawerContent === 'units'}
-            <units>
+            <units in:transition>
                 {#each units as unit}
                     <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
                 {/each}
@@ -424,19 +413,20 @@
                 </section>
             </more>
         {:else}
-            <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
-            {#each options as item}
-                <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
-                    <Button 
-                        value={item.name} 
-                        on:click={(e) => handleOptionClick(e, item)} 
-                        style="width: 100%; display: flex; justify-content: space-between; color: black;"
-                    >
-                        <pre>{item.name}</pre>
-                        <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
-                    </Button>
-                </item>
-            {/each}
+            <div in:transition>
+                {#each options as item}
+                    <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
+                        <Button 
+                            value={item.name} 
+                            on:click={(e) => handleOptionClick(e, item)} 
+                            style="width: 100%; display: flex; justify-content: space-between; color: black;"
+                        >
+                            <pre>{item.name}</pre>
+                            <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
+                        </Button>
+                    </item>
+                {/each}
+            </div>
         {/if}
         {#if !options.some(({qty}) => qty === '')}
             <copyToClipboard transition:transition>
@@ -449,6 +439,13 @@
         </start>
     {/if}
 </main>
-<footer>
-    {added.length}    
-</footer>
+<Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
+    <!-- <Title>Start new stocktake?</Title> -->
+    <Content>
+        Clear current stocktake and start a new one?
+    </Content>
+    <Actions>
+        <Button on:click={startNew}>start new</Button>
+        <Button defaultAction>cancel</Button>
+    </Actions>
+</Dialog>
