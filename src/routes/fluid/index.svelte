@@ -292,10 +292,10 @@
     main {
         position: fixed;
         width: calc(100% - 40px);
-        top: 10vh;
+        top: 10%;
         right: 0;
         display:flex;
-        height: 90vh;
+        height: 90%;
         flex-direction: column;
         overflow: scroll;
         padding-left: 20px;
