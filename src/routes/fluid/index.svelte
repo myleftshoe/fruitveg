@@ -18,7 +18,7 @@
 <script>
     import { browser } from '$app/env';
     import { tick } from 'svelte'
-    import { slide as transition } from 'svelte/transition'
+    import { slide, blur as transition} from 'svelte/transition'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -67,10 +67,16 @@
         }
     }
 
-    function handleKeyPress(e) {
-        if (option.qty)
+    async function handleQtyInput(e) {
+        console.log('handleQtyInput')
+        if (option.qty) {
             drawerContent = 'units'
-        console.log(e.key, e.code)
+        }
+    }
+
+
+    function handleQtyKeyPress(e) {
+        console.log('handleQtyKeyPress', e.key, e.code)
         if ([' ', 'Enter'].includes(e.key)) {
             e.preventDefault()
             add()
@@ -175,6 +181,7 @@
         items.length = 0
         clear()
         browser && localStorage.removeItem(localStorageId)
+        complete = false
     }
 
     let drawerContent = 'products'
@@ -236,7 +243,6 @@
             console.log('setting name to' , option,name)
             name = option.name
         }
-        console.log('a', options.length)
         options = items.length && name && 
         items.filter((product) => product.name.includes(name.toLowerCase())) || 
         items.filter((product) => product.qty !== '')
@@ -276,13 +282,14 @@
             step="1"
             min="0"
             max="99"
-            on:keypress={handleKeyPress}
+            on:keypress={handleQtyKeyPress}
+            on:input={handleQtyInput}
             on:focus={handleQtyFocus} 
             on:blur={handleQtyBlur} 
         >
     </row>
     {#if drawerContent === 'units'}
-        <expanded  in:transition>
+        <expanded transition:slide>
             <units>
                 {#each units as unit}
                     <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
@@ -334,11 +341,11 @@
                 {/each}
             </div>
         {/if}
-        {#if !options.some(({qty}) => qty === '')}
+        <!-- {#if !options.some(({qty}) => qty === '')}
             <copyToClipboard transition:transition>
                 <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
             </copyToClipboard>
-        {/if}
+        {/if} -->
     {:else if !option.name && !option.qty && !option.unit && browser && document.activeElement !== refs.name}
         <start transition:transition>
             <Button class="material-icons" on:click={handleStartClick}>start</Button>
@@ -349,8 +356,8 @@
         <Icon class="material-icons">menu</Icon>
     </Fab>
 </fab>
-<footer>{y}</footer>
-<Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction="" escapeKeyAction="" >
+<!-- <footer>{y}</footer> -->
+<Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction={() => complete = false} escapeKeyAction="" >
     <menuDialog>
         <Title>Fruit & Veg Stocktake</Title>
         <buttons>
@@ -424,7 +431,7 @@
         display:flex;
         flex-wrap: wrap;
         justify-content: space-around;
-        gap:20px;
+        /* gap:20px; */
     }
     more {
         display: flex;
