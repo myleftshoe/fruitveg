@@ -130,7 +130,8 @@
             return
         }
         if (!option.qty) {
-            refs.qty.select()
+            option.qty = ''
+            // refs.qty.select()
             return
         }
         const index = items.findIndex(({name}) => name === option.name)
