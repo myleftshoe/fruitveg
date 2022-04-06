@@ -353,7 +353,7 @@
         position: absolute;
         bottom: 40px;
     }
-    copyToClipboard {
+    start, copyToClipboard {
         display:flex;
         width:100%;
         position: absolute;
@@ -380,10 +380,6 @@
         transition: background-color .35s ease;
         /* background: #ffa50055; */
         /* border-radius: 5px; */
-    }
-    start {
-        justify-self: center;
-        align-self: center;
     }
 
 </style>
@@ -463,16 +459,16 @@
                 {/each}
             {/if}
         </drawer>
-    {:else}
-        <start transition:transition>
-            <Button class="material-icons" on:click={handleStartClick}>start</Button>
-        </start>
     {/if}
 </main>
 {#if options.length && !options.some(({qty}) => qty === '')}
     <copyToClipboard transition:transition>
         <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
     </copyToClipboard>
+{:else if !options.length}
+    <start transition:transition>
+        <Button class="material-icons" on:click={handleStartClick}>start</Button>
+    </start>
 {/if}
 <!-- <footer>
     {added.length}    
