@@ -1,5 +1,5 @@
 <script context="module">
-    const localStorageId = 'fruitveg-localStorage'
+    const localStorageId = 'fruitveg-fluid'
     const units = [
         '[none]',
         'bags',
@@ -138,13 +138,15 @@
             // refs.qty.select()
             return
         }
+
         const index = items.findIndex(({name}) => name === option.name)
         if (index > -1)
             items[index] = { ...option }
         else
             items = [ ...items, { ...option }]
-        // added = [ ...added, { ...option } ]
-        // option = { ...blankOption }
+            
+        localStorage.setItem(localStorageId, JSON.stringify(items))
+
         option.name = name
         option.qty = ''
         option.unit = ''
