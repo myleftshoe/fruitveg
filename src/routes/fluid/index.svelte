@@ -241,9 +241,6 @@
             else
                 refs.name.style.maxWidth = '16ch'
         }
-        //     option = { ...option, name: options[0].name }
-        //     refs.qty.focus()
-        // } 
     }
     $: modifiedItems = [...items].filter(withQtys)
     $: console.log('here2', drawerContent, options.length, name)
@@ -252,26 +249,9 @@
 </script>
 
 <style>
-    stocktake {
-        width: calc( 100% - 0px );
-        outline: none;
-        /* align-self: flex-start; */
-        background-color: yellow;
-    }
     pre {
         font-size: 12px;
         text-transform: lowercase;
-    }
-    main {
-        /* border: 10px solid black; */
-        position: absolute;
-        margin-top: 10vh;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 2vh;
     }
     topbar {
         position: -webkit-sticky;
@@ -285,14 +265,6 @@
         background-color: #333;
         box-shadow: 0px 4px 8px #000a
     }
-    form {
-        width:80%;
-        height:100px;
-        /* background:red; */
-        display: flex;
-        justify-content: center;
-        gap:16px;
-    }
     input {
         background: none;
         border: none;
@@ -303,8 +275,6 @@
         /* text-decoration: underline; */
         /* border-bottom: 2px solid orange; */
 
-    }
-    input:focus {
     }
     input[name="name"] {
         max-width: 16ch;
@@ -319,22 +289,19 @@
         margin:0;
         background-color: #fff;
     }
-    drawer {
+    main {
         position: fixed;
         width: calc(100% - 40px);
         top: 10vh;
         right: 0;
-        /* height: 100%;   */
         display:flex;
         height: 90vh;
         flex-direction: column;
-        align-items:stretch;
-        /* gap: 20px; */
         overflow: scroll;
         padding-left: 20px;
         padding-right: 20px;
-        /* overflow-x: hidden; */
         background-color: #fff;
+        padding-bottom: 20vh;
     }
     units {
         display:flex;
@@ -376,16 +343,10 @@
         justify-content: center;
         background-color: #7773;
     }
-    actions {
-        display: flex;
-        align-self: center;
-    }
     item {
         display: flex;
         justify-content: space-between;
         transition: background-color .35s ease;
-        /* background: #ffa50055; */
-        /* border-radius: 5px; */
     }
 
 </style>
@@ -421,65 +382,56 @@
         on:keypress={handleKeyPress}
         on:focus={handleQtyFocus} 
         on:blur={handleQtyBlur} 
-        on:click={() => {
-//            if ((option.qty + option.name).trim() === '')
-//                refs.name.focus()
-        }}
     >
 </topbar>
 <main>
-    <!-- <actions>
-        <IconButton class="material-icons">add</IconButton>
-    </actions> -->
     {#if options.length}
-        <drawer>
-            <!-- <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton> -->
-            <p></p>
-            {#if drawerContent === 'units'}
-                <units>
-                    {#each units as unit}
-                        <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
-                    {/each}
-                </units>
-            {:else if drawerContent === 'more'}
-                <more>
-                    <section>
-                        <Button class="material-icons" size="button" on:click={doNothing}>outside stock</Button>
-                        <Button class="material-icons" size="button" on:click={doNothing}>coolibah</Button>
-                        <Button class="material-icons" size="button" on:click={doNothing}>zuccs, cukes, caps</Button>
-                    </section>
-                    <section>
-                        <Button class="material-icons" size="button" on:click={() => { warn = true }}>start over</Button>
-                        <Button class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
-                        {#if copied}
-                            <copied transition:transition>
-                                <Button disabled style="color:darkorange; font-size: .8em">copied!</Button>
-                            </copied>
-                        {/if}
-                    </section>
-                </more>
-            {:else}
-                <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
-                {#each options as item}
-                    <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
-                        <Button 
-                            value={item.name} 
-                            on:click={(e) => handleOptionClick(e, item)} 
-                            style="width: 100%; display: flex; justify-content: space-between; color: black;"
-                        >
-                            <pre>{item.name}</pre>
-                            <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
-                        </Button>
-                    </item>
+        <!-- <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton> -->
+        <p></p>
+        {#if drawerContent === 'units'}
+            <units>
+                {#each units as unit}
+                    <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
                 {/each}
-            {/if}
-            {#if !options.some(({qty}) => qty === '')}
-                <copyToClipboard transition:transition>
-                    <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
-                </copyToClipboard>
-            {/if}
-        </drawer>
-    {:else if !options.length && !option.name && !option.qty && !option.unit}
+            </units>
+        {:else if drawerContent === 'more'}
+            <more>
+                <section>
+                    <Button class="material-icons" size="button" on:click={doNothing}>outside stock</Button>
+                    <Button class="material-icons" size="button" on:click={doNothing}>coolibah</Button>
+                    <Button class="material-icons" size="button" on:click={doNothing}>zuccs, cukes, caps</Button>
+                </section>
+                <section>
+                    <Button class="material-icons" size="button" on:click={() => { warn = true }}>start over</Button>
+                    <Button class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
+                    {#if copied}
+                        <copied transition:transition>
+                            <Button disabled style="color:darkorange; font-size: .8em">copied!</Button>
+                        </copied>
+                    {/if}
+                </section>
+            </more>
+        {:else}
+            <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
+            {#each options as item}
+                <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
+                    <Button 
+                        value={item.name} 
+                        on:click={(e) => handleOptionClick(e, item)} 
+                        style="width: 100%; display: flex; justify-content: space-between; color: black;"
+                    >
+                        <pre>{item.name}</pre>
+                        <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
+                    </Button>
+                </item>
+            {/each}
+        {/if}
+        {#if !options.some(({qty}) => qty === '')}
+            <copyToClipboard transition:transition>
+                <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
+            </copyToClipboard>
+        {/if}
+    {:else if !option.name && !option.qty && !option.unit}
         <start transition:transition>
             <Button class="material-icons" on:click={handleStartClick}>start</Button>
         </start>
