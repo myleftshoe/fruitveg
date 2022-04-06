@@ -176,13 +176,13 @@
 
     async function handleNameFocus() {
         drawerContent = 'products'
-        refs.name.placeholder = !options.length && 'type...' || ''
+        refs.name.placeholder = !option.name && 'type...' || ''
         await tick()
         refs.name.select()
     }
     
     function handleNameBlur() {
-        refs.name.placeholder = !options.length && ''
+        refs.name.placeholder = ''
     }
 
     function handleUnitClick(e, unit = '') {
@@ -200,6 +200,8 @@
     }
 
     const doNothing = () => {}
+
+    let ripple = false
     
     $: if (!items.length && $products.length) {   
             items = $products
@@ -375,6 +377,7 @@
     item {
         display: flex;
         justify-content: space-between;
+        transition: background-color .35s ease;
         /* background: #ffa50055; */
         /* border-radius: 5px; */
     }
@@ -454,7 +457,7 @@
             {:else}
                 <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
                 {#each options as item}
-                    <item>
+                    <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
                         <Button value={item.name} on:click={(e) => handleOptionClick(e, item)} style="width: 100%; display: flex; justify-content: space-between; color: black;"><pre>{item.name}</pre><pre>{item.qty} {item.unit}</pre></Button>
                     </item>
                 {/each}
@@ -466,7 +469,7 @@
         </start>
     {/if}
 </main>
-{#if modifiedItems.length}
+{#if options.length && !options.some(({qty}) => qty === '')}
     <copyToClipboard transition:transition>
         <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
     </copyToClipboard>
