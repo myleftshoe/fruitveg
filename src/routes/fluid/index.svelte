@@ -129,6 +129,10 @@
             refs.name.select()
             return
         }
+        if (option.qty === 0) {
+            option.qty = '0'
+            return
+        }
         if (!option.qty) {
             option.qty = ''
             // refs.qty.select()
@@ -191,7 +195,7 @@
     }
 
     async function handleOptionClick(e, item) {
-        option = { ...item }
+        option = item
         await tick()
         refs.qty.select()
     }
@@ -234,13 +238,11 @@
             else
                 refs.name.style.maxWidth = '16ch'
         }
-        // if (options.length === 1) {
         //     option = { ...option, name: options[0].name }
         //     refs.qty.focus()
         // } 
     }
     $: modifiedItems = [...items].filter(withQtys)
-
     $: console.log('here2', drawerContent, options.length, name)
     $: console.table(modifiedItems) 
 
@@ -410,7 +412,9 @@
             bind:this={refs.qty}
             bind:value={option.qty}
             type="number"
-            step="any"
+            step="1"
+            min="0"
+            max="99"
             on:keypress={handleKeyPress}
             on:focus={handleQtyFocus} 
             on:blur={handleQtyBlur} 
@@ -455,7 +459,14 @@
                 <input name="name" type="text" bind:value={name} style="align-self:center; width: 70%; display: none;"/>
                 {#each options as item}
                     <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
-                        <Button value={item.name} on:click={(e) => handleOptionClick(e, item)} style="width: 100%; display: flex; justify-content: space-between; color: black;"><pre>{item.name}</pre><pre>{item.qty} {item.unit}</pre></Button>
+                        <Button 
+                            value={item.name} 
+                            on:click={(e) => handleOptionClick(e, item)} 
+                            style="width: 100%; display: flex; justify-content: space-between; color: black;"
+                        >
+                            <pre>{item.name}</pre>
+                            <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
+                        </Button>
                     </item>
                 {/each}
             {/if}
