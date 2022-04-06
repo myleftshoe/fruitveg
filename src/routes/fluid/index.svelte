@@ -335,7 +335,7 @@
     }
     footer {
         position: fixed;
-        bottom:0;
+        bottom: -20px;
         height: 40px;
         width: 100%;
         display: flex;
@@ -437,6 +437,6 @@
         </start>
     {/if}
 </main>
-<!-- <footer>
+<footer>
     {added.length}    
-</footer> -->
+</footer>
