@@ -347,7 +347,7 @@
     }
     footer {
         position: fixed;
-        bottom: -20px;
+        bottom: 40vh;
         height: 40px;
         width: 100%;
         display: flex;
