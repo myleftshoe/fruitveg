@@ -274,8 +274,8 @@
         gap: 2vh;
     }
     topbar {
+        position: sticky;
         position: -webkit-sticky;
-        position: fixed;
         top: 0;
         display: flex;
         width:100%;
