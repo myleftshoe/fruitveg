@@ -22,6 +22,7 @@
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
+    import Fab, { Icon } from '@smui/fab'
     import clipboard from '../../helpers/clipboard.js'
 
     import products from '$lib/productStore'
@@ -35,6 +36,7 @@
 
     let name = ''
 
+    let complete = false
     let copied = false
     let warn = false
 
@@ -50,6 +52,11 @@
         copied = true
         setTimeout(() => copied = false, 1500)
     }
+
+    function handleFabClick(e) {
+        complete = true
+    }
+
 
     function handleNameKeyPress(e) {
         if (e.key === 'Enter') {
@@ -164,7 +171,6 @@
 
     function startNew() {
         items.length = 0
-        added.length = 0
         clear()
         browser && localStorage.removeItem(localStorageId)
     }
@@ -360,6 +366,25 @@
         justify-content: space-between;
         transition: background-color .35s ease;
     }
+    fab {
+        position: fixed;
+        right: 32px;
+        bottom: 32px;
+    }
+    menuDialog {
+        min-height: 50vh;
+        display:flex; 
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2ch;
+    }
+    buttons {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2ch;
+    }
 </style>
 <topbar>
     <input 
@@ -439,13 +464,30 @@
         </start>
     {/if}
 </main>
-<Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
-    <!-- <Title>Start new stocktake?</Title> -->
-    <Content>
-        Clear current stocktake and start a new one?
-    </Content>
-    <Actions>
-        <Button on:click={startNew}>start new</Button>
-        <Button defaultAction>cancel</Button>
-    </Actions>
+<fab>
+    <Fab on:click={handleFabClick}>
+        <Icon class="material-icons">menu</Icon>
+    </Fab>
+</fab>
+<Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction="" escapeKeyAction="" >
+    <menuDialog>
+        <Title>Fruit & Veg Stocktake</Title>
+        <buttons>
+            <message style="opacity: {copied ? 1 : 0}">copied!</message>
+            <Button on on:click={copyToClipboard} >copy to clipboard</Button>
+            <Button color="secondary" on:click={() => warn = true}>start new</Button>
+            <Button color="secondary" on:click={() => complete = false}>continue editing</Button>
+        </buttons>
+    </menuDialog>
+    <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
+        <!-- <Title>Start new stocktake?</Title> -->
+        <Content>
+            Clear current stocktake and start a new one?
+        </Content>
+        <Actions>
+            <Button on:click={startNew}>start new</Button>
+            <Button defaultAction>cancel</Button>
+        </Actions>
+    </Dialog>
 </Dialog>
+
