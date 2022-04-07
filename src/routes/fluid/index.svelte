@@ -403,7 +403,7 @@
         position: relative;
         position: sticky;
         position: -webkit-sticky;
-        top: 20vh;
+        top: 3vh;
         /* height: 3ch; */
         /* justify-content: stretch; */
         /* min-height: 12vh; */
@@ -413,9 +413,10 @@
         background: none;
         border: none;
         outline:none;
-        padding: 8px 16px;
+        padding: 12px 16px;
         font-size: 18px;
         font-family: monospace;
+        font-weight: bold;
         /* color: orange; */
 
     }
@@ -425,7 +426,6 @@
         text-transform: lowercase;
         /* background-color: red; */
         padding-left: 5px;
-        font-weight: bold;
         /* color:white;
         text-shadow: 2px 2px #000; */
         /* transition: max-width 0.1s linear; */
