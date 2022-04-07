@@ -297,7 +297,7 @@
             _on:focus={handleQtyFocus} 
             on:blur={handleQtyBlur} 
         >
-        <select name="unit" id="unit" bind:this={refs.unit} bind:value={option.unit} placeholder="test">
+        <select name="unit" id="unit" bind:this={refs.unit} bind:value={option.unit}>
             <option value="" disabled>[unit]</option>
             {#each units as unit}
                 <option value={unit} on:click={handleUnitChange}>{unit}</option>
@@ -398,7 +398,7 @@
     input {
         background: none;
         border: none;
-        outline:none;
+        /* outline:none; */
         /* padding: 20px 8px; */
         font-size: 20px;
         font-family: monospace;
@@ -416,6 +416,22 @@
         padding-left: 5px;
         padding-right: 0;
     }
+    select {
+        border: none;
+        /* outline:none; */
+        background: none;
+        height: 40px;
+        text-align: right;
+        font-weight: bold;
+        font-size: 12px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        color: #bbb;
+    }
+    item {
+        display: flex;
+        justify-content: space-between;
+    }
+    item:nth-child(even) {background: #7773}
     footer {
         position: fixed;
         bottom: 0;
@@ -425,11 +441,6 @@
         align-items: center;
         justify-content: center;
     }
-    item {
-        display: flex;
-        justify-content: space-between;
-    }
-    item:nth-child(even) {background: #7773}
     fab {
         position: fixed;
         right: 32px;
@@ -448,17 +459,6 @@
         flex-direction: column;
         align-items: center;
         gap: 2ch;
-    }
-    select {
-        border: none;
-        outline:none;
-        background: none;
-        height: 40px;
-        text-align: right;
-        font-weight: bold;
-        font-size: 12px;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        color: #bbb;
     }
     p {
         color: transparent;
