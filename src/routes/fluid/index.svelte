@@ -295,7 +295,7 @@
             max="99"
             on:keypress={handleQtyKeyPress}
             _on:focus={handleQtyFocus} 
-            _on:blur={handleQtyBlur} 
+            on:blur={handleQtyBlur} 
         >
         <select name="unit" id="unit" bind:this={refs.unit} bind:value={option.unit} placeholder="test">
             <option value="" disabled>[unit]</option>
