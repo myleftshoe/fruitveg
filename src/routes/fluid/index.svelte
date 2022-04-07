@@ -324,7 +324,6 @@
         </added>
     {/each}
     </div>
-    <p></p>
     <row on:click|stopPropagation>
         <input 
             name="name" 
@@ -359,7 +358,6 @@
             {/each}
         </select>
     </row>
-    <p></p>
     <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
     {#each options as item, i (item.name)}
         <item in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip={{duration: 200}}>
@@ -373,7 +371,8 @@
         </item>
     {/each}
     </div>
-    <p></p>
+    <p>.</p>
+    
 </main>
 <footer>
 </footer>
@@ -417,6 +416,9 @@
         /* height: 50vh; */
         overflow: scroll;
         overflow-x: visible;
+        display:flex;
+        flex-direction: column;
+        gap: 4vh;
         /* border: 1px solid red; */
         /* background-color: #f00; */
     }
@@ -441,7 +443,7 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        background: #fd0;
+        background: #fa0;
         border-radius: 0px;
         position: relative;
         position: sticky;
@@ -507,7 +509,7 @@
     item {
         display: flex;
         justify-content: flex-start;
-        margin-left: 16px;
+        margin-left: 32px;
     }
     fab {
         position: fixed;
@@ -535,5 +537,8 @@
         height: 40px;
         text-align: right;
         font-weight: bold;
+    }
+    p {
+        color: transparent;
     }
 </style>
