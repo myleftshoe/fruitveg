@@ -27,7 +27,9 @@
 <script>
     import { browser } from '$app/env';
     import { tick } from 'svelte'
-    import { slide, blur as transition} from 'svelte/transition'
+    import { crossfade, slide, blur as transition} from 'svelte/transition'
+	import { quintOut } from 'svelte/easing'
+    import { flip } from 'svelte/animate'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -139,6 +141,28 @@
         }
         option.qty--
     }
+
+
+
+
+    const [send, receive] = crossfade({
+    duration: d => Math.sqrt(d * 200),
+
+    fallback(node, params) {
+        const style = getComputedStyle(node);
+        const transform = style.transform === 'none' ? '' : style.transform;
+
+        return {
+            duration: 600,
+            easing: quintOut,
+            css: t => `
+                transform: ${transform} scale(${t});
+                opacity: ${t}
+            `
+        };
+    }
+});
+
 
     const blankOption = {
         name: '',
@@ -253,7 +277,7 @@
                     name: name.toLowerCase(),
                     qty: '',
                     unit: '',
-                })) || []
+                })).filter((v1, i, a) => a.findIndex((v2) => v2.name === v1.name) === i) || []
                 console.table(items)
     }
     let options = []
@@ -286,8 +310,8 @@
 <svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
     <div style="background-color: #0f01; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
-    {#each added as item}
-        <added transition:slide>
+    {#each added as item, i (item.name)}
+        <added in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip>
             <Button 
                 value={item.name} 
                 on:click={(e) => handleOptionClick(e, item)} 
@@ -328,14 +352,14 @@
         >
         <select name="cars" id="cars">
             {#each units as unit}
-               <option value="volvo">{unit}</option>
+                <option value="volvo">{unit}</option>
             {/each}
         </select>
     </row>
     <p></p>
     <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
-    {#each options as item}
-        <item>
+    {#each options as item, i (item.name)}
+        <item in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip>
             <Button 
                 value={item.name} 
                 on:click={(e) => handleOptionClick(e, item)} 
