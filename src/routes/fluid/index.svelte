@@ -290,7 +290,6 @@
                 console.table(items)
     }
     let options = []
-    let added = []
     let modifiedItems = []
     $: if (options) {
         if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
@@ -304,15 +303,9 @@
         else {
             options = items.length && name && 
             items.filter((item) => item.name.includes(name.toLowerCase()))  || []
-            // items.filter((item) => item.qty !== '')
-            // if (!options.length) 
-            //     options = [...items]
         }
-        added = items.filter(({qty}) => qty > 0)
         if (!options.length && !name)
-            options = [...added]
-
-        // options = options.filter(({qty}) => qty === '')
+            options = items.filter(({qty}) => qty > 0)
         // resizeNameElement()
     }
     $: modifiedItems = [...items].filter(withQtys)
@@ -322,19 +315,6 @@
 </script>
 <svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
-    <!-- <div style="background-color: #0f01; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
-    {#each added as item, i (item.name)}
-        <added in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip={{duration: 200}}>
-            <Button 
-                value={item.name} 
-                on:click={(e) => handleOptionClick(e, item)} 
-                style="color: black;"
-            >
-                <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.name}{item.unit && ` [${item.unit}]`}</pre>
-            </Button>
-        </added>
-    {/each}
-    </div> -->
     <row on:click|stopPropagation>
         <input 
             name="name" 
@@ -525,10 +505,6 @@
         justify-content: center;
         /* background-color: red; */
         /* box-shadow: 0 -20px 40px 50px #fff; */
-    }
-    added {
-        display: flex;
-        justify-content: flex-start;
     }
     item {
         display: flex;
