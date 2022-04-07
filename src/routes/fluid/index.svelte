@@ -299,10 +299,10 @@
         }
         else {
             options = items.length && name && 
-            items.filter((product) => product.name.includes(name.toLowerCase()) && product.qty === '') || 
-            items.filter((product) => product.qty !== '')
-            if (!options.length) 
-                options = [...items]
+            items.filter((item) => item.name.includes(name.toLowerCase()) && item.qty === '')  || []
+            // items.filter((item) => item.qty !== '')
+            // if (!options.length) 
+            //     options = [...items]
         }
         added = items.filter(({qty}) => qty > 0)
         // resizeNameElement()
