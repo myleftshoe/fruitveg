@@ -325,7 +325,7 @@
     {/each}
     </div>
     <p></p>
-    <row>
+    <row on:click|stopPropagation>
         <input 
             name="name" 
             type="text"
