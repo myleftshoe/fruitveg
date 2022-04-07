@@ -35,6 +35,7 @@
     import IconButton from '@smui/icon-button'
     import Fab, { Icon } from '@smui/fab'
     import clipboard from '../../helpers/clipboard.js'
+    import Draggable from '$lib/draggable.svelte';
 
     import products from '$lib/productStore'
 
@@ -328,6 +329,7 @@
         </added>
     {/each}
     </div> -->
+    <Draggable>
     <row on:click|stopPropagation>
         <input 
             name="name" 
@@ -362,6 +364,7 @@
             {/each}
         </select>
     </row>
+    </Draggable>
     <br/>
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
     <div>
