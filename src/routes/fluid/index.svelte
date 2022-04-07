@@ -441,12 +441,13 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        background: #eee;
+        background: #fd0;
         border-radius: 0px;
         position: relative;
         position: sticky;
         position: -webkit-sticky;
         top: 3vh;
+        bottom: 50vh;
         margin:-10px;
         box-shadow: 4px 4px 4px #0007;
         box-shadow: 2px 4px 4px #0007;
