@@ -23,6 +23,8 @@
         ['zucc', 'caps,zuc,cucum,leb'],
         ['citrus', 'orange,lemon,lime']
     ])
+    const exclude = new Map()
+    exclude.set('onion', 'spring')
 </script>
 <script>
     import { browser } from '$app/env';
@@ -254,7 +256,7 @@
         }
         if (related.has(name)) {
             const relatedItems = related.get(name).split(',')
-            options = items.filter(({name}) => relatedItems.find(r => name.includes(r)))
+            options = items.filter(({name}) => relatedItems.find(r => name.includes(r) && !name.includes(exclude.get(r))))
         }
         else {
             options = items.length && name && 
