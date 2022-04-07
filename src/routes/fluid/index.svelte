@@ -412,6 +412,7 @@
         position: sticky;
         position: -webkit-sticky;
         top: 3vh;
+        box-shadow: 4px 4px 4px #0007;
         /* height: 3ch; */
         /* justify-content: stretch; */
         /* min-height: 12vh; */
