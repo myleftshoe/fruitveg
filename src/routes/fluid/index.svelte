@@ -244,7 +244,8 @@
         refs.qty.select()
     }
 
-    async function handleUnitChange() {
+    async function handleUnitChange(e) {
+        console.log('fsddddddddffff')
         await tick()
         refs.qty.focus()
     }
@@ -353,10 +354,10 @@
             _on:blur={handleQtyBlur} 
             _on:dblclick={handleQtyDblClick}
         >
-        <select name="unit" id="unit" bind:value={option.unit} on:change={handleUnitChange} placeholder="test">
+        <select name="unit" id="unit" bind:value={option.unit}  placeholder="test">
             <option value="" disabled>[unit]</option>
             {#each units as unit}
-                <option value={unit}>{unit}</option>
+                <option value={unit} on:click={handleUnitChange}>{unit}</option>
             {/each}
         </select>
     </row>
