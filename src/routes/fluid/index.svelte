@@ -238,8 +238,10 @@
         // open = false
     }
 
-    function handleUnitClick(e, unit = '') {
+    async function handleUnitClick(e, unit = '') {
         option.unit = unit
+        await tick()
+        refs.qty.select()
     }
 
     function handleUnitChange() {
@@ -248,8 +250,6 @@
 
     async function handleOptionClick(e, item) {
         option.name = item.name
-        await tick()
-        refs.qty.focus()
         await tick()
         refs.qty.select()
     }
