@@ -221,7 +221,7 @@
     async function handleQtyFocus() {
         // drawerContent = 'units'
         await tick()
-        // refs.qty.select()
+        refs.qty.select()
     }
 
     function handleQtyBlur() {
@@ -231,7 +231,7 @@
     async function handleNameFocus() {
         drawerContent = 'products'
         await tick()
-        // refs.name.select()
+        refs.name.select()
     }
     
     function handleNameBlur() {
@@ -250,8 +250,8 @@
         option.name = item.name
         await tick()
         refs.qty.focus()
-        // await tick()
-        // refs.qty.select()
+        await tick()
+        refs.qty.select()
     }
 
     function handleStartClick() {
