@@ -320,27 +320,28 @@
         </expanded>
     {/if}
 </topbar>
-{#if options.length}
-    <p></p>
-    <div in:transition>
-        {#each options as item}
-            <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
-                <Button 
-                    value={item.name} 
-                    on:click={(e) => handleOptionClick(e, item)} 
-                    style="width: 100%; display: flex; justify-content: space-between; color: black;"
-                >
-                    <pre>{item.name}</pre>
-                    <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
-                </Button>
-            </item>
-        {/each}
-    </div>
-{:else if !option.name && !option.qty && !option.unit && browser && document.activeElement !== refs.name}
-    <start transition:transition>
-        <Button class="material-icons" on:click={handleStartClick}>start</Button>
-    </start>
-{/if}
+<main>
+    {#if options.length}
+        <div in:transition>
+            {#each options as item}
+                <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
+                    <Button 
+                        value={item.name} 
+                        on:click={(e) => handleOptionClick(e, item)} 
+                        style="width: 100%; display: flex; justify-content: space-between; color: black;"
+                    >
+                        <pre>{item.name}</pre>
+                        <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
+                    </Button>
+                </item>
+            {/each}
+        </div>
+    {:else if !option.name && !option.qty && !option.unit && browser && document.activeElement !== refs.name}
+        <start transition:transition>
+            <Button class="material-icons" on:click={handleStartClick}>start</Button>
+        </start>
+    {/if}
+</main>
 <fab>
     <Fab on:click={handleFabClick}>
         <Icon class="material-icons">menu</Icon>
@@ -367,6 +368,10 @@
     </Dialog>
 </Dialog>
 <style>
+    main {
+        position: fixed;
+        top: 17.5vh;
+    }
     pre {
         font-size: 12px;
         text-transform: lowercase;
