@@ -305,7 +305,7 @@
             //     options = [...items]
         }
         added = options.filter(({qty}) => qty > 0)
-        options = options.filter(({qty}) => qty === '')
+        // options = options.filter(({qty}) => qty === '')
         // resizeNameElement()
     }
     $: modifiedItems = [...items].filter(withQtys)
@@ -315,7 +315,7 @@
 </script>
 <svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
-    <div style="background-color: #0f01; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
+    <!-- <div style="background-color: #0f01; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
     {#each added as item, i (item.name)}
         <added in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip={{duration: 200}}>
             <Button 
@@ -327,7 +327,7 @@
             </Button>
         </added>
     {/each}
-    </div>
+    </div> -->
     <row on:click|stopPropagation>
         <input 
             name="name" 
@@ -362,15 +362,27 @@
             {/each}
         </select>
     </row>
-    <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
+    <p></p>
+    <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
+    <div>
     {#each options as item, i (item.name)}
-        <item in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip={{duration: 200}}>
+        <item
+            style={item.name === option.name && 'outline: 2px solid orange;'} 
+            in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip={{duration: 200}}
+        >
             <Button 
                 value={item.name} 
                 on:click={(e) => handleOptionClick(e, item)} 
                 style="color: black;"
             >
                 <pre>{item.name}</pre>
+            </Button>
+            <Button 
+                value={item.qty} 
+                on:click={(e) => handleOptionClick(e, item)} 
+                style="color: black;"
+            >
+                <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''}{item.unit && ` ${item.unit}`}</pre>
             </Button>
         </item>
     {/each}
@@ -447,7 +459,7 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        background: #fa0;
+        background: #000c;
         border-radius: 0px;
         position: relative;
         position: sticky;
@@ -455,8 +467,9 @@
         top: 3vh;
         bottom: 50vh;
         margin:-10px;
-        box-shadow: 4px 4px 4px #0007;
-        box-shadow: 2px 4px 4px #0007;
+        border-radius: 3px;
+        box-shadow: 2px 4px 4px #0007, inset 1px 1px 1px #fff;
+        padding: 10px 5px 10px 10px; 
         /* height: 3ch; */
         /* justify-content: stretch; */
         /* min-height: 12vh; */
@@ -466,10 +479,11 @@
         background: none;
         border: none;
         outline:none;
-        padding: 12px 8px;
+        /* padding: 20px 8px; */
         font-size: 18px;
         font-family: monospace;
         font-weight: bold;
+        color: orange;
         /* color: orange; */
 
     }
@@ -512,9 +526,10 @@
     }
     item {
         display: flex;
-        justify-content: flex-start;
-        margin-left: 40px;
+        justify-content: space-between;
+        /* margin-left: 10px; */
     }
+    item:nth-child(even) {background: #7773}
     fab {
         position: fixed;
         right: 32px;
@@ -541,6 +556,9 @@
         height: 40px;
         text-align: right;
         font-weight: bold;
+        font-size: 12px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        color: #bbb;
     }
     p {
         color: transparent;
