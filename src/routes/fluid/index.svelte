@@ -188,11 +188,15 @@
         }
 
         const index = items.findIndex(({name}) => name === option.name)
-        console.log({index})
-        items[index] = { ...option }
-        console.log(items[index])
+        if (index > -1) {
+            items[index] = { ...option }
+            console.log(items[index])
+        }
+        else {
+            items.push({...option}) 
+        }
+
         items = [...items]
-            
         localStorage.setItem(localStorageId, JSON.stringify(items))
 
         option.name = name
@@ -304,7 +308,10 @@
             // if (!options.length) 
             //     options = [...items]
         }
-        added = options.filter(({qty}) => qty > 0)
+        added = items.filter(({qty}) => qty > 0)
+        if (!options.length && !name)
+            options = [...added]
+
         // options = options.filter(({qty}) => qty === '')
         // resizeNameElement()
     }
