@@ -14,6 +14,15 @@
         'sacks',
         'pcs'
     ]
+    const related = new Map([
+        ['out', 'potato,tomato,garlic,onion,pumpkin,banana,avo'], 
+        ['leafy', 'kale,silver,chard'], 
+        ['salad', 'salad,spin,roq'],
+        ['root', 'ginger,turmeric,dates,beet,daikon,turnip,swede'],
+        ['cruc', 'broc,cauli,cabb'],
+        ['zucc', 'caps,zuc,cucum,leb'],
+        ['citrus', 'orange,lemon,lime']
+    ])
 </script>
 <script>
     import { browser } from '$app/env';
@@ -57,6 +66,10 @@
         complete = true
     }
 
+    function handleQtyDblClick() {
+        if (!option.name) return
+        drawerContent = 'units'
+    }
 
     function handleNameKeyPress(e) {
         if (e.key === 'Enter') {
@@ -222,6 +235,18 @@
         refs.name.focus()
     }
 
+    function resizeNameElement() {
+        const length = option.name.length 
+        if (refs.name) {
+            if (length > 20)
+                refs.name.style.maxWidth = '20ch'
+            else if (length > 16)
+                refs.name.style.maxWidth = `${length}ch`
+            else
+                refs.name.style.maxWidth = '16ch'
+        }
+    }        
+
     const doNothing = () => {}
 
     let ripple = false
@@ -243,18 +268,16 @@
             console.log('setting name to' , option,name)
             name = option.name
         }
-        options = items.length && name && 
-        items.filter((product) => product.name.includes(name.toLowerCase())) || 
-        items.filter((product) => product.qty !== '')
-        const length = option.name.length 
-        if (refs.name) {
-            if (length > 20)
-                refs.name.style.maxWidth = '20ch'
-            else if (length > 16)
-                refs.name.style.maxWidth = `${length}ch`
-            else
-                refs.name.style.maxWidth = '16ch'
+        if (related.has(option.name)) {
+            const relatedItems = related.get(option.name).split(',')
+            options = items.filter(({name}) => relatedItems.find(r => name.includes(r)))
         }
+        else {
+            options = items.length && name && 
+            items.filter((product) => product.name.includes(name.toLowerCase())) || 
+            items.filter((product) => product.qty !== '')
+        }
+        resizeNameElement()
     }
     $: modifiedItems = [...items].filter(withQtys)
     $: console.log('here2', drawerContent, options.length, name)
@@ -286,6 +309,7 @@
             on:input={handleQtyInput}
             on:focus={handleQtyFocus} 
             on:blur={handleQtyBlur} 
+            on:dblclick={handleQtyDblClick}
         >
     </row>
     {#if drawerContent === 'units'}
