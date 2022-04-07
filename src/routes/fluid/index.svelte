@@ -452,10 +452,10 @@
         position: -webkit-sticky;
         top: 3vh;
         bottom: 50vh;
-        margin:-9px;
-        border-radius: 3px;
-        box-shadow: 2px 4px 4px #0007, inset 1px 1px 1px #fff;
-        padding: 10px 5px 10px 10px; 
+        margin:-10px;
+        /* border-radius: 3px; */
+        box-shadow: 2px 4px 4px #0007/*, inset 1px 1px 1px #fff*/;
+        padding: 10px 5px 10px 20px; 
         /* height: 3ch; */
         /* justify-content: stretch; */
         /* min-height: 12vh; */
@@ -474,7 +474,7 @@
 
     }
     input[name="name"] {
-        width: 70vw;
+        width: 60vw;
         text-overflow: clip;
         text-transform: lowercase;
         /* background-color: red; */
