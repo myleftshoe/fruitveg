@@ -229,9 +229,9 @@
     }
 
     async function handleNameFocus() {
-        drawerContent = 'products'
-        await tick()
-        refs.name.select()
+        // drawerContent = 'products'
+        // await tick()
+        // refs.name.select()
     }
     
     function handleNameBlur() {
@@ -362,7 +362,7 @@
             {/each}
         </select>
     </row>
-    <p></p>
+    <br/>
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
     <div>
     {#each options as item, i (item.name)}
@@ -388,7 +388,6 @@
     {/each}
     </div>
     <p>.</p>
-    
 </main>
 <footer>
 </footer>
@@ -466,7 +465,7 @@
         position: -webkit-sticky;
         top: 3vh;
         bottom: 50vh;
-        margin:-10px;
+        margin:-9px;
         border-radius: 3px;
         box-shadow: 2px 4px 4px #0007, inset 1px 1px 1px #fff;
         padding: 10px 5px 10px 10px; 
@@ -480,7 +479,7 @@
         border: none;
         outline:none;
         /* padding: 20px 8px; */
-        font-size: 18px;
+        font-size: 20px;
         font-family: monospace;
         font-weight: bold;
         color: orange;
@@ -488,7 +487,7 @@
 
     }
     input[name="name"] {
-        width: calc( 60vw - 20px);
+        width: 70vw;
         text-overflow: clip;
         text-transform: lowercase;
         /* background-color: red; */
