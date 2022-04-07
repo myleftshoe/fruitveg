@@ -260,7 +260,6 @@
                 })) || []
                 console.table(items)
     }
-    let y;
     let options = []
     let modifiedItems = []
     $: if (options) {
@@ -282,9 +281,7 @@
     $: modifiedItems = [...items].filter(withQtys)
     $: console.log('here2', drawerContent, options.length, name)
     $: console.table(modifiedItems) 
-
 </script>
-<svelte:window bind:scrollY={y}/>
 <topbar>
     <row>
         <input 
@@ -322,65 +319,32 @@
         </expanded>
     {/if}
 </topbar>
-    {#if options.length}
-        <!-- <IconButton size="button" class="material-icons" style="align-self: flex-end;" on:click={setDrawerContent("more")}>more_vert</IconButton> -->
-        <p></p>
-        <!-- {#if drawerContent === 'units'}
-            <units in:transition>
-                {#each units as unit}
-                    <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
-                {/each}
-            </units>
-        {:else if drawerContent === 'more'} -->
-        {#if drawerContent === 'more'} 
-            <more>
-                <section>
-                    <Button class="material-icons" size="button" on:click={doNothing}>outside stock</Button>
-                    <Button class="material-icons" size="button" on:click={doNothing}>coolibah</Button>
-                    <Button class="material-icons" size="button" on:click={doNothing}>zuccs, cukes, caps</Button>
-                </section>
-                <section>
-                    <Button class="material-icons" size="button" on:click={() => { warn = true }}>start over</Button>
-                    <Button class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
-                    {#if copied}
-                        <copied transition:transition>
-                            <Button disabled style="color:darkorange; font-size: .8em">copied!</Button>
-                        </copied>
-                    {/if}
-                </section>
-            </more>
-        {:else}
-            <div in:transition>
-                {#each options as item}
-                    <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
-                        <Button 
-                            value={item.name} 
-                            on:click={(e) => handleOptionClick(e, item)} 
-                            style="width: 100%; display: flex; justify-content: space-between; color: black;"
-                        >
-                            <pre>{item.name}</pre>
-                            <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
-                        </Button>
-                    </item>
-                {/each}
-            </div>
-        {/if}
-        <!-- {#if !options.some(({qty}) => qty === '')}
-            <copyToClipboard transition:transition>
-                <Button variant="raised" class="material-icons" size="button" on:click={copyToClipboard}>copy to clipboard</Button>
-            </copyToClipboard>
-        {/if} -->
-    {:else if !option.name && !option.qty && !option.unit && browser && document.activeElement !== refs.name}
-        <start transition:transition>
-            <Button class="material-icons" on:click={handleStartClick}>start</Button>
-        </start>
-    {/if}
+{#if options.length}
+    <p></p>
+    <div in:transition>
+        {#each options as item}
+            <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
+                <Button 
+                    value={item.name} 
+                    on:click={(e) => handleOptionClick(e, item)} 
+                    style="width: 100%; display: flex; justify-content: space-between; color: black;"
+                >
+                    <pre>{item.name}</pre>
+                    <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
+                </Button>
+            </item>
+        {/each}
+    </div>
+{:else if !option.name && !option.qty && !option.unit && browser && document.activeElement !== refs.name}
+    <start transition:transition>
+        <Button class="material-icons" on:click={handleStartClick}>start</Button>
+    </start>
+{/if}
 <fab>
     <Fab on:click={handleFabClick}>
         <Icon class="material-icons">menu</Icon>
     </Fab>
 </fab>
-<!-- <footer>{y}</footer> -->
 <Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction={() => complete = false} escapeKeyAction="" >
     <menuDialog>
         <Title>Fruit & Veg Stocktake</Title>
@@ -392,7 +356,6 @@
         </buttons>
     </menuDialog>
     <Dialog bind:open={warn} on:SMUIDialog:closed={null} slot="over" surface$style="width: 600px; max-width: calc(100vw - 32px); padding: 8px;">
-        <!-- <Title>Start new stocktake?</Title> -->
         <Content>
             Clear current stocktake and start a new one?
         </Content>
@@ -402,8 +365,6 @@
         </Actions>
     </Dialog>
 </Dialog>
-
-
 <style>
     pre {
         font-size: 12px;
@@ -433,8 +394,6 @@
         font-size: 24px;
         font-family: monospace;
         color: orange;
-        /* text-decoration: underline; */
-        /* border-bottom: 2px solid orange; */
 
     }
     input[name="name"] {
@@ -448,6 +407,7 @@
     }
     :global(body) {
         margin:0;
+        padding: 10px;
         background-color: #fff;
         overflow: scroll;
     }
@@ -455,30 +415,10 @@
         display:flex;
         flex-wrap: wrap;
         justify-content: space-around;
-        /* gap:20px; */
     }
-    more {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        height:100%;
-    }
-    section {
-        display:flex;
-        flex-direction: column;
-        gap: 20px;
-        align-items: center;
-    }
-    copied {
-        position: absolute;
-        bottom: 40px;
-    }
-    start, copyToClipboard {
+    start {
         display:flex;
         width:100%;
-        /* position: absolute; */
-        /* bottom: 60px; */
         justify-content: center;
     }
     start {
