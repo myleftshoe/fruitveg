@@ -398,8 +398,12 @@
     row {
         display: flex;
         gap: 5px;
-        background-color: #3333;
-        border-radius: 0px;
+        background-color: burlywood;
+        border-radius: 5px;
+        position: relative;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 20vh;
         /* height: 3ch; */
         /* justify-content: stretch; */
         /* min-height: 12vh; */
@@ -419,8 +423,11 @@
         width: calc( 85vw - 20px);
         text-overflow: clip;
         text-transform: lowercase;
-        background-color: red;
+        /* background-color: red; */
         padding-left: 5px;
+        font-weight: bold;
+        /* color:white;
+        text-shadow: 2px 2px #000; */
         /* transition: max-width 0.1s linear; */
     }
     input[name="qty"] {
