@@ -147,8 +147,7 @@
     }
     let option = { ...blankOption }
 
-    let items = []
-    let added = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
+    let items = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
 
     function add() {
         // if (option.name.length < 3) return
@@ -166,9 +165,13 @@
             return
         }
 
-        added = [...added, { ...option }]
+        const index = items.findIndex(({name}) => name === option.name)
+        console.log({index})
+        items[index] = { ...option }
+        console.log(items[index])
+        items = [...items]
             
-        localStorage.setItem(localStorageId, JSON.stringify(added))
+        localStorage.setItem(localStorageId, JSON.stringify(items))
 
         option.name = name
         option.qty = ''
@@ -177,7 +180,6 @@
     }
 
     function remove() {
-        added = added.slice(1)
     }
 
     function clear() {
@@ -206,7 +208,6 @@
 
     async function handleNameFocus() {
         drawerContent = 'products'
-        open = true
         await tick()
         refs.name.select()
     }
@@ -222,7 +223,6 @@
     async function handleOptionClick(e, item) {
         option.name = item.name
         refs.qty.focus()
-        open = false
         // await tick()
         // refs.qty.select()
     }
@@ -246,7 +246,6 @@
     const doNothing = () => {}
 
     let innerHeight
-    let open = false
     
     $: if (!items.length && $products.length) {   
             items = $products
@@ -258,6 +257,7 @@
                 console.table(items)
     }
     let options = []
+    let added = []
     let modifiedItems = []
     $: if (options) {
         if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
@@ -270,19 +270,22 @@
         }
         else {
             options = items.length && name && 
-            items.filter((product) => product.name.includes(name.toLowerCase())) || 
+            items.filter((product) => product.name.includes(name.toLowerCase()) && product.qty === '') || 
             items.filter((product) => product.qty !== '')
+            if (!options.length) 
+                options = [...items]
         }
+        added = items.filter(({qty}) => qty > 0)
         // resizeNameElement()
     }
     $: modifiedItems = [...items].filter(withQtys)
-    $: console.table(added) 
     $: if (refs.main) {
         refs.main.style.height = innerHeight && innerHeight + 'px' || ''
     }
 </script>
 <svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
+    <div style="background-color: #0f01; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
     {#each added as item}
         <added transition:slide>
             <Button 
@@ -294,6 +297,7 @@
             </Button>
         </added>
     {/each}
+    </div>
     <p></p>
     <row>
         <input 
@@ -324,7 +328,7 @@
         >
     </row>
     <p></p>
-    <options style="visibility: {open ? 'visible' : 'hidden'}">
+    <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
     {#each options as item}
         <item>
             <Button 
@@ -336,7 +340,7 @@
             </Button>
         </item>
     {/each}
-    </options>
+    </div>
     <p></p>
 
 </main>
@@ -404,7 +408,7 @@
     row {
         display: flex;
         gap: 5px;
-        background-color: burlywood;
+        background-color: #fa2;
         border-radius: 5px;
         position: relative;
         position: sticky;
@@ -464,7 +468,8 @@
     }
     item {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
+        margin-left: 16px;
     }
     fab {
         position: fixed;
