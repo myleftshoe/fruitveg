@@ -17,7 +17,7 @@
     const related = new Map([
         ['out', 'potato,tomato,garlic,onion,pumpkin,banana,avo'], 
         ['leafy', 'kale,silver,chard'], 
-        ['salad', 'salad,spin,roq'],
+        ['salad', 'salad,spin,roq,april,ceres,sprout,shoot'],
         ['root', 'ginger,turmeric,dates,beet,daikon,turnip,swede'],
         ['cruc', 'broc,cauli,cabb'],
         ['zucc', 'caps,zuc,cucum,leb'],
@@ -69,6 +69,7 @@
     function handleQtyDblClick() {
         if (!option.name) return
         drawerContent = 'units'
+        setTimeout(() => drawerContent = '', 3000)
     }
 
     function handleNameKeyPress(e) {
@@ -82,9 +83,9 @@
 
     async function handleQtyInput(e) {
         console.log('handleQtyInput')
-        if (option.qty) {
-            drawerContent = 'units'
-        }
+        // if (option.qty) {
+        //     drawerContent = 'units'
+        // }
     }
 
 
@@ -399,6 +400,7 @@
     input[name="name"] {
         max-width: 16ch;
         text-overflow: clip;
+        text-transform: lowercase;
         transition: max-width 0.1s linear;
     }
     input[name="qty"] {
