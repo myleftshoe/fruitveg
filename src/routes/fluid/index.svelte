@@ -40,10 +40,9 @@
 
     const refs = {
         main: null,
-        qty: null,
         name: null,
+        qty: null,
         unit: null,
-        hidden: null,
     }
 
     let name = ''
@@ -69,12 +68,6 @@
         complete = true
     }
 
-    function handleQtyDblClick() {
-        if (!option.name) return
-        drawerContent = 'units'
-        setTimeout(() => drawerContent = '', 3000)
-    }
-
     function handleNameKeyPress(e) {
         if (e.key === 'Enter') {
             // if (options.length === 1) {
@@ -83,14 +76,6 @@
             refs.qty.focus()
         }
     }
-
-    async function handleQtyInput(e) {
-        console.log('handleQtyInput')
-        // if (option.qty) {
-        //     drawerContent = 'units'
-        // }
-    }
-
 
     function handleQtyKeyPress(e) {
         console.log('handleQtyKeyPress', e.key, e.code)
@@ -127,7 +112,6 @@
         if (value.length > 1) {
             return
         }
-        console.log('here', drawerContent, options.length)
     }
 
     function increment() {
@@ -219,11 +203,7 @@
         complete = false
     }
 
-    let drawerContent = 'products'
-    const setDrawerContent = (name = 'products') => (e) => { drawerContent = name }
-
     async function handleQtyFocus() {
-        // drawerContent = 'units'
         await tick()
         refs.qty.select()
     }
@@ -233,23 +213,11 @@
     }
 
     async function handleNameFocus() {
-        // drawerContent = 'products'
         // await tick()
         // refs.name.select()
     }
     
-    function handleNameBlur() {
-        // open = false
-    }
-
-    async function handleUnitClick(e, unit = '') {
-        option.unit = unit
-        await tick()
-        refs.qty.select()
-    }
-
     async function handleUnitChange(e) {
-        console.log('fsddddddddffff')
         await tick()
         refs.qty.focus()
     }
@@ -263,18 +231,6 @@
     function handleStartClick() {
         refs.name.focus()
     }
-
-    function resizeNameElement() {
-        const length = option.name.length 
-        if (refs.name) {
-            if (length > 20)
-                refs.name.style.maxWidth = '20ch'
-            else if (length > 16)
-                refs.name.style.maxWidth = `${length}ch`
-            else
-                refs.name.style.maxWidth = '16ch'
-        }
-    }        
 
     const doNothing = () => {}
 
@@ -324,7 +280,6 @@
             bind:this={refs.name} 
             bind:value={option.name} 
             on:focus={handleNameFocus} 
-            on:blur={handleNameBlur} 
             on:keypress={handleNameKeyPress}
             on:change={() => console.log('onchange')}
         />
@@ -337,12 +292,10 @@
             min="0"
             max="99"
             on:keypress={handleQtyKeyPress}
-            _on:input={handleQtyInput}
             _on:focus={handleQtyFocus} 
             _on:blur={handleQtyBlur} 
-            _on:dblclick={handleQtyDblClick}
         >
-        <select name="unit" id="unit" bind:value={option.unit}  placeholder="test">
+        <select name="unit" id="unit" bind:this={refs.unit} bind:value={option.unit} placeholder="test">
             <option value="" disabled>[unit]</option>
             {#each units as unit}
                 <option value={unit} on:click={handleUnitChange}>{unit}</option>
@@ -406,9 +359,6 @@
 <style>
     :global(body) {
         margin:0;
-        /* padding: 10px; */
-        /* background-color: #fff; */
-        /* overflow: hidden; */
     }
     main {
         position: fixed;
@@ -423,19 +373,6 @@
         gap: 4vh;
         /* border: 1px solid red; */
         /* background-color: #f00; */
-    }
-    topbar {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-        display: flex;
-        flex-direction: column;
-        width:100%;
-        justify-content: stretch;
-        align-items: center;
-        gap: 10px;
-        background-color: #333;
-        box-shadow: 0px 4px 8px #000a
     }
     pre {
         font-size: 12px;
@@ -453,13 +390,8 @@
         top: 3vh;
         bottom: 50vh;
         margin:-10px;
-        /* border-radius: 3px; */
-        box-shadow: 2px 4px 4px #0007/*, inset 1px 1px 1px #fff*/;
+        box-shadow: 2px 4px 4px #0007;
         padding: 10px 5px 10px 20px; 
-        /* height: 3ch; */
-        /* justify-content: stretch; */
-        /* min-height: 12vh; */
-        /* background-color:#f333 */
     }
     input {
         background: none;
@@ -470,30 +402,17 @@
         font-family: monospace;
         font-weight: bold;
         color: orange;
-        /* color: orange; */
-
     }
     input[name="name"] {
         width: 60vw;
         text-overflow: clip;
         text-transform: lowercase;
-        /* background-color: red; */
-        /* padding-right: 5px; */
-        /* color:white;
-        text-shadow: 2px 2px #000; */
-        /* transition: max-width 0.1s linear; */
     }
     input[name="qty"] {
         width: 15vw;
         text-align: right;
         padding-left: 5px;
         padding-right: 0;
-        /* background:  green; */
-    }
-    units {
-        display:flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
     }
     footer {
         position: fixed;
@@ -503,13 +422,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        /* background-color: red; */
-        /* box-shadow: 0 -20px 40px 50px #fff; */
     }
     item {
         display: flex;
         justify-content: space-between;
-        /* margin-left: 10px; */
     }
     item:nth-child(even) {background: #7773}
     fab {
