@@ -309,8 +309,8 @@
         // resizeNameElement()
     }
     $: modifiedItems = [...items].filter(withQtys)
-    $: if (refs.main) {
-        refs.main.style.height = innerHeight && innerHeight + 'px' || ''
+    $: if (innerHeight && refs.main) {
+        refs.main.style.height = innerHeight + 'px' || ''
     }
 </script>
 <svelte:window bind:innerHeight/>
