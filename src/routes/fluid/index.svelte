@@ -208,8 +208,8 @@
     async function handleNameFocus() {
         drawerContent = 'products'
         refs.name.placeholder = !option.name && 'type...' || ''
-        await tick()
-        refs.name.select()
+        // await tick()
+        // refs.name.select()
     }
     
     function handleNameBlur() {
@@ -222,8 +222,9 @@
 
     async function handleOptionClick(e, item) {
         option.name = item.name
-        await tick()
-        refs.qty.select()
+        refs.name.focus()
+        // await tick()
+        // refs.qty.select()
     }
 
     function handleStartClick() {
