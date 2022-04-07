@@ -293,8 +293,8 @@
             console.log('setting name to' , option,name)
             name = option.name
         }
-        if (related.has(option.name)) {
-            const relatedItems = related.get(option.name).split(',')
+        if (related.has(name)) {
+            const relatedItems = related.get(name).split(',')
             options = items.filter(({name}) => relatedItems.find(r => name.includes(r)))
         }
         else {
