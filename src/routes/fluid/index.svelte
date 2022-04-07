@@ -125,7 +125,7 @@
         if (value.length > 1) {
             return
         }
-        refs.name.placeholder = !option.name && 'type...' || ''
+        // refs.name.placeholder = !option.name && 'type...' || ''
         console.log('here', drawerContent, options.length)
     }
 
@@ -174,7 +174,7 @@
         option.name = name
         option.qty = ''
         option.unit = ''
-        refs.name.select()
+        refs.qty.focus()
     }
 
     function remove() {
@@ -207,7 +207,8 @@
 
     async function handleNameFocus() {
         drawerContent = 'products'
-        refs.name.placeholder = !option.name && 'type...' || ''
+        open = true
+        // refs.name.placeholder = !option.name && 'type...' || ''
         // await tick()
         // refs.name.select()
     }
@@ -223,6 +224,7 @@
     async function handleOptionClick(e, item) {
         option.name = item.name
         refs.name.focus()
+        open = false
         // await tick()
         // refs.qty.select()
     }
@@ -246,6 +248,7 @@
     const doNothing = () => {}
 
     let innerHeight
+    let open = false
     
     $: if (!items.length && $products.length) {   
             items = $products
@@ -322,6 +325,7 @@
         />
     </row>
     <p></p>
+    <options style="visibility: {open ? 'visible' : 'hidden'}">
     {#each options as item}
         <item>
             <Button 
@@ -333,7 +337,9 @@
             </Button>
         </item>
     {/each}
+    </options>
     <p></p>
+
 </main>
 <footer>
 </footer>
