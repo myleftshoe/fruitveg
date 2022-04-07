@@ -295,7 +295,7 @@
         }
         if (related.has(name)) {
             const relatedItems = related.get(name).split(',')
-            options = items.filter(({name}) => relatedItems.find(r => name.includes(r)))
+            options = items.filter(({name, qty}) => qty === '' && relatedItems.find(r => name.includes(r)))
         }
         else {
             options = items.length && name && 
