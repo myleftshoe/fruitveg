@@ -280,7 +280,6 @@
         resizeNameElement()
     }
     $: modifiedItems = [...items].filter(withQtys)
-    $: console.log('here2', drawerContent, options.length, name)
     $: console.table(modifiedItems) 
 </script>
 <topbar>
@@ -368,13 +367,19 @@
     </Dialog>
 </Dialog>
 <style>
+    :global(body) {
+        margin:0;
+        /* padding: 10px; */
+        background-color: #fff;
+    }
     main {
         position: fixed;
         top: 17.5vh;
-    }
-    pre {
-        font-size: 12px;
-        text-transform: lowercase;
+        margin: 10px;
+        width: calc( 100vw - 20px);
+        height: calc( 100vh - 20px - 17.5vh - 2.5vh);
+        overflow: scroll;
+
     }
     topbar {
         position: -webkit-sticky;
@@ -392,6 +397,11 @@
     row {
         display: flex;
         min-height: 12vh;
+        background-color:#333
+    }
+    pre {
+        font-size: 12px;
+        text-transform: lowercase;
     }
     input {
         background: none;
@@ -411,12 +421,6 @@
     input[name="qty"] {
         width: 4ch;
         text-align: right;
-    }
-    :global(body) {
-        margin:0;
-        padding: 10px;
-        background-color: #fff;
-        overflow: scroll;
     }
     units {
         display:flex;
