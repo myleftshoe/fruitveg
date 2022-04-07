@@ -78,7 +78,7 @@
             // if (options.length === 1) {
             //     option.name = options[0].name
             // }
-            add()
+            refs.qty.focus()
         }
     }
 
@@ -92,9 +92,9 @@
 
     function handleQtyKeyPress(e) {
         console.log('handleQtyKeyPress', e.key, e.code)
-        if ([' ', 'Enter'].includes(e.key)) {
+        if (['Enter'].includes(e.key)) {
             e.preventDefault()
-            refs.name.focus()
+            add()
             return
         }
         const value = e.target.value
@@ -125,7 +125,7 @@
         if (value.length > 1) {
             return
         }
-        // refs.name.placeholder = !option.name && 'type...' || ''
+        refs.name.placeholder = !option.name && 'type...' || ''
         console.log('here', drawerContent, options.length)
     }
 
@@ -174,7 +174,7 @@
         option.name = name
         option.qty = ''
         option.unit = ''
-        refs.qty.focus()
+        refs.name.focus()
     }
 
     function remove() {
@@ -208,13 +208,14 @@
     async function handleNameFocus() {
         drawerContent = 'products'
         open = true
-        // refs.name.placeholder = !option.name && 'type...' || ''
-        // await tick()
-        // refs.name.select()
+        refs.name.placeholder = !option.name && 'type...' || ''
+        await tick()
+        refs.name.select()
     }
     
     function handleNameBlur() {
         refs.name.placeholder = ''
+        // open = false
     }
 
     function handleUnitClick(e, unit = '') {
@@ -223,7 +224,7 @@
 
     async function handleOptionClick(e, item) {
         option.name = item.name
-        refs.name.focus()
+        refs.qty.focus()
         open = false
         // await tick()
         // refs.qty.select()
@@ -298,6 +299,17 @@
     {/each}
     <p></p>
     <row>
+        <input 
+            name="name" 
+            type="text" 
+            autocapitalize="none"
+            bind:this={refs.name} 
+            bind:value={option.name} 
+            on:focus={handleNameFocus} 
+            on:blur={handleNameBlur} 
+            on:keypress={handleNameKeyPress}
+            on:change={() => console.log('onchange')}
+        />
         <input
             name="qty"
             bind:this={refs.qty}
@@ -312,17 +324,6 @@
             _on:blur={handleQtyBlur} 
             _on:dblclick={handleQtyDblClick}
         >
-        <input 
-            name="name" 
-            type="text" 
-            autocapitalize="none"
-            bind:this={refs.name} 
-            bind:value={option.name} 
-            on:focus={handleNameFocus} 
-            on:blur={handleNameBlur} 
-            on:keypress={handleNameKeyPress}
-            on:change={() => console.log('onchange')}
-        />
     </row>
     <p></p>
     <options style="visibility: {open ? 'visible' : 'hidden'}">
@@ -432,7 +433,7 @@
         text-overflow: clip;
         text-transform: lowercase;
         /* background-color: red; */
-        padding-left: 5px;
+        padding-right: 5px;
         /* color:white;
         text-shadow: 2px 2px #000; */
         /* transition: max-width 0.1s linear; */
@@ -440,7 +441,7 @@
     input[name="qty"] {
         width: 15vw;
         text-align: right;
-        padding-right: 0;
+        padding-left: 5px;
     }
     units {
         display:flex;
