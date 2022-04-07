@@ -287,6 +287,7 @@
         <input 
             name="name" 
             type="text" 
+            autocapitalize="none"
             bind:this={refs.name} 
             bind:value={option.name} 
             on:focus={handleNameFocus} 
@@ -376,7 +377,7 @@
     }
     main {
         position: fixed;
-        top: 17.5vh;
+        top: 12vh;
         margin: 10px;
         width: calc( 100vw - 20px);
         height: calc( 100vh - 20px - 17.5vh - 2.5vh);
