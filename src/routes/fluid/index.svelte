@@ -295,16 +295,17 @@
         }
         if (related.has(name)) {
             const relatedItems = related.get(name).split(',')
-            options = items.filter(({name, qty}) => qty === '' && relatedItems.find(r => name.includes(r)))
+            options = items.filter(({name}) => relatedItems.find(r => name.includes(r)))
         }
         else {
             options = items.length && name && 
-            items.filter((item) => item.name.includes(name.toLowerCase()) && item.qty === '')  || []
+            items.filter((item) => item.name.includes(name.toLowerCase()))  || []
             // items.filter((item) => item.qty !== '')
             // if (!options.length) 
             //     options = [...items]
         }
-        added = items.filter(({qty}) => qty > 0)
+        added = options.filter(({qty}) => qty > 0)
+        options = options.filter(({qty}) => qty === '')
         // resizeNameElement()
     }
     $: modifiedItems = [...items].filter(withQtys)
@@ -316,7 +317,7 @@
 <main bind:this={refs.main}>
     <div style="background-color: #0f01; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
     {#each added as item, i (item.name)}
-        <added in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip>
+        <added in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip={{duration: 200}}>
             <Button 
                 value={item.name} 
                 on:click={(e) => handleOptionClick(e, item)} 
