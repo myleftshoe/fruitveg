@@ -389,8 +389,8 @@
         position: relative;
         position: sticky;
         position: -webkit-sticky;
-        top: 3vh;
-        bottom: 50vh;
+        top: 0vh;
+        /* bottom: 50vh; */
         margin:-10px;
         box-shadow: 2px 4px 4px #0007;
         padding: 10px 5px 10px 20px; 
