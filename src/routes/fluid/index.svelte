@@ -1,7 +1,7 @@
 <script context="module">
     const localStorageId = 'fruitveg-fluid'
     const units = [
-        '[none]',
+        '',
         'bags',
         'boxes',
         'crates',
@@ -146,22 +146,20 @@
 
 
     const [send, receive] = crossfade({
-    duration: d => Math.sqrt(d * 200),
-
-    fallback(node, params) {
-        const style = getComputedStyle(node);
-        const transform = style.transform === 'none' ? '' : style.transform;
-
-        return {
-            duration: 600,
-            easing: quintOut,
-            css: t => `
-                transform: ${transform} scale(${t});
-                opacity: ${t}
-            `
-        };
-    }
-});
+        duration: d => Math.sqrt(d * 200),
+        fallback(node, params) {
+            // const style = getComputedStyle(node);
+            // const transform = style.transform === 'none' ? '' : style.transform;
+            // return {
+            //     duration: 600,
+            //     easing: quintOut,
+            //     css: t => `
+            //         transform: ${transform} scale(${t});
+            //         opacity: ${t}
+            //     `
+            // };
+        }
+    });
 
 
     const blankOption = {
@@ -242,6 +240,10 @@
 
     function handleUnitClick(e, unit = '') {
         option.unit = unit
+    }
+
+    function handleUnitChange() {
+        refs.qty.focus()
     }
 
     async function handleOptionClick(e, item) {
@@ -350,16 +352,17 @@
             _on:blur={handleQtyBlur} 
             _on:dblclick={handleQtyDblClick}
         >
-        <select name="cars" id="cars">
+        <select name="unit" id="unit" bind:value={option.unit} on:change={handleUnitChange} placeholder="test">
+            <option value="" disabled>[unit]</option>
             {#each units as unit}
-                <option value="volvo">{unit}</option>
+                <option value={unit}>{unit}</option>
             {/each}
         </select>
     </row>
     <p></p>
     <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
     {#each options as item, i (item.name)}
-        <item in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip>
+        <item in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip={{duration: 200}}>
             <Button 
                 value={item.name} 
                 on:click={(e) => handleOptionClick(e, item)} 
@@ -371,7 +374,6 @@
     {/each}
     </div>
     <p></p>
-
 </main>
 <footer>
 </footer>
@@ -404,16 +406,17 @@
     :global(body) {
         margin:0;
         /* padding: 10px; */
-        background-color: #fff;
+        /* background-color: #fff; */
         /* overflow: hidden; */
     }
     main {
         position: fixed;
         top: 0vh;
-        margin: 10px;
+        padding: 10px;
         width: calc( 100vw - 20px);
         /* height: 50vh; */
         overflow: scroll;
+        overflow-x: visible;
         /* border: 1px solid red; */
         /* background-color: #f00; */
     }
@@ -438,15 +441,15 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        gap: 5px;
-        background-color: #fa2;
-        border-radius: 5px;
+        background: #eee;
+        border-radius: 0px;
         position: relative;
         position: sticky;
         position: -webkit-sticky;
         top: 3vh;
+        margin:-10px;
         box-shadow: 4px 4px 4px #0007;
-        padding-right: 10px;
+        box-shadow: 2px 4px 4px #0007;
         /* height: 3ch; */
         /* justify-content: stretch; */
         /* min-height: 12vh; */
@@ -456,7 +459,7 @@
         background: none;
         border: none;
         outline:none;
-        padding: 12px 16px;
+        padding: 12px 8px;
         font-size: 18px;
         font-family: monospace;
         font-weight: bold;
@@ -464,11 +467,11 @@
 
     }
     input[name="name"] {
-        width: calc( 80vw - 20px);
+        width: calc( 60vw - 20px);
         text-overflow: clip;
         text-transform: lowercase;
         /* background-color: red; */
-        padding-right: 5px;
+        /* padding-right: 5px; */
         /* color:white;
         text-shadow: 2px 2px #000; */
         /* transition: max-width 0.1s linear; */
@@ -477,6 +480,8 @@
         width: 15vw;
         text-align: right;
         padding-left: 5px;
+        padding-right: 0;
+        /* background:  green; */
     }
     units {
         display:flex;
@@ -525,10 +530,9 @@
     select {
         border: none;
         outline:none;
-        width: 10px;
-        height: 10px;
-        color: transparent;
-        background-color:#777;
-        border-radius: 50%;
+        background: none;
+        height: 40px;
+        text-align: right;
+        font-weight: bold;
     }
 </style>
