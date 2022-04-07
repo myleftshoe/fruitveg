@@ -295,11 +295,11 @@
         }
         if (related.has(name)) {
             const relatedItems = related.get(name).split(',')
-            options = items.filter(({name}) => relatedItems.find(r => name.includes(r)))
+            options = items.filter(({name, qty}) => qty === '' && relatedItems.find(r => name.includes(r)))
         }
         else {
             options = items.length && name && 
-            items.filter((item) => item.name.includes(name.toLowerCase()))  || []
+            items.filter((item) => item.name.includes(name.toLowerCase()) && item.qty === '')  || []
             // items.filter((item) => item.qty !== '')
             // if (!options.length) 
             //     options = [...items]
@@ -367,7 +367,7 @@
             <Button 
                 value={item.name} 
                 on:click={(e) => handleOptionClick(e, item)} 
-                disabled={item.qty}
+                style="color: black;"
             >
                 <pre>{item.name}</pre>
             </Button>
