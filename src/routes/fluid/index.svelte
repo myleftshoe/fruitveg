@@ -341,6 +341,8 @@
         </start>
     {/if}
 </main>
+<footer>
+</footer>
 <fab>
     <Fab on:click={handleFabClick}>
         <Icon class="material-icons">menu</Icon>
@@ -445,13 +447,14 @@
     }
     footer {
         position: fixed;
-        bottom: 40vh;
-        height: 40px;
+        bottom: 0;
+        height: 1px;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: red;
+        /* background-color: red; */
+        box-shadow: 0 -20px 40px 50px #fff;
     }
     item {
         display: flex;
