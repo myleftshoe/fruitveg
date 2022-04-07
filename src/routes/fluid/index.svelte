@@ -244,7 +244,8 @@
         refs.qty.select()
     }
 
-    function handleUnitChange() {
+    async function handleUnitChange() {
+        await tick()
         refs.qty.focus()
     }
 
