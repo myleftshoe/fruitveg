@@ -125,7 +125,6 @@
         if (value.length > 1) {
             return
         }
-        refs.name.placeholder = !option.name && 'type...' || ''
         console.log('here', drawerContent, options.length)
     }
 
@@ -208,13 +207,11 @@
     async function handleNameFocus() {
         drawerContent = 'products'
         open = true
-        refs.name.placeholder = !option.name && 'type...' || ''
         await tick()
         refs.name.select()
     }
     
     function handleNameBlur() {
-        refs.name.placeholder = ''
         // open = false
     }
 
@@ -301,7 +298,8 @@
     <row>
         <input 
             name="name" 
-            type="text" 
+            type="text"
+            placeholder="type..."
             autocapitalize="none"
             bind:this={refs.name} 
             bind:value={option.name} 
