@@ -31,9 +31,9 @@
 	}
 </style>
 
-<svelte:window on:pointerup={stop} on:pointermove={move}  />
+<svelte:window on:touchend={stop} on:touchmove={move}  />
 
-<section on:pointerdown={start} style="left: {left}px; top: {top}px;" class="draggable">
+<section on:touchstart={start} style="left: {left}px; top: {top}px;" class="draggable">
 	<slot></slot>
 </section>
 
