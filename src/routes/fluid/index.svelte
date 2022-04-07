@@ -326,6 +326,11 @@
             _on:blur={handleQtyBlur} 
             _on:dblclick={handleQtyDblClick}
         >
+        <select name="cars" id="cars">
+            {#each units as unit}
+               <option value="volvo">{unit}</option>
+            {/each}
+        </select>
     </row>
     <p></p>
     <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;">
@@ -407,6 +412,8 @@
     }
     row {
         display: flex;
+        align-items: center;
+        justify-content: space-around;
         gap: 5px;
         background-color: #fa2;
         border-radius: 5px;
@@ -415,6 +422,7 @@
         position: -webkit-sticky;
         top: 3vh;
         box-shadow: 4px 4px 4px #0007;
+        padding-right: 10px;
         /* height: 3ch; */
         /* justify-content: stretch; */
         /* min-height: 12vh; */
@@ -432,7 +440,7 @@
 
     }
     input[name="name"] {
-        width: calc( 85vw - 20px);
+        width: calc( 80vw - 20px);
         text-overflow: clip;
         text-transform: lowercase;
         /* background-color: red; */
@@ -489,5 +497,14 @@
         flex-direction: column;
         align-items: center;
         gap: 2ch;
+    }
+    select {
+        border: none;
+        outline:none;
+        width: 10px;
+        height: 10px;
+        color: transparent;
+        background-color:#777;
+        border-radius: 50%;
     }
 </style>
