@@ -509,7 +509,7 @@
     item {
         display: flex;
         justify-content: flex-start;
-        margin-left: 32px;
+        margin-left: 40px;
     }
     fab {
         position: fixed;
