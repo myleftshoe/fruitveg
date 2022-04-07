@@ -37,6 +37,7 @@
     import products from '$lib/productStore'
 
     const refs = {
+        main: null,
         qty: null,
         name: null,
         unit: null,
@@ -250,7 +251,7 @@
 
     const doNothing = () => {}
 
-    let ripple = false
+    let innerHeight
     
     $: if (!items.length && $products.length) {   
             items = $products
@@ -281,7 +282,11 @@
     }
     $: modifiedItems = [...items].filter(withQtys)
     $: console.table(modifiedItems) 
+    $: if (refs.main) {
+        refs.main.style.height = innerHeight && innerHeight + 'px' || ''
+    }
 </script>
+<svelte:window bind:innerHeight/>
 <topbar>
     <row>
         <input 
@@ -320,7 +325,7 @@
         </expanded>
     {/if}
 </topbar>
-<main>
+<main bind:this={refs.main}>
     {#if options.length}
         <div in:transition>
             {#each options as item}
