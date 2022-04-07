@@ -75,10 +75,10 @@
 
     function handleNameKeyPress(e) {
         if (e.key === 'Enter') {
-            if (options.length === 1) {
-                option.name = options[0].name
-            }
-            refs.qty.focus()
+            // if (options.length === 1) {
+            //     option.name = options[0].name
+            // }
+            add()
         }
     }
 
@@ -94,7 +94,6 @@
         console.log('handleQtyKeyPress', e.key, e.code)
         if ([' ', 'Enter'].includes(e.key)) {
             e.preventDefault()
-            add()
             refs.name.focus()
             return
         }
@@ -147,12 +146,10 @@
         qty: '',
         unit: '',
     }
-
     let option = { ...blankOption }
 
-    let items = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
-
-    let added = []
+    let items = []
+    let added = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
 
     function add() {
         // if (option.name.length < 3) return
@@ -170,13 +167,9 @@
             return
         }
 
-        const index = items.findIndex(({name}) => name === option.name)
-        if (index > -1)
-            items[index] = { ...option }
-        else
-            items = [ ...items, { ...option }]
+        added = [...added, { ...option }]
             
-        localStorage.setItem(localStorageId, JSON.stringify(items))
+        localStorage.setItem(localStorageId, JSON.stringify(added))
 
         option.name = name
         option.qty = ''
@@ -228,7 +221,7 @@
     }
 
     async function handleOptionClick(e, item) {
-        option = item
+        option.name = item.name
         await tick()
         refs.qty.select()
     }
@@ -278,17 +271,43 @@
             items.filter((product) => product.name.includes(name.toLowerCase())) || 
             items.filter((product) => product.qty !== '')
         }
-        resizeNameElement()
+        // resizeNameElement()
     }
     $: modifiedItems = [...items].filter(withQtys)
-    $: console.table(modifiedItems) 
+    $: console.table(added) 
     $: if (refs.main) {
         refs.main.style.height = innerHeight && innerHeight + 'px' || ''
     }
 </script>
 <svelte:window bind:innerHeight/>
-<topbar>
+<main bind:this={refs.main}>
+    {#each added as item}
+        <added transition:slide>
+            <Button 
+                value={item.name} 
+                on:click={(e) => handleOptionClick(e, item)} 
+                style="color: black;"
+            >
+                <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.name}{item.unit && ` [${item.unit}]`}</pre>
+            </Button>
+        </added>
+    {/each}
+    <p></p>
     <row>
+        <input
+            name="qty"
+            bind:this={refs.qty}
+            bind:value={option.qty}
+            type="number"
+            step="1"
+            min="0"
+            max="99"
+            on:keypress={handleQtyKeyPress}
+            _on:input={handleQtyInput}
+            _on:focus={handleQtyFocus} 
+            _on:blur={handleQtyBlur} 
+            _on:dblclick={handleQtyDblClick}
+        >
         <input 
             name="name" 
             type="text" 
@@ -300,52 +319,20 @@
             on:keypress={handleNameKeyPress}
             on:change={() => console.log('onchange')}
         />
-        <input
-            name="qty"
-            bind:this={refs.qty}
-            bind:value={option.qty}
-            type="number"
-            step="1"
-            min="0"
-            max="99"
-            on:keypress={handleQtyKeyPress}
-            on:input={handleQtyInput}
-            on:focus={handleQtyFocus} 
-            on:blur={handleQtyBlur} 
-            on:dblclick={handleQtyDblClick}
-        >
     </row>
-    {#if drawerContent === 'units'}
-        <expanded transition:slide>
-            <units>
-                {#each units as unit}
-                    <Button style="font-size:10px;" data-value={unit} on:click={(e) => handleUnitClick(e, unit)}>{unit}</Button>
-                {/each}
-            </units>
-        </expanded>
-    {/if}
-</topbar>
-<main bind:this={refs.main}>
-    {#if options.length}
-        <div in:transition>
-            {#each options as item}
-                <item style={`background-color: ${item.name === option.name && '#ffa50055' || 'transparent'}`}>
-                    <Button 
-                        value={item.name} 
-                        on:click={(e) => handleOptionClick(e, item)} 
-                        style="width: 100%; display: flex; justify-content: space-between; color: black;"
-                    >
-                        <pre>{item.name}</pre>
-                        <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''} {item.unit}</pre>
-                    </Button>
-                </item>
-            {/each}
-        </div>
-    {:else if !option.name && !option.qty && !option.unit && browser && document.activeElement !== refs.name}
-        <start transition:transition>
-            <Button class="material-icons" on:click={handleStartClick}>start</Button>
-        </start>
-    {/if}
+    <p></p>
+    {#each options as item}
+        <item>
+            <Button 
+                value={item.name} 
+                on:click={(e) => handleOptionClick(e, item)} 
+                style="color: black;"
+            >
+                <pre>{item.name}</pre>
+            </Button>
+        </item>
+    {/each}
+    <p></p>
 </main>
 <footer>
 </footer>
@@ -379,15 +366,17 @@
         margin:0;
         /* padding: 10px; */
         background-color: #fff;
+        /* overflow: hidden; */
     }
     main {
         position: fixed;
-        top: 12vh;
+        top: 0vh;
         margin: 10px;
         width: calc( 100vw - 20px);
-        height: calc( 100vh - 20px - 17.5vh - 2.5vh);
+        /* height: 50vh; */
         overflow: scroll;
-
+        /* border: 1px solid red; */
+        /* background-color: #f00; */
     }
     topbar {
         position: -webkit-sticky;
@@ -396,60 +385,53 @@
         display: flex;
         flex-direction: column;
         width:100%;
-        justify-content: center;
+        justify-content: stretch;
         align-items: center;
         gap: 10px;
         background-color: #333;
         box-shadow: 0px 4px 8px #000a
     }
-    row {
-        display: flex;
-        min-height: 12vh;
-        background-color:#333
-    }
     pre {
         font-size: 12px;
         text-transform: lowercase;
+    }
+    row {
+        display: flex;
+        gap: 5px;
+        background-color: #3333;
+        border-radius: 0px;
+        /* height: 3ch; */
+        /* justify-content: stretch; */
+        /* min-height: 12vh; */
+        /* background-color:#f333 */
     }
     input {
         background: none;
         border: none;
         outline:none;
-        font-size: 24px;
+        padding: 8px 16px;
+        font-size: 18px;
         font-family: monospace;
-        color: orange;
+        /* color: orange; */
 
     }
     input[name="name"] {
-        max-width: 16ch;
+        width: calc( 85vw - 20px);
         text-overflow: clip;
         text-transform: lowercase;
-        transition: max-width 0.1s linear;
+        background-color: red;
+        padding-left: 5px;
+        /* transition: max-width 0.1s linear; */
     }
     input[name="qty"] {
-        width: 4ch;
+        width: 15vw;
         text-align: right;
+        padding-right: 0;
     }
     units {
         display:flex;
         flex-wrap: wrap;
         justify-content: space-around;
-    }
-    start {
-        display:flex;
-        width:100%;
-        justify-content: center;
-    }
-    start {
-        position: fixed;
-        width: 100vw;
-        height:100vh;
-        top:0;
-        left:0;
-        display:flex;
-        align-items: center;
-        justify-content: center;
-        background: none;
     }
     footer {
         position: fixed;
@@ -460,12 +442,15 @@
         align-items: center;
         justify-content: center;
         /* background-color: red; */
-        box-shadow: 0 -20px 40px 50px #fff;
+        /* box-shadow: 0 -20px 40px 50px #fff; */
+    }
+    added {
+        display: flex;
+        justify-content: flex-start;
     }
     item {
         display: flex;
-        justify-content: space-between;
-        transition: background-color .35s ease;
+        justify-content: center;
     }
     fab {
         position: fixed;
