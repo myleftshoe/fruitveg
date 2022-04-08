@@ -269,7 +269,7 @@
             options = items.filter(withQtys)
 
         if (browser && innerHeight/outerHeight < .6) {
-            console.warn('keb is up')
+            alert('keb is up')
         }
     }
 </script>
