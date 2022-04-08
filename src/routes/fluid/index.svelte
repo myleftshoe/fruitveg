@@ -215,7 +215,7 @@
 
     function handleQtyBlur(e) {
         console.log(e.relatedTarget.parentElement, refs.row)
-        if (e.relatedTarget.parentElement !== refs.row)
+        if (e.relatedTarget?.parentElement !== refs.row)
             add()
     }
 
