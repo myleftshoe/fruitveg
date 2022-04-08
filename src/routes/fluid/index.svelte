@@ -190,7 +190,7 @@
     }
 
     function startNew() {
-        items.length = 0
+        items = []
         clear()
         browser && localStorage.removeItem(localStorageId)
         complete = false
@@ -203,10 +203,10 @@
 
     async function handleQtyBlur(e) {
         if (!option.qty) return
-        const index = items.findIndex((item) => item.name === name)
+        const index = items.findIndex((item) => item.name === option.name)
         if (index < 0) {
             option = { name, qty: option.qty, unit: '' }
-            items = [ ... items, option]
+            items = [ ...items, option]
 
         }
     }
@@ -223,7 +223,7 @@
     async function handleOptionClick(e, item) {
         e.stopPropagation()
         e.preventDefault()
-        if (option.name) add()
+        // if (option.name) add()
         option = item
         await tick()
         refs.qty.select()
