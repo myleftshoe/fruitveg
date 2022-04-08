@@ -322,11 +322,11 @@
 </main>
 <footer>
 </footer>
-<fab>
+<!-- <fab>
     <Fab on:click={handleFabClick}>
         <Icon class="material-icons">menu</Icon>
     </Fab>
-</fab>
+</fab> -->
 <Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction={() => complete = false} escapeKeyAction="" >
     <menuDialog>
         <Title>Fruit & Veg Stocktake</Title>
@@ -384,7 +384,7 @@
         box-shadow: 2px 4px 4px #0007;
         padding: 10px 5px 10px 20px; 
         transition: top .3s ease-out;
-        z-index: 10;
+        z-index: 1;
     }
     input {
         background: none;
