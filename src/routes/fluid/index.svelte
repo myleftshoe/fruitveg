@@ -42,6 +42,7 @@
 
     const refs = {
         main: null,
+        row: null,
         name: null,
         qty: null,
         unit: null,
@@ -210,8 +211,10 @@
         refs.qty.select()
     }
 
-    function handleQtyBlur() {
-        add()
+    function handleQtyBlur(e) {
+        console.log(e.relatedTarget.parentElement, refs.row)
+        if (e.relatedTarget.parentElement !== refs.row)
+            add()
     }
 
     async function handleNameFocus() {
@@ -273,7 +276,7 @@
 </script>
 <svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
-    <row on:click|stopPropagation>
+    <row on:click|stopPropagation bind:this={refs.row}>
         <input 
             name="name" 
             type="text"
