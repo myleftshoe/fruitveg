@@ -32,6 +32,7 @@
     import { crossfade, slide, blur as transition} from 'svelte/transition'
 	import { quintOut } from 'svelte/easing'
     import { flip } from 'svelte/animate'
+    import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -312,29 +313,18 @@
     </row>
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
-    <div>
-    {#each options as item, i (item.name)}
-        <item
-            style={item.name === option.name && 'outline: 2px solid orange;'} 
-            in:receive="{{key: item.name}}" out:send="{{key: item.name}}" animate:flip={{duration: 200}}
-        >
-            <Button 
-                value={item.name} 
-                on:click={(e) => handleOptionClick(e, item)} 
-                style="color: black;"
-            >
-                <pre>{item.name}</pre>
-            </Button>
-            <Button 
-                value={item.qty} 
-                on:click={(e) => handleOptionClick(e, item)} 
-                style="color: black;"
-            >
-                <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''}{item.unit && ` ${item.unit}`}</pre>
-            </Button>
-        </item>
-    {/each}
-    </div>
+    <List dense>
+        {#each options as item, i (item.name)}
+            <Item on:SMUI:action={() => (option = item)}>
+                <Text>
+                    <pre>{item.name}</pre>
+                </Text>
+                <Meta>
+                    <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''}{item.unit && ` ${item.unit}`}</pre>
+                </Meta>
+            </Item>
+        {/each}
+    </List>
     <p>.</p>
 </main>
 <footer>
