@@ -419,8 +419,12 @@
         color: #bbb;
     }
     item { 
+        overflow:visible;
+        margin-left:3px;
+        margin-right: 3px;
         display: block;
-        transition: outline-color .35s ease-in .2s;
+        outline-color: #777;
+        transition: outline-color .25s ease-out ;
     }
     item:nth-child(even) { background: #7773 }
     footer {
