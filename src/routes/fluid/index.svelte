@@ -298,7 +298,7 @@
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
     <List dense>
         {#each options as item, i (item.name)}
-            <item>
+            <item style="outline: {option === item ? '3px solid orange' : ''}">
                 <Item on:SMUI:action={(e) => handleOptionClick(e, item)}>
                     <Text>
                         <pre>{item.name}</pre>
