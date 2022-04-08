@@ -109,11 +109,8 @@
                 return
             }
         }
-        if (value.length > 1 && e.key !== ' ') {
-            option.qty = option.qty + e.key
-            refs.name.focus()
-        }
-        if (value.length > 1) {
+        if (value.length > 2) {
+            e.preventDefault()
             return
         }
     }
