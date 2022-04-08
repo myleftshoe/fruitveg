@@ -417,7 +417,7 @@
         width: 15vw;
         text-align: right;
         padding-left: 5px;
-        padding-right: 0;
+        padding-right: 5px;
     }
     select {
         border: none;
