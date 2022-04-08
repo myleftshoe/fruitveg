@@ -304,7 +304,7 @@
     </row>
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
-    <List dense >
+    <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll;">
         {#each options as item, i (item.name)}
             <item style="outline: {option === item ? '3px solid orange' : ''}">
                 <Item on:SMUI:action={(e) => handleOptionClick(e, item)}>
@@ -357,8 +357,8 @@
         padding: 10px;
         width: calc( 100vw - 20px);
         /* height: 50vh; */
-        overflow: scroll;
-        overflow-x: visible;
+        /* overflow: scroll; */
+        /* overflow-x: visible; */
         display:flex;
         flex-direction: column;
         gap: 4vh;
