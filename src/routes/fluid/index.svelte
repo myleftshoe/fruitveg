@@ -205,19 +205,21 @@
     }
 
     async function handleQtyBlur(e) {
-        console.log(e?.relatedTarget, refs.row)
-        if (e.relatedTarget === refs.name) {
-            await tick()
-            option = { ...blankOption }
-            name = ''
-            return
-        }
+        // console.log(e?.relatedTarget, refs.row)
+        // if (e.relatedTarget === refs.name) {
+        //     await tick()
+        //     option = { ...blankOption }
+        //     name = ''
+        //     return
+        // }
         // add()
     }
 
     async function handleNameFocus() {
         // await tick()
         // refs.name.select()
+        option = { ...blankOption }
+        name = ''
     }
     
     async function handleUnitChange(e) {
