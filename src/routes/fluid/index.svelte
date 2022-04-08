@@ -209,22 +209,10 @@
             items = [ ... items, option]
 
         }
-        
-        // console.log(e?.relatedTarget, refs.row)
-        // if (e.relatedTarget === refs.name) {
-        //     await tick()
-        //     option = { ...blankOption }
-        //     name = ''
-        //     return
-        // }
-        // add()
     }
 
     async function handleNameFocus() {
         option = { ...blankOption }
-        // name = ''
-        // await tick()
-        // refs.name.select()
     }
     
     async function handleUnitChange(e) {
@@ -250,13 +238,10 @@
     let innerHeight
 
     $: if (!items.length && $products.length) {   
-            items = $products
-                .map(({name}) => ({
-                    name: name.toLowerCase(),
-                    qty: '',
-                    unit: '',
-                })).filter((v1, i, a) => a.findIndex((v2) => v2.name === v1.name) === i) || []
-                console.table(items)
+        items = $products
+            .map(({name}) => ({ name: name.toLowerCase(), qty: '', unit: '' }))
+            .filter((v1, i, a) => a.findIndex((v2) => v2.name === v1.name) === i) || []
+        console.table(items)
     }
     let options = []
     $: if (options) {
