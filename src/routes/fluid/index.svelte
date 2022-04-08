@@ -287,7 +287,7 @@
             name="qty"
             bind:this={refs.qty}
             bind:value={option.qty}
-            type="number"
+            type="tel"
             step="1"
             min="0"
             max="99"
