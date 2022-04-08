@@ -232,6 +232,9 @@
 
     async function handleOptionClick(e, item) {
         if (option.name) add()
+        const bcr = e.target.getBoundingClientRect()
+        refs.row.style.top = bcr.top -20 + 'px'
+        console.log(bcr)
         option = item
         await tick()
         refs.qty.select()
@@ -392,6 +395,7 @@
         margin:-10px;
         box-shadow: 2px 4px 4px #0007;
         padding: 10px 5px 10px 20px; 
+        transition: top .3s ease-out;
     }
     input {
         background: none;
