@@ -230,6 +230,7 @@
     }
 
     async function handleOptionClick(e, item) {
+        if (option.name) add()
         option = { ...item }
         await tick()
         refs.qty.select()
