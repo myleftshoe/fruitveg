@@ -182,7 +182,7 @@
         option.unit = ''
 
         option = { ...option }
-        refs.name.focus()
+        // refs.name.focus()
     }
 
     function remove() {
@@ -205,6 +205,7 @@
     }
 
     async function handleQtyBlur(e) {
+        if (!option.qty) return
         const index = items.findIndex((item) => item.name === name)
         if (index < 0) {
             option = { name, qty: option.qty, unit: '' }
