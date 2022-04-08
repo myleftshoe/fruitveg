@@ -232,7 +232,7 @@
 
     async function handleOptionClick(e, item) {
         if (option.name) add()
-        option = { ...item }
+        option = item
         await tick()
         refs.qty.select()
     }
@@ -315,7 +315,7 @@
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
     <List dense>
         {#each options as item, i (item.name)}
-            <Item on:SMUI:action={() => (option = item)}>
+            <Item on:SMUI:action={(e) => handleOptionClick(e, item)}>
                 <Text>
                     <pre>{item.name}</pre>
                 </Text>
