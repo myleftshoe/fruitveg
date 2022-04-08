@@ -186,10 +186,10 @@
         items = [...items]
         localStorage.setItem(localStorageId, JSON.stringify(items))
 
-        option.name = name
-        option.qty = ''
-        option.unit = ''
-        refs.name.focus()
+        // option.name = name
+        // option.qty = ''
+        // option.unit = ''
+        // refs.name.focus()
     }
 
     function remove() {
