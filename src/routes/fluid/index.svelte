@@ -400,14 +400,14 @@
         background: none;
         border: none;
         /* outline:none; */
-        /* padding: 20px 8px; */
+        padding: 8px;
         font-size: 20px;
         font-family: monospace;
         font-weight: bold;
         color: orange;
     }
     input[name="name"] {
-        width: 60vw;
+        width: calc( 60vw - 32px );
         text-overflow: clip;
         text-transform: lowercase;
     }
