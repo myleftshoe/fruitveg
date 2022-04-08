@@ -1,19 +1,6 @@
 <script context="module">
     const localStorageId = 'fruitveg-fluid'
-    const units = [
-        '',
-        'bags',
-        'boxes',
-        'crates',
-        'tubs',
-        'trays',
-        'bin',
-        'shelf',
-        'trolley',
-        'nets',
-        'sacks',
-        'pcs'
-    ]
+    const units = [ '', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
     const related = new Map([
         ['out', 'potato,tomato,garlic,onion,pumpkin,banana,avo'], 
         ['leafy', 'kale,silver,chard'], 
@@ -26,6 +13,7 @@
     const exclude = new Map()
     exclude.set('onion', 'spring')
 </script>
+
 <script>
     import { browser } from '$app/env';
     import { tick } from 'svelte'
@@ -41,20 +29,13 @@
 
     import products from '$lib/productStore'
 
-    const refs = {
-        main: null,
-        row: null,
-        name: null,
-        qty: null,
-        unit: null,
-    }
+    const refs = { main: null, row: null, name: null, qty: null, unit: null, }
 
     let name = ''
 
     let complete = false
     let copied = false
     let warn = false
-
 
     const withQtys = (item) => item.qty?.toString().trim() || '' !== ''
 
@@ -113,18 +94,6 @@
             e.preventDefault()
             return
         }
-    }
-
-    function increment() {
-        option.qty++
-    }
-
-    function decrement() {
-        if (option.qty < '1') {
-            option.qty = ''
-            return
-        }
-        option.qty--
     }
 
     function isInViewport(element) {
