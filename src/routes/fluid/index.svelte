@@ -240,6 +240,8 @@
 
     const doNothing = () => {}
 
+    let innerHeight
+
     $: if (!items.length && $products.length) {   
             items = $products
                 .map(({name}) => ({
@@ -265,8 +267,13 @@
         }
         if (!options.length && !name)
             options = items.filter(withQtys)
+
+        if (browser && innerHeight/outerHeight < .6) {
+            console.warn('keb is up')
+        }
     }
 </script>
+<svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
     <row on:click|stopPropagation bind:this={refs.row}>
         <input 
