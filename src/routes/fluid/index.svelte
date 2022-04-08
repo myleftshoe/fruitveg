@@ -246,11 +246,6 @@
         e.stopPropagation()
         e.preventDefault()
         if (option.name) add()
-        if (!isInViewport(refs.row)) {
-            const bcr = e.target.getBoundingClientRect()
-            refs.row.style.top = bcr.top - 20 + 'px'
-            console.log(bcr)
-        }
         option = item
         await tick()
         refs.qty.select()
@@ -262,8 +257,6 @@
 
     const doNothing = () => {}
 
-    let innerHeight
-    
     $: if (!items.length && $products.length) {   
             items = $products
                 .map(({name}) => ({
@@ -274,7 +267,6 @@
                 console.table(items)
     }
     let options = []
-    let modifiedItems = []
     $: if (options) {
         if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
             console.log('setting name to' , option,name)
@@ -289,15 +281,9 @@
             items.filter((item) => item.name.includes(name.toLowerCase()))  || []
         }
         if (!options.length && !name)
-            options = items.filter(({qty}) => qty > 0)
-        // resizeNameElement()
-    }
-    $: modifiedItems = [...items].filter(withQtys)
-    $: if (innerHeight && refs.main) {
-        refs.main.style.height = innerHeight + 'px' || ''
+            options = items.filter(withQtys)
     }
 </script>
-<svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
     <row on:click|stopPropagation bind:this={refs.row}>
         <input 
