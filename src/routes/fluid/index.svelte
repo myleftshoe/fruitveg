@@ -267,10 +267,6 @@
         }
         if (!options.length && !name)
             options = items.filter(withQtys)
-
-        if (browser && innerHeight/outerHeight < .7) {
-            alert('keb is up')
-        }
     }
 </script>
 <svelte:window bind:innerHeight/>
