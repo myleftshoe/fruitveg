@@ -301,7 +301,7 @@
     </row>
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
-    <List dense>
+    <List dense >
         {#each options as item, i (item.name)}
             <item style="outline: {option === item ? '3px solid orange' : ''}">
                 <Item on:SMUI:action={(e) => handleOptionClick(e, item)}>
@@ -415,7 +415,10 @@
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         color: #bbb;
     }
-    item { display:block }
+    item { 
+        display: block;
+        transition: outline-color .35s ease-in .2s;
+    }
     item:nth-child(even) { background: #7773 }
     footer {
         position: fixed;
