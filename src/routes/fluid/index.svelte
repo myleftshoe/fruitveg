@@ -304,7 +304,7 @@
                         <pre>{item.name}</pre>
                     </Text>
                     <Meta>
-                        <pre>{item.qty === 0 && '0' || item.qty && item.qty || ''}{item.unit && ` ${item.unit}`}</pre>
+                        <pre style="color:darkorange; font-size: 20px; font-weight: bold;">{item.qty === 0 && '0' || item.qty && item.qty || ''}{item.unit && ` ${item.unit}`}</pre>
                     </Meta>
                 </Item>
             </item>
