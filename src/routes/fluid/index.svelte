@@ -205,14 +205,14 @@
     }
 
     async function handleQtyBlur(e) {
-        console.log(e?.relatedTarget?.parentElement, refs.row)
-        if (e?.relatedTarget && e.relatedTarget.parentElement !== refs.row) {
-            add() 
+        console.log(e?.relatedTarget, refs.row)
+        if (e.relatedTarget === refs.name) {
+            await tick()
+            option = { ...blankOption }
+            name = ''
             return
         }
-        await tick()
-        option = { ...blankOption }
-        name = ''
+        // add()
     }
 
     async function handleNameFocus() {
