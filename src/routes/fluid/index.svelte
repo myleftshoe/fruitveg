@@ -29,7 +29,7 @@
 <script>
     import { browser } from '$app/env';
     import { tick } from 'svelte'
-    import { crossfade, slide, blur as transition} from 'svelte/transition'
+    import { slide, blur as transition} from 'svelte/transition'
 	import { quintOut } from 'svelte/easing'
     import { flip } from 'svelte/animate'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
@@ -130,26 +130,6 @@
         option.qty--
     }
 
-
-
-
-    const [send, receive] = crossfade({
-        duration: d => Math.sqrt(d * 200),
-        fallback(node, params) {
-            // const style = getComputedStyle(node);
-            // const transform = style.transform === 'none' ? '' : style.transform;
-            // return {
-            //     duration: 600,
-            //     easing: quintOut,
-            //     css: t => `
-            //         transform: ${transform} scale(${t});
-            //         opacity: ${t}
-            //     `
-            // };
-        }
-    });
-
-
     function isInViewport(element) {
         const rect = element.getBoundingClientRect();
         return (
@@ -159,8 +139,6 @@
             rect.right <= (window.innerWidth || document.documentElement.clientWidth)
         );
     }
-
-
 
     const blankOption = {
         name: '',
