@@ -205,6 +205,13 @@
     }
 
     async function handleQtyBlur(e) {
+        const index = items.findIndex((item) => item.name === name)
+        if (index < 0) {
+            option = { name, qty: option.qty, unit: '' }
+            items = [ ... items, option]
+
+        }
+        
         // console.log(e?.relatedTarget, refs.row)
         // if (e.relatedTarget === refs.name) {
         //     await tick()
