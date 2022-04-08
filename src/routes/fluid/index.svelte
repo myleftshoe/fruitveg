@@ -150,6 +150,18 @@
     });
 
 
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+
+
     const blankOption = {
         name: '',
         qty: '',
@@ -234,9 +246,11 @@
         e.stopPropagation()
         e.preventDefault()
         if (option.name) add()
-        const bcr = e.target.getBoundingClientRect()
-        refs.row.style.top = bcr.top -20 + 'px'
-        console.log(bcr)
+        if (!isInViewport(refs.row)) {
+            const bcr = e.target.getBoundingClientRect()
+            refs.row.style.top = bcr.top - 20 + 'px'
+            console.log(bcr)
+        }
         option = item
         await tick()
         refs.qty.select()
