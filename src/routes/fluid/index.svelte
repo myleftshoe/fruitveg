@@ -268,7 +268,7 @@
         if (!options.length && !name)
             options = items.filter(withQtys)
 
-        if (browser && innerHeight/outerHeight < .7) {
+        if (browser && innerHeight/outerHeight < .8) {
             alert('keb is up')
         }
     }
