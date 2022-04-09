@@ -54,7 +54,7 @@
         if (!dragging) return
         console.log(e.currentTarget)
         const el = e.currentTarget
-        el.style.position = 'absolute'
+        el.style.position = 'fixed'
         el.style.top = e.clientY + 'px'
         el.style.width = '100vw';
     }
@@ -241,7 +241,12 @@
 </script>
 <svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
-    <row on:click|stopPropagation bind:this={refs.row} on:pointermove={touchmove} on:pointerdown={() => dragging = true} on:pointerup={() => dragging = false}>
+    <row bind:this={refs.row} 
+        on:click|stopPropagation 
+        on:pointermove|stopPropagation={touchmove} 
+        on:pointerdown|stopPropagation={() => dragging = true} 
+        on:pointerup|stopPropagation={() => dragging = false}
+    >
         <input 
             name="name" 
             type="text"
