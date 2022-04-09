@@ -139,11 +139,7 @@
         items = [...items]
         localStorage.setItem(localStorageId, JSON.stringify(items))
 
-        option.name = name
-        option.qty = ''
-        option.unit = ''
-
-        option = { ...option }
+        option = { name: option.name, qty: '', unit: '' }
         // refs.name.focus()
     }
 
@@ -172,7 +168,6 @@
         if (index < 0) {
             option = { name, qty: option.qty, unit: '' }
             items = [ ...items, option]
-
         }
     }
 
