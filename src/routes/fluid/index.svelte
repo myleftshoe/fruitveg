@@ -49,6 +49,17 @@
         setTimeout(() => copied = false, 1500)
     }
 
+    let dragging = false
+    function touchmove(e) {
+        if (!dragging) return
+        console.log(e.currentTarget)
+        const el = e.currentTarget
+        el.style.position = 'absolute'
+        el.style.top = e.clientY + 'px'
+        el.style.width = '100vw';
+    }
+
+
     function handleFabClick(e) {
         complete = true
     }
@@ -230,7 +241,7 @@
 </script>
 <svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
-    <row on:click|stopPropagation bind:this={refs.row}>
+    <row on:click|stopPropagation bind:this={refs.row} on:pointermove={touchmove} on:pointerdown={() => dragging = true} on:pointerup={() => dragging = false}>
         <input 
             name="name" 
             type="text"
