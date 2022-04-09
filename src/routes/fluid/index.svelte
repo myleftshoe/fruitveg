@@ -60,6 +60,11 @@
             // }
             refs.qty.focus()
         }
+                // if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
+            console.log('setting name to' , option,name + e.key)
+            name = option.name + e.key
+        // }
+
     }
 
     function handleQtyKeyPress(e) {
@@ -173,6 +178,7 @@
 
     async function handleNameFocus() {
         option = { ...blankOption }
+        name = ''
     }
     
     async function handleUnitChange(e) {
@@ -205,10 +211,6 @@
     }
     let options = []
     $: if (options) {
-        if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
-            console.log('setting name to' , option,name)
-            name = option.name
-        }
         if (related.has(name)) {
             const relatedItems = related.get(name).split(',')
             options = items.filter(({name}) => relatedItems.find(r => name.includes(r) && !name.includes(exclude.get(r))))
