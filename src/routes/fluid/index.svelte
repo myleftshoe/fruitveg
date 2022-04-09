@@ -243,9 +243,9 @@
 <main bind:this={refs.main}>
     <row bind:this={refs.row} 
         on:click|stopPropagation 
-        on:pointermove|stopPropagation={touchmove} 
-        on:pointerdown|stopPropagation={() => dragging = true} 
-        on:pointerup|stopPropagation={() => dragging = false}
+        on:pointermove|preventDefault|stopPropagation={touchmove} 
+        on:pointerdown|preventDefault|stopPropagation={() => dragging = true} 
+        on:pointerup|preventDefault|stopPropagation={() => dragging = false}
     >
         <input 
             name="name" 
