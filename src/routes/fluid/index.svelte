@@ -53,54 +53,6 @@
         complete = true
     }
 
-    function handleNameKeyPress(e) {
-        if (e.key === 'Enter') {
-            // if (options.length === 1) {
-            //     option.name = options[0].name
-            // }
-            refs.qty.focus()
-        }
-                // if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
-            console.log('setting name to' , option,name + e.key)
-            name = option.name + e.key
-        // }
-
-    }
-
-    function handleQtyKeyPress(e) {
-        console.log('handleQtyKeyPress', e.key, e.code)
-        if (['Enter'].includes(e.key)) {
-            e.preventDefault()
-            add()
-            return
-        }
-        const value = e.target.value
-        if (value.length === 2) {
-            const convert = {
-                '12': '1/2',
-                '14': '1/4',
-                '24': '1/2',
-                '34': '3/4',
-                '13': '1/3',
-                '23': '2/3',
-                '0': 'bin',
-                '1': 'shelf',
-            }
-            const frac = convert[value]
-            if (frac && ['0','1'].includes(e.key)) {
-                e.preventDefault()
-                option.qty = frac
-                option.unit = convert[e.key] || option.unit
-                option = { ...option }
-                return
-            }
-        }
-        if (value.length > 2) {
-            e.preventDefault()
-            return
-        }
-    }
-
     function isInViewport(element) {
         const rect = element.getBoundingClientRect();
         return (
@@ -162,6 +114,54 @@
         complete = false
     }
 
+    function handleNameKeyPress(e) {
+        if (e.key === 'Enter') {
+            // if (options.length === 1) {
+            //     option.name = options[0].name
+            // }
+            refs.qty.focus()
+        }
+    }
+    
+    async function handleNameFocus() {
+        option = { ...blankOption }
+        name = ''
+    }
+
+    async function handleQtyKeyPress(e) {
+        console.log('handleQtyKeyPress', e.key, e.code)
+        if (['Enter'].includes(e.key)) {
+            e.preventDefault()
+            add()
+            return
+        }
+        const value = e.target.value
+        if (value.length === 2) {
+            const convert = {
+                '12': '1/2',
+                '14': '1/4',
+                '24': '1/2',
+                '34': '3/4',
+                '13': '1/3',
+                '23': '2/3',
+                '0': 'bin',
+                '1': 'shelf',
+            }
+            const frac = convert[value]
+            if (frac && ['0','1'].includes(e.key)) {
+                e.preventDefault()
+                option.qty = frac
+                option.unit = convert[e.key] || option.unit
+                option = { ...option }
+                return
+            }
+        }
+        if (value.length > 2) {
+            e.preventDefault()
+            return
+        }
+    }
+    
     async function handleQtyFocus() {
         await tick()
         refs.qty.select()
@@ -174,13 +174,12 @@
             option = { name, qty: option.qty, unit: '' }
             items = [ ...items, option]
         }
+        else {
+            items[index] = option
+            items = [...items]
+        }
     }
 
-    async function handleNameFocus() {
-        option = { ...blankOption }
-        name = ''
-    }
-    
     async function handleUnitChange(e) {
         await tick()
         refs.qty.focus()
@@ -211,6 +210,12 @@
     }
     let options = []
     $: if (options) {
+        if (browser && document.activeElement === refs.name 
+            // && !options.map(({name}) => name).includes(option.name)
+        ) {
+            console.log('setting name to' , option, name)
+            name = option.name
+        }
         if (related.has(name)) {
             const relatedItems = related.get(name).split(',')
             options = items.filter(({name}) => relatedItems.find(r => name.includes(r) && !name.includes(exclude.get(r))))
@@ -221,6 +226,7 @@
         if (!options.length && !name)
             options = items.filter(withQtys).sort((a, b) => a.name.localeCompare(b.name))
     }
+    $: update = items
 </script>
 <svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
@@ -247,10 +253,11 @@
             on:keypress={handleQtyKeyPress}
             _on:focus={handleQtyFocus} 
             on:blur={handleQtyBlur} 
-            style={`${name.length && 'visibility: visible;'}`}
+            on:change={() => console.log('onchange')}
+            style={`${option.name.length && 'visibility: visible;'}`}
         >
         <select name="unit" id="unit" bind:this={refs.unit} bind:value={option.unit}
-            style={`${name.length && 'visibility: visible; opacity: 1;'}`}
+            style={`${option.name.length && 'visibility: visible; opacity: 1;'}`}
         >
             <option value="" disabled>[unit]</option>
             {#each units as unit}
