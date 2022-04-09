@@ -214,7 +214,7 @@
     }
     let options = []
     $: if (options) {
-        if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
+        if (options.length || browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
             console.log('setting name to' , option,name)
             name = option.name
         }
