@@ -49,17 +49,6 @@
         setTimeout(() => copied = false, 1500)
     }
 
-    let dragging = false
-    function touchmove(e) {
-        if (!dragging) return
-        console.log(e.currentTarget)
-        const el = e.currentTarget
-        el.style.position = 'fixed'
-        el.style.top = e.clientY + 'px'
-        el.style.width = '100vw';
-    }
-
-
     function handleFabClick(e) {
         complete = true
     }
@@ -241,12 +230,7 @@
 </script>
 <svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
-    <row bind:this={refs.row} 
-        on:click|stopPropagation 
-        on:pointermove|stopPropagation={touchmove} 
-        on:pointerdown|stopPropagation={() => dragging = true} 
-        on:pointerup|stopPropagation={() => dragging = false}
-    >
+    <row on:click|stopPropagation bind:this={refs.row}>
         <input 
             name="name" 
             type="text"
@@ -283,7 +267,7 @@
     </row>
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
-    <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible; touch-action:none;">
+    <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
         {#each options as item, i (item.name)}
             <item style="outline: {option === item ? '3px solid orange' : ''}">
                 <Item on:SMUI:action={(e) => handleOptionClick(e, item)}>
