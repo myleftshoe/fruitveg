@@ -217,7 +217,7 @@
             options = items.length && name && items.filter((item) => item.name.includes(name.toLowerCase()))  || []
         }
         if (!options.length && !name)
-            options = items.filter(withQtys)
+            options = items.filter(withQtys).sort((a, b) => a.name.localeCompare(b.name))
     }
 </script>
 <svelte:window bind:innerHeight/>
@@ -245,8 +245,11 @@
             on:keypress={handleQtyKeyPress}
             _on:focus={handleQtyFocus} 
             on:blur={handleQtyBlur} 
+            style={`${name.length && 'visibility: visible;'}`}
         >
-        <select name="unit" id="unit" bind:this={refs.unit} bind:value={option.unit}>
+        <select name="unit" id="unit" bind:this={refs.unit} bind:value={option.unit}
+            style={`${name.length && 'visibility: visible; opacity: 1;'}`}
+        >
             <option value="" disabled>[unit]</option>
             {#each units as unit}
                 <option value={unit} on:click={handleUnitChange}>{unit}</option>
@@ -357,6 +360,7 @@
         text-align: right;
         padding-left: 5px;
         padding-right: 5px;
+        visibility: hidden;
     }
     select {
         border: none;
@@ -368,6 +372,9 @@
         font-size: 12px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         color: #bbb;
+        /* visibility: hidden; */
+        opacity:0.0;
+        transition: opacity .3s ease;
     }
     item { 
         overflow:visible;
