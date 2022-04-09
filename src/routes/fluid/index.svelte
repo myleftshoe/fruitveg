@@ -205,7 +205,7 @@
     }
     let options = []
     $: if (options) {
-        if (options.length || browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
+        if (browser && document.activeElement === refs.name && !options.map(({name}) => name).includes(option.name)) {
             console.log('setting name to' , option,name)
             name = option.name
         }
@@ -373,7 +373,8 @@
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         color: #bbb;
         /* visibility: hidden; */
-        opacity:0.0;
+        visibility: hidden;
+        opacity: 0;
         transition: opacity .3s ease;
     }
     item { 
