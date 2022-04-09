@@ -243,9 +243,9 @@
 <main bind:this={refs.main}>
     <row bind:this={refs.row} 
         on:click|stopPropagation 
-        on:pointermove|preventDefault|stopPropagation={touchmove} 
-        on:pointerdown|preventDefault|stopPropagation={() => dragging = true} 
-        on:pointerup|preventDefault|stopPropagation={() => dragging = false}
+        on:pointermove|stopPropagation={touchmove} 
+        on:pointerdown|stopPropagation={() => dragging = true} 
+        on:pointerup|stopPropagation={() => dragging = false}
     >
         <input 
             name="name" 
@@ -283,7 +283,7 @@
     </row>
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
-    <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
+    <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible; touch-action:none;">
         {#each options as item, i (item.name)}
             <item style="outline: {option === item ? '3px solid orange' : ''}">
                 <Item on:SMUI:action={(e) => handleOptionClick(e, item)}>
