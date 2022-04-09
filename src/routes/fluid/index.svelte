@@ -106,11 +106,7 @@
         );
     }
 
-    const blankOption = {
-        name: '',
-        qty: '',
-        unit: '',
-    }
+    const blankOption = { name: '', qty: '', unit: '', }
     let option = { ...blankOption }
 
     let items = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
