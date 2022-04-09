@@ -269,13 +269,11 @@
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
     <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
         {#each options as item, i (item.name)}
-            <item style="outline: {option === item ? '3px solid orange' : ''}">
-                <Item on:SMUI:action={(e) => handleOptionClick(e, item)}>
-                    <Text>
-                        <pre>{item.name}</pre>
-                    </Text>
+            <item>
+                <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
+                    <Text><pre>{item.name}</pre></Text>
                     <Meta>
-                        <pre style="color:darkorange; font-size: 20px; font-weight: bold;">{item.qty === 0 && '0' || item.qty && item.qty || ''}{item.unit && ` ${item.unit}`}</pre>
+                        <pre style="color:darkorange; font-size: 16px; font-weight: bold;">{item.qty === 0 && '0' || item.qty && item.qty || ''}{item.unit && ` ${item.unit}`}</pre>
                     </Meta>
                 </Item>
             </item>
