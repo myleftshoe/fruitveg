@@ -189,6 +189,7 @@
     }
 
     async function handleOptionClick(e, item) {
+        option = item
         e.stopPropagation()
         e.preventDefault()
         const qtyElement = e.target.parentElement.querySelector('[name="qty"]')
