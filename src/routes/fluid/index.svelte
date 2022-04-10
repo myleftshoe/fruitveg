@@ -1,4 +1,5 @@
 <script context="module">
+    import smoothscroll from 'smoothscroll-polyfill'
     const localStorageId = 'fruitveg-fluid'
     const units = [ '', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
     const related = new Map([
@@ -12,6 +13,7 @@
     ])
     const exclude = new Map()
     exclude.set('onion', 'spring')
+    smoothscroll.polyfill();
 </script>
 
 <script>
