@@ -186,6 +186,9 @@
     }
 
     async function handleOptionClick(e, item) {
+        const rect = e.target.getBoundingClientRect()
+        console.log(rect)
+        refs.div.scrollTo({ left: rect.x, top: rect.y + refs.div.scrollTop, behavior: 'smooth' })
         e.stopPropagation()
         e.preventDefault()
         // if (option.name) add()
@@ -267,7 +270,8 @@
     </row>
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
-    <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
+    <div bind:this={refs.div} style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
+    <List dense style="padding-bottom: 80vh;">
         {#each options as item, i (item.name)}
             <item>
                 <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
@@ -279,6 +283,7 @@
             </item>
         {/each}
     </List>
+    </div>
     <p>.</p>
 </main>
 <footer>
