@@ -1,4 +1,5 @@
 <script context="module">
+    import { browser } from '$app/env';
     import smoothscroll from 'smoothscroll-polyfill'
     const localStorageId = 'fruitveg-fluid'
     const units = [ '', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
@@ -13,11 +14,10 @@
     ])
     const exclude = new Map()
     exclude.set('onion', 'spring')
-    smoothscroll.polyfill();
+    browser && smoothscroll.polyfill();
 </script>
 
 <script>
-    import { browser } from '$app/env';
     import { tick } from 'svelte'
     import { slide, blur as transition} from 'svelte/transition'
 	import { quintOut } from 'svelte/easing'
