@@ -373,8 +373,8 @@
         background: none;
         border: none;
         /* outline:none; */
-        padding: 8px;
-        /* font-size: 20px; */
+        padding: 4px 0;
+        font-size: 16px;
         font-family: monospace;
         /* font-weight: bold; */
         /* color: orange; */
@@ -385,7 +385,6 @@
         /* outline:none; */
         padding: 8px;
         font-size: 20px;
-        font-family: monospace;
         font-weight: bold;
         color: orange;
     }
