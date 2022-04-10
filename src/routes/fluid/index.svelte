@@ -1,6 +1,4 @@
 <script context="module">
-    import { browser } from '$app/env';
-    import smoothscroll from 'smoothscroll-polyfill'
     const localStorageId = 'fruitveg-fluid'
     const units = [ '', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
     const related = new Map([
@@ -14,10 +12,10 @@
     ])
     const exclude = new Map()
     exclude.set('onion', 'spring')
-    browser && smoothscroll.polyfill();
 </script>
 
 <script>
+    import { browser } from '$app/env';
     import { tick } from 'svelte'
     import { slide, blur as transition} from 'svelte/transition'
 	import { quintOut } from 'svelte/easing'
@@ -188,9 +186,6 @@
     }
 
     async function handleOptionClick(e, item) {
-        const rect = e.target.getBoundingClientRect()
-        console.log(rect)
-        refs.div.scrollTo({ left: rect.x, top: rect.y + refs.div.scrollTop, behavior: 'smooth' })
         e.stopPropagation()
         e.preventDefault()
         // if (option.name) add()
@@ -272,8 +267,7 @@
     </row>
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
-    <div bind:this={refs.div} style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
-    <List dense style="padding-bottom: 80vh;">
+    <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
         {#each options as item, i (item.name)}
             <item>
                 <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
@@ -285,7 +279,6 @@
             </item>
         {/each}
     </List>
-    </div>
     <p>.</p>
 </main>
 <footer>
