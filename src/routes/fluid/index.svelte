@@ -29,7 +29,7 @@
 
     import products from '$lib/productStore'
 
-    const refs = { main: null, row: null, name: null, qty: null, unit: null, }
+    const refs = { }
 
     let name = ''
 
@@ -70,33 +70,34 @@
 
     function add() {
         // if (option.name.length < 3) return
-        if (option.name.trim() === '') {
-            refs.name.select()
-            return
-        }
-        if (option.qty === 0) {
-            option.qty = '0'
-            return
-        }
-        if (!option.qty) {
-            option.qty = ''
-            // refs.qty.select()
-            return
-        }
+        // if (option.name.trim() === '') {
+        //     refs.name.select()
+        //     return
+        // }
+        // if (option.qty === 0) {
+        //     option.qty = '0'
+        //     return
+        // }
+        // if (!option.qty) {
+        //     option.qty = ''
+        //     // refs.qty.select()
+        //     return
+        // }
+        console.log(name)
 
-        const index = items.findIndex(({name}) => name === option.name)
+        const index = items.findIndex(item => item.name === name)
         if (index > -1) {
             items[index] = { ...option }
             console.log(items[index])
         }
         else {
-            items.push({...option}) 
+            items.push({ name, qty: '', unit: '' }) 
         }
 
         items = [...items]
         localStorage.setItem(localStorageId, JSON.stringify(items))
 
-        option = { name: option.name, qty: '', unit: '' }
+        option = { name, qty: '', unit: '' }
         // refs.name.focus()
     }
 
@@ -114,16 +115,18 @@
         complete = false
     }
 
-    function handleNameKeyPress(e) {
+    async function handleSearchKeyPress(e) {
         if (e.key === 'Enter') {
-            // if (options.length === 1) {
-            //     option.name = options[0].name
-            // }
-            refs.qty.focus()
+            add()
+            await tick() 
+            const qtyElement = [...refs.list.querySelectorAll('[name="qty"]')].slice(-1)[0]
+            console.log(qtyElement)
+            qtyElement.focus()
+
         }
     }
     
-    async function handleNameFocus() {
+    async function handleSearchFocus() {
         option = { ...blankOption }
         name = ''
     }
@@ -132,7 +135,7 @@
         console.log('handleQtyKeyPress', e.key, e.code)
         if (['Enter'].includes(e.key)) {
             e.preventDefault()
-            add()
+            refs.name.focus()
             return
         }
         const value = e.target.value
@@ -188,10 +191,9 @@
     async function handleOptionClick(e, item) {
         e.stopPropagation()
         e.preventDefault()
-        // if (option.name) add()
-        option = item
-        await tick()
-        refs.qty.select()
+        const qtyElement = e.target.parentElement.querySelector('[name="qty"]')
+        // await tick()
+        qtyElement.select()
     }
 
     function handleStartClick() {
@@ -210,12 +212,12 @@
     }
     let options = []
     $: if (options) {
-        if (browser && document.activeElement === refs.name 
-            // && !options.map(({name}) => name).includes(option.name)
-        ) {
-            console.log('setting name to' , option, name)
-            name = option.name
-        }
+        // if (browser && document.activeElement === refs.name 
+        //     // && !options.map(({name}) => name).includes(option.name)
+        // ) {
+        //     console.log('setting name to' , option, name)
+        //     name = option.name
+        // }
         if (related.has(name)) {
             const relatedItems = related.get(name).split(',')
             options = items.filter(({name}) => relatedItems.find(r => name.includes(r) && !name.includes(exclude.get(r))))
@@ -232,17 +234,17 @@
 <main bind:this={refs.main}>
     <row on:click|stopPropagation bind:this={refs.row}>
         <input 
-            name="name" 
+            name="search" 
             type="text"
             placeholder="type..."
             autocapitalize="none"
             bind:this={refs.name} 
-            bind:value={option.name} 
-            on:focus={handleNameFocus} 
-            on:keypress={handleNameKeyPress}
+            bind:value={name} 
+            on:focus={handleSearchFocus} 
+            on:keypress={handleSearchKeyPress}
             on:change={() => console.log('onchange')}
         />
-        <input
+        <!-- <input
             name="qty"
             bind:this={refs.qty}
             bind:value={option.qty}
@@ -263,23 +265,43 @@
             {#each units as unit}
                 <option value={unit} on:click={handleUnitChange}>{unit}</option>
             {/each}
-        </select>
+        </select> -->
+        <Button disabled={name.length < 3} on:click={add}>add</Button>
     </row>
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
-    <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
-        {#each options as item, i (item.name)}
-            <item>
-                <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
-                    <Text><pre>{item.name}</pre></Text>
-                    <Meta>
-                        <pre style="color:darkorange; font-size: 16px; font-weight: bold;">{item.qty === 0 && '0' || item.qty && item.qty || ''}{item.unit && ` ${item.unit}`}</pre>
-                    </Meta>
-                </Item>
-            </item>
-        {/each}
-    </List>
-    <p>.</p>
+    <list bind:this={refs.list}>
+        <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
+            {#each options as item, i (item.name)}
+                <item>
+                    <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
+                        <input 
+                            name="name" 
+                            type="text"
+                            placeholder="type..."
+                            autocapitalize="none"
+                            bind:value={item.name} 
+                        />
+                        <Meta>
+                            <input
+                                name="qty"
+                                bind:this={refs.qty}
+                                bind:value={item.qty}
+                                type="tel"
+                                step="1"
+                                min="0"
+                                max="99"
+                                on:keypress={handleQtyKeyPress}
+                                _on:focus={handleQtyFocus} 
+                                on:blur={handleQtyBlur} 
+                                on:change={() => console.log('onchange')}
+                            >
+                        </Meta>
+                    </Item>
+                </item>
+            {/each}
+        </List>
+    </list>
 </main>
 <footer>
 </footer>
@@ -352,13 +374,24 @@
         border: none;
         /* outline:none; */
         padding: 8px;
+        /* font-size: 20px; */
+        font-family: monospace;
+        /* font-weight: bold; */
+        /* color: orange; */
+    }
+    input[name="search"] {
+        background: none;
+        border: none;
+        /* outline:none; */
+        padding: 8px;
         font-size: 20px;
         font-family: monospace;
         font-weight: bold;
         color: orange;
     }
     input[name="name"] {
-        width: calc( 60vw - 32px );
+        /* width: calc( 60vw - 32px ); */
+        width:100%;
         text-overflow: clip;
         text-transform: lowercase;
     }
@@ -367,7 +400,6 @@
         text-align: right;
         padding-left: 5px;
         padding-right: 5px;
-        visibility: hidden;
     }
     select {
         border: none;
