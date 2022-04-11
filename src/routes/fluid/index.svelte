@@ -231,7 +231,11 @@
             options = items.filter(({name}) => relatedItems.find(r => name.includes(r) && !name.includes(exclude.get(r))))
         }
         else {
-            options = items.length && name && items.filter((item) => item.name.includes(name.toLowerCase()))  || []
+            options = items.length && name && items.filter((item) => {
+                if (name.length === 1 )
+                    return item.name.startsWith(name)
+                return item.name.includes(name.toLowerCase())
+            }) || []
         }
         if (!options.length && !name)
             options = items.filter(withQtys).sort(alpha('name'))
