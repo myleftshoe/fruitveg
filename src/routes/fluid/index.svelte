@@ -38,6 +38,7 @@
     let warn = false
 
     const withQtys = (item) => item.qty?.toString().trim() || '' !== ''
+    const alpha = (prop) => (a, b) => a[prop].localeCompare(b[prop])
 
     async function copyToClipboard() {
         const text = items.filter(withQtys)
@@ -227,7 +228,7 @@
             options = items.length && name && items.filter((item) => item.name.includes(name.toLowerCase()))  || []
         }
         if (!options.length && !name)
-            options = items.filter(withQtys).sort((a, b) => a.name.localeCompare(b.name))
+            options = items.filter(withQtys).sort(alpha('name'))
     }
     $: update = items
 </script>
