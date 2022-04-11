@@ -184,18 +184,24 @@
         }
     }
 
+    function handleQtyDblClick() {
+        console.log('dblclick')
+
+    }
+
     async function handleUnitChange(e) {
         await tick()
         refs.qty.focus()
     }
 
     async function handleOptionClick(e, item) {
+        console.log('option')
         option = item
-        e.stopPropagation()
-        e.preventDefault()
-        const qtyElement = e.target.parentElement.querySelector('[name="qty"]')
-        // await tick()
-        qtyElement.select()
+        // e.stopPropagation()
+        // e.preventDefault()
+        // const qtyElement = e.target.parentElement.querySelector('[name="qty"]')
+        // // await tick()
+        // qtyElement.select()
     }
 
     function handleStartClick() {
@@ -278,11 +284,13 @@
                 <item>
                     <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
                         <input 
+                            disabled={option !== item}
                             name="name" 
                             type="text"
                             placeholder="type..."
                             autocapitalize="none"
                             bind:value={item.name} 
+                            on:click={handleOptionClick}
                         />
                         <Meta>
                             <input
@@ -296,7 +304,7 @@
                                 on:keypress={handleQtyKeyPress}
                                 _on:focus={handleQtyFocus} 
                                 on:blur={handleQtyBlur} 
-                                on:change={() => console.log('onchange')}
+                                on:dblclick={handleQtyDblClick} 
                             >
                         </Meta>
                     </Item>
