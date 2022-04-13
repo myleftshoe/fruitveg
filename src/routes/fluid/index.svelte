@@ -132,6 +132,10 @@
         name = ''
     }
 
+    function handleNameFocus(e) {
+        console.log('handleNameFocus')
+    }
+
     async function handleQtyKeyPress(e) {
         console.log('handleQtyKeyPress', e.key, e.code)
         if (['Enter'].includes(e.key)) {
@@ -167,6 +171,7 @@
     }
     
     async function handleQtyFocus() {
+        console.log('focus')
         await tick()
         refs.qty.select()
     }
@@ -232,10 +237,10 @@
         }
         else {
             options = items.length && name && items.filter((item) => {
-                if (name.length === 1 )
-                    return item.name.startsWith(name)
+                if (name.length === 1 ) return item.name.split(' ').some(word => word.startsWith(name))
                 return item.name.includes(name.toLowerCase())
-            }) || []
+            })
+            .sort((a,b) => a.name.search(name) > b.name.search(name) ? 1 : -1) || []
         }
         if (!options.length && !name)
             options = items.filter(withQtys).sort(alpha('name'))
@@ -285,7 +290,7 @@
     <list bind:this={refs.list}>
         <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
             {#each options as item, i (item.name)}
-                <item>
+                <item >
                     <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
                         <input 
                             disabled={option !== item}
@@ -294,9 +299,11 @@
                             placeholder="type..."
                             autocapitalize="none"
                             bind:value={item.name} 
-                            on:click={handleOptionClick}
+                            style={`${option === item && "pointer-events: auto;"}`}
+                            on:mousedown={handleNameFocus}
+                            
                         />
-                        <Meta>
+                        <Meta _style="background-color:orange;">
                             <input
                                 name="qty"
                                 bind:this={refs.qty}
@@ -387,7 +394,9 @@
         background: none;
         border: none;
         /* outline:none; */
-        padding: 4px 0;
+        /* padding: 4px; */
+        margin: -4px;
+        outline-offset: 4px;
         font-size: 16px;
         font-family: monospace;
         /* font-weight: bold; */
@@ -407,6 +416,7 @@
         width:100%;
         text-overflow: clip;
         text-transform: lowercase;
+        pointer-events: none;
     }
     input[name="qty"] {
         width: 15vw;
