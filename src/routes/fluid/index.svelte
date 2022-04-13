@@ -202,11 +202,11 @@
     async function handleOptionClick(e, item) {
         console.log('option')
         option = item
-        // e.stopPropagation()
-        // e.preventDefault()
-        // const qtyElement = e.target.parentElement.querySelector('[name="qty"]')
-        // // await tick()
-        // qtyElement.select()
+        e.stopPropagation()
+        e.preventDefault()
+        const qtyElement = e.target.parentElement.querySelector('[name="qty"]')
+        // await tick()
+        qtyElement.select()
     }
 
     function handleStartClick() {
