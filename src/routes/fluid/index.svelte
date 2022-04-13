@@ -418,6 +418,9 @@
         text-transform: lowercase;
         pointer-events: none;
     }
+    input[name="name"]:disabled {
+        color:black;
+    }
     input[name="qty"] {
         width: 15vw;
         text-align: right;
