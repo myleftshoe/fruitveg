@@ -409,7 +409,6 @@
         color: orange;
     }
     input[name="name"] {
-        -webkit-appearance:none;
         text-overflow: clip;
         text-transform: lowercase;
         pointer-events: none;
@@ -417,12 +416,12 @@
         width:100%;
     }
     input[name="name"]:disabled {
-        -webkit-appearance:none;
         color:black;
+        opacity:1;
     }
     input[name="name"][disabled] {
-        -webkit-appearance:none;
         color:black;
+        opacity:1;
     }
     input[name="qty"] {
         width: 40%;
