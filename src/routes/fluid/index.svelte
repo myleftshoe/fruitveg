@@ -202,9 +202,10 @@
 
     async function handleOptionClick(e, item) {
         console.log('option')
+        if (item === option ) return
         option = item
-        e.stopPropagation()
-        e.preventDefault()
+        // e.stopPropagation()
+        // e.preventDefault()
         const qtyElement = e.target.parentElement.querySelector('[name="qty"]')
         // await tick()
         qtyElement.select()
@@ -265,24 +266,8 @@
             on:keypress={handleSearchKeyPress}
             on:change={() => console.log('onchange')}
         />
-        <!-- <input
-            name="qty"
-            bind:this={refs.qty}
-            bind:value={option.qty}
-            type="tel"
-            step="1"
-            min="0"
-            max="99"
-            on:keypress={handleQtyKeyPress}
-            _on:focus={handleQtyFocus} 
-            on:blur={handleQtyBlur} 
-            on:change={() => console.log('onchange')}
-            style={`${option.name.length && 'visibility: visible;'}`}
-        > -->
         <Button disabled={name.length < 3} on:click={add}>add</Button>
     </row>
-    <!-- <br/> -->
-    <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
     <list bind:this={refs.list}>
         <List style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible; background: #0f00">
             {#each options as item, i (item.name)}
@@ -297,7 +282,8 @@
                             placeholder="type..."
                             autocapitalize="none"
                             bind:value={item.name} 
-                            style={`${option === item && "pointer-events: auto;"}`}
+                            on:click={() => console.log('sdfsdfsdfsdfsdfsdf')}
+                            style={`${option.name === item.name && "pointer-events: auto; color:green;"}`}
                         />
                         <itemmeta>
                             {#if option === item || item.unit.length}
