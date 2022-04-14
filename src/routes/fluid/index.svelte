@@ -17,7 +17,7 @@
 <script>
     import { browser } from '$app/env';
     import { tick } from 'svelte'
-    import { slide, blur as transition} from 'svelte/transition'
+    import { slide, blur, scale, fade , fly } from 'svelte/transition'
 	import { quintOut } from 'svelte/easing'
     import { flip } from 'svelte/animate'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
@@ -303,17 +303,12 @@
                         </div>
                         <itemmeta>
                             {#if option === item || item.unit.length}
-                            <select name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}
-                                on:change={(e) =>{ 
-                                    console.log('onchange')
-                                    e.target.parentElement.style.zIndex = 0
-                                }}
-                            >
-                                <!-- <option value="" disabled>[unit]</option> -->
-                                {#each units as unit}
-                                    <option value={unit}>{unit}</option>
-                                {/each}
-                            </select>
+                                <select transition:fade name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}>
+                                    <option value="" disabled>[unit]</option>
+                                    {#each units as unit}
+                                        <option value={unit}>{unit}</option>
+                                    {/each}
+                                </select>
                             {/if}
                             <input 
                                 name="qty"
@@ -324,9 +319,8 @@
                                 min="0"
                                 max="99"
                                 _on:keypress={handleQtyKeyPress}
-                                on:click={handleQtyFocus} 
+                                _on:focus={handleQtyFocus} 
                                 _on:blur={handleQtyBlur} 
-                                on:dblclick={(e) => handleQtyDblClick(e,item)} 
                             >
                         </itemmeta>
                     </Item>
