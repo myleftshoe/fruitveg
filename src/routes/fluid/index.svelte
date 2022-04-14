@@ -284,7 +284,7 @@
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
     <list bind:this={refs.list}>
-        <List dense style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible; background: #0f00">
+        <List style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible; background: #0f00">
             {#each options as item, i (item.name)}
                 <item>
                     <Item _on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}
@@ -442,9 +442,9 @@
         appearance: none;
         border: none;
         background: none;
-        color: orange;
+        color: teal;
         text-align: center;
-        font-weight: 500;
+        /* font-weight: 500; */
         font-size: 12px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         opacity: 1;
