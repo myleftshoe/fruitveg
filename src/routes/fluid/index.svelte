@@ -37,7 +37,6 @@
     let complete = false
     let copied = false
     let warn = false
-    let showUnits = false
 
     const withQtys = (item) => item.qty?.toString().trim() || '' !== ''
     const alpha = (prop) => (a, b) => a[prop].localeCompare(b[prop])
@@ -54,16 +53,6 @@
 
     function handleFabClick(e) {
         complete = true
-    }
-
-    function isInViewport(element) {
-        const rect = element.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
     }
 
     const blankOption = { name: '', qty: '', unit: '', }
@@ -134,10 +123,6 @@
         name = ''
     }
 
-    function handleNameFocus(e) {
-        console.log('handleNameFocus')
-    }
-
     async function handleQtyKeyPress(e) {
         console.log('handleQtyKeyPress', e.key, e.code)
         if (['Enter'].includes(e.key)) {
@@ -172,13 +157,6 @@
         }
     }
     
-    async function handleQtyFocus(e) {
-        console.log('focus', e.target.parentElement)
-
-        await tick()
-        refs.qty.select()
-    }
-
     async function handleQtyBlur(e) {
         return
         if (!option.qty) return
@@ -193,33 +171,14 @@
         }
     }
 
-
-
-    async function handleUnitChange(e) {
-        await tick()
-        refs.qty.focus()
-    }
-
-    async function handleOptionClick(e, item) {
-        console.log('option')
+    async function handleItemClick(e, item) {
+        console.log('handleOptionClick', item)
         if (item === option ) return
         option = item
-        // e.stopPropagation()
-        // e.preventDefault()
         const qtyElement = e.target.parentElement.querySelector('[name="qty"]')
         // await tick()
         qtyElement.select()
     }
-
-    function handleStartClick() {
-        refs.name.focus()
-    }
-
-    const doNothing = () => {}
-
-    let innerHeight
-    let clicked
-
 
 
     $: if (!items.length && $products.length) {   
@@ -252,7 +211,6 @@
     }
     $: update = items
 </script>
-<svelte:window bind:innerHeight/>
 <main bind:this={refs.main}>
     <row on:click|stopPropagation bind:this={refs.row}>
         <input 
@@ -272,7 +230,7 @@
         <List style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible; background: #0f00">
             {#each options as item, i (item.name)}
                 <item>
-                    <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}
+                    <Item on:SMUI:action={(e) => handleItemClick(e, item)} activated={option === item}
                         style="display:flex; justify-content: space-between; width: calc( 100% - 33px );"
                     >
                         <input 
@@ -282,12 +240,11 @@
                             placeholder="type..."
                             autocapitalize="none"
                             bind:value={item.name} 
-                            on:click={() => console.log('sdfsdfsdfsdfsdfsdf')}
                             style={`${option.name === item.name && "pointer-events: auto; color:green;"}`}
                         />
                         <itemmeta>
                             {#if option === item || item.unit.length}
-                                <select transition:fade name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}>
+                                <select transition:slide name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}>
                                     <option value="" disabled>[unit]</option>
                                     {#each units as unit}
                                         <option value={unit}>{unit}</option>
@@ -302,9 +259,8 @@
                                 step="1"
                                 min="0"
                                 max="99"
-                                _on:keypress={handleQtyKeyPress}
-                                _on:focus={handleQtyFocus} 
-                                _on:blur={handleQtyBlur} 
+                                on:keypress={handleQtyKeyPress}
+                                on:blur={handleQtyBlur} 
                             >
                         </itemmeta>
                     </Item>
