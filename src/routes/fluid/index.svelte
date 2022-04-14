@@ -290,7 +290,7 @@
                     <Item _on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}
                         style="display:flex; justify-content: space-between; width: calc( 100% - 33px );"
                     >
-                        <div on:click={(e) => handleOptionClick(e, item)}>
+                        <name on:click={(e) => handleOptionClick(e, item)}>
                             <input 
                                 disabled={option !== item}
                                 name="name" 
@@ -300,7 +300,7 @@
                                 bind:value={item.name} 
                                 style={`${option === item && "pointer-events: auto;"}`}
                             />
-                        </div>
+                        </name>
                         <itemmeta>
                             {#if option === item || item.unit.length}
                                 <select transition:fade name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}>
@@ -412,6 +412,8 @@
         text-overflow: clip;
         text-transform: lowercase;
         pointer-events: none;
+        /* background: #f003; */
+        width:100%;
     }
     input[name="name"]:disabled {
         color:black;
@@ -420,10 +422,16 @@
         width: 40%;
         text-align: center;
     }
+    name {
+        width:67%;
+        /* background-color: #00f; */
+    }
     itemmeta {
         display:flex;
         justify-content: flex-end;
+        align-items: center;
         width:30%;
+        /* background: #0f03 */
     }
     select {
         appearance: none;
