@@ -177,11 +177,6 @@
 
         await tick()
         refs.qty.select()
-                const unitElement = e.target.parentElement.parentElement.querySelector('[name="unit"]')
-                console.log(unitElement)
-                unitElement.parentElement.style.zIndex='2'
-                unitElement.parentElement.style.opacity = 1;
-        // unitElement.focus()
     }
 
     async function handleQtyBlur(e) {
@@ -198,28 +193,7 @@
         }
     }
 
-    function handleQtyDblClick(e, item) {
-        e.preventDefault()
-        e.stopPropagation()
-        console.log(option, item)
-        // option = item
-        console.log('dblclick')
-        showUnits = true
-        const unitElement = e.target.parentElement.querySelector('[name="unit"]')
-        unitElement.focus()
-        // refs.menu.setOpen(true)
 
-    }
-
-    function handleUnitClick(e) {
-        console.log('unit click')
-        const item = items.find(({name}) => name === option.name)
-        item.unit = e.target.innerText
-        items = [...items]
-        console.log(item)
-        
-
-    }
 
     async function handleUnitChange(e) {
         await tick()
@@ -391,29 +365,6 @@
 </Dialog>
 
 
-<!-- <Dialog fullscreen bind:open={showUnits} on:SMUIDialog:closed={null} scrimClickAction={() => showUnits = false} escapeKeyAction={() => showUnits = false} on:click={(e) => {e.preventDefault 
-    showUnits = false
-}}>
-    <menuDialog bind:this={refs.menu}>
-    <List>
-        <twocolumn>
-            <column1>
-                <Button>1/2</Button>
-                <Button>1/3</Button>
-                <Button>2/3</Button>
-                <Button>1/4</Button>
-                <Button>3/4</Button>
-            </column1>
-            <units>
-                {#each units as unit}
-                    <Button on:click={handleUnitClick}>{unit}</Button>
-                {/each}
-            </units>
-        </twocolumn>
-    </List>
-</menuDialog>
-</Dialog> -->
-
 <style>
     :global(body) {
         margin:0;
@@ -422,16 +373,10 @@
         position: fixed;
         top: 10px;
         padding: 0px;
-        /* margin:-10px; */
         width: calc( 100vw - 0px);
-        /* height: 50vh; */
-        /* overflow: scroll; */
-        /* overflow-x: visible; */
         display:flex;
         flex-direction: column;
         gap: 3vh;
-        /* border: 1px solid red; */
-        /* background-color: #f00; */
     }
     pre {
         font-size: 12px;
@@ -447,7 +392,6 @@
         position: sticky;
         position: -webkit-sticky;
         top: 1vh;
-        /* bottom: 90vh; */
         margin:-10px;
         box-shadow: 2px 4px 4px #0007;
         padding: 10px 5px 10px 20px; 
@@ -457,27 +401,20 @@
     input {
         background: none;
         border: none;
-        /* outline:none; */
-        /* padding: 4px; */
         margin: 0px;
         outline-offset: 4px;
         font-size: 16px;
         font-family: monospace;
-        /* font-weight: bold; */
-        /* color: orange; */
     }
     input[name="search"] {
         background: none;
         border: none;
-        /* outline:none; */
         padding: 8px;
         font-size: 20px;
         font-weight: bold;
         color: orange;
     }
     input[name="name"] {
-        /* width: calc( 60vw - 32px ); */
-        /* width:100%; */
         text-overflow: clip;
         text-transform: lowercase;
         pointer-events: none;
@@ -487,47 +424,30 @@
     }
     input[name="qty"] {
         width: 40%;
-        /* height: 100%; */
         text-align: center;
-        /* padding-left: 5px;
-        padding-right: 5px; */
-        /* background: #00f6; */
     }
     itemmeta {
         display:flex;
-        /* background:#F005;  */
         justify-content: flex-end;
-        /* height:100%;  */
         width:30%;
     }
     select {
         appearance: none;
         border: none;
         background: none;
-        /* outline:none; */
-        /* height: 40px; */
         color: orange;
         text-align: center;
         font-weight: 500;
         font-size: 12px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        /* color: #bbb; */
-        /* visibility: hidden; */
-        /* visibility: hidden; */
         opacity: 1;
         transition: flex-basis .3s ease;
         width:60%;
-        /* height:100%; */
-        
-        /* width: 0px; */
-        /* flex: 0px 0 1; */
         /* background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>') no-repeat;
         background-position: right 0px top 50%; */
     }
     item { 
         overflow:visible;
-        /* margin-left:-10px; */
-        /* margin-right: 3px; */
         display: block;
     }
     item:nth-child(even) { background: #7773 }
