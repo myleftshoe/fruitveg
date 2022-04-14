@@ -418,6 +418,9 @@
     input[name="name"]:disabled {
         color:black;
     }
+    input[name="name"][disabled] {
+        color:black;
+    }
     input[name="qty"] {
         width: 40%;
         text-align: center;
