@@ -172,10 +172,16 @@
         }
     }
     
-    async function handleQtyFocus() {
-        console.log('focus')
+    async function handleQtyFocus(e) {
+        console.log('focus', e.target.parentElement)
+
         await tick()
         refs.qty.select()
+                const unitElement = e.target.parentElement.parentElement.querySelector('[name="unit"]')
+                console.log(unitElement)
+                unitElement.parentElement.style.zIndex='2'
+                unitElement.parentElement.style.opacity = 1;
+        // unitElement.focus()
     }
 
     async function handleQtyBlur(e) {
@@ -319,28 +325,33 @@
                                 style={`${option === item && "pointer-events: auto;"}`}
                             />
                         </div>
-                        <Meta style="background-color:orange; display: flex; flex-direction: row; align-items: center; width:30%; height:100%">
-                            <input
-                                name="qty"
-                                bind:this={refs.qty}
-                                bind:value={item.qty}
-                                type="tel"
-                                step="1"
-                                min="0"
-                                max="99"
-                                _on:keypress={handleQtyKeyPress}
-                                _on:focus={handleQtyFocus} 
-                                _on:blur={handleQtyBlur} 
-                                on:dblclick={(e) => handleQtyDblClick(e,item)} 
-                            >
-                            <select name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}
-                                style="flex-basis: {item.unit.length && '50%'};"
-                            >
-                                <!-- <option value="" disabled>[unit]</option> -->
-                                {#each units as unit}
-                                    <option value={unit}>{unit}</option>
-                                {/each}
-                            </select>
+                        <Meta style="border: 1px solid #0f0f; width:30%; height: calc( 100% - 10px );">
+                        <liner-relative>
+                            <layer>
+                                <select name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}
+                                >
+                                    <!-- <option value="" disabled>[unit]</option> -->
+                                    {#each units as unit}
+                                        <option value={unit}>{unit}</option>
+                                    {/each}
+                                </select>
+                            </layer>
+                            <layer name="qtylayer">
+                                <input 
+                                    name="qty"
+                                    bind:this={refs.qty}
+                                    bind:value={item.qty}
+                                    type="tel"
+                                    step="1"
+                                    min="0"
+                                    max="99"
+                                    _on:keypress={handleQtyKeyPress}
+                                    on:click={handleQtyFocus} 
+                                    _on:blur={handleQtyBlur} 
+                                    on:dblclick={(e) => handleQtyDblClick(e,item)} 
+                                >
+                            </layer>
+                            </liner-relative>
                         </Meta>
                     </Item>
                 </item>
@@ -402,6 +413,13 @@
 </Dialog> -->
 
 <style>
+    liner-relative {
+        display:block;
+        position:relative; 
+        /* background:#F005;  */
+        height:100%; 
+        width:100%;
+    }
     twocolumn {
         top:0;
         display: flex;
@@ -496,16 +514,29 @@
         color:black;
     }
     input[name="qty"] {
-        width: 50%;
+        width: 100%;
+        height: 100%;
         text-align: right;
-        padding-left: 5px;
-        padding-right: 5px;
+        /* padding-left: 5px;
+        padding-right: 5px; */
+        background: #00f6;
+    }
+    layer {
+        position: absolute;
+        top:0;
+        height:100%;
+        width:100%;
+        z-index:0;
+        /* background: red; */
+    }
+    layer[name="qtylayer"] {
+        z-index:1;
     }
     select {
         appearance: none;
         border: none;
+        background-color: #f054;
         /* outline:none; */
-        background: red;
         /* height: 40px; */
         text-align: left;
         font-weight: 500;
@@ -516,14 +547,12 @@
         /* visibility: hidden; */
         /* opacity: 0; */
         transition: flex-basis .3s ease;
-        min-width:10px;
-        flex-shrink:1;
-        flex-basis:10px;
+        width:100%;
         height:100%;
         /* width: 0px; */
         /* flex: 0px 0 1; */
-        /* background: cyan url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>') no-repeat;
-        background-position: left 0px top 50%; */
+        /* background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>') no-repeat;
+        background-position: right 0px top 50%; */
     }
     item { 
         overflow:visible;
