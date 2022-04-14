@@ -1,6 +1,6 @@
 <script context="module">
     const localStorageId = 'fruitveg-fluid'
-    const units = [ '', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
+    const units = [ '[none]', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
     const related = new Map([
         ['out', 'potato,tomato,garlic,onion,pumpkin,banana,avo'], 
         ['leafy', 'kale,silver,chard'], 
@@ -21,6 +21,7 @@
 	import { quintOut } from 'svelte/easing'
     import { flip } from 'svelte/animate'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
+    import Menu from '@smui/menu'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
@@ -36,6 +37,7 @@
     let complete = false
     let copied = false
     let warn = false
+    let showUnits = false
 
     const withQtys = (item) => item.qty?.toString().trim() || '' !== ''
     const alpha = (prop) => (a, b) => a[prop].localeCompare(b[prop])
@@ -177,6 +179,7 @@
     }
 
     async function handleQtyBlur(e) {
+        return
         if (!option.qty) return
         const index = items.findIndex((item) => item.name === option.name)
         if (index < 0) {
@@ -189,8 +192,26 @@
         }
     }
 
-    function handleQtyDblClick() {
+    function handleQtyDblClick(e, item) {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log(option, item)
+        // option = item
         console.log('dblclick')
+        showUnits = true
+        const unitElement = e.target.parentElement.querySelector('[name="unit"]')
+        unitElement.focus()
+        // refs.menu.setOpen(true)
+
+    }
+
+    function handleUnitClick(e) {
+        console.log('unit click')
+        const item = items.find(({name}) => name === option.name)
+        item.unit = e.target.innerText
+        items = [...items]
+        console.log(item)
+        
 
     }
 
@@ -216,6 +237,9 @@
     const doNothing = () => {}
 
     let innerHeight
+    let clicked
+
+
 
     $: if (!items.length && $products.length) {   
         items = $products
@@ -274,15 +298,7 @@
             on:blur={handleQtyBlur} 
             on:change={() => console.log('onchange')}
             style={`${option.name.length && 'visibility: visible;'}`}
-        >
-        <select name="unit" id="unit" bind:this={refs.unit} bind:value={option.unit}
-            style={`${option.name.length && 'visibility: visible; opacity: 1;'}`}
-        >
-            <option value="" disabled>[unit]</option>
-            {#each units as unit}
-                <option value={unit} on:click={handleUnitChange}>{unit}</option>
-            {/each}
-        </select> -->
+        > -->
         <Button disabled={name.length < 3} on:click={add}>add</Button>
     </row>
     <!-- <br/> -->
@@ -291,19 +307,19 @@
         <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
             {#each options as item, i (item.name)}
                 <item >
-                    <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
-                        <input 
-                            disabled={option !== item}
-                            name="name" 
-                            type="text"
-                            placeholder="type..."
-                            autocapitalize="none"
-                            bind:value={item.name} 
-                            style={`${option === item && "pointer-events: auto;"}`}
-                            on:mousedown={handleNameFocus}
-                            
-                        />
-                        <Meta _style="background-color:orange;">
+                    <Item _on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
+                        <div on:click={(e) => handleOptionClick(e, item)}>
+                            <input 
+                                disabled={option !== item}
+                                name="name" 
+                                type="text"
+                                placeholder="type..."
+                                autocapitalize="none"
+                                bind:value={item.name} 
+                                style={`${option === item && "pointer-events: auto;"}`}
+                            />
+                        </div>
+                        <Meta style="background-color:orange; display: flex; flex-direction: row; align-items: center; width:30%; height:100%">
                             <input
                                 name="qty"
                                 bind:this={refs.qty}
@@ -312,15 +328,24 @@
                                 step="1"
                                 min="0"
                                 max="99"
-                                on:keypress={handleQtyKeyPress}
+                                _on:keypress={handleQtyKeyPress}
                                 _on:focus={handleQtyFocus} 
-                                on:blur={handleQtyBlur} 
-                                on:dblclick={handleQtyDblClick} 
+                                _on:blur={handleQtyBlur} 
+                                on:dblclick={(e) => handleQtyDblClick(e,item)} 
                             >
+                            <select name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}
+                                style="flex-basis: {item.unit.length && '50%'};"
+                            >
+                                <!-- <option value="" disabled>[unit]</option> -->
+                                {#each units as unit}
+                                    <option value={unit}>{unit}</option>
+                                {/each}
+                            </select>
                         </Meta>
                     </Item>
                 </item>
             {/each}
+            <p style="height: 65vh;"></p>
         </List>
     </list>
 </main>
@@ -351,7 +376,56 @@
         </Actions>
     </Dialog>
 </Dialog>
+
+
+<!-- <Dialog fullscreen bind:open={showUnits} on:SMUIDialog:closed={null} scrimClickAction={() => showUnits = false} escapeKeyAction={() => showUnits = false} on:click={(e) => {e.preventDefault 
+    showUnits = false
+}}>
+    <menuDialog bind:this={refs.menu}>
+    <List>
+        <twocolumn>
+            <column1>
+                <Button>1/2</Button>
+                <Button>1/3</Button>
+                <Button>2/3</Button>
+                <Button>1/4</Button>
+                <Button>3/4</Button>
+            </column1>
+            <units>
+                {#each units as unit}
+                    <Button on:click={handleUnitClick}>{unit}</Button>
+                {/each}
+            </units>
+        </twocolumn>
+    </List>
+</menuDialog>
+</Dialog> -->
+
 <style>
+    twocolumn {
+        top:0;
+        display: flex;
+        /* background:red; */
+    }
+    column1 {
+        display: flex;
+        flex-direction: column;
+        /* background-color: green; */
+        gap: 2ch;
+        width:20%;
+        flex-shrink:0;
+        align-items:center;
+        border-right: 1px solid orange;
+    }
+    units {
+        display: flex;
+        flex-direction: row;
+        gap: 2ch;
+        flex-wrap: wrap;
+        /* background-color: blue; */
+        justify-content: center;
+        align-items: center;
+    }
     :global(body) {
         margin:0;
     }
@@ -395,7 +469,7 @@
         border: none;
         /* outline:none; */
         /* padding: 4px; */
-        margin: -4px;
+        margin: 0px;
         outline-offset: 4px;
         font-size: 16px;
         font-family: monospace;
@@ -413,7 +487,7 @@
     }
     input[name="name"] {
         /* width: calc( 60vw - 32px ); */
-        width:100%;
+        /* width:100%; */
         text-overflow: clip;
         text-transform: lowercase;
         pointer-events: none;
@@ -422,25 +496,34 @@
         color:black;
     }
     input[name="qty"] {
-        width: 15vw;
+        width: 50%;
         text-align: right;
         padding-left: 5px;
         padding-right: 5px;
     }
     select {
+        appearance: none;
         border: none;
         /* outline:none; */
-        background: none;
-        height: 40px;
-        text-align: right;
-        font-weight: bold;
+        background: red;
+        /* height: 40px; */
+        text-align: left;
+        font-weight: 500;
         font-size: 12px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        color: #bbb;
+        /* color: #bbb; */
         /* visibility: hidden; */
-        visibility: hidden;
-        opacity: 0;
-        transition: opacity .3s ease;
+        /* visibility: hidden; */
+        /* opacity: 0; */
+        transition: flex-basis .3s ease;
+        min-width:10px;
+        flex-shrink:1;
+        flex-basis:10px;
+        height:100%;
+        /* width: 0px; */
+        /* flex: 0px 0 1; */
+        /* background: cyan url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>') no-repeat;
+        background-position: left 0px top 50%; */
     }
     item { 
         overflow:visible;
