@@ -310,10 +310,12 @@
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
     <list bind:this={refs.list}>
-        <List dense style="height: calc( 100vh - 95px ); overflow-y: scroll; overflow-x: visible;">
+        <List dense style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible;">
             {#each options as item, i (item.name)}
-                <item >
-                    <Item _on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}>
+                <item style="width:100%;">
+                    <Item _on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}
+                        style="display:flex; justify-content: space-between; width: calc( 100% - 15px );"
+                    >
                         <div on:click={(e) => handleOptionClick(e, item)}>
                             <input 
                                 disabled={option !== item}
@@ -325,10 +327,13 @@
                                 style={`${option === item && "pointer-events: auto;"}`}
                             />
                         </div>
-                        <Meta style="border: 1px solid #0f0f; width:30%; height: calc( 100% - 10px );">
-                        <liner-relative>
+                        <itemmeta>
                             <layer>
                                 <select name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}
+                                    on:change={(e) =>{ 
+                                        console.log('onchange')
+                                        e.target.parentElement.style.zIndex = 0
+                                    }}
                                 >
                                     <!-- <option value="" disabled>[unit]</option> -->
                                     {#each units as unit}
@@ -350,9 +355,9 @@
                                     _on:blur={handleQtyBlur} 
                                     on:dblclick={(e) => handleQtyDblClick(e,item)} 
                                 >
+                                {item.unit}
                             </layer>
-                            </liner-relative>
-                        </Meta>
+                            </itemmeta>
                     </Item>
                 </item>
             {/each}
@@ -413,51 +418,21 @@
 </Dialog> -->
 
 <style>
-    liner-relative {
-        display:block;
-        position:relative; 
-        /* background:#F005;  */
-        height:100%; 
-        width:100%;
-    }
-    twocolumn {
-        top:0;
-        display: flex;
-        /* background:red; */
-    }
-    column1 {
-        display: flex;
-        flex-direction: column;
-        /* background-color: green; */
-        gap: 2ch;
-        width:20%;
-        flex-shrink:0;
-        align-items:center;
-        border-right: 1px solid orange;
-    }
-    units {
-        display: flex;
-        flex-direction: row;
-        gap: 2ch;
-        flex-wrap: wrap;
-        /* background-color: blue; */
-        justify-content: center;
-        align-items: center;
-    }
     :global(body) {
         margin:0;
     }
     main {
         position: fixed;
-        top: 0vh;
-        padding: 10px;
-        width: calc( 100vw - 20px);
+        top: 10px;
+        padding: 0px;
+        /* margin:-10px; */
+        width: calc( 100vw - 0px);
         /* height: 50vh; */
         /* overflow: scroll; */
         /* overflow-x: visible; */
         display:flex;
         flex-direction: column;
-        gap: 4vh;
+        gap: 3vh;
         /* border: 1px solid red; */
         /* background-color: #f00; */
     }
@@ -519,7 +494,14 @@
         text-align: right;
         /* padding-left: 5px;
         padding-right: 5px; */
-        background: #00f6;
+        /* background: #00f6; */
+    }
+    itemmeta {
+        display:block;
+        position:relative; 
+        background:#F005; 
+        height:100%; 
+        width:30%;
     }
     layer {
         position: absolute;
@@ -527,6 +509,8 @@
         height:100%;
         width:100%;
         z-index:0;
+        display:flex;
+        align-items: center;
         /* background: red; */
     }
     layer[name="qtylayer"] {
@@ -538,6 +522,7 @@
         background-color: #f054;
         /* outline:none; */
         /* height: 40px; */
+        color: transparent;
         text-align: left;
         font-weight: 500;
         font-size: 12px;
@@ -545,22 +530,21 @@
         /* color: #bbb; */
         /* visibility: hidden; */
         /* visibility: hidden; */
-        /* opacity: 0; */
+        opacity: 1;
         transition: flex-basis .3s ease;
         width:100%;
         height:100%;
+        
         /* width: 0px; */
         /* flex: 0px 0 1; */
-        /* background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>') no-repeat;
-        background-position: right 0px top 50%; */
+        background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>') no-repeat;
+        background-position: right 0px top 50%;
     }
     item { 
         overflow:visible;
-        margin-left:3px;
-        margin-right: 3px;
+        /* margin-left:-10px; */
+        /* margin-right: 3px; */
         display: block;
-        outline-color: #777;
-        transition: outline-color .25s ease-out ;
     }
     item:nth-child(even) { background: #7773 }
     footer {
