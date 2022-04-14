@@ -310,11 +310,11 @@
     <!-- <br/> -->
     <!-- <div style="background-color: #f001; border-radius: 8px; box-shadow: inset 0px 0px 1px #0007;"> -->
     <list bind:this={refs.list}>
-        <List dense style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible;">
+        <List dense style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible; background: #0f00">
             {#each options as item, i (item.name)}
-                <item style="width:100%;">
+                <item>
                     <Item _on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}
-                        style="display:flex; justify-content: space-between; width: calc( 100% - 15px );"
+                        style="display:flex; justify-content: space-between; width: calc( 100% - 33px );"
                     >
                         <div on:click={(e) => handleOptionClick(e, item)}>
                             <input 
@@ -328,36 +328,33 @@
                             />
                         </div>
                         <itemmeta>
-                            <layer>
-                                <select name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}
-                                    on:change={(e) =>{ 
-                                        console.log('onchange')
-                                        e.target.parentElement.style.zIndex = 0
-                                    }}
-                                >
-                                    <!-- <option value="" disabled>[unit]</option> -->
-                                    {#each units as unit}
-                                        <option value={unit}>{unit}</option>
-                                    {/each}
-                                </select>
-                            </layer>
-                            <layer name="qtylayer">
-                                <input 
-                                    name="qty"
-                                    bind:this={refs.qty}
-                                    bind:value={item.qty}
-                                    type="tel"
-                                    step="1"
-                                    min="0"
-                                    max="99"
-                                    _on:keypress={handleQtyKeyPress}
-                                    on:click={handleQtyFocus} 
-                                    _on:blur={handleQtyBlur} 
-                                    on:dblclick={(e) => handleQtyDblClick(e,item)} 
-                                >
-                                {item.unit}
-                            </layer>
-                            </itemmeta>
+                            {#if option === item || item.unit.length}
+                            <select name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}
+                                on:change={(e) =>{ 
+                                    console.log('onchange')
+                                    e.target.parentElement.style.zIndex = 0
+                                }}
+                            >
+                                <!-- <option value="" disabled>[unit]</option> -->
+                                {#each units as unit}
+                                    <option value={unit}>{unit}</option>
+                                {/each}
+                            </select>
+                            {/if}
+                            <input 
+                                name="qty"
+                                bind:this={refs.qty}
+                                bind:value={item.qty}
+                                type="tel"
+                                step="1"
+                                min="0"
+                                max="99"
+                                _on:keypress={handleQtyKeyPress}
+                                on:click={handleQtyFocus} 
+                                _on:blur={handleQtyBlur} 
+                                on:dblclick={(e) => handleQtyDblClick(e,item)} 
+                            >
+                        </itemmeta>
                     </Item>
                 </item>
             {/each}
@@ -489,41 +486,28 @@
         color:black;
     }
     input[name="qty"] {
-        width: 100%;
-        height: 100%;
-        text-align: right;
+        width: 40%;
+        /* height: 100%; */
+        text-align: center;
         /* padding-left: 5px;
         padding-right: 5px; */
         /* background: #00f6; */
     }
     itemmeta {
-        display:block;
-        position:relative; 
-        background:#F005; 
-        height:100%; 
-        width:30%;
-    }
-    layer {
-        position: absolute;
-        top:0;
-        height:100%;
-        width:100%;
-        z-index:0;
         display:flex;
-        align-items: center;
-        /* background: red; */
-    }
-    layer[name="qtylayer"] {
-        z-index:1;
+        /* background:#F005;  */
+        justify-content: flex-end;
+        /* height:100%;  */
+        width:30%;
     }
     select {
         appearance: none;
         border: none;
-        background-color: #f054;
+        background: none;
         /* outline:none; */
         /* height: 40px; */
-        color: transparent;
-        text-align: left;
+        color: orange;
+        text-align: center;
         font-weight: 500;
         font-size: 12px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -532,13 +516,13 @@
         /* visibility: hidden; */
         opacity: 1;
         transition: flex-basis .3s ease;
-        width:100%;
-        height:100%;
+        width:60%;
+        /* height:100%; */
         
         /* width: 0px; */
         /* flex: 0px 0 1; */
-        background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>') no-repeat;
-        background-position: right 0px top 50%;
+        /* background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>') no-repeat;
+        background-position: right 0px top 50%; */
     }
     item { 
         overflow:visible;
