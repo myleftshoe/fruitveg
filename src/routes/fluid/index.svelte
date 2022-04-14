@@ -287,20 +287,18 @@
         <List style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible; background: #0f00">
             {#each options as item, i (item.name)}
                 <item>
-                    <Item _on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}
+                    <Item on:SMUI:action={(e) => handleOptionClick(e, item)} activated={option === item}
                         style="display:flex; justify-content: space-between; width: calc( 100% - 33px );"
                     >
-                        <name on:click={(e) => handleOptionClick(e, item)}>
-                            <input 
-                                disabled={option !== item}
-                                name="name" 
-                                type="text"
-                                placeholder="type..."
-                                autocapitalize="none"
-                                bind:value={item.name} 
-                                style={`${option === item && "pointer-events: auto;"}`}
-                            />
-                        </name>
+                        <input 
+                            disabled={option !== item}
+                            name="name" 
+                            type="text"
+                            placeholder="type..."
+                            autocapitalize="none"
+                            bind:value={item.name} 
+                            style={`${option === item && "pointer-events: auto;"}`}
+                        />
                         <itemmeta>
                             {#if option === item || item.unit.length}
                                 <select transition:fade name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}>
@@ -428,10 +426,6 @@
         width: 40%;
         text-align: center;
     }
-    name {
-        width:67%;
-        /* background-color: #00f; */
-    }
     itemmeta {
         display:flex;
         justify-content: flex-end;
@@ -445,7 +439,7 @@
         border: none;
         background: none;
         color: teal;
-        text-align: center;
+        text-align: right;
         font-weight: 500;
         font-size: 12px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
