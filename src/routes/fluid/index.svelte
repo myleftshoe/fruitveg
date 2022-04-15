@@ -57,20 +57,6 @@
     let items = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
 
     async function add() {
-        // if (option.name.length < 3) return
-        // if (option.name.trim() === '') {
-        //     refs.name.select()
-        //     return
-        // }
-        // if (option.qty === 0) {
-        //     option.qty = '0'
-        //     return
-        // }
-        // if (!option.qty) {
-        //     option.qty = ''
-        //     // refs.qty.select()
-        //     return
-        // }
         console.log(name)
 
         const index = items.findIndex(item => item.name === name)
