@@ -337,7 +337,7 @@
         border: none;
         margin: 0px;
         padding:0;
-        outline-offset: 0px;
+        outline-offset: 2px;
         font-size: 16px;
         font-family: monospace;
     }
