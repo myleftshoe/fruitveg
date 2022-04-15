@@ -200,7 +200,7 @@
     </row>
     <list bind:this={refs.list}>
         <List style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible; background: #0f00">
-            {#each options as item, i (item.name)}
+            {#each options as item}
                 <item>
                     <Item on:SMUI:action={(e) => handleItemClick(e, item)} activated={option === item}
                         style="display:flex; justify-content: space-between; width: calc( 100% - 33px ); gap:10px;"
