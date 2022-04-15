@@ -139,20 +139,6 @@
         }
     }
     
-    async function handleQtyBlur(e) {
-        return
-        if (!option.qty) return
-        const index = items.findIndex((item) => item.name === option.name)
-        if (index < 0) {
-            option = { name, qty: option.qty, unit: '' }
-            items = [ ...items, option]
-        }
-        else {
-            items[index] = option
-            items = [...items]
-        }
-    }
-
     async function handleItemClick(e, item) {
         console.log('handleItemClick', item)
         if (item === option ) return
@@ -244,7 +230,6 @@
                                 min="0"
                                 max="99"
                                 on:keypress={(e) => handleQtyKeyPress(e, item)}
-                                on:blur={handleQtyBlur} 
                             >
                         </itemmeta>
                     </Item>
