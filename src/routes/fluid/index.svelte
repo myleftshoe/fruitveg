@@ -235,7 +235,7 @@
                     </Item>
                 </item>
             {/each}
-            {#if !items.find(withQtys)}
+            {#if !items.find(withQtys) && !options.length && !name.length}
                 <p transition:fade style="height: 65vh; color:black; text-align: center;">
                     <code><u>magic words:</u></code><br><br>
                     {#each [...related.keys()] as key}
