@@ -154,7 +154,7 @@
     }
 
     async function handleItemClick(e, item) {
-        console.log('handleOptionClick', item)
+        console.log('handleItemClick', item)
         if (item === option ) return
         option = item
         const qtyElement = e.target.parentElement.querySelector('[name="qty"]')
@@ -223,14 +223,13 @@
                             disabled={option !== item}
                             name="name" 
                             type="text"
-                            placeholder="type..."
                             autocapitalize="none"
                             bind:value={item.name} 
                             style={`${option.name === item.name && "pointer-events: auto; color: red;"}`}
                         />
                         <itemmeta>
                             {#if option === item || item.unit.length}
-                                <select in:fade name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}>
+                                <select in:fade name="unit" id="unit" bind:value={item.unit}>
                                     <option value="" disabled>[unit]</option>
                                     {#each units as unit}
                                         <option value={unit}>{unit}</option>
@@ -239,7 +238,6 @@
                             {/if}
                             <input 
                                 name="qty"
-                                bind:this={refs.qty}
                                 bind:value={item.qty}
                                 type="tel"
                                 step="1"
