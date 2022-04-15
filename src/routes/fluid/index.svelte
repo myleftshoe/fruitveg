@@ -123,8 +123,8 @@
         name = ''
     }
 
-    async function handleQtyKeyPress(e) {
-        console.log('handleQtyKeyPress', e.key, e.code)
+    async function handleQtyKeyPress(e, item) {
+        console.log('handleQtyKeyPress', e.key, e.code, e.target.value)
         if (['Enter'].includes(e.key)) {
             e.preventDefault()
             refs.name.focus()
@@ -145,9 +145,9 @@
             const frac = convert[value]
             if (frac && ['0','1'].includes(e.key)) {
                 e.preventDefault()
-                option.qty = frac
-                option.unit = convert[e.key] || option.unit
-                option = { ...option }
+                item.qty = frac
+                item.unit = convert[e.key] || item.unit
+                items = [ ...items ]
                 return
             }
         }
@@ -231,7 +231,7 @@
             {#each options as item, i (item.name)}
                 <item>
                     <Item on:SMUI:action={(e) => handleItemClick(e, item)} activated={option === item}
-                        style="display:flex; justify-content: space-between; width: calc( 100% - 33px );"
+                        style="display:flex; justify-content: space-between; width: calc( 100% - 33px ); gap:10px;"
                     >
                         <input 
                             disabled={option !== item}
@@ -240,11 +240,11 @@
                             placeholder="type..."
                             autocapitalize="none"
                             bind:value={item.name} 
-                            style={`${option.name === item.name && "pointer-events: auto; color:green;"}`}
+                            style={`${option.name === item.name && "pointer-events: auto; color: red;"}`}
                         />
                         <itemmeta>
                             {#if option === item || item.unit.length}
-                                <select transition:slide name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}>
+                                <select in:fade name="unit" id="unit" bind:this={refs.unit} bind:value={item.unit}>
                                     <option value="" disabled>[unit]</option>
                                     {#each units as unit}
                                         <option value={unit}>{unit}</option>
@@ -259,7 +259,7 @@
                                 step="1"
                                 min="0"
                                 max="99"
-                                on:keypress={handleQtyKeyPress}
+                                on:keypress={(e) => handleQtyKeyPress(e, item)}
                                 on:blur={handleQtyBlur} 
                             >
                         </itemmeta>
@@ -336,7 +336,8 @@
         background: none;
         border: none;
         margin: 0px;
-        outline-offset: 4px;
+        padding:0;
+        outline-offset: 0px;
         font-size: 16px;
         font-family: monospace;
     }
@@ -352,8 +353,8 @@
         text-overflow: clip;
         text-transform: lowercase;
         pointer-events: none;
+        width: 67%;
         /* background: #f003; */
-        width:100%;
     }
     input[name="name"]:disabled {
         color:black;
@@ -364,8 +365,8 @@
         opacity:1;
     }
     input[name="qty"] {
-        outline: none;
-        width: 40%;
+        /* outline: none; */
+        width: 30%;
         text-align: center;
     }
     itemmeta {
@@ -380,8 +381,8 @@
         appearance: none;
         border: none;
         background: none;
-        color: teal;
-        text-align: right;
+        color: gray;
+        text-align: center;
         font-weight: 500;
         font-size: 12px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
