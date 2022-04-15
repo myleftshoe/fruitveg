@@ -235,7 +235,21 @@
                     </Item>
                 </item>
             {/each}
-            <p style="height: 65vh;"></p>
+            {#if !items.find(withQtys)}
+                <p transition:fade style="height: 65vh; color:black; text-align: center;">
+                    <code><u>magic words:</u></code><br><br>
+                    {#each [...related.keys()] as key}
+                        <code>{key}</code><br>
+                    {/each}
+                    <br>
+                    <code><u>magic numbers:</u></code><br><br>
+                    <code>120 = 1/2 bin</code><br>
+                    <code>130 = 1/3 bin</code><br>
+                    <code>230 = 2/3 bin</code><br>
+                    <code>140 = 1/4 bin</code><br>
+                    <code>340 = 3/4 bin</code><br>
+                </p>
+            {/if}
         </List>
     </list>
 </main>
@@ -348,7 +362,7 @@
         color: gray;
         text-align: center;
         font-weight: 500;
-        font-size: 12px;
+        font-size: 16px;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         opacity: 1;
         transition: flex-basis .3s ease;
