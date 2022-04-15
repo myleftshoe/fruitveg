@@ -1,4 +1,14 @@
 <script context="module">
+    import { browser } from '$app/env';
+    import { tick } from 'svelte'
+    import { fade } from 'svelte/transition'
+    import List, { Item, Meta } from '@smui/list'
+    import Menu from '@smui/menu'
+    import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
+    import Button from '@smui/button'
+    import IconButton from '@smui/icon-button'
+    import clipboard from '../../helpers/clipboard.js'
+
     const localStorageId = 'fruitveg-fluid'
     const units = [ '[none]', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
     const related = new Map([
@@ -15,18 +25,7 @@
 </script>
 
 <script>
-    import { browser } from '$app/env';
-    import { tick } from 'svelte'
-    import { slide, blur, scale, fade , fly } from 'svelte/transition'
-	import { quintOut } from 'svelte/easing'
-    import { flip } from 'svelte/animate'
-    import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
-    import Menu from '@smui/menu'
-    import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
-    import Button from '@smui/button'
-    import IconButton from '@smui/icon-button'
-    import Fab, { Icon } from '@smui/fab'
-    import clipboard from '../../helpers/clipboard.js'
+
 
     import products from '$lib/productStore'
 
@@ -60,7 +59,7 @@
 
     let items = browser && JSON.parse(localStorage.getItem(localStorageId)) || []
 
-    function add() {
+    async function add() {
         // if (option.name.length < 3) return
         // if (option.name.trim() === '') {
         //     refs.name.select()
@@ -91,6 +90,11 @@
 
         option = { name, qty: '', unit: '' }
         // refs.name.focus()
+        await tick() 
+        const qtyElement = [...refs.list.querySelectorAll('[name="qty"]')].slice(-1)[0]
+        console.log(qtyElement)
+        qtyElement.focus()
+
     }
 
     function remove() {
@@ -110,11 +114,6 @@
     async function handleSearchKeyPress(e) {
         if (e.key === 'Enter') {
             add()
-            await tick() 
-            const qtyElement = [...refs.list.querySelectorAll('[name="qty"]')].slice(-1)[0]
-            console.log(qtyElement)
-            qtyElement.focus()
-
         }
     }
     
@@ -224,7 +223,11 @@
             on:keypress={handleSearchKeyPress}
             on:change={() => console.log('onchange')}
         />
-        <Button disabled={name.length < 3} on:click={add}>add</Button>
+        {#if name.length}
+            <IconButton class="material-icons" style="color: white; opacity: {name.length < 3 ? .3 : 1};" disabled={name.length < 3} on:click={add}>add</IconButton>
+        {:else}
+            <IconButton class="material-icons" style="color: white;" on:click={handleFabClick}>more_vert</IconButton>
+        {/if}
     </row>
     <list bind:this={refs.list}>
         <List style="height: calc( 100vh - 90px ); overflow-y: scroll; overflow-x: visible; background: #0f00">
@@ -272,11 +275,6 @@
 </main>
 <footer>
 </footer>
-<fab>
-    <Fab on:click={handleFabClick}>
-        <Icon class="material-icons">menu</Icon>
-    </Fab>
-</fab>
 <Dialog bind:open={complete} on:SMUIDialog:closed={null} scrimClickAction={() => complete = false} escapeKeyAction="" >
     <menuDialog>
         <Title>Fruit & Veg Stocktake</Title>
@@ -405,11 +403,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    fab {
-        position: fixed;
-        right: 32px;
-        bottom: 32px;
     }
     menuDialog {
         min-height: 50vh;
