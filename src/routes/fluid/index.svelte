@@ -25,14 +25,11 @@
 </script>
 
 <script>
-
-
     import products from '$lib/productStore'
 
     const refs = { }
 
     let name = ''
-
     let complete = false
     let copied = false
     let warn = false
