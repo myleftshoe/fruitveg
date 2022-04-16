@@ -345,6 +345,8 @@
     }
     input[name="qty"] {
         /* outline: none; */
+        color: #777;
+        font-weight: bold;
         width: 30%;
         text-align: center;
     }
