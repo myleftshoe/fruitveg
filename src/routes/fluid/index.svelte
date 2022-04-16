@@ -74,7 +74,7 @@
         option = { name, qty: '', unit: '' }
         // refs.name.focus()
         await tick() 
-        const qtyElement = [...refs.list.querySelectorAll('[name="qty"]')].slice(-1)[0]
+        const qtyElement = refs.list.querySelector(`[id="${name}"]`)
         console.log(qtyElement)
         qtyElement.focus()
 
@@ -224,6 +224,7 @@
                             {/if}
                             <input 
                                 name="qty"
+                                id={item.name}
                                 bind:value={item.qty}
                                 type="tel"
                                 step="1"
