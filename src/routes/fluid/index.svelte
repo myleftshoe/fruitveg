@@ -10,7 +10,7 @@
     import clipboard from '../../helpers/clipboard.js'
 
     const localStorageId = 'fruitveg-fluid2'
-    const units = [ '[none]', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
+    const units = [ '', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
     const related = new Map([
         ['out', 'potato,tomato,garlic,onion,pumpkin,banana,avo'], 
         ['leafy', 'kale,silver,chard'], 
