@@ -404,4 +404,9 @@
     p {
         color: transparent;
     }
+    message { 
+        color: red;
+        font-family: monospace;
+        font-weight: bold;
+    }
 </style>
