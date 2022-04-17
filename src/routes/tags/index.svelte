@@ -221,7 +221,7 @@
     }
     li {
         display: inline-flex;
-        gap: 4px;
+        gap: 5px;
         color:white;
         font-weight: 600;
     }
@@ -260,7 +260,7 @@
         width:100vw;
         text-align: center;
         white-space: nowrap;
-        transform: translateY(-30px);
+        transform: translateY(-45px);
     }
     :global(html) { 
         background-color: #444; 
