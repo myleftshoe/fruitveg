@@ -10,7 +10,7 @@
 </tag>
 <style>
     tag {
-        border: 8px solid #999;
+        border: 5px solid #999;
         border-radius: 7px;
         background-color: white;
         cursor: pointer;
@@ -18,11 +18,11 @@
         justify-content: space-around;
         align-items: center;
         flex-direction: column;
-        padding: 5px;
+        padding: 2px;
         height: 10vw;
         width: 17vw;
-        font-size: 14px;
-        font-family: arial;
+        font-size: 12px;
+        font-family: monospace;
         font-weight: 600;
         text-transform: uppercase;
         overflow: hidden;
@@ -37,11 +37,11 @@
         align-items: center;
         justify-content: center;
         color: #000;
-        line-height: 14px;
+        line-height: 12px;
     }
     price {
         color: red;
         font-size: x-large;
-        font-family: sans;
+        font-family: monospace;
     }
 </style>
