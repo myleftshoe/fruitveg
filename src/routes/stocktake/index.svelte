@@ -1,6 +1,6 @@
 <script context="module">
     import { browser } from '$app/env';
-    import 'carbon-components-svelte/css/g100.css'
+    // import 'carbon-components-svelte/css/g100.css'
     import Dialog, { Header, Title, Content, Actions } from '@smui/dialog'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'

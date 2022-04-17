@@ -29,7 +29,6 @@
     "@smui/top-app-bar": "^6.0.0-beta.15",
     "@sveltejs/adapter-auto": "1.0.0-next.29",
     "@sveltejs/kit": "next",
-    "carbon-components-svelte": "^0.61.1",
     "smui-theme": "^6.0.0-beta.15",
     "svelte": "^3.44.0"
   },

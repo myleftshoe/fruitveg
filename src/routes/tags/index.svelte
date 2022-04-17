@@ -167,57 +167,6 @@
         selectedRow = null
     }
 </script>
-
-<style lang="scss">
-    .hovering {
-        border-color: orange;
-    }
-    .item {
-        display: inline; /* required for flip to work */
-    }
-    li {
-        display: inline-flex;
-    }
-    ul {
-        /* display: flex; /* required for drag & drop to work when .item display is inline */
-        display: flex;
-        /* height: 40px; needed when empty */
-        padding: 20px;
-        padding-top: 40px;
-        gap: 20px;
-        overflow-x:scroll;
-        background: #7774;
-    }
-    main {
-        user-select: none;
-        font-size: 16px;
-        color: #000f;
-        font-family: arial;
-        font-weight: bold;
-    }
-    float {
-        /* display: none; */
-        position: absolute;
-        top: 50%;
-        left:25%;
-        box-shadow: 8px 8px 16px #000d;
-        border-radius: 7px;
-    }
-    groupname {
-        color: #fff; 
-        position: sticky; 
-        left: 0px;
-        text-align: center;
-        white-space: nowrap;
-        transform: translateY(-20px);
-    }
-    :global(html) { 
-        background-color: #333; 
-    }
-    :global(body) { 
-        background-color: transparent; 
-    }
-</style>
 <svelte:window bind:innerWidth={width} bind:innerHeight={height}/>
 <main ondragover="return false" on:drop={remove}  style={`${width < height && "display: none;"}`}>
     {#each tagGroups as group, groupIndex (group.name)}
@@ -261,3 +210,55 @@
 <!-- {#if open} -->
     <ProductDrawer bind:open bind:selectedRow/>
 {/if}
+<style lang="scss">
+    .hovering {
+        border-color: orange;
+    }
+    .item {
+        display: inline; /* required for flip to work */
+    }
+    li {
+        display: inline-flex;
+    }
+    ul {
+        margin:0;
+        /* display: flex; /* required for drag & drop to work when .item display is inline */
+        display: flex;
+        /* height: 40px; needed when empty */
+        padding: 20px;
+        padding-top: 40px;
+        gap: 20px;
+        overflow-x:scroll;
+        background: #7774;
+    }
+    main {
+        user-select: none;
+        font-size: 16px;
+        color: #000f;
+        font-family: arial;
+        font-weight: bold;
+    }
+    float {
+        /* display: none; */
+        position: absolute;
+        top: 50%;
+        left:25%;
+        box-shadow: 8px 8px 16px #000d;
+        border-radius: 7px;
+    }
+    groupname {
+        color: #fff; 
+        position: absolute;
+        left: 0px;
+        width:100vw;
+        text-align: center;
+        white-space: nowrap;
+        transform: translateY(-30px);
+    }
+    :global(html) { 
+        background-color: #333; 
+    }
+    :global(body) { 
+        background-color: transparent; 
+    }
+</style>

@@ -1,11 +1,11 @@
 <script>
     import { onMount } from 'svelte'
     import { fade as transition } from 'svelte/transition'
-    import 'carbon-components-svelte/css/g100.css'
+    // import 'carbon-components-svelte/css/g100.css'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import TopAppBar from '@smui/top-app-bar';
-    import { Search } from 'carbon-components-svelte'
+    // import { Search } from 'carbon-components-svelte'
     import fuzzy from '../helpers/fuzzy.js'
     import getheaders from '../helpers/headers.js'
     import products from './productStore'
@@ -30,7 +30,7 @@
 </script>
 <container on:click={() => open = false}>
     <TopAppBar>
-        <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/>
+        <!-- <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/> -->
     </TopAppBar>
     <p></p>
     <main transition>

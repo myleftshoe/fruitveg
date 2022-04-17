@@ -1,6 +1,6 @@
 <script context='module'>
-    import 'carbon-components-svelte/css/white.css'
-    import { TextInput, Button } from 'carbon-components-svelte'
+    // import 'carbon-components-svelte/css/white.css'
+    // import { TextInput, Button } from 'carbon-components-svelte'
 </script>
 <script>
     export let product = {}
@@ -9,8 +9,9 @@
 <form method="post" action={`/products/${product.ItemCode}?_method=PUT`}>
     {#each Object.entries(product) as [key, value]}
         {#if fields.includes(key)}
-            <TextInput type="text" id={key} name={key} labelText={key} {value}/>
+            <!-- <TextInput type="text" id={key} name={key} labelText={key} {value}/> -->
+            <input type="text" id={key} name={key} labelText={key} {value}/>
         {/if}
     {/each}
-    <Button type="submit">SAVE CHANGES</Button>
+    <button type="submit">SAVE CHANGES</button>
 </form>
