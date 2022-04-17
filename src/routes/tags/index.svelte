@@ -9,13 +9,6 @@
 
     import ProductDrawer from '$lib/productDrawer.svelte'
     
-    /* not working tags
-
-    AC233FD0A100 
-
-    */
-
-
     let tagGroups = [
         {
             name: 'Main Fridge', // 19
@@ -91,7 +84,9 @@
         }
     ]
 
-    const macs = tagGroups.map(({tags}) => tags).flat().map(({macAddress}) => macAddress)
+    const pluck = prop => obj => obj[prop]
+
+    const macs = tagGroups.map(pluck("tags")).flat().map(pluck("macAddress"))
 
     setMacs(macs)
 

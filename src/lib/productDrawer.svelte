@@ -1,11 +1,9 @@
 <script>
     import { onMount } from 'svelte'
     import { fade as transition } from 'svelte/transition'
-    // import 'carbon-components-svelte/css/g100.css'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
-    import TopAppBar from '@smui/top-app-bar';
-    // import { Search } from 'carbon-components-svelte'
+    import IconButton from '@smui/icon-button'
     import fuzzy from '../helpers/fuzzy.js'
     import getheaders from '../helpers/headers.js'
     import products from './productStore'
@@ -29,10 +27,10 @@
     $: rows = $products && fuzzy($products, value, ['label4', 'label5', 'Description', 'id'])
 </script>
 <container on:click={() => open = false}>
-    <TopAppBar>
-        <!-- <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/> -->
-    </TopAppBar>
-    <p></p>
+    <row>
+        <IconButton class="material-icons" style="color: white;" on:click={() => {}}>search</IconButton>
+        <input name="search" bind:value>
+    </row>
     <main transition>
         <List twoLine>
             {#each rows as row}
@@ -70,7 +68,40 @@
         left:0px;
         width: 100vw;
         height: 100vh;
-        background-color: #0007;
         overflow: auto;
+    }
+    row {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background: #000c;
+        border-radius: 0px;
+        position: relative;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0vh;
+        /* margin:-10px; */
+        box-shadow: 2px 4px 4px #0007;
+        padding: 10px 5px 10px 20px; 
+        transition: top .3s ease-out;
+        z-index: 1;
+    }
+    input {
+        background: none;
+        border: none;
+        margin: 0px;
+        padding:0;
+        outline-offset: 3px;
+        font-size: 16px;
+        font-family: monospace;
+        color:white;
+    }
+    input[name="search"] {
+        background: none;
+        border: none;
+        padding: 8px;
+        font-size: 20px;
+        font-weight: bold;
+        color: orange;
     }
 </style>
