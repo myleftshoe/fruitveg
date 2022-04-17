@@ -106,6 +106,7 @@
 
     async function remove(e) {
         e.preventDefault()
+        floatRef.style.opacity = 1
         const json = e.dataTransfer.getData('text/plain')
         float = JSON.parse(json)
         console.log(float)
@@ -129,6 +130,7 @@
         console.log(e)
         e.preventDefault()
         e.stopPropagation()
+        floatRef.style.opacity = 1
 
         const data = e.dataTransfer.getData('text/plain')
         const product = JSON.parse(data) 
@@ -147,6 +149,7 @@
         hoveringOverBasket = null
         // tags.set(toTag.macAddress, { ...toTag })
         // tags = new Map(tags)
+        floatRef.style.opacity = 1
     }
     // console.log(tagGroups)
     // $: otags = Array.from(tags).map(([k, v]) => ({ k, v }))
@@ -194,7 +197,7 @@
     draggable={true}
     on:dragstart={e => dragStart(e, JSON.stringify(float))}
     on:click={() => open = true}
-    on:drag={e => e.target.style.opacity = 0 }
+    on:drag={e => floatRef.style.opacity = 0 }
 >
     <Tag product={float} 
         style="border: 10px solid red; background-color: orange;"
