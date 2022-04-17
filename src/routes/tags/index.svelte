@@ -110,8 +110,6 @@
         const json = e.dataTransfer.getData('text/plain')
         float = JSON.parse(json)
         console.log(float)
-        floatRef.style.top = '100px'
-        floatRef.style.backgroundColor = '#00f'
         await tick()
         console.log('remove', float, e.target)
         hoveringOverBasket = null
@@ -200,7 +198,7 @@
     on:drag={e => floatRef.style.opacity = 0 }
 >
     <Tag product={float} 
-        style="border: 10px solid red; background-color: orange;"
+        style="background-color: orange;"
     />
         <!-- <Icon class="material-icons">add</Icon> -->
 </float>
@@ -238,11 +236,12 @@
     }
     float {
         /* display: none; */
+        opacity: 0;
         position: absolute;
         top: 50%;
         left:25%;
         box-shadow: 8px 8px 16px #000d;
-        border-radius: 7px;
+        border-radius: 5px;
     }
     groupname {
         color: #fff; 
