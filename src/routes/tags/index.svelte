@@ -181,6 +181,7 @@
                             on:dragstart={e => dragStart(e, JSON.stringify($tags.get(tag.macAddress)))}
                             on:drop={e => drop(e, tag)}
                         >
+                            <sup>{tagIndex + 1}</sup>
                             <Tag product={$tags.get(tag.macAddress)} on:click={() => open = true } />
                         </li>
                     </div>
@@ -202,19 +203,27 @@
     />
         <!-- <Icon class="material-icons">add</Icon> -->
 </float>
-{#if width < height}
-<!-- {#if open} -->
-    <ProductDrawer bind:open bind:selectedRow/>
+<!-- {#if width < height} -->
+{#if open}
+    <ProductDrawer bind:open bind:selectedRow />
 {/if}
 <style lang="scss">
     .hovering {
         border-color: orange;
     }
     .item {
-        display: inline; /* required for flip to work */
+        /* display: inline; /* required for flip to work */
+        display: flex;
+        gap: 4px;
+    }
+    code { 
+        color: white;
     }
     li {
         display: inline-flex;
+        gap: 4px;
+        color:white;
+        font-weight: 600;
     }
     ul {
         margin:0;
@@ -222,10 +231,10 @@
         display: flex;
         /* height: 40px; needed when empty */
         padding: 20px;
-        padding-top: 40px;
+        padding-top: 70px;
+        padding-bottom: 20px;
         gap: 20px;
         overflow-x:scroll;
-        background: #7774;
     }
     main {
         user-select: none;
@@ -233,6 +242,7 @@
         color: #000f;
         font-family: arial;
         font-weight: bold;
+        padding-bottom: 20px;
     }
     float {
         /* display: none; */
@@ -253,7 +263,7 @@
         transform: translateY(-30px);
     }
     :global(html) { 
-        background-color: #333; 
+        background-color: #444; 
     }
     :global(body) { 
         background-color: transparent; 

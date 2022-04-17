@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte'
+    import { slide } from 'svelte/transition'
     import { fade as transition } from 'svelte/transition'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
@@ -26,7 +27,7 @@
     // $: headers = getheaders(products)
     $: rows = $products && fuzzy($products, value, ['label4', 'label5', 'Description', 'id'])
 </script>
-<container on:click={() => open = false}>
+<container transition:slide on:click={() => open = false}>
     <row>
         <IconButton class="material-icons" style="color: white;" on:click={() => {}}>search</IconButton>
         <input name="search" bind:value>
@@ -66,9 +67,12 @@
         position: fixed;
         top:0px;
         left:0px;
-        width: 100vw;
+        width: 50vw;
         height: 100vh;
         overflow: auto;
+        box-shadow: 16px 16px 16px #000a;
+        border-right: 1px solid black;
+        z-index:1;
     }
     row {
         display: flex;
@@ -76,6 +80,7 @@
         justify-content: space-around;
         background: #000c;
         border-radius: 0px;
+        border-bottom: 1px solid #000f;
         position: relative;
         position: sticky;
         position: -webkit-sticky;
