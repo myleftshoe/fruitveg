@@ -4,7 +4,7 @@
     import { slide } from 'svelte/transition'
     import { tick } from 'svelte'
     import IconButton, { Icon } from '@smui/icon-button';
-    import tags from './tagStore'
+    import tags, { setMacs } from './tagStore'
     import Tag from './tag.svelte'
 
     import ProductDrawer from '$lib/productDrawer.svelte'
@@ -65,7 +65,7 @@
                 { macAddress: 'AC233FD0A109', id: '1675' }, // Packham
                 { macAddress: 'AC233FD0A30E', id: '1667' }, // White Nect
                 { macAddress: 'AC233FD0A11C', id: '7420' }, // plum
-                { macAddress: '????????????', id: '1674' },
+                { macAddress: 'AC233FD0A2A2', id: '1674' },
                 { macAddress: 'AC233FD0A132', id: '????' }, // Ruby Grapefruit
                 { macAddress: 'AC233FD09A82', id: '1773' }, // round
                 { macAddress: 'AC233FD0A2B1', id: '1773' }, // round
@@ -91,6 +91,9 @@
         }
     ]
 
+    const macs = tagGroups.map(({tags}) => tags).flat().map(({macAddress}) => macAddress)
+
+    setMacs(macs)
 
     let hoveringOverBasket
     let float = 'id,ADD'
@@ -179,8 +182,11 @@
         /* display: flex; /* required for drag & drop to work when .item display is inline */
         display: flex;
         /* height: 40px; needed when empty */
-        padding: 0;
+        padding: 20px;
+        padding-top: 40px;
         gap: 20px;
+        overflow-x:scroll;
+        background: #7774;
     }
     main {
         user-select: none;
@@ -197,6 +203,14 @@
         box-shadow: 8px 8px 16px #000d;
         border-radius: 7px;
     }
+    groupname {
+        color: #fff; 
+        position: sticky; 
+        left: 0px;
+        text-align: center;
+        white-space: nowrap;
+        transform: translateY(-20px);
+    }
     :global(html) { 
         background-color: #333; 
     }
@@ -208,13 +222,13 @@
 <main ondragover="return false" on:drop={remove}  style={`${width < height && "display: none;"}`}>
     {#each tagGroups as group, groupIndex (group.name)}
         <div animate:flip>
-            <p style="color: #fff; margin-top: 10vh;">{group.name}</p>
             <ul
                 class:hovering={hoveringOverBasket === group.name}
                 on:dragenter={() => (hoveringOverBasket = group.name)}
                 on:dragleave={() => (hoveringOverBasket = null)}
                 ondragover="return false"
             >
+                <groupname><code>{group.name}</code></groupname>
                 {#each group.tags as tag, tagIndex (tag.macAddress)}
                     <div class="item" animate:flip={{ duration: 300 }}>
                         <li
