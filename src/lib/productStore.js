@@ -1,6 +1,7 @@
 import { readable } from 'svelte/store'
 import minew from '../datasources/minew.js'
 import translate from '../translations.js'
+import { alpha } from '$lib/sort'
 
 
 export default readable([], (set) => {
@@ -26,7 +27,7 @@ export default readable([], (set) => {
                 status: translate(row.status) || row.status,
             }))
             .filter(row => row.status === 'bound')
-            .sort((a, b) => a.name.localeCompare(b.name))
+            .sort(alpha("name"))
     
         // console.table(products)
         set(products)

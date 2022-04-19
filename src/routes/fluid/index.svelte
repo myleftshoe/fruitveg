@@ -8,6 +8,7 @@
     import Button from '@smui/button'
     import IconButton from '@smui/icon-button'
     import clipboard from '../../helpers/clipboard.js'
+    import { alpha } from '$lib/sort'
 
     const localStorageId = 'fruitveg-fluid2'
     const units = [ '', 'bags', 'boxes', 'crates', 'tubs', 'trays', 'bin', 'shelf', 'trolley', 'nets', 'sacks', 'pcs' ]
@@ -35,7 +36,6 @@
     let warn = false
 
     const withQtys = (item) => item.qty?.toString().trim() || '' !== ''
-    const alpha = (prop) => (a, b) => a[prop].localeCompare(b[prop])
 
     async function copyToClipboard() {
         const text = items.filter(withQtys)
