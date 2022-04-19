@@ -1,6 +1,5 @@
 <script>
     // Inspired by https://svelte.dev/repl/810b0f1e16ac4bbd8af8ba25d5e0deff?version=3.4.2.
-    import { flip } from 'svelte/animate'
     import { slide } from 'svelte/transition'
     import { tick } from 'svelte'
     import IconButton, { Icon } from '@smui/icon-button';
@@ -90,7 +89,6 @@
 
     setMacs(macs)
 
-    let hoveringOverBasket
     let float = 'id,ADD'
     let floatRef
 
@@ -112,7 +110,6 @@
         console.log(float)
         await tick()
         console.log('remove', float, e.target)
-        hoveringOverBasket = null
 
         floatRef.style.left = e.clientX + 'px'
         floatRef.style.top = e.clientY + 'px'
@@ -139,12 +136,11 @@
         float = {...toTag}
         console.log({float})
         console.log(JSON.parse(JSON.stringify(toTag)))
-        await bind(toTag.macAddress, product.id)
+        // await bind(toTag.macAddress, product.id)
         // TODO: on success only
         _tags.set(tag.macAddress.toUpperCase(), { ...toTag, ...product })
         tags.update(value => new Map(_tags))
         console.log('dropped', product.id, toTag)
-        hoveringOverBasket = null
         // tags.set(toTag.macAddress, { ...toTag })
         // tags = new Map(tags)
         floatRef.style.opacity = 1
@@ -166,28 +162,19 @@
 <svelte:window bind:innerWidth={width} bind:innerHeight={height}/>
 <main ondragover="return false" on:drop={remove}  style={`${width < height && "display: none;"}`}>
     {#each tagGroups as group, groupIndex (group.name)}
-        <div animate:flip>
-            <ul
-                class:hovering={hoveringOverBasket === group.name}
-                on:dragenter={() => (hoveringOverBasket = group.name)}
-                on:dragleave={() => (hoveringOverBasket = null)}
-                ondragover="return false"
-            >
-                <groupname><code>{group.name}</code></groupname>
-                {#each group.tags as tag, tagIndex (tag.macAddress)}
-                    <div class="item" animate:flip={{ duration: 300 }}>
-                        <li
-                            draggable={true}
-                            on:dragstart={e => dragStart(e, JSON.stringify($tags.get(tag.macAddress)))}
-                            on:drop={e => drop(e, tag)}
-                        >
-                            <sup>{tagIndex + 1}</sup>
-                            <Tag product={$tags.get(tag.macAddress)} on:click={() => open = true } />
-                        </li>
-                    </div>
-                {/each}
-            </ul>
-        </div>
+        <ul>
+            <groupname><code>{group.name}</code></groupname>
+            {#each group.tags as tag, tagIndex (tag.macAddress)}
+                <li
+                    draggable={true}
+                    on:dragstart={e => dragStart(e, JSON.stringify($tags.get(tag.macAddress)))}
+                    on:drop={e => drop(e, tag)}
+                >
+                    <sup>{tagIndex + 1}</sup>
+                    <Tag product={$tags.get(tag.macAddress)} on:click={() => open = true } />
+                </li>
+            {/each}
+        </ul>
     {/each}
     <!-- <button on:click={() => open = !open}>open</button> -->
 </main>
@@ -208,14 +195,6 @@
     <ProductDrawer bind:open bind:selectedRow />
 {/if}
 <style lang="scss">
-    .hovering {
-        border-color: orange;
-    }
-    .item {
-        /* display: inline; /* required for flip to work */
-        display: flex;
-        gap: 4px;
-    }
     code { 
         color: white;
     }
@@ -227,12 +206,9 @@
     }
     ul {
         margin:0;
-        /* display: flex; /* required for drag & drop to work when .item display is inline */
         display: flex;
-        /* height: 40px; needed when empty */
         padding: 20px;
         padding-top: 70px;
-        padding-bottom: 20px;
         gap: 20px;
         overflow-x:scroll;
     }
@@ -245,7 +221,6 @@
         padding-bottom: 20px;
     }
     float {
-        /* display: none; */
         opacity: 0;
         position: absolute;
         top: 50%;
@@ -259,7 +234,6 @@
         left: 0px;
         width:100vw;
         text-align: center;
-        white-space: nowrap;
         transform: translateY(-45px);
     }
     :global(html) { 
