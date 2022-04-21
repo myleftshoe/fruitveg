@@ -2,7 +2,7 @@
     import { tick } from 'svelte'
     import { Pincode, PincodeInput } from 'svelte-pincode'
 
-        export let message = ''
+    export let message = ''
     let value = ''
 
     async function handleComplete() {
