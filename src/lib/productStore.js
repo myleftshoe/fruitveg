@@ -26,7 +26,7 @@ export default readable([], (set) => {
                 label13: row.label13,
                 status: translate(row.status) || row.status,
             }))
-            .filter(row => row.status === 'bound')
+            // .filter(row => row.status === 'bound')
             .sort(alpha("name"))
     
         // console.table(products)

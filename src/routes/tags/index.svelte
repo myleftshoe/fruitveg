@@ -199,8 +199,8 @@
     />
         <!-- <Icon class="material-icons">add</Icon> -->
 </float>
-<!-- {#if width < height} -->
-{#if open}
+{#if width < height || open}
+<!-- {#if open} -->
     <ProductDrawer bind:open bind:selectedRow />
 {/if}
 <style lang="scss">

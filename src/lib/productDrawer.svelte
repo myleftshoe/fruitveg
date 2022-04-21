@@ -20,7 +20,7 @@
         color: active ? 'primary' : 'secondary',
     })
     const metaStyle = { 
-        style : 'display:flex; flex-direction: column; align-items: flex-end;'
+        style : 'display:flex; flex-direction: column; align-items: flex-end; justify-content: center; ',
     }
 
     $: value = value?.toUpperCase?.() ?? '';
@@ -45,8 +45,8 @@
                             <SecondaryText>{row.id}</SecondaryText>
                         </Text>
                         <Meta {...metaStyle}>
-                            <strong>{row.plucode}</strong>
-                            <h4>$ {row.price}</h4>
+                            <sup>{row.plucode}</sup>
+                            <strong>${row.price}</strong>
                             {row.label10 || ''}
                         </Meta>
                     </Item>
@@ -67,7 +67,7 @@
         position: fixed;
         top:0px;
         left:0px;
-        width: 50vw;
+        width: 100vw;
         height: 100vh;
         overflow: auto;
         box-shadow: 16px 16px 16px #000a;
