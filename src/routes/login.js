@@ -12,7 +12,7 @@ export async function post({ params, request }) {
     await wait(5000)
     // ⚠️ CAUTION: Do not store a plain passwords. Use proper hashing and salting.
     // TODO
-    if (pin === AUTHCODE) {
+    if (pin == AUTHCODE) {
         return {
             status: 302,
             headers: {
@@ -35,7 +35,7 @@ export async function post({ params, request }) {
     return {
         status: 401,
         body: {
-            message: 'Incorrect pin' + pin,
+            message: `Incorrect pin ${pin},${AUTHCODE}`,
         },
     };
 
