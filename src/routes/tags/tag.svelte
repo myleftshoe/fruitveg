@@ -1,11 +1,19 @@
 <script>
+    import { blur } from 'svelte/transition'
     export let product = {}
 </script>
 <tag  {...$$restProps} on:click>
-    <product>
-        <div>{product?.label5 || ''}</div>
-        <div>{product?.label4 || ''}</div>
-    </product>
+    {#if !product?.label4?.trim() && !product?.label5?.trim()}
+        <product>
+            <div>loading...</div>
+        </product>
+
+    {:else}
+        <product in:blur>
+            <div>{product?.label5 || ''}</div>
+            <div>{product?.label4 || ''}</div>
+        </product>
+    {/if}
     <price>${product?.label6 || '0'}</price>
 </tag>
 <style>

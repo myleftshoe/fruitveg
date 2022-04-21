@@ -1,13 +1,22 @@
+<script context="module">
+    export async function load({ session }) {
+        if (!session.authenticated) {
+            return {
+                status: 302,
+                redirect: '/login',
+            }
+        }
+        return {}
+    }
+</script>
 <script>
-    // Inspired by https://svelte.dev/repl/810b0f1e16ac4bbd8af8ba25d5e0deff?version=3.4.2.
     import { slide } from 'svelte/transition'
     import { tick } from 'svelte'
     import IconButton, { Icon } from '@smui/icon-button';
     import tags, { setMacs } from './tagStore'
     import Tag from './tag.svelte'
-
     import ProductDrawer from '$lib/productDrawer.svelte'
-    
+
     let tagGroups = [
         {
             name: 'Main Fridge', // 19
