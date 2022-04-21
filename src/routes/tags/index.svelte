@@ -145,7 +145,7 @@
         float = {...toTag}
         console.log({float})
         console.log(JSON.parse(JSON.stringify(toTag)))
-        // await bind(toTag.macAddress, product.id)
+        await bind(toTag.macAddress, product.id)
         // TODO: on success only
         _tags.set(tag.macAddress.toUpperCase(), { ...toTag, ...product })
         tags.update(value => new Map(_tags))
