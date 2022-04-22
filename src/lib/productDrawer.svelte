@@ -19,7 +19,7 @@
         color: active ? 'primary' : 'secondary',
     })
     const metaStyle = { 
-        style : 'display:flex; flex-direction: column; align-items: flex-end; justify-content: center; ',
+        style : 'display:flex; flex-direction: column; align-items: flex-end; justify-content: center; font-size:16px;',
     }
 
     $: value = value?.toUpperCase?.() ?? '';
@@ -41,10 +41,9 @@
                     }}>
                         <Text>
                             <PrimaryText>{row.name}</PrimaryText>
-                            <SecondaryText>{row.id}</SecondaryText>
+                            <SecondaryText>id: {row.id}, plucode: {row.plucode}</SecondaryText>
                         </Text>
                         <Meta {...metaStyle}>
-                            <sup>{row.plucode}</sup>
                             <strong>${row.price}</strong>
                             {row.label10 || ''}
                         </Meta>
