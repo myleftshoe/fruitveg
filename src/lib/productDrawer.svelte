@@ -1,7 +1,6 @@
 <script>
     import { onMount } from 'svelte'
-    import { slide } from 'svelte/transition'
-    import { fade as transition } from 'svelte/transition'
+    import { blur } from 'svelte/transition'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import IconButton from '@smui/icon-button'
@@ -27,12 +26,12 @@
     // $: headers = getheaders(products)
     $: rows = $products && fuzzy($products, value, ['label4', 'label5', 'Description', 'id'])
 </script>
-<container transition:slide on:click={() => open = false}>
+<container transition:blur on:click={() => open = false}>
     <row>
         <IconButton class="material-icons" style="color: white;" on:click={() => {}}>search</IconButton>
         <input name="search" bind:value>
     </row>
-    <main transition>
+    <main>
         <List twoLine>
             {#each rows as row}
                 <Paper  {...itemStyle(true)}>
