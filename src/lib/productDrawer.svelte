@@ -87,7 +87,7 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        background: #000c;
+        background: #000f;
         border-radius: 0px;
         border-bottom: 1px solid #000f;
         position: relative;
