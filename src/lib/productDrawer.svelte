@@ -15,16 +15,25 @@
 
     const itemStyle = (active) => ({ 
         square: true,
-        style: `background-color: #a53; padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7};`,
+        style: ` padding: 0px; border-bottom: 1px solid black; opacity: ${active ? 1 : 0.7};`,
         color: active ? 'primary' : 'secondary',
     })
     const metaStyle = { 
         style : 'display:flex; flex-direction: column; align-items: flex-end; justify-content: center; font-size:16px;',
     }
 
+    const selectRow = (e, row) => {
+        selectedRow = row
+        open = false
+    }
+
     $: value = value?.toUpperCase?.() ?? '';
     // $: headers = getheaders(products)
     $: rows = $products && fuzzy($products, value, ['label4', 'label5', 'Description', 'id'])
+    $: if (open) {
+        window.screen.orientation.lock("portrait")
+
+    }
 </script>
 <container transition:blur on:click={() => open = false}>
     <row>
@@ -32,13 +41,10 @@
         <input name="search" bind:value>
     </row>
     <main>
-        <List twoLine>
+        <List twoLine >
             {#each rows as row}
-                <Paper  {...itemStyle(true)}>
-                    <Item on:SMUI:action={() => {
-                        selectedRow = row
-                        open = false
-                    }}>
+                <Paper class='paper' square color="{row.status !== 'bound' && 'secondary'}">
+                    <Item on:SMUI:action={(e) => selectRow(e, row)}>
                         <Text>
                             <PrimaryText>{row.name}</PrimaryText>
                             <SecondaryText>id: {row.id}, plucode: {row.plucode}</SecondaryText>
@@ -54,6 +60,11 @@
     </main>
 </container>
 <style>
+    :global(.paper) { 
+        padding: 4px;
+        border-bottom: 1px solid black;
+        border-radius: 0;
+    }
     main { 
         width: 100%;
         height: 100%;
