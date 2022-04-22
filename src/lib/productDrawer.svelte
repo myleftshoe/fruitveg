@@ -11,7 +11,7 @@
     export let open = false
     export let selectedRow = {}
     let value = ''
-
+    const refs = {}
 
     const itemStyle = (active) => ({ 
         square: true,
@@ -31,10 +31,10 @@
     // $: headers = getheaders(products)
     $: rows = $products && fuzzy($products, value, ['label4', 'label5', 'Description', 'id'])
 </script>
-<container transition:blur on:click|stopPropagation={() => open = false}>
+<container>
     <row>
-        <IconButton class="material-icons" style="color: white;" on:click={() => {}}>search</IconButton>
-        <input name="search" bind:value>
+        <IconButton class="material-icons" style="color: white;" on:click={() => refs.name.focus()}>search</IconButton>
+        <input name="search" bind:value bind:this={refs.name}>
     </row>
     <main>
         <List twoLine >
@@ -79,19 +79,19 @@
         background: black;
     }
     row {
+        /* width:100%; */
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: center;
         background: #000f;
         border-radius: 0px;
         border-bottom: 1px solid #000f;
-        position: relative;
         position: sticky;
         position: -webkit-sticky;
         top: 0vh;
         /* margin:-10px; */
         box-shadow: 2px 4px 4px #0007;
-        padding: 10px 5px 10px 20px; 
+        padding: 10px 5px 10px 0px; 
         transition: top .3s ease-out;
         z-index: 1;
     }
