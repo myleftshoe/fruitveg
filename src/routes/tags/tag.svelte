@@ -27,8 +27,8 @@
         align-items: center;
         flex-direction: column;
         padding: 2px;
-        height: 10vw;
-        width: 17vw;
+        height: 60px;
+        width: 100px;
         font-size: 12px;
         font-family: monospace;
         font-weight: 600;

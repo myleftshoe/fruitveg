@@ -184,6 +184,7 @@
                 </li>
             {/each}
         </ul>
+    <hr/>
     {/each}
     <!-- <button on:click={() => open = !open}>open</button> -->
 </main>
@@ -220,6 +221,9 @@
         padding-top: 70px;
         gap: 20px;
         overflow-x:scroll;
+    }
+    ul:hover {
+        background-color: #f002;
     }
     main {
         user-select: none;
