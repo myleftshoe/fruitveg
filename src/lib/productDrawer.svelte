@@ -31,7 +31,7 @@
     // $: headers = getheaders(products)
     $: rows = $products && fuzzy($products, value, ['label4', 'label5', 'Description', 'id'])
 </script>
-<container transition:blur on:click={() => open = false}>
+<container transition:blur on:click|stopPropagation={() => open = false}>
     <row>
         <IconButton class="material-icons" style="color: white;" on:click={() => {}}>search</IconButton>
         <input name="search" bind:value>
@@ -40,7 +40,7 @@
         <List twoLine >
             {#each rows as row}
                 <Paper class='paper' square color="{row.status !== 'bound' && 'secondary'}">
-                    <Item on:SMUI:action={(e) => selectRow(e, row)}>
+                    <Item on:SMUI:action={(e) => selectRow(e, row)} activated={row === selectedRow}>
                         <Text>
                             <PrimaryText>{row.name}</PrimaryText>
                             <SecondaryText>id: {row.id}, plucode: {row.plucode}</SecondaryText>
@@ -57,16 +57,14 @@
 </container>
 <style>
     :global(.paper) { 
-        padding: 4px;
-        border-bottom: 1px solid black;
+        padding: 0;
+        margin: 1px;
+        /* border-bottom: 1px solid black; */
         border-radius: 0;
     }
     main { 
         width: 100%;
         height: 100%;
-    }
-    p { 
-        height: 40px;
     }
     container { 
         position: fixed;
@@ -78,6 +76,7 @@
         box-shadow: 16px 16px 16px #000a;
         border-right: 1px solid black;
         z-index:1;
+        background: black;
     }
     row {
         display: flex;
