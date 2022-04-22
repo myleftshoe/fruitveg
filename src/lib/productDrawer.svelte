@@ -30,10 +30,6 @@
     $: value = value?.toUpperCase?.() ?? '';
     // $: headers = getheaders(products)
     $: rows = $products && fuzzy($products, value, ['label4', 'label5', 'Description', 'id'])
-    $: if (open) {
-        window.screen.orientation.lock("portrait")
-
-    }
 </script>
 <container transition:blur on:click={() => open = false}>
     <row>
