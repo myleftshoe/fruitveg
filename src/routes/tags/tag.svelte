@@ -14,7 +14,10 @@
             <div>{product?.label4 || ''}</div>
         </product>
     {/if}
-    <price>${product?.label6 || '0'}</price>
+    <price>
+        ${product?.label6?.split('.')[0] || ''}
+        <cents>{product?.label6?.split('.')[1] || ''}</cents>    
+    </price>
 </tag>
 <style>
     tag {
@@ -27,10 +30,10 @@
         align-items: center;
         flex-direction: column;
         padding: 2px;
-        height: 60px;
-        width: 100px;
+        height: 50px;
+        width: 80px;
         font-size: 12px;
-        font-family: monospace;
+        font-family: "Roboto Condensed";
         font-weight: 600;
         text-transform: uppercase;
         overflow: hidden;
@@ -49,7 +52,11 @@
     }
     price {
         color: red;
-        font-size: x-large;
-        font-family: monospace;
+        font-size: 16px;
+    }
+    cents {
+        position: relative;
+        top: -3px;
+        font-size: 12px;
     }
 </style>

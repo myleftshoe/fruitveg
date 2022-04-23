@@ -179,7 +179,7 @@
                     on:dragstart={e => dragStart(e, JSON.stringify($tags.get(tag.macAddress)))}
                     on:drop={e => drop(e, tag)}
                 >
-                    <sup>{tagIndex + 1}</sup>
+                    <!-- <sup>{tagIndex + 1}</sup> -->
                     <Tag product={$tags.get(tag.macAddress)} on:click={() => open = true } />
                 </li>
             {/each}
@@ -204,7 +204,7 @@
 {#if open}
     <ProductDrawer bind:open bind:selectedRow />
 {/if}
-<style lang="scss">
+<style>
     code { 
         color: white;
     }
@@ -215,12 +215,10 @@
         font-weight: 600;
     }
     ul {
-        margin:0;
         display: flex;
-        padding: 20px;
-        padding-top: 70px;
-        gap: 20px;
-        overflow-x:scroll;
+        flex-wrap: wrap;
+        padding-top: 50px;
+        gap: 10px;
     }
     ul:hover {
         background-color: #f002;
@@ -231,11 +229,10 @@
         color: #000f;
         font-family: arial;
         font-weight: bold;
-        padding-bottom: 20px;
     }
     float {
         opacity: 0;
-        position: absolute;
+        position: fixed;
         top: 50%;
         left:25%;
         box-shadow: 8px 8px 16px #000d;
@@ -245,7 +242,7 @@
         color: #fff; 
         position: absolute;
         left: 0px;
-        width:100vw;
+        width:100%;
         text-align: center;
         transform: translateY(-45px);
     }
@@ -254,5 +251,6 @@
     }
     :global(body) { 
         background-color: transparent; 
+        margin:0;
     }
 </style>
