@@ -222,11 +222,13 @@
         scroll-snap-align: start;
         margin: 0;
         padding:0;
-        margin-top: 20px;
-        padding-top: 50px;
+        margin: 10px;
+        padding-top: 60px;
+        padding-bottom: 10px;
     }
     ul:hover {
-        background-color: #f002;
+        background-color: #0f03;
+        border-radius: 20px;
     }
     main {
         user-select: none;
@@ -234,6 +236,7 @@
         color: #000f;
         font-family: arial;
         font-weight: bold;
+        padding-bottom: 20px;
     }
     float {
         opacity: 0;
