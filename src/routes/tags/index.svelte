@@ -222,19 +222,18 @@
         scroll-snap-align: start;
         margin: 0;
         padding:0;
+        margin-top: 20px;
         padding-top: 50px;
     }
     ul:hover {
         background-color: #f002;
     }
     main {
-        margin-top: 20px;
         user-select: none;
         font-size: 16px;
         color: #000f;
         font-family: arial;
         font-weight: bold;
-        scroll-snap-type: y mandatory;
     }
     float {
         opacity: 0;
@@ -251,7 +250,6 @@
         width:100%;
         text-align: center;
         transform: translateY(-45px);
-        scroll-snap-align: start;
     }
     :global(html) { 
         background-color: #444; 
