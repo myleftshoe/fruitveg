@@ -219,6 +219,7 @@
         flex-wrap: wrap;
         padding-top: 50px;
         gap: 10px;
+        scroll-snap-align: start;
     }
     ul:hover {
         background-color: #f002;
@@ -229,6 +230,7 @@
         color: #000f;
         font-family: arial;
         font-weight: bold;
+        scroll-snap-type: y mandatory;
     }
     float {
         opacity: 0;
@@ -245,6 +247,7 @@
         width:100%;
         text-align: center;
         transform: translateY(-45px);
+        scroll-snap-align: start;
     }
     :global(html) { 
         background-color: #444; 
@@ -252,5 +255,6 @@
     :global(body) { 
         background-color: transparent; 
         margin:0;
+        scroll-snap-type: y mandatory;
     }
 </style>
