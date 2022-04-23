@@ -226,10 +226,10 @@
         padding-top: 60px;
         padding-bottom: 10px;
     }
-    ul:hover {
+    /* ul:hover {
         background-color: #0f03;
         border-radius: 20px;
-    }
+    } */
     main {
         user-select: none;
         font-size: 16px;
