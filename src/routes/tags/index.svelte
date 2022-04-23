@@ -217,14 +217,18 @@
     ul {
         display: flex;
         flex-wrap: wrap;
-        padding-top: 50px;
+        justify-content: center;
         gap: 10px;
         scroll-snap-align: start;
+        margin: 0;
+        padding:0;
+        padding-top: 50px;
     }
     ul:hover {
         background-color: #f002;
     }
     main {
+        margin-top: 20px;
         user-select: none;
         font-size: 16px;
         color: #000f;

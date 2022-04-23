@@ -16,7 +16,7 @@
     {/if}
     <price>
         ${product?.label6?.split('.')[0] || ''}
-        <cents>{product?.label6?.split('.')[1] || ''}</cents>    
+        <sup>{product?.label6?.split('.')[1] || ''}</sup>    
     </price>
 </tag>
 <style>
@@ -31,8 +31,8 @@
         flex-direction: column;
         padding: 2px;
         height: 50px;
-        width: 80px;
-        font-size: 12px;
+        width: 90px;
+        font-size: 11px;
         font-family: "Roboto Condensed";
         font-weight: 600;
         text-transform: uppercase;
@@ -54,9 +54,7 @@
         color: red;
         font-size: 16px;
     }
-    cents {
-        position: relative;
-        top: -3px;
-        font-size: 12px;
+    sup {
+        font-size: 11px;
     }
 </style>
