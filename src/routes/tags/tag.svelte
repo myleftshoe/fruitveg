@@ -3,7 +3,7 @@
     export let product = {}
     let prevProduct = {}
     let blink = false
-    $: if (product && product.id !== prevProduct.id) {
+    $: if (product.id !== prevProduct.id) {
         prevProduct = product
         blink = true
     } else {

@@ -180,7 +180,7 @@
                     on:drop={e => drop(e, tag)}
                 >
                     <!-- <sup>{tagIndex + 1}</sup> -->
-                    <Tag product={$tags.get(tag.macAddress)} on:click={() => open = true } />
+                    <Tag product={$tags.get(tag.macAddress) || {}} on:click={() => open = true } />
                 </li>
             {/each}
         </ul>
