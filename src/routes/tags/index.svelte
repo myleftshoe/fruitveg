@@ -236,7 +236,7 @@
         color: #000f;
         font-family: arial;
         font-weight: bold;
-        padding-bottom: 20px;
+        padding-bottom: 50vh;
     }
     float {
         opacity: 0;
