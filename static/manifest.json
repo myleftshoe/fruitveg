@@ -3,9 +3,9 @@
     "name": "tags",
     "start_url": "/tags",
     "icons": [{
-        "src": "logo_512.png",
+        "src": "logo_256.png",
         "type": "image/png",
-        "sizes": "512x512"
+        "sizes": "256x256"
     }],
     "background_color": "#333",
     "display": "standalone",
