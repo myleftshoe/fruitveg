@@ -26,11 +26,17 @@ export const get = async (event) => {
         label11: row.label11,
         label13: row.label13,
         status: translate(row.status) || row.status,
-    })).filter(row => row.status === 'bound')
+    }))
+    .filter(row => row.status === 'bound')
 
     console.log(minewData.length, atriaData.length)
+    console.table(atriaData)
 
-    const products = atriaData.map(t1 => ({...t1, ...minewData.find(t2 => t2.plucode === t1.PLUCode.toString())})).map(mapper).filter(({Active}) => Boolean(Active))
+    const active = ({Active}) => Boolean(Active)
+
+    const products = atriaData.map(t1 => ({...t1, ...minewData.find(t2 => t2.plucode === t1.PLUCode.toString())}))
+        .map(mapper)
+        // .filter(active)
     console.table(products)
 
     const body = { products }

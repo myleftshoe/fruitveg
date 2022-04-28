@@ -40,7 +40,7 @@
             <Paper  {...itemStyle(row.Active)}>
                 <Item on:SMUI:action={() => (selectedRow = row)} >
                     <Text>
-                        <PrimaryText>{row.Description} {row.status} </PrimaryText>
+                        <PrimaryText>{row.Description} {row.status} {row.Active}</PrimaryText>
                         <SecondaryText>{row.label5 || ''}</SecondaryText>
                         <SecondaryText>{row.label4 || ''}</SecondaryText>
                     </Text>
