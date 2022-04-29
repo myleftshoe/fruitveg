@@ -39,6 +39,7 @@
         item.label5 = item.label5.toUpperCase()
         submitted = true
         open = false
+        // history.back()
     }
     $: console.log(copy)
     $: {

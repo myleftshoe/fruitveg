@@ -2,6 +2,7 @@
     // import 'carbon-components-svelte/css/g100.css'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
+    import IconButton from '@smui/icon-button'
     import TopAppBar from '@smui/top-app-bar';
     // import { Search } from 'carbon-components-svelte'
     import fuzzy from '../../helpers/fuzzy.js'
@@ -21,6 +22,7 @@
     import EditDialog from '$lib/edit.svelte'
     export let products = []
     let selectedRow
+    let refs = {}
     $: value = value?.toUpperCase?.() ?? ''
     $: headers = getheaders(products)
     $: rows = fuzzy(products, value, ['label4', 'label5', 'Description', 'id'])
@@ -31,9 +33,11 @@
     }
     $: console.log(value)
 </script>
-<TopAppBar>
+<searchbar>
     <!-- <Search bind:value expanded persistent size="xl" light style="font-size: 16px;"/> -->
-</TopAppBar>
+        <IconButton class="material-icons" style="color: white;" on:click={() => refs.name.focus()}>search</IconButton>
+        <input name="search" bind:value bind:this={refs.name}>    
+</searchbar>
 <main>
     <List threeLine nonInteractive>
         {#each rows as row}
@@ -61,13 +65,56 @@
 }}/>
 <style>
     main { 
-        background-color: black;
+        /* background-color: black; */
         position: absolute;
-        top: 40px ;
+        top: 70px ;
         width: 100%
+    }
+    searchbar {
+        /* width:100%; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000f;
+        border-radius: 0px;
+        border-bottom: 1px solid #000f;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0vh;
+        /* margin:-10px; */
+        box-shadow: 2px 4px 4px #0007;
+        padding: 10px 5px 10px 0px; 
+        transition: top .3s ease-out;
+        z-index: 1;
+    }
+    input {
+        background: none;
+        border: none;
+        margin: 0px;
+        padding:0;
+        outline-offset: 3px;
+        font-size: 16px;
+        font-family: monospace;
+        color:white;
+    }
+    input[name="search"] {
+        background: none;
+        border: none;
+        padding: 8px;
+        font-size: 20px;
+        font-weight: bold;
+        color: orange;
     }
     :root {
         --mdc-theme-primary: #ff7e00;
         --mdc-theme-secondary: #676778;
+    }
+        :global(html) { 
+        background-color: #444; 
+    }
+    :global(body) { 
+        background-color: transparent; 
+        margin:0;
+        scroll-snap-type: y mandatory;
     }
 </style>

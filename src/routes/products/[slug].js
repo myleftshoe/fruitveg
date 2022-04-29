@@ -118,52 +118,52 @@ const sample2 = {
 export const put = async ({params, request}) => {
     console.log('put')
 
-    await minew.bind()
+    // await minew.bind()
     
-    // const { slug } = params
-    // const data = await request.formData()
-    // const payload = Object.fromEntries(data.entries())
+    const { slug } = params
+    const data = await request.formData()
+    const payload = Object.fromEntries(data.entries())
 
-    // const { PLUCode, UnitPrice, Description, isWeighed } = payload
-    // const atriaData = { 
-    //     PLUCode,
-    //     Description,
-    //     UnitPrice,
-    //     // isWeighed,
-    //     StoreGroupPrices: [],
-    // }
-    // console.log(slug, payload, atriaData)
+    const { PLUCode, UnitPrice, Description, isWeighed } = payload
+    const atriaData = { 
+        PLUCode,
+        Description,
+        UnitPrice,
+        // isWeighed,
+        StoreGroupPrices: [],
+    }
+    console.log(slug, payload, atriaData)
 
-    // await get({ params: { slug } })
+    await get({ params: { slug } })
 
-    // const got = fetched.get(slug)
-    // console.log({got})
+    const got = fetched.get(slug)
+    console.log({got})
 
-    // let minewData = {
-    //     label3: payload.PLUCode, 
-    //     label4: payload.label4.toUpperCase(),
-    //     label5: payload.label5.toUpperCase(),
-    //     label6: payload.label6,
-    //     label8: payload.label8 || 'Organic',
-    //     label10: payload.label10,
-    //     label13: payload.label13 || 'VEGETABLES',
-    // }
-    // if (got) {
-    //     minewData = { ...got, ...minewData, 
-    //         label3: got.label3 || minewData.label3,
-    //         label8: got.label8 || minewData.label8,
-    //         label13: got.label13 || minewData.label13,
-    //     } 
-    //     console.table(minewData)
-    //     await minew.put('goods?storeId=123', minewData)
-    // }
-    // else { 
-    //     minewData = { id: payload.PLUCode, ...minewData }
-    //     console.table(minewData)
-    //     await minew.post('goods?storeId=123', minewData)
-    // }
+    let minewData = {
+        label3: payload.PLUCode, 
+        label4: payload.label4.toUpperCase(),
+        label5: payload.label5.toUpperCase(),
+        label6: payload.label6,
+        label8: payload.label8 || 'Organic',
+        label10: payload.label10,
+        label13: payload.label13 || 'VEGETABLES',
+    }
+    if (got) {
+        minewData = { ...got, ...minewData, 
+            label3: got.label3 || minewData.label3,
+            label8: got.label8 || minewData.label8,
+            label13: got.label13 || minewData.label13,
+        } 
+        console.table(minewData)
+        await minew.put('goods?storeId=123', minewData)
+    }
+    else { 
+        minewData = { id: payload.PLUCode, ...minewData }
+        console.table(minewData)
+        await minew.post('goods?storeId=123', minewData)
+    }
 
-    // await atria.put(`/Items/${slug}/Price`, atriaData)
+    await atria.put(`/Items/${slug}/Price`, atriaData)
 
     return {
         headers: { Location: '/products' },

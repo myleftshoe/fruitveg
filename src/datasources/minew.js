@@ -9,6 +9,7 @@ let token
 
 async function get(path, token) {
     console.log('get')
+    token=await login()
     let headers = { 'Authorization': `Bearer ${token}` } 
     let response = await fetcher.fetch(path, { headers })
     let json = await response.json()
