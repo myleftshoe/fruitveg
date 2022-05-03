@@ -32,13 +32,14 @@
     }
 
     function startScanner() {
-        window.alert('start')
+        alert('start')
 
         Quagga.init({
             inputStream: {
                 name: "Live",
                 type: "LiveStream",
                 target: video,
+                numOfWorkers: navigator.hardwareConcurrency,
                 constraints
             },
             decoder: {
@@ -70,7 +71,9 @@
         })
 
         Quagga.onDetected(function (result) {
-            alert("Barcode detected and processed : [" + result.codeResult.code + "]", result);
+            const code = result.codeResult.code
+            alert(`Barcode detected and processed : [${code}]`, result);
+            Quagga.stop()
         });
 
     }
