@@ -31,7 +31,6 @@
         startScanner()
     }
 
-    let started = false;
     function startScanner() {
 
         Quagga.init({
@@ -39,11 +38,7 @@
                 name: "Live",
                 type: "LiveStream",
                 target: video,
-                constraints: {
-                    width: 240,
-                    height: 320,
-                    facingMode: "environment"
-                },
+                constraints
             },
             decoder: {
                 readers: [
@@ -63,11 +58,9 @@
                     return
                 }
 
-                console.log("Initialization finished. Ready to start");
+                alert("Initialization finished. Ready to start");
                 Quagga.start();
 
-                // Set flag to is running
-                started = true;
             }
         })
 
@@ -76,7 +69,7 @@
         })
 
         Quagga.onDetected(function (result) {
-            console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
+            alert("Barcode detected and processed : [" + result.codeResult.code + "]", result);
         });
 
     }
