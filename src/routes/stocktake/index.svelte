@@ -179,4 +179,13 @@
         --mdc-theme-primary: #ff7e00;
         --mdc-theme-secondary: #676778;
     }
+        :global(html) { 
+        background-color: #444; 
+    }
+    :global(body) { 
+        background-color: transparent; 
+        margin:0;
+        scroll-snap-type: y mandatory;
+    }
+
 </style>
