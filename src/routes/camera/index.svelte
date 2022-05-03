@@ -12,22 +12,19 @@
     }
 
 
-    function connect() {
-        navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-            video.setAttribute('autoplay', '');
-            video.setAttribute('muted', '');
-            video.setAttribute('playsinline', '')
+    async function connect() {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints)
+        video.setAttribute('autoplay', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '')
 
-            console.dir(video);
-            if ('srcObject' in video) {
-                video.srcObject = stream;
-            } else {
-                video.src = URL.createObjectURL(stream);
-            }
-            // video.src = window.URL.createObjectURL(localMediaStream);
-            video.play();
-
-        })
+        console.dir(video);
+        if ('srcObject' in video) {
+            video.srcObject = stream;
+        } else {
+            video.src = URL.createObjectURL(stream);
+        }
+        video.play();
         // .catch(function(err) { console.log(err.name + ": " + err.message); });
     }
 </script>
