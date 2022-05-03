@@ -20,13 +20,13 @@
         video.setAttribute('muted', '');
         video.setAttribute('playsinline', '')
 
-        console.dir(video);
-        if ('srcObject' in video) {
-            video.srcObject = stream;
-        } else {
-            video.src = URL.createObjectURL(stream);
-        }
-        video.play();
+        // console.dir(video);
+        // if ('srcObject' in video) {
+        //     video.srcObject = stream;
+        // } else {
+        //     video.src = URL.createObjectURL(stream);
+        // }
+        // video.play();
         // .catch(function(err) { console.log(err.name + ": " + err.message); });
         startScanner()
     }
@@ -81,7 +81,7 @@
 
 </script>
 <main>
-    <video bind:this={video} width="240" height="320"></video>
+    <div bind:this={video} width="240" height="320"></div>
     <button on:click={connect}>camera</button>
 </main>
 <style>
