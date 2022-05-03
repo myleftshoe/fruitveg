@@ -28,6 +28,7 @@
         }
         video.play();
         // .catch(function(err) { console.log(err.name + ": " + err.message); });
+        startScanner()
     }
 
     let started = false;
@@ -39,7 +40,7 @@
                 type: "LiveStream",
                 target: video,
                 constraints: {
-                    width: 480,
+                    width: 240,
                     height: 320,
                     facingMode: "environment"
                 },
@@ -81,7 +82,7 @@
     }
 
 
-	onMount(startScanner)
+	// onMount(startScanner)
 
     // browser && startScanner()
 
