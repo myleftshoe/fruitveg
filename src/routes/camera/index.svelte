@@ -13,7 +13,7 @@
 
 
     function connect() {
-        navigator.mediaDevices.getUserMedia({video: true}).then(function(stream) {
+        navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
             video.setAttribute('autoplay', '');
             video.setAttribute('muted', '');
             video.setAttribute('playsinline', '')
