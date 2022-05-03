@@ -3,12 +3,30 @@
     let video
     // Prefer camera resolution nearest to 1280x720.
     // const constraints = { audio: false, video: { width: 640, height: 480 } }; 
+
+    const constraints = {
+        audio: false,
+        video: {
+            facingMode: 'user'
+        }
+    }
+
+
     function connect() {
         navigator.mediaDevices.getUserMedia({video: true}).then(function(stream) {
-            video.src = stream;
-            // video.onloadedmetadata = function(e) {
-                video.play();
-            // };
+            video.setAttribute('autoplay', '');
+            video.setAttribute('muted', '');
+            video.setAttribute('playsinline', '')
+
+            console.dir(video);
+            if ('srcObject' in video) {
+                video.srcObject = stream;
+            } else {
+                video.src = URL.createObjectURL(stream);
+            }
+            // video.src = window.URL.createObjectURL(localMediaStream);
+            video.play();
+
         })
         // .catch(function(err) { console.log(err.name + ": " + err.message); });
     }
