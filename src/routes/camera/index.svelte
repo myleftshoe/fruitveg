@@ -73,13 +73,13 @@
         })
 
         Quagga.onProcessed(function (result) {
-            alert('processed!', result)
+            alert('processed!', typeof result)
         })
 
         Quagga.onDetected(function (result) {
             const code = result.codeResult.code
             alert(`Barcode detected and processed : [${code}]`, result);
-            Quagga.stop()
+            // Quagga.stop()
         });
 
     }
