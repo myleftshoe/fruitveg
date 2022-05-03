@@ -15,7 +15,7 @@
 
 
     async function connect() {
-        const stream = await navigator.mediaDevices.getUserMedia(constraints)
+        // const stream = await navigator.mediaDevices.getUserMedia(constraints)
         video.setAttribute('autoplay', '');
         video.setAttribute('muted', '');
         video.setAttribute('playsinline', '')
@@ -32,6 +32,7 @@
     }
 
     function startScanner() {
+        window.alert('start')
 
         Quagga.init({
             inputStream: {
