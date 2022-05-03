@@ -73,7 +73,7 @@
         })
 
         Quagga.onProcessed(function (result) {
-            alert('processed!', typeof result)
+            alert(JSON.stringify(result))
         })
 
         Quagga.onDetected(function (result) {
