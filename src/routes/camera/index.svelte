@@ -2,7 +2,7 @@
 
     let video
     // Prefer camera resolution nearest to 1280x720.
-    const constraints = { audio: true, video: { width: 1280, height: 720 } }; 
+    const constraints = { audio: false, video: { width: 640, height: 480 } }; 
     function connect() {
         navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {
             video.srcObject = mediaStream;
@@ -13,5 +13,4 @@
     }
 </script>
 <button on:click={connect}>camera</button>
-<video bind:this={video}>
-</video>
+<video bind:this={video} width="640" height="480" autoplay></video>
