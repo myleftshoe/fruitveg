@@ -13,5 +13,19 @@
         // .catch(function(err) { console.log(err.name + ": " + err.message); });
     }
 </script>
-<button on:click={connect}>camera</button>
-<video bind:this={video} width="640" height="480" autoplay></video>
+<main>
+    <video bind:this={video} width="240" height="320"></video>
+    <button on:click={connect}>camera</button>
+</main>
+<style>
+    main {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+    video {
+        border: 1px solid red;
+    }
+</style>
