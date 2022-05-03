@@ -42,10 +42,10 @@
                 // numOfWorkers: navigator.hardwareConcurrency,
                 constraints,
             },
-            locator: {
-                patchSize: "medium",
-                halfSample: true,
-            },
+            // locator: {
+            //     patchSize: "medium",
+            //     halfSample: true,
+            // },
             numOfWorkers: 2,
             frequency:10,
             decoder: {
@@ -62,7 +62,7 @@
                     // "i2of5_reader"
                 }],
             }, 
-            locate: true,
+            // locate: true,
         }, function (err) {
             if (err) {
                 alert(err);
