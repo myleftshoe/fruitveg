@@ -5,7 +5,7 @@
     // const constraints = { audio: false, video: { width: 640, height: 480 } }; 
     function connect() {
         navigator.mediaDevices.getUserMedia({video: true}).then(function(stream) {
-            video.srcObject = stream;
+            video.src = stream;
             // video.onloadedmetadata = function(e) {
                 video.play();
             // };
