@@ -77,9 +77,8 @@
         })
 
         Quagga.onDetected(function (result) {
-            // const code = result.codeResult.code
-            const code = 'code'
-            alert(`Barcode detected and processed : [${JSON.stringify(result)}]`);
+            const code = result.codeResult.code
+            alert(`Barcode detected and processed : [${code}]`);
             // Quagga.stop()
         });
 
