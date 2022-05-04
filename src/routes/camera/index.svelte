@@ -12,8 +12,8 @@
 
     const constraints = {
         facingMode: "environment",
-        height: 200,
-        width: 400,
+        height: 360,
+        width: 180,
         // aspectRatio: {min: .5, max: .5}
     }
 
@@ -109,7 +109,7 @@
     }
     div {
         border: 1px solid red;
-        height: 200px;
-        width: 400px;
+        height: 180px;
+        width: 360px;
     }
 </style>
