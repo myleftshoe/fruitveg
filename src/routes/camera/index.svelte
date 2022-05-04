@@ -12,7 +12,7 @@
 
     const constraints = {
         width: {min: 480},
-        height: {min: 640},
+        height: {min: 240},
         facingMode: "environment",
         aspectRatio: {min: 1, max: 2}
     }
@@ -73,29 +73,8 @@
             Quagga.start();
         })
 
-        Quagga.onProcessed(result => {
-            // alert(JSON.stringify(result))
-                    var drawingCtx = Quagga.canvas.ctx.overlay,
-            drawingCanvas = Quagga.canvas.dom.overlay;
-
-            if (result) {
-                if (result.boxes) {
-                    drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
-                    result.boxes.filter(function (box) {
-                        return box !== result.box;
-                    }).forEach(function (box) {
-                        Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
-                    });
-                }
-
-                if (result.box) {
-                    Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
-                }
-
-                if (result.codeResult && result.codeResult.code) {
-                    Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
-                }
-            }
+        Quagga.onProcessed(data => {
+            // alert(JSON.stringify(data))
         })
 
         Quagga.onDetected(data => {
@@ -113,7 +92,7 @@
 
 </script>
 <main>
-    <div bind:this={video}></div>
+    <div bind:this={video} height={240} width={480}></div>
     <IconButton on:click={connect}>
         <Icon component={Svg} viewBox="0 0 24 24">
             <path fill="currentColor" d={mdiBarcodeScan} />
