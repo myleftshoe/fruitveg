@@ -14,7 +14,7 @@
         width: {max: 480},
         height: {max: 240},
         facingMode: "environment",
-        aspectRatio: {min: 2, max: 2}
+        // aspectRatio: {min: 0.5, max: 0.5}
     }
 
 
