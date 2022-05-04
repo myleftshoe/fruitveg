@@ -71,7 +71,7 @@
             Quagga.start();
             const track = Quagga.CameraAccess.getActiveTrack();
             const capabilities = track.getCapabilities();
-            this.applySettingsVisibility('zoom', capabilities.zoom.max);
+            track.applyConstraints({advanced: [ {zoom:capabilities.zoom.max} ]});
         })
 
         Quagga.onProcessed(data => {
