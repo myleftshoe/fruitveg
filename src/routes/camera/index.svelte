@@ -12,9 +12,9 @@
 
     const constraints = {
         facingMode: "environment",
-        height: 360,
-        width: 180,
-        // aspectRatio: {min: .5, max: .5}
+        // height: 360,
+        width: 360,
+        aspectRatio: {min: 1, max: 2}
     }
 
 
