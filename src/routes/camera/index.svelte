@@ -66,12 +66,12 @@
             Quagga.start();
         })
 
-        Quagga.onProcessed(function (result) {
-            // alert(JSON.stringify(result))
+        Quagga.onProcessed(data => {
+            // alert(JSON.stringify(data))
         })
 
-        Quagga.onDetected(function (result) {
-            const code = result.codeResult.code
+        Quagga.onDetected(data => {
+            const code = data.codeResult.code
             alert(`Barcode detected and processed : [${code}]`);
             // Quagga.stop()
         });
