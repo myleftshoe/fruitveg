@@ -46,17 +46,24 @@
                 // numOfWorkers: navigator.hardwareConcurrency,
                 constraints,
             },
-            locator: {
-                patchSize: "medium",
-                halfSample: false,
-            },
-            numOfWorkers: 1,
+            // locator: {
+            //     patchSize: "medium",
+            //     halfSample: false,
+            // },
+            numOfWorkers: navigator.hardwareConcurrency,
             frequency:10,
             decoder: {
                 readers: ["code_128_reader"],
             }, 
-            locate: true,
+            locate: false,
             src: null,
+            debug: {
+                drawBoundingBox: true,
+                showFrequency: false,
+                drawScanline: true,
+                showPattern: true
+            },
+            multiple: false
         }, function (err) {
             if (err) {
                 alert(err);
