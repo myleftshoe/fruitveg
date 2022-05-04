@@ -91,7 +91,7 @@
 
 </script>
 <main>
-    <div bind:this={video}></div>
+    <div bind:this={video} width="480" height="640"></div>
     <button on:click={connect}>camera</button>
 </main>
 <style>
@@ -101,10 +101,10 @@
         align-items: center;
         justify-content: center;
         gap: 20px;
+        height: 100vh;
+        width: 100vw;
     }
     div {
         border: 1px solid red;
-        width: 100vw;
-        height: 100vh;
     }
 </style>
