@@ -7,8 +7,8 @@
     let video
 
     const constraints = {
-        width: {min: 240},
-        height: {min: 320},
+        width: {min: 480},
+        height: {min: 640},
         facingMode: "environment",
         aspectRatio: {min: 1, max: 2}
     }
@@ -91,7 +91,7 @@
 
 </script>
 <main>
-    <div bind:this={video} width="240" height="320"></div>
+    <div bind:this={video} width="480" height="640"></div>
     <button on:click={connect}>camera</button>
 </main>
 <style>
