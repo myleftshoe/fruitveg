@@ -92,7 +92,7 @@
 
 </script>
 <main>
-    <div bind:this={video} height="240" width="480"></div>
+    <div bind:this={video} height="240" width="480">*</div>
     <IconButton on:click={connect}>
         <Icon component={Svg} viewBox="0 0 24 24">
             <path fill="currentColor" d={mdiBarcodeScan} />
