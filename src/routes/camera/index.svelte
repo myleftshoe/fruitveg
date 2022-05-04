@@ -12,7 +12,7 @@
 
     const constraints = {
         facingMode: "environment",
-        aspectRatio: {min: 1, max: 3}
+        aspectRatio: {min: 2, max: 2}
     }
 
 
@@ -34,8 +34,6 @@
     }
 
     function startScanner() {
-        alert('start')
-
         Quagga.init({
             inputStream: {
                 name: "Live",
