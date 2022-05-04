@@ -50,7 +50,7 @@
             frequency:10,
             decoder: {
                 readers: [
-                    "code_128_reader",
+                    "code_128_reader"
                     // "ean_reader",
                     // "ean_8_reader",
                     // "code_39_reader",
