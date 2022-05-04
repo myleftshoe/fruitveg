@@ -54,16 +54,16 @@
             frequency:10,
             decoder: {
                 readers: ["code_128_reader"],
+                debug: {
+                    drawBoundingBox: true,
+                    showFrequency: true,
+                    drawScanline: true,
+                    showPattern: true
+                },
+                multiple: false
             }, 
             locate: false,
             src: null,
-            debug: {
-                drawBoundingBox: true,
-                showFrequency: false,
-                drawScanline: true,
-                showPattern: true
-            },
-            multiple: false
         }, function (err) {
             if (err) {
                 alert(err);
