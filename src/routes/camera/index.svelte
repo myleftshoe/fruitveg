@@ -11,10 +11,8 @@
     let video
 
     const constraints = {
-        width: {max: 480},
-        height: {max: 240},
         facingMode: "environment",
-        aspectRatio: {min: 1, max: 4}
+        aspectRatio: {min: 1, max: 3}
     }
 
 
@@ -92,7 +90,7 @@
 
 </script>
 <main>
-    <div bind:this={video} height="240" width="480">*</div>
+    <div bind:this={video}></div>
     <IconButton on:click={connect}>
         <Icon component={Svg} viewBox="0 0 24 24">
             <path fill="currentColor" d={mdiBarcodeScan} />
