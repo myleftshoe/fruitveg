@@ -101,8 +101,6 @@
         align-items: center;
         justify-content: center;
         gap: 20px;
-        height: 100vh;
-        width: 100vw;
     }
     div {
         border: 1px solid red;
