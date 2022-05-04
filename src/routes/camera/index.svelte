@@ -3,6 +3,10 @@
     import { onMount } from 'svelte';
     import { browser } from '$app/env';
 
+    import IconButton, { Icon } from '@smui/icon-button'
+    import { Svg } from '@smui/common/elements'
+    import { mdiBarcodeScan } from '@mdi/js'
+
 
     let video
 
@@ -49,17 +53,7 @@
             numOfWorkers: 1,
             frequency:10,
             decoder: {
-                readers: [
-                    "code_128_reader"
-                    // "ean_reader",
-                    // "ean_8_reader",
-                    // "code_39_reader",
-                    // "code_39_vin_reader",
-                    // "codabar_reader",
-                    // "upc_reader",
-                    // "upc_e_reader",
-                    // "i2of5_reader"
-                ],
+                readers: ["code_128_reader"],
             }, 
             locate: true,
             src: null,
@@ -68,7 +62,7 @@
                 alert(err);
                 return
             }
-            alert("Initialization finished. Ready to start");
+            // alert("Initialization finished. Ready to start");
             Quagga.start();
         })
 
@@ -92,7 +86,13 @@
 </script>
 <main>
     <div bind:this={video}></div>
-    <button on:click={connect}>camera</button>
+    <IconButton on:click={connect}>
+        <Icon component={Svg} viewBox="0 0 24 24">
+            <path fill="currentColor" d={mdiBarcodeScan} />
+        </Icon>
+    </IconButton>
+
+
 </main>
 <style>
     main {
