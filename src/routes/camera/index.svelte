@@ -1,5 +1,5 @@
 <script>
-    import Quagga from 'quagga'
+    import Quagga from '@ericblade/quagga2'
     import { onMount } from 'svelte';
     import { browser } from '$app/env';
 

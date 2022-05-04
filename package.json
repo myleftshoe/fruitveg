@@ -36,12 +36,12 @@
   "type": "module",
   "dependencies": {
     "@babel/runtime": "^7.17.7",
+    "@ericblade/quagga2": "^1.7.0",
     "@mdi/js": "^6.5.95",
     "@shopify/semaphore": "^2.0.11",
     "async-sema": "^3.1.1",
     "awesome-clipboard": "^2.0.4",
     "cookie": "^0.5.0",
-    "quagga": "^0.12.1",
     "uuid": "^8.3.2"
   }
 }
