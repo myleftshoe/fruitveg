@@ -69,10 +69,7 @@
             }
             // alert("Initialization finished. Ready to start");
             Quagga.start();
-            // const track = Quagga.CameraAccess.getActiveTrack();
-            // const capabilities = track.getCapabilities();
-            // track.applyConstraints({advanced: [ {zoom:.5} ]});
-            // track.applyConstraints({advanced: [ {zoom:capabilities.zoom.max} ]});
+\            // track.applyConstraints({advanced: [ {zoom:capabilities.zoom.max} ]});
         })
 
         Quagga.onProcessed(data => {
