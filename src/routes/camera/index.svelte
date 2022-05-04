@@ -12,8 +12,8 @@
 
     const constraints = {
         facingMode: "environment",
-        height: 200,
-        width: 100,
+        height: 360,
+        width: 180,
         // aspectRatio: {min: .5, max: .5}
     }
 
@@ -69,7 +69,6 @@
             }
             // alert("Initialization finished. Ready to start");
             Quagga.start();
-\            // track.applyConstraints({advanced: [ {zoom:capabilities.zoom.max} ]});
         })
 
         Quagga.onProcessed(data => {
@@ -110,7 +109,7 @@
     }
     div {
         border: 1px solid red;
-        height: 100px;
-        width: 200px;
+        height: 180px;
+        width: 360px;
     }
 </style>
