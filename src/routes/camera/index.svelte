@@ -1,14 +1,12 @@
 <script>
-    import Quagga from '@ericblade/quagga2'
-    import { onMount } from 'svelte';
-    import { browser } from '$app/env';
+    import {Html5QrcodeScanner} from "html5-qrcode" 
 
     import IconButton, { Icon } from '@smui/icon-button'
     import { Svg } from '@smui/common/elements'
     import { mdiBarcodeScan } from '@mdi/js'
 
 
-    let video
+    let reader
 
     const constraints = {
         facingMode: "environment",
@@ -19,78 +17,32 @@
 
 
     async function connect() {
-        // const stream = await navigator.mediaDevices.getUserMedia(constraints)
-        video.setAttribute('autoplay', '');
-        video.setAttribute('muted', '');
-        video.setAttribute('playsinline', '')
+        reader.setAttribute('autoplay', '');
+        reader.setAttribute('muted', '');
+        reader.setAttribute('playsinline', '')
 
-        // console.dir(video);
-        // if ('srcObject' in video) {
-        //     video.srcObject = stream;
-        // } else {
-        //     video.src = URL.createObjectURL(stream);
-        // }
-        // video.play();
-        // .catch(function(err) { console.log(err.name + ": " + err.message); });
-        startScanner()
+        function onScanSuccess(decodedText, decodedResult) {
+            // handle the scanned code as you like, for example:
+            console.log(`Code matched = ${decodedText}`, decodedResult);
+        }
+
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning.
+            // for example:
+            console.warn(`Code scan error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader",
+            { fps: 10, qrbox: {width: 250, height: 250} },
+            /* verbose= */ false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
     }
 
-    function startScanner() {
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                target: video,
-                // numOfWorkers: navigator.hardwareConcurrency,
-                constraints,
-            },
-            decoder: {
-                readers: ["code_128_reader"],
-                debug: {
-                    drawBoundingBox: true,
-                    showFrequency: true,
-                    drawScanline: true,
-                    showPattern: true
-                },
-                multiple: false,
-            }, 
-            src: null,
-            numOfWorkers: navigator.hardwareConcurrency,
-            frequency:10,
-            locate: false,
-            // locator: {
-            //     patchSize: "medium",
-            //     halfSample: false,
-            // },
-        }, function (err) {
-            if (err) {
-                alert(err);
-                return
-            }
-            // alert("Initialization finished. Ready to start");
-            Quagga.start();
-        })
-
-        Quagga.onProcessed(data => {
-            // alert(JSON.stringify(data))
-        })
-
-        Quagga.onDetected(data => {
-            const code = data.codeResult.code
-            alert(`Barcode detected and processed : [${code}]`);
-            // Quagga.stop()
-        });
-
-    }
-
-
-	// onMount(startScanner)
-
-    // browser && startScanner()
 
 </script>
 <main>
-    <div bind:this={video}></div>
+    <div id="reader" bind:this={reader}></div>
     <IconButton on:click={connect}>
         <Icon component={Svg} viewBox="0 0 24 24">
             <path fill="currentColor" d={mdiBarcodeScan} />
