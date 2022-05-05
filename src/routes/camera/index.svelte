@@ -1,5 +1,5 @@
 <script>
-    import { Html5Qrcode } from "html5-qrcode" 
+    import { Html5Qrcode } from 'html5-qrcode'
     import { onMount } from 'svelte'
 
     let reader
@@ -15,18 +15,18 @@
         reader.setAttribute('muted', '')
         reader.setAttribute('playsinline', '')
 
-        html5Qrcode = new Html5Qrcode("reader")
+        html5Qrcode = new Html5Qrcode('reader')
     }
 
     function start() {
         html5Qrcode.start(
-            { facingMode: "environment" }, 
-            { 
-                fps: 10, 
+            { facingMode: 'environment' },
+            {
+                fps: 10,
                 qrbox: { width: 250, height: 125 },
-                disableFlip: true,
-            }, 
-            onScanSuccess, 
+                disableFlip: true
+            },
+            onScanSuccess,
             onScanFailure
         )
         scanning = true
@@ -38,28 +38,17 @@
     }
 
     function onScanSuccess(decodedText, decodedResult) {
-        // handle the scanned code as you like, for example:
-        console.log(`Code matched = ${decodedText}`, decodedResult)
         alert(`Code matched = ${decodedText}`, decodedResult)
     }
 
     function onScanFailure(error) {
-        // handle scan failure, usually better to ignore and keep scanning.
-        // for example:
         console.warn(`Code scan error = ${error}`)
     }
 </script>
-<main>
-    <div id="reader" bind:this={reader}></div>
-    {#if scanning}
-        <button on:click={stop}>stop</button>>
-    {:else}
-        <button on:click={start}>start</button>
-    {/if}
-</main>
+
 <style>
     main {
-        display:flex;
+        display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
@@ -71,3 +60,13 @@
         background-color: black;
     }
 </style>
+
+<main>
+    <div id="reader" bind:this={reader} />
+    {#if scanning}
+        <button on:click={stop}>stop</button>
+        >
+    {:else}
+        <button on:click={start}>start</button>
+    {/if}
+</main>
