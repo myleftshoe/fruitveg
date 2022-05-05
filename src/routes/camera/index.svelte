@@ -2,7 +2,6 @@
     import { Html5Qrcode } from 'html5-qrcode'
     import { onMount } from 'svelte'
 
-    let reader
     let scanning = false
 
     let html5Qrcode
@@ -10,11 +9,6 @@
     onMount(init)
 
     function init() {
-        // fix for iOS, otherwiser reader ref is not required
-        reader.setAttribute('autoplay', '')
-        reader.setAttribute('muted', '')
-        reader.setAttribute('playsinline', '')
-
         html5Qrcode = new Html5Qrcode('reader')
     }
 
@@ -23,8 +17,7 @@
             { facingMode: 'environment' },
             {
                 fps: 10,
-                qrbox: { width: 250, height: 125 },
-                disableFlip: true
+                qrbox: { width: 250, height: 250 },
             },
             onScanSuccess,
             onScanFailure
@@ -38,7 +31,8 @@
     }
 
     function onScanSuccess(decodedText, decodedResult) {
-        alert(`Code matched = ${decodedText}`, decodedResult)
+        alert(`Code matched = ${decodedText}`)
+        console.log(decodedResult)
     }
 
     function onScanFailure(error) {
@@ -54,7 +48,7 @@
         justify-content: center;
         gap: 20px;
     }
-    #reader {
+    reader {
         width: 100%;
         min-height: 500px;
         background-color: black;
@@ -62,7 +56,7 @@
 </style>
 
 <main>
-    <div id="reader" bind:this={reader} />
+    <reader id="reader"/>
     {#if scanning}
         <button on:click={stop}>stop</button>
     {:else}
