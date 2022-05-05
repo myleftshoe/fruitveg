@@ -35,7 +35,7 @@
         }
 
         let html5Qrcode = new Html5Qrcode("reader")
-        html5Qrcode.start({ facingMode: "environment" }, { fps: 10, qrbox: {width: { exact: 250 }, height: {exact: 125} }}, onScanSuccess, onScanFailure);
+        html5Qrcode.start({ facingMode: "environment" }, { fps: 10, qrbox: {width: 250, height: 125 }}, onScanSuccess, onScanFailure);
     }
 
 
