@@ -9,27 +9,22 @@
     let reader
     let scanning = false
 
-    console.log('start')
+    let html5Qrcode
 
-    function connect() {
-        reader.setAttribute('autoplay', '');
-        reader.setAttribute('muted', '');
+    onMount(init)
+
+    function init(autostart = true) {
+        console.log('init')
+        reader.setAttribute('autoplay', '')
+        reader.setAttribute('muted', '')
         reader.setAttribute('playsinline', '')
-        console.log('connect')
 
-        function onScanSuccess(decodedText, decodedResult) {
-            // handle the scanned code as you like, for example:
-            console.log(`Code matched = ${decodedText}`, decodedResult);
-            alert(`Code matched = ${decodedText}`, decodedResult);
-        }
+        html5Qrcode = new Html5Qrcode("reader")
 
-        function onScanFailure(error) {
-            // handle scan failure, usually better to ignore and keep scanning.
-            // for example:
-            console.warn(`Code scan error = ${error}`);
-        }
+        autostart && start()
+    }
 
-        let html5Qrcode = new Html5Qrcode("reader")
+    function start() {
         html5Qrcode.start(
             { facingMode: "environment" }, 
             { 
@@ -39,29 +34,36 @@
             }, 
             onScanSuccess, 
             onScanFailure
-        );
+        )
         scanning = true
     }
 
-    onMount(connect)
+    async function stop() {
+        await html5Qrcode.stop()
+        scanning = false
+    }
 
+    function onScanSuccess(decodedText, decodedResult) {
+        // handle the scanned code as you like, for example:
+        console.log(`Code matched = ${decodedText}`, decodedResult)
+        alert(`Code matched = ${decodedText}`, decodedResult)
+    }
 
+    function onScanFailure(error) {
+        // handle scan failure, usually better to ignore and keep scanning.
+        // for example:
+        console.warn(`Code scan error = ${error}`)
+    }
 </script>
 <main>
     <div id="reader" bind:this={reader} height={250} width={250}></div>
-    <IconButton on:click={() => scanning = !scanning}>
-        {#if scanning}
+    {#if scanning}
+        <IconButton on:click={stop}>
             <Icon component={Svg} viewBox="0 0 24 24">
                 <path fill="currentColor" d={mdiBarcodeOff} />
             </Icon>
-        {:else}
-            <Icon component={Svg} viewBox="0 0 24 24">
-                <path fill="currentColor" d={mdiBarcodeScan} />
-            </Icon>
-        {/if}
-    </IconButton>
-
-
+        </IconButton>
+    {/if}
 </main>
 <style>
     main {
