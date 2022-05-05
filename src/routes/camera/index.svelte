@@ -60,8 +60,7 @@
     }
     div {
         /* border: 1px solid red; */
-        /* height: 180px;
-        width: 360px; */
-        width: 100%;
+        height: 250px;
+        width: 250px;
     }
 </style>
