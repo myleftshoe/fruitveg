@@ -2,9 +2,7 @@
     import { Html5Qrcode } from "html5-qrcode" 
     import { onMount } from 'svelte'
     import MdiButton from '$lib/mdiButton.svelte'
-    import { Svg } from '@smui/common/elements'
     import { mdiBarcodeOff, mdiBarcodeScan } from '@mdi/js'
-
 
     let reader
     let scanning = false
