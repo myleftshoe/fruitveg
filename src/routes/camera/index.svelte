@@ -41,7 +41,7 @@
 
 </script>
 <main>
-    <div id="reader" bind:this={reader}></div>
+    <div id="reader" bind:this={reader} height={250} width={250}></div>
     <IconButton on:click={connect}>
         <Icon component={Svg} viewBox="0 0 24 24">
             <path fill="currentColor" d={mdiBarcodeScan} />
@@ -61,6 +61,6 @@
     div {
         /* border: 1px solid red; */
         /* height: 60%; */
-        width: 100%;
+        /* width: 100%; */
     }
 </style>
