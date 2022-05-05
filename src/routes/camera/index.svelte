@@ -56,11 +56,17 @@
     }
 </script>
 <main>
-    <div id="reader" bind:this={reader} height={250} width={250}></div>
+    <div id="reader" bind:this={reader}></div>
     {#if scanning}
         <IconButton on:click={stop}>
             <Icon component={Svg} viewBox="0 0 24 24">
                 <path fill="currentColor" d={mdiBarcodeOff} />
+            </Icon>
+        </IconButton>
+    {:else}
+        <IconButton on:click={start}>
+            <Icon component={Svg} viewBox="0 0 24 24">
+                <path fill="currentColor" d={mdiBarcodeScan} />
             </Icon>
         </IconButton>
     {/if}
@@ -76,6 +82,7 @@
     #reader {
         /* border: 1px solid red; */
         /* height: 60%; */
-        /* width: 100%; */
+        width: 100%;
+        min-height: 250px;
     }
 </style>
