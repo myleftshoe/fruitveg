@@ -65,7 +65,6 @@
     <div id="reader" bind:this={reader} />
     {#if scanning}
         <button on:click={stop}>stop</button>
-        >
     {:else}
         <button on:click={start}>start</button>
     {/if}
