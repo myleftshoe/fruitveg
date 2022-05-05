@@ -60,7 +60,7 @@
     }
     div {
         /* border: 1px solid red; */
-        height: 60%;
+        /* height: 60%; */
         width: 100%;
     }
 </style>
