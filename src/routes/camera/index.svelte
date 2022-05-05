@@ -1,8 +1,6 @@
 <script>
     import { Html5Qrcode } from "html5-qrcode" 
     import { onMount } from 'svelte'
-    import MdiButton from '$lib/mdiButton.svelte'
-    import { mdiBarcodeOff, mdiBarcodeScan } from '@mdi/js'
 
     let reader
     let scanning = false
@@ -11,15 +9,13 @@
 
     onMount(init)
 
-    function init(autostart = true) {
-        console.log('init')
+    function init() {
+        // fix for iOS, otherwiser reader ref is not required
         reader.setAttribute('autoplay', '')
         reader.setAttribute('muted', '')
         reader.setAttribute('playsinline', '')
 
         html5Qrcode = new Html5Qrcode("reader")
-
-        autostart && start()
     }
 
     function start() {
@@ -56,9 +52,9 @@
 <main>
     <div id="reader" bind:this={reader}></div>
     {#if scanning}
-        <MdiButton mdiIcon={mdiBarcodeOff} on:click={stop}/>
+        <button on:click={stop}>stop</button>>
     {:else}
-        <MdiButton mdiIcon={mdiBarcodeScan} on:click={start}/>
+        <button on:click={start}>start</button>
     {/if}
 </main>
 <style>
@@ -70,8 +66,6 @@
         gap: 20px;
     }
     #reader {
-        /* border: 1px solid red; */
-        /* height: 60%; */
         width: 100%;
         min-height: 500px;
         background-color: black;
