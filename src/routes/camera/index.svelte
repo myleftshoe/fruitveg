@@ -1,5 +1,5 @@
 <script>
-    import {Html5QrcodeScanner} from "html5-qrcode" 
+    import {Html5Qrcode} from "html5-qrcode" 
 
     import IconButton, { Icon } from '@smui/icon-button'
     import { Svg } from '@smui/common/elements'
@@ -14,13 +14,14 @@
         width: 180,
         // aspectRatio: {min: 1, max: 2}
     }
-console.log('start')
+    console.log('start')
 
     function connect() {
         reader.setAttribute('autoplay', '');
         reader.setAttribute('muted', '');
         reader.setAttribute('playsinline', '')
         console.log('connect')
+
         function onScanSuccess(decodedText, decodedResult) {
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
@@ -33,11 +34,8 @@ console.log('start')
             console.warn(`Code scan error = ${error}`);
         }
 
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader",
-            { fps: 10, qrbox: {width: 250, height: 100} },
-            /* verbose= */ false);
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        let html5Qrcode = new Html5Qrcode("reader")
+        html5Qrcode.start({ facingMode: "environment" }, { fps: 10, qrbox: {width: 250, height: 250} }, onScanSuccess, onScanFailure);
     }
 
 
