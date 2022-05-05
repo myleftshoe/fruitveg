@@ -14,7 +14,7 @@
         width: 180,
         // aspectRatio: {min: 1, max: 2}
     }
-
+console.log('start')
 
     async function connect() {
         reader.setAttribute('autoplay', '');
