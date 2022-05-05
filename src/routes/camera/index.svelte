@@ -8,12 +8,6 @@
 
     let reader
 
-    const constraints = {
-        facingMode: "environment",
-        height: 360,
-        width: 180,
-        // aspectRatio: {min: 1, max: 2}
-    }
     console.log('start')
 
     function connect() {
@@ -35,7 +29,12 @@
         }
 
         let html5Qrcode = new Html5Qrcode("reader")
-        html5Qrcode.start({ facingMode: "environment" }, { fps: 10, qrbox: {width: 250, height: 125 }}, onScanSuccess, onScanFailure);
+        html5Qrcode.start(
+            { facingMode: "environment" }, 
+            { fps: 10, qrbox: {width: 250, height: 125 }}, 
+            onScanSuccess, 
+            onScanFailure
+        );
     }
 
 
