@@ -84,5 +84,6 @@
         /* height: 60%; */
         width: 100%;
         min-height: 250px;
+        background-color: black;
     }
 </style>
