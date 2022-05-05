@@ -16,11 +16,11 @@
     }
 console.log('start')
 
-    async function connect() {
+    function connect() {
         reader.setAttribute('autoplay', '');
         reader.setAttribute('muted', '');
         reader.setAttribute('playsinline', '')
-
+        console.log('connect')
         function onScanSuccess(decodedText, decodedResult) {
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
