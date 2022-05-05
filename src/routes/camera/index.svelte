@@ -1,12 +1,13 @@
 <script>
-    import {Html5Qrcode} from "html5-qrcode" 
-
+    import { Html5Qrcode } from "html5-qrcode" 
+    import { onMount } from 'svelte'
     import IconButton, { Icon } from '@smui/icon-button'
     import { Svg } from '@smui/common/elements'
-    import { mdiBarcodeScan } from '@mdi/js'
+    import { mdiBarcodeOff, mdiBarcodeScan } from '@mdi/js'
 
 
     let reader
+    let scanning = false
 
     console.log('start')
 
@@ -31,20 +32,33 @@
         let html5Qrcode = new Html5Qrcode("reader")
         html5Qrcode.start(
             { facingMode: "environment" }, 
-            { fps: 10, qrbox: {width: 250, height: 125 }}, 
+            { 
+                fps: 10, 
+                qrbox: { width: 250, height: 125 },
+                disableFlip: true,
+            }, 
             onScanSuccess, 
             onScanFailure
         );
+        scanning = true
     }
+
+    onMount(connect)
 
 
 </script>
 <main>
     <div id="reader" bind:this={reader} height={250} width={250}></div>
-    <IconButton on:click={connect}>
-        <Icon component={Svg} viewBox="0 0 24 24">
-            <path fill="currentColor" d={mdiBarcodeScan} />
-        </Icon>
+    <IconButton on:click={() => scanning = !scanning}>
+        {#if scanning}
+            <Icon component={Svg} viewBox="0 0 24 24">
+                <path fill="currentColor" d={mdiBarcodeOff} />
+            </Icon>
+        {:else}
+            <Icon component={Svg} viewBox="0 0 24 24">
+                <path fill="currentColor" d={mdiBarcodeScan} />
+            </Icon>
+        {/if}
     </IconButton>
 
 
@@ -57,7 +71,7 @@
         justify-content: center;
         gap: 20px;
     }
-    div {
+    #reader {
         /* border: 1px solid red; */
         /* height: 60%; */
         /* width: 100%; */
