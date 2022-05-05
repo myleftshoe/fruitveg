@@ -75,7 +75,7 @@
         /* border: 1px solid red; */
         /* height: 60%; */
         width: 100%;
-        min-height: 250px;
+        min-height: 500px;
         background-color: black;
     }
 </style>
