@@ -1,7 +1,7 @@
 <script>
     import { Html5Qrcode } from "html5-qrcode" 
     import { onMount } from 'svelte'
-    import IconButton, { Icon } from '@smui/icon-button'
+    import MdiButton from '$lib/mdiButton.svelte'
     import { Svg } from '@smui/common/elements'
     import { mdiBarcodeOff, mdiBarcodeScan } from '@mdi/js'
 
@@ -58,17 +58,9 @@
 <main>
     <div id="reader" bind:this={reader}></div>
     {#if scanning}
-        <IconButton on:click={stop}>
-            <Icon component={Svg} viewBox="0 0 24 24">
-                <path fill="currentColor" d={mdiBarcodeOff} />
-            </Icon>
-        </IconButton>
+        <MdiButton mdiIcon={mdiBarcodeOff} on:click={stop}/>
     {:else}
-        <IconButton on:click={start}>
-            <Icon component={Svg} viewBox="0 0 24 24">
-                <path fill="currentColor" d={mdiBarcodeScan} />
-            </Icon>
-        </IconButton>
+        <MdiButton mdiIcon={mdiBarcodeScan} on:click={start}/>
     {/if}
 </main>
 <style>
