@@ -59,8 +59,9 @@
         gap: 20px;
     }
     div {
-        border: 1px solid red;
+        /* border: 1px solid red; */
         /* height: 180px;
         width: 360px; */
+        width: 100%;
     }
 </style>
