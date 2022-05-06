@@ -20,6 +20,10 @@
                 fps: 10,
                 qrbox: { width: 320, height: 80 },
                 disableFlip: true,
+                rememberLastUsedCamera: true,
+                experimentalFeatures: {
+                    useBarCodeDetectorIfSupported: true
+                },
                 // aspectRatio: 0.5625,
             },
             onScanSuccess,
