@@ -1,10 +1,11 @@
 <script>
     import { Html5Qrcode } from 'html5-qrcode'
     import { onMount } from 'svelte'
-    import products from '$lib/productStore'
+    // import products from '$lib/productStore'
 
     let scanning = false
-
+    let result = ''
+    
     let html5Qrcode
 
     onMount(init)
@@ -40,13 +41,14 @@
     function onScanSuccess(decodedText, decodedResult) {
         alert(`Code matched = ${decodedText}`)
         console.log(decodedResult)
+        result = JSON.stringify(decodedResult)
     }
 
     function onScanFailure(error) {
         console.warn(`Code scan error = ${error}`)
     }
 
-    $: console.log($products)
+    // $: console.log($products)
 </script>
 <main>
     <reader id="reader"/>
@@ -55,7 +57,8 @@
     {:else}
         <button on:click={start}>start</button>
     {/if}
-    <product>{$products[0]}</product>
+    <result></result>
+    <!-- <product>{$products[0]}</product> -->
 </main>
 <style>
     main {
