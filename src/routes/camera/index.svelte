@@ -18,7 +18,7 @@
             { facingMode: 'environment' },
             {
                 fps: 10,
-                qrbox: { width: 250, height: 250 },
+                qrbox: { width: 300, height: 150 },
                 disableFlip: true,
                 // aspectRatio: 0.5625,
             },
