@@ -19,9 +19,11 @@
             {
                 fps: 10,
                 qrbox: { width: 250, height: 100 },
+                disableFlip: true,
+                aspectRatio: 1.77777777778,
             },
             onScanSuccess,
-            onScanFailure
+            onScanFailure,
         )
         scanning = true
     }
