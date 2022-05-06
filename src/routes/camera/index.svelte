@@ -62,6 +62,7 @@
     reader {
         width: 100%;
         min-height: 200px;
+        max-height: 200px;
         background-color: black;
     }
 </style>
