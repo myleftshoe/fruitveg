@@ -1,6 +1,7 @@
 <script>
     import { Html5Qrcode } from 'html5-qrcode'
     import { onMount } from 'svelte'
+    import products from '$lib/productStore'
 
     let scanning = false
 
@@ -17,7 +18,7 @@
             { facingMode: 'environment' },
             {
                 fps: 10,
-                qrbox: { width: 250, height: 250 },
+                qrbox: { width: 250, height: 100 },
             },
             onScanSuccess,
             onScanFailure
@@ -38,8 +39,18 @@
     function onScanFailure(error) {
         console.warn(`Code scan error = ${error}`)
     }
-</script>
 
+    $: console.log($products)
+</script>
+<main>
+    <reader id="reader"/>
+    {#if scanning}
+        <button on:click={stop}>stop</button>
+    {:else}
+        <button on:click={start}>start</button>
+    {/if}
+    <product>{$products[0]}</product>
+</main>
 <style>
     main {
         display: flex;
@@ -50,16 +61,8 @@
     }
     reader {
         width: 100%;
-        min-height: 500px;
+        min-height: 200px;
         background-color: black;
     }
 </style>
 
-<main>
-    <reader id="reader"/>
-    {#if scanning}
-        <button on:click={stop}>stop</button>
-    {:else}
-        <button on:click={start}>start</button>
-    {/if}
-</main>
