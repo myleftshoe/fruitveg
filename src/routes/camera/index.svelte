@@ -39,7 +39,7 @@
     }
 
     function onScanSuccess(decodedText, decodedResult) {
-        alert(`Code matched = ${decodedText}`)
+        // alert(`Code matched = ${decodedText}`)
         console.log(decodedResult)
         result = JSON.stringify(decodedResult)
     }
@@ -57,7 +57,7 @@
     {:else}
         <button on:click={start}>start</button>
     {/if}
-    <result></result>
+    <result>{result}</result>
     <!-- <product>{$products[0]}</product> -->
 </main>
 <style>
