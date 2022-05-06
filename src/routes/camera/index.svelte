@@ -18,9 +18,9 @@
             { facingMode: 'environment' },
             {
                 fps: 10,
-                qrbox: { width: 250, height: 100 },
+                qrbox: { width: 250, height: 250 },
                 disableFlip: true,
-                aspectRatio: 0.5625,
+                // aspectRatio: 0.5625,
             },
             onScanSuccess,
             onScanFailure,
@@ -63,8 +63,8 @@
     }
     reader {
         width: 100%;
-        min-height: 200px;
-        max-height: 200px;
+        min-height: 500px;
+        /* max-height: 200px; */
         background-color: black;
     }
 </style>
