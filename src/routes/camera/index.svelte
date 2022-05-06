@@ -30,6 +30,7 @@
             onScanSuccess,
             onScanFailure,
         )
+        html5Qrcode.applyVideoConstraints({ focusMode: "continuous", advanced: [ {zoom: 2 } ]})
         scanning = true
     }
 
@@ -57,7 +58,7 @@
     {:else}
         <button on:click={start}>start</button>
     {/if}
-    <result>{result}</result>
+    <code>{result}</code>
     <!-- <product>{$products[0]}</product> -->
 </main>
 <style>
