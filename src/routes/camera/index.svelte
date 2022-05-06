@@ -67,5 +67,9 @@
         /* max-height: 200px; */
         background-color: black;
     }
+    :global(body) {
+        margin: 0;
+        padding: 0;
+    }
 </style>
 
