@@ -59,7 +59,7 @@
     {:else}
         <button on:click={start}>start</button>
     {/if}
-    <pre>{result}</pre>
+    <!-- <pre>{result}</pre> -->
     <!-- <product>{$products[0]}</product> -->
 </main>
 <style>
