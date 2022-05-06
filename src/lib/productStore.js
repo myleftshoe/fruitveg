@@ -13,6 +13,8 @@ export default readable([], (set) => {
             .filter(row => ['FRUIT', 'VEGETABLES'].includes(row.label13))
             .map(row => ({
                 id: row.id,
+                // qrcode: row.qrcode,
+                // barcode: row.barcode,
                 plucode: row.label3,
                 label4: row.label4.trim(),
                 label5: row.label5.trim(),
