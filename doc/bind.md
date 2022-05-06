@@ -1,6 +1,12 @@
+# MINEW API (Bind)
+
+https://esl.minew.com:9090/V1
+
+## [POST] /label/save
+
 Bind from label page
-url: https://esl.minew.com:9090/V1/label/save
-method: 'POST',
+
+```json
 body = {
     "mac": "ac233fd0b591",
     "only": "1620",
@@ -15,8 +21,8 @@ body = {
         }
     ]
 } 
+```
 
+## [POST] /label/delete?mac=ac233fd0a3f5&storeId=123
 
 Delete binding (Product Page Drawer - Click trash can)
-https://esl.minew.com:9090/V1/label/delete?mac=ac233fd0a3f5&storeId=123
-method: 'POST',

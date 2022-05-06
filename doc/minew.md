@@ -1,6 +1,6 @@
 # MINEW API
 
-https://esl.minew.com:9090/V1/
+https://esl.minew.com:9090/V1
 
 ## [GET] /TagBinding/label?storeId=123
 
