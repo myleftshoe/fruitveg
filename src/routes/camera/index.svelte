@@ -89,8 +89,6 @@
     }
     reader {
         width: 100%;
-        min-height: 80vh;
-        max-height: 80vh;
         background-color: black;
     }
     :global(body) {
