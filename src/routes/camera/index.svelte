@@ -83,6 +83,7 @@
     #reader {
         width: 100%;
         min-height: 20vh;
+        max-height: 20vh;
         /* max-height: 200px; */
         background-color: black;
     }
