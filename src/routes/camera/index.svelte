@@ -46,7 +46,7 @@
         let minEdgePercentage = 0.7; // 70%
         let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
         let qrBoxSize = Math.floor(minEdgeSize * minEdgePercentage);
-        document.append(viewfinderWidth, viewfinderHeight)
+        result = `${viewfinderWidth}x${viewfinderHeight}`
         return {
             width: qrBoxSize,
             height: qrBoxSize
@@ -73,7 +73,7 @@
     {:else}
         <button on:click={start}>start</button>
     {/if}
-    <!-- <pre>{result}</pre> -->
+    <pre>{result}</pre>
     <!-- <product>{$products[0]}</product> -->
 </main>
 <style>
