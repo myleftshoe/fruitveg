@@ -21,7 +21,7 @@
     function doBlink() {
         blink = true
         clearTimeout(blinkTimeout)
-        blinkTimeout = setTimeout(() => {blink = false}, 500)
+        blinkTimeout = setTimeout(() => {blink = false}, 100)
     }
 
     function start() {
@@ -29,7 +29,7 @@
             { facingMode: 'environment' },
             {
                 formatsToSupport: [Html5QrcodeSupportedFormats.CODE_128],
-                fps: 20,
+                fps: 10,
                 qrbox: calcQrBox,
                 // qrbox: { width: 360, height: 60 },
                 disableFlip: true,
