@@ -94,13 +94,16 @@
         padding: 0;
     }
     header, footer {
-        font-size: 2rem;
         position: fixed;
         width: 100%;
         height: 80px;
         display: grid;
         place-content: center;
         background-color: #7777;
+        font-size: 2rem;
+    }
+    header {
+        top: 0;
     }
     footer {
         bottom: 0;
