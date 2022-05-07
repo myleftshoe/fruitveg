@@ -7,6 +7,7 @@
 
     let scanning = false
     let result = ''
+    let code = ''
 
     let html5Qrcode
 
@@ -51,6 +52,7 @@
 
     function onScanSuccess(decodedText, decodedResult) {
         // alert(`Code matched = ${decodedText}`)
+        code = decodedText
         result = JSON.stringify(decodedResult, null, 4)
         alert(result)
         console.log(decodedResult)
@@ -66,11 +68,11 @@
 <main>
     <reader id="reader"/>
     <overlay>
-        <code>{result}</code>
+        <code>{code}</code>
         {#if scanning}
-            <MdiButton mdiIcon={mdiBarcodeOff} on:click={stop}/>
+            <MdiButton icon={mdiBarcodeOff} on:click={stop}/>
         {:else}
-            <MdiButton mdiIcon={mdiBarcodeScan} on:click={start}/>
+            <MdiButton icon={mdiBarcodeScan} on:click={start}/>
         {/if}
     </overlay>
     <!-- <product>{$products[0]}</product> -->
