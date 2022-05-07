@@ -54,7 +54,7 @@
         // alert(`Code matched = ${decodedText}`)
         code = decodedText
         result = JSON.stringify(decodedResult, null, 4)
-        alert(result)
+        // alert(result)
         console.log(decodedResult)
     }
 
@@ -88,8 +88,8 @@
     }
     reader {
         width: 100%;
-        min-height: 100vh;
-        /* max-height: 100vh; */
+        min-height: 80vh;
+        max-height: 80vh;
         background-color: black;
     }
     :global(body) {
