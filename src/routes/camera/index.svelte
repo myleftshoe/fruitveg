@@ -86,12 +86,8 @@
 
 <style>
     reader {
-        width: 100%;
+        width: 100vw;
         background-color: black;
-    }
-    :global(body) {
-        margin: 0;
-        padding: 0;
     }
     header, footer {
         position: fixed;
@@ -110,5 +106,10 @@
     }
     .blink {
         color: green;
+    }
+    :global(body) {
+        margin: 0;
+        padding: 0;
+        color: white;
     }
 </style>
