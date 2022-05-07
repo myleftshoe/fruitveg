@@ -35,7 +35,7 @@
                 experimentalFeatures: {
                     useBarCodeDetectorIfSupported: true,
                 },
-                aspectRatio: 16/9,
+                aspectRatio: 2.2,
             },
             onScanSuccess,
             onScanFailure
@@ -87,12 +87,13 @@
 </main>
 <style>
     main { 
+        height: 100vh;
+        width: 100vw;
         display: grid;
         place-content: center;
     }
     reader {
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
         background-color: black;
     }
     header, footer {
