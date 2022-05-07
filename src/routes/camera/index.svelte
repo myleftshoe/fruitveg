@@ -86,6 +86,10 @@
     <!-- <product>{$products[0]}</product> -->
 </main>
 <style>
+    main { 
+        display: grid;
+        place-content: center;
+    }
     reader {
         width: 100vw;
         height: 100vh;
