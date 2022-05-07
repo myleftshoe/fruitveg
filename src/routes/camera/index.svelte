@@ -66,10 +66,11 @@
 <main>
     <reader id="reader"/>
     <overlay>
+        <code>{result}</code>
         {#if scanning}
-            <MdiButton mdiIcon={mdiBarcodeOff} color="white" on:click={stop}>stop</MdiButton>
+            <MdiButton mdiIcon={mdiBarcodeOff} on:click={stop}/>
         {:else}
-            <MdiButton mdiIcon={mdiBarcodeScan} color="white" on:click={start}>start</MdiButton>
+            <MdiButton mdiIcon={mdiBarcodeScan} on:click={start}/>
         {/if}
     </overlay>
     <!-- <product>{$products[0]}</product> -->
@@ -86,7 +87,7 @@
     reader {
         width: 100%;
         min-height: 100vh;
-        max-height: 100vh;
+        /* max-height: 100vh; */
         background-color: black;
     }
     :global(body) {
@@ -98,10 +99,11 @@
         position: fixed;
         top:0;
         width: calc( 100vw - 40px );
-        background-color: #7777;
+        /* background-color: #7777; */
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 20px;
+        color:white;
     }
 </style>
