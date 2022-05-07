@@ -42,10 +42,9 @@
     }
 
     function calcQrBox(viewfinderWidth, viewfinderHeight) {
-        return {
-            width: viewfinderWidth,
-            height: Math.trunc(viewfinderWidth / 5)
-        }
+        const [width, height] = [viewfinderWidth, viewfinderWidth / 5]
+        result = `${width}x${height}`
+        return { width, height }
     }
 
     function onScanSuccess(decodedText, decodedResult) {
