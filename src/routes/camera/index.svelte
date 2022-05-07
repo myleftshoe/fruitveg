@@ -71,19 +71,20 @@
     let blink = false
 
 </script>
-<header>        
-    <code class:blink>{code}</code>
-</header>
-<reader id="reader"/>
-<footer>
-    {#if scanning}
-        <MdiButton icon={mdiBarcodeOff} on:click={stop}/>
-    {:else}
-        <MdiButton icon={mdiBarcodeScan} on:click={start}/>
-    {/if}
-</footer>
+<main>
+    <header>        
+        <code class:blink>{code}</code>
+    </header>
+    <reader id="reader"/>
+    <footer>
+        {#if scanning}
+            <MdiButton icon={mdiBarcodeOff} on:click={stop}/>
+        {:else}
+            <MdiButton icon={mdiBarcodeScan} on:click={start}/>
+        {/if}
+    </footer>
     <!-- <product>{$products[0]}</product> -->
-
+</main>
 <style>
     reader {
         width: 100vw;
