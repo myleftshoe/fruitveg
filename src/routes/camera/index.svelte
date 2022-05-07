@@ -44,7 +44,7 @@
     function calcQrBox(viewfinderWidth, viewfinderHeight) {
         return {
             width: viewfinderWidth,
-            height: viewfinderWidth / 5
+            height: Math.trunc(viewfinderWidth / 5)
         }
     }
 
