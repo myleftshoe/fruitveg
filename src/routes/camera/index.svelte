@@ -63,13 +63,15 @@
 
 <main>
     <div id="reader">
-    {#if scanning}
-        <button on:click={stop}>stop</button>
-    {:else}
-        <button on:click={start}>start</button>
-    {/if}
     <pre>{result}</pre>
     </div>
+    <overlay>
+        {#if scanning}
+            <button on:click={stop}>stop</button>
+        {:else}
+            <button on:click={start}>start</button>
+        {/if}
+    </overlay>
     <!-- <product>{$products[0]}</product> -->
 </main>
 
@@ -91,7 +93,15 @@
         margin: 0;
         padding: 0;
     }
-    button, pre { 
-        z-index: 10;
+    overlay {
+        z-index: 20;
+        position: fixed;
+        top:0;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 </style>
