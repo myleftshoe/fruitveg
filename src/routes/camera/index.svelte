@@ -96,7 +96,7 @@
     }
     header, footer {
         position: fixed;
-        width: 100%;
+        width: 100vw;
         height: 80px;
         display: grid;
         place-content: center;
