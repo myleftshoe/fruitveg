@@ -21,7 +21,7 @@
     function doBlink() {
         blink = true
         clearTimeout(blinkTimeout)
-        blinkTimeout = setTimeout(() => {blink = false}, 1000)
+        blinkTimeout = setTimeout(() => {blink = false}, 500)
     }
 
     function start() {
