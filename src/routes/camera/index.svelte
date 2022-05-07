@@ -56,6 +56,7 @@
         result = JSON.stringify(decodedResult, null, 4)
         // alert(result)
         console.log(decodedResult)
+        html5Qrcode.clear()
     }
 
     function onScanFailure(error) {
@@ -107,5 +108,8 @@
         justify-content: space-between;
         padding: 20px;
         color:white;
+    }
+    code {
+        color: green;
     }
 </style>
