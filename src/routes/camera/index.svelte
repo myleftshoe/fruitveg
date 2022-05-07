@@ -1,6 +1,8 @@
 <script>
     import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode'
     import { onMount } from 'svelte'
+    import MdiButton from '$lib/mdiButton.svelte'
+    import { mdiBarcodeScan, mdiBarcodeOff } from '@mdi/js'
     // import products from '$lib/productStore'
 
     let scanning = false
@@ -62,14 +64,12 @@
 </script>
 
 <main>
-    <div id="reader">
-    <pre>{result}</pre>
-    </div>
+    <reader id="reader"/>
     <overlay>
         {#if scanning}
-            <button on:click={stop}>stop</button>
+            <MdiButton mdiIcon={mdiBarcodeOff} color="white" on:click={stop}>stop</MdiButton>
         {:else}
-            <button on:click={start}>start</button>
+            <MdiButton mdiIcon={mdiBarcodeScan} color="white" on:click={start}>start</MdiButton>
         {/if}
     </overlay>
     <!-- <product>{$products[0]}</product> -->
@@ -83,10 +83,10 @@
         justify-content: center;
         gap: 20px;
     }
-    #reader {
+    reader {
         width: 100%;
         min-height: 100vh;
-        /* max-height: 200px; */
+        max-height: 100vh;
         background-color: black;
     }
     :global(body) {
@@ -97,11 +97,11 @@
         z-index: 20;
         position: fixed;
         top:0;
-        height: 100vh;
-        width: 100vw;
+        width: calc( 100vw - 40px );
+        background-color: #7777;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
+        padding: 20px;
     }
 </style>
