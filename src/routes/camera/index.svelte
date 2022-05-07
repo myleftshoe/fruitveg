@@ -16,13 +16,15 @@
         html5Qrcode = new Html5Qrcode('reader')
     }
 
-    let blink = false
-    let blinkTimeout
-    function doBlink() {
-        blink = true
-        clearTimeout(blinkTimeout)
-        blinkTimeout = setTimeout(() => {blink = false}, 1000)
+    const blinker = {
+        blinking: false,
+        blink() {
+            clearTimeout(this.timeout)
+            this.timeout = setTimeout(() => {this.blinking = false}, 1000)
+            this.blinking = true
+        }
     }
+
 
     function start() {
         html5Qrcode.start(
@@ -60,7 +62,7 @@
     function onScanSuccess(decodedText, decodedResult) {
         // alert(`Code matched = ${decodedText}`)
         code = decodedText
-        doBlink()
+        blinker.blink()
         console.log(decodedResult)
     }
 
@@ -71,7 +73,7 @@
 </script>
 <main>
     <header>        
-        <code class:blink>{code}</code>
+        <code class:blink={blinker.blinking}>{code}</code>
     </header>
     <reader id="reader"/>
     <footer>
