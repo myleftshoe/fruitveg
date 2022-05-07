@@ -41,10 +41,13 @@
         scanning = false
     }
 
-    const calcQrBox = (viewfinderWidth, viewfinderHeight) => ({
-        width: viewfinderWidth,
-        height: viewfinderWidth / 5
-    })
+    function calcQrBox(viewfinderWidth, viewfinderHeight) {
+        return {
+            width: viewfinderWidth,
+            height: viewfinderWidth / 5
+        }
+    }
+
     function onScanSuccess(decodedText, decodedResult) {
         // alert(`Code matched = ${decodedText}`)
         result = JSON.stringify(decodedResult, null, 4)
