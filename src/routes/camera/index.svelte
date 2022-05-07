@@ -1,5 +1,5 @@
 <script>
-    import { Html5Qrcode } from 'html5-qrcode'
+    import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode'
     import { onMount } from 'svelte'
     // import products from '$lib/productStore'
 
@@ -18,14 +18,15 @@
         html5Qrcode.start(
             { facingMode: 'environment' },
             {
+                formatsToSupport: [ Html5QrcodeSupportedFormats.CODE_128 ], 
                 fps: 10,
-                qrbox: { width: 320, height: 80 },
+                qrbox: { width: 360, height: 80 },
                 disableFlip: true,
                 rememberLastUsedCamera: true,
                 experimentalFeatures: {
                     useBarCodeDetectorIfSupported: true
                 },
-                aspectRatio: 2.2
+                aspectRatio: 2.2,
             },
             onScanSuccess,
             onScanFailure,
