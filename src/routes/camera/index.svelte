@@ -51,7 +51,7 @@
 
     function calcQrBox(viewfinderWidth, viewfinderHeight) {
         const [width, height] = [viewfinderWidth - 15, viewfinderWidth / 5]
-        result = `${width}x${height}`
+        code = `${width}x${height}`
         return { width, height }
     }
 
@@ -87,6 +87,7 @@
 <style>
     reader {
         width: 100vw;
+        height: 100vh;
         background-color: black;
     }
     header, footer {
