@@ -7,7 +7,7 @@
 
     let scanning = false
     let result = ''
-    let code = ''
+    let code = '[scan result]'
 
     let html5Qrcode
 
@@ -15,6 +15,11 @@
 
     function init() {
         html5Qrcode = new Html5Qrcode('reader')
+    }
+
+    function doBlink() {
+        blink = true
+        setTimeout(() => {blink = false}, 1000)
     }
 
     function start() {
@@ -53,40 +58,33 @@
     function onScanSuccess(decodedText, decodedResult) {
         // alert(`Code matched = ${decodedText}`)
         code = decodedText
+        doBlink()
         result = JSON.stringify(decodedResult, null, 4)
         // alert(result)
         console.log(decodedResult)
-        html5Qrcode.clear()
     }
 
     function onScanFailure(error) {
         console.warn(`Code scan error = ${error}`)
     }
 
-    // $: console.log($products)
-</script>
+    let blink = false
 
-<main>
-    <reader id="reader"/>
-    <overlay>
-        <code>{code}</code>
-        {#if scanning}
-            <MdiButton icon={mdiBarcodeOff} on:click={stop}/>
-        {:else}
-            <MdiButton icon={mdiBarcodeScan} on:click={start}/>
-        {/if}
-    </overlay>
+</script>
+<header>        
+    <code class:blink>{code}</code>
+</header>
+<reader id="reader"/>
+<footer>
+    {#if scanning}
+        <MdiButton icon={mdiBarcodeOff} on:click={stop}/>
+    {:else}
+        <MdiButton icon={mdiBarcodeScan} on:click={start}/>
+    {/if}
+</footer>
     <!-- <product>{$products[0]}</product> -->
-</main>
 
 <style>
-    main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-    }
     reader {
         width: 100%;
         background-color: black;
@@ -95,19 +93,19 @@
         margin: 0;
         padding: 0;
     }
-    overlay {
-        z-index: 20;
+    header, footer {
+        font-size: 2rem;
         position: fixed;
-        top:0;
-        width: calc( 100vw - 40px );
-        /* background-color: #7777; */
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px;
-        color:white;
+        width: 100%;
+        height: 80px;
+        display: grid;
+        place-content: center;
+        background-color: #7777;
     }
-    code {
+    footer {
+        bottom: 0;
+    }
+    .blink {
         color: green;
     }
 </style>
