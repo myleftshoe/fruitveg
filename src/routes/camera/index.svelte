@@ -5,7 +5,7 @@
 
     let scanning = false
     let result = ''
-    
+
     let html5Qrcode
 
     onMount(init)
@@ -18,19 +18,19 @@
         html5Qrcode.start(
             { facingMode: 'environment' },
             {
-                formatsToSupport: [ Html5QrcodeSupportedFormats.CODE_128 ], 
+                formatsToSupport: [Html5QrcodeSupportedFormats.CODE_128],
                 fps: 20,
                 qrbox: calcQrBox,
                 // qrbox: { width: 360, height: 60 },
                 disableFlip: true,
                 rememberLastUsedCamera: true,
                 experimentalFeatures: {
-                    useBarCodeDetectorIfSupported: true
+                    useBarCodeDetectorIfSupported: true,
                 },
                 aspectRatio: 2.2,
             },
             onScanSuccess,
-            onScanFailure,
+            onScanFailure
         )
         // html5Qrcode.applyVideoConstraints({ focusMode: "continuous", advanced: [ {zoom: 2 } ]})
         scanning = true
@@ -60,8 +60,9 @@
 
     // $: console.log($products)
 </script>
+
 <main>
-    <reader id="reader"/>
+    <div id="reader" />
     {#if scanning}
         <button on:click={stop}>stop</button>
     {:else}
@@ -70,6 +71,7 @@
     <pre>{result}</pre>
     <!-- <product>{$products[0]}</product> -->
 </main>
+
 <style>
     main {
         display: flex;
@@ -78,8 +80,8 @@
         justify-content: center;
         gap: 20px;
     }
-    reader {
-        width: 100%;
+    #reader {
+        width: 150%;
         min-height: 100vh;
         /* max-height: 200px; */
         background-color: black;
@@ -89,4 +91,3 @@
         padding: 0;
     }
 </style>
-
