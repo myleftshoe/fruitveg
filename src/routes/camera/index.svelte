@@ -72,7 +72,7 @@
     }
     reader {
         width: 100%;
-        min-height: 500px;
+        min-height: 100vh;
         /* max-height: 200px; */
         background-color: black;
     }
