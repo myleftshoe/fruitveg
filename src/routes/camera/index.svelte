@@ -46,7 +46,7 @@
         let minEdgePercentage = 0.7; // 70%
         let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
         let qrBoxSize = Math.floor(minEdgeSize * minEdgePercentage);
-        console.log(qrBoxSize)
+        document.append(viewfinderWidth, viewfinderHeight)
         return {
             width: qrBoxSize,
             height: qrBoxSize
