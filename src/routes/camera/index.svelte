@@ -62,13 +62,14 @@
 </script>
 
 <main>
-    <div id="reader" />
+    <div id="reader">
     {#if scanning}
         <button on:click={stop}>stop</button>
     {:else}
         <button on:click={start}>start</button>
     {/if}
     <pre>{result}</pre>
+    </div>
     <!-- <product>{$products[0]}</product> -->
 </main>
 
@@ -82,13 +83,15 @@
     }
     #reader {
         width: 100%;
-        min-height: 20vh;
-        max-height: 20vh;
+        min-height: 100vh;
         /* max-height: 200px; */
         background-color: black;
     }
     :global(body) {
         margin: 0;
         padding: 0;
+    }
+    button, pre { 
+        z-index: 10;
     }
 </style>
