@@ -41,18 +41,10 @@
         scanning = false
     }
 
-    // Square QR box with edge size = 70% of the smaller edge of the viewfinder.
-    function calcQrBox(viewfinderWidth, viewfinderHeight) {
-        let minEdgePercentage = 0.7; // 70%
-        let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
-        let qrBoxSize = Math.floor(minEdgeSize * minEdgePercentage);
-        result = `${viewfinderWidth}x${viewfinderHeight}`
-        return {
-            width: qrBoxSize,
-            height: qrBoxSize
-        };
-    }
-
+    const calcQrBox = (viewfinderWidth, viewfinderHeight) => ({
+        width: viewfinderWidth,
+        height: viewfinderWidth / 5
+    })
     function onScanSuccess(decodedText, decodedResult) {
         // alert(`Code matched = ${decodedText}`)
         result = JSON.stringify(decodedResult, null, 4)
