@@ -20,7 +20,7 @@
             {
                 formatsToSupport: [ Html5QrcodeSupportedFormats.CODE_128 ], 
                 fps: 20,
-                qrBox,
+                qrbox: calcQrBox,
                 // qrbox: { width: 360, height: 60 },
                 disableFlip: true,
                 rememberLastUsedCamera: true,
@@ -42,7 +42,7 @@
     }
 
     // Square QR box with edge size = 70% of the smaller edge of the viewfinder.
-    function qrBox(viewfinderWidth, viewfinderHeight) {
+    function calcQrBox(viewfinderWidth, viewfinderHeight) {
         let minEdgePercentage = 0.7; // 70%
         let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
         let qrBoxSize = Math.floor(minEdgeSize * minEdgePercentage);
