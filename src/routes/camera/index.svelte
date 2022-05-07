@@ -20,7 +20,8 @@
             {
                 formatsToSupport: [ Html5QrcodeSupportedFormats.CODE_128 ], 
                 fps: 20,
-                qrbox: { width: 360, height: 60 },
+                qrBox,
+                // qrbox: { width: 360, height: 60 },
                 disableFlip: true,
                 rememberLastUsedCamera: true,
                 experimentalFeatures: {
@@ -38,6 +39,18 @@
     async function stop() {
         await html5Qrcode.stop()
         scanning = false
+    }
+
+    // Square QR box with edge size = 70% of the smaller edge of the viewfinder.
+    function qrBox(viewfinderWidth, viewfinderHeight) {
+        let minEdgePercentage = 0.7; // 70%
+        let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
+        let qrBoxSize = Math.floor(minEdgeSize * minEdgePercentage);
+        console.log(qrBoxSize)
+        return {
+            width: qrBoxSize,
+            height: qrBoxSize
+        };
     }
 
     function onScanSuccess(decodedText, decodedResult) {
