@@ -25,12 +25,12 @@
                 experimentalFeatures: {
                     useBarCodeDetectorIfSupported: true
                 },
-                // aspectRatio: 0.5625,
+                aspectRatio: 2,
             },
             onScanSuccess,
             onScanFailure,
         )
-        html5Qrcode.applyVideoConstraints({ focusMode: "continuous", advanced: [ {zoom: 2 } ]})
+        // html5Qrcode.applyVideoConstraints({ focusMode: "continuous", advanced: [ {zoom: 2 } ]})
         scanning = true
     }
 
