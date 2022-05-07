@@ -91,12 +91,12 @@
         place-content: center;
     }
     reader {
-        width: 100%;
+        width: 100vw;
         background-color: black;
     }
     header, footer {
         position: fixed;
-        width: 100vw;
+        width: 100%;
         height: 80px;
         display: grid;
         place-content: center;
