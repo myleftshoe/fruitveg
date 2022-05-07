@@ -20,8 +20,8 @@
             {
                 formatsToSupport: [Html5QrcodeSupportedFormats.CODE_128],
                 fps: 20,
-                // qrbox: calcQrBox,
-                qrbox: { width: 375, height: 60 },
+                qrbox: calcQrBox,
+                // qrbox: { width: 360, height: 60 },
                 disableFlip: true,
                 rememberLastUsedCamera: true,
                 experimentalFeatures: {
@@ -81,8 +81,8 @@
         gap: 20px;
     }
     #reader {
-        width: 150%;
-        min-height: 100vh;
+        width: 100%;
+        min-height: 20vh;
         /* max-height: 200px; */
         background-color: black;
     }
