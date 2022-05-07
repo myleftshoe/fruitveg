@@ -93,7 +93,7 @@
         place-content: center;
     }
     reader {
-        width: 100%;
+        width: 100vw;
         background-color: black;
     }
     header, footer {
@@ -104,6 +104,7 @@
         place-content: center;
         background-color: #7777;
         font-size: 2rem;
+        z-index: 2;
     }
     header {
         top: 0;
