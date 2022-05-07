@@ -25,7 +25,7 @@
                 experimentalFeatures: {
                     useBarCodeDetectorIfSupported: true
                 },
-                aspectRatio: 2.1
+                aspectRatio: 2.2
             },
             onScanSuccess,
             onScanFailure,
