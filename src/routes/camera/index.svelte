@@ -6,7 +6,6 @@
     // import products from '$lib/productStore'
 
     let scanning = false
-    let result = ''
     let code = '[scan result]'
 
     let html5Qrcode
@@ -17,9 +16,12 @@
         html5Qrcode = new Html5Qrcode('reader')
     }
 
+    let blink = false
+    let blinkTimeout
     function doBlink() {
         blink = true
-        setTimeout(() => {blink = false}, 1000)
+        clearTimeout(blinkTimeout)
+        blinkTimeout = setTimeout(() => {blink = false}, 1000)
     }
 
     function start() {
@@ -59,16 +61,12 @@
         // alert(`Code matched = ${decodedText}`)
         code = decodedText
         doBlink()
-        result = JSON.stringify(decodedResult, null, 4)
-        // alert(result)
         console.log(decodedResult)
     }
 
     function onScanFailure(error) {
-        console.warn(`Code scan error = ${error}`)
+        // console.warn(`Code scan error = ${error}`)
     }
-
-    let blink = false
 
 </script>
 <main>
