@@ -19,14 +19,14 @@
             { facingMode: 'environment' },
             {
                 formatsToSupport: [ Html5QrcodeSupportedFormats.CODE_128 ], 
-                fps: 10,
+                fps: 20,
                 qrbox: { width: 360, height: 80 },
                 disableFlip: true,
                 rememberLastUsedCamera: true,
                 experimentalFeatures: {
                     useBarCodeDetectorIfSupported: true
                 },
-                aspectRatio: 2,
+                aspectRatio: 2.2,
             },
             onScanSuccess,
             onScanFailure,
