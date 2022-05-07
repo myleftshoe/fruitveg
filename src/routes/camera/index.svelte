@@ -91,7 +91,7 @@
         place-content: center;
     }
     reader {
-        width: 100vw;
+        height: 100vh;
         background-color: black;
     }
     header, footer {
