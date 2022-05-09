@@ -52,7 +52,7 @@
     }
 
     function calcQrBox(viewfinderWidth, viewfinderHeight) {
-        const [width, height] = [viewfinderWidth - 15, viewfinderWidth / 5]
+        const [width, height] = [viewfinderWidth - 15, viewfinderWidth / 12]
         code = `${width}x${height}`
         return { width, height }
     }
