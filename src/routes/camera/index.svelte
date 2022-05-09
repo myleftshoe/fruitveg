@@ -2,7 +2,7 @@
     // import products from '$lib/productStore'
 
 </script>
-<textarea rows={20} placeholder="scanned codes"/>
+<textarea rows={10} placeholder="scanned codes"/>
     <!-- <product>{$products[0]}</product> -->
 <style>
     textarea {
@@ -12,6 +12,7 @@
         border: none;
         border-bottom: 1px solid black;
         outline: none;
+        font-size:1.5rem;
     }
     :global(body) {
         margin: 0;
