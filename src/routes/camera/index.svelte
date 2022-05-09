@@ -30,8 +30,8 @@
             {
                 formatsToSupport: [Html5QrcodeSupportedFormats.CODE_128],
                 fps: 10,
-                qrbox: calcQrBox,
-                // qrbox: { width: 360, height: 60 },
+                // qrbox: calcQrBox,
+                qrbox: { width: 360, height: 15 },
                 disableFlip: true,
                 rememberLastUsedCamera: true,
                 experimentalFeatures: {
