@@ -29,7 +29,7 @@
             { facingMode: 'environment' },
             {
                 formatsToSupport: [Html5QrcodeSupportedFormats.CODE_128],
-                fps: 10,
+                fps: 60,
                 // qrbox: calcQrBox,
                 qrbox: { width: 360, height: 60 },
                 disableFlip: true,
