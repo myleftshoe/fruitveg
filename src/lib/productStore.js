@@ -40,7 +40,7 @@ export async function fetchPreview(macAddress) {
     const response = await minew.get(`label/query?storeId=123&mac=${macAddress}`)
     console.log(JSON.stringify(response.body, null, 2))
     const { id, label3, label4, label5, label6 } = response.body.goods
-    return { macAddress, id, label3, label4, label5, label6, name: getName({label4, label5})}
+    return { macAddress, id, plucode: label3, label3, label4, label5, label6, name: getName({label4, label5})}
 }
 
 function getName({label4 = '', label5 = ''} = {}) {
