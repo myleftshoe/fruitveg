@@ -1,21 +1,19 @@
-<script>
-    // import products from '$lib/productStore'
-
+<script context=module>
+    const isHex12 = (value = '') => /^([0-9A-Fa-f]{12})$/.test(value.trim())
 </script>
-<textarea rows={10} placeholder="scanned codes"/>
-    <!-- <product>{$products[0]}</product> -->
-<style>
-    textarea {
-        height: calc(100% - 40px);
-        width: calc(100% - 40px);
-        padding: 20px;
-        border: none;
-        border-bottom: 1px solid black;
-        outline: none;
-        font-size:1.5rem;
+<script>
+    import products, { fetchPreview } from '$lib/productStore'
+    let product = {}
+    async function onInput(e) {
+        const { value } = e.target
+        if (!isHex12(value)) return
+        product = await fetchPreview(value)
     }
-    :global(body) {
-        margin: 0;
-        padding: 0;
+</script>
+<input type="text" placeholder="mac address" on:input={onInput}/>
+<pre>{JSON.stringify(product,null,4)}</pre>
+<style>
+    input {
+        font-size:1.5rem;
     }
 </style>

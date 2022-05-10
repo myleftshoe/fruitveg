@@ -7,8 +7,7 @@ import { alpha } from '$lib/sort'
 export default readable([], (set) => {
     (async function asyncWrapper() {
         console.log('productStore')
-        const token = await minew.login()
-        const response = await minew.get(`/goods?page=1&size=9999&storeId=123`, token)
+        const response = await minew.get(`/goods?page=1&size=9999&storeId=123`)
         const products = response.rows
             .filter(row => ['FRUIT', 'VEGETABLES'].includes(row.label13))
             .map(row => ({
@@ -19,7 +18,7 @@ export default readable([], (set) => {
                 label4: row.label4.trim(),
                 label5: row.label5.trim(),
                 label6: row.label6,
-                name: `${row.label4.trim()} ${row.label5.trim()}`.trim(),
+                name: getName(row),
                 price: row.label6,
                 label8: row.label8,
                 label9: row.label9,
@@ -29,30 +28,21 @@ export default readable([], (set) => {
                 status: translate(row.status) || row.status,
             }))
             // .filter(row => row.status === 'bound')
-            .sort(alpha("name"))
+            .sort(alpha('name'))
     
         // console.table(products)
         set(products)
     })()
 })
 
-async function fetchPreview(macAddress, token) {
+export async function fetchPreview(macAddress) {
     console.log('preview', macAddress)
-    // await wait(2000)
-    // const permit = await semaphore.acquire()
-    let response
-    try {
-        response = await minew.get(`label/query?storeId=123&mac=${macAddress}`, token)
-    } catch (error) {
-        return null
-    }
-    // permit.release()
-    // console.log('preview', response)
-    if (response?.errcode == 10000330) return null
-    if (!response.body) return null
+    const response = await minew.get(`label/query?storeId=123&mac=${macAddress}`)
+    console.log(JSON.stringify(response.body, null, 2))
     const { id, label3, label4, label5, label6 } = response.body.goods
-    console.log({ id, label3, label4, label5, label6 })
-    // const demoData = response.demoData
-    return { macAddress, id, label3, label4, label5, label6, Description: `${label5} ${label4}`.trim() }
+    return { macAddress, id, label3, label4, label5, label6, name: getName({label4, label5})}
 }
 
+function getName({label4 = '', label5 = ''} = {}) {
+    return `${label4.trim()} ${label5.trim()}`.trim()
+} 

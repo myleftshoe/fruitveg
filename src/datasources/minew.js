@@ -7,20 +7,12 @@ const fetcher = new Fetcher(`https://esl.minew.com:9090/V1`)
 let token
 
 
-async function get(path, token) {
+async function get(path) {
     console.log('get')
-    token=await login()
-    let headers = { 'Authorization': `Bearer ${token}` } 
-    let response = await fetcher.fetch(path, { headers })
-    let json = await response.json()
-    if (json.errcode == '10000100') {
-        console.log('relogin')
-        // token=await login()
-        // headers = { 'Authorization': `Bearer ${token}` } 
-        // response = await fetcher.fetch(path, { headers })
-        // json = await response.json()
-    }
-    return json
+    token = await login()
+    const headers = { 'Authorization': `Bearer ${token}` } 
+    const response = await fetcher.fetch(path, { headers })
+    return response.json()
 }
 
 async function post(path, payload) {
