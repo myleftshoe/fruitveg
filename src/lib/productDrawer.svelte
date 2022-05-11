@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte'
-    import { slide } from 'svelte/transition'
+    import { fade as slide } from 'svelte/transition'
     import Paper from '@smui/paper'
     import List, { Item, Text, PrimaryText, SecondaryText, Meta } from '@smui/list'
     import IconButton from '@smui/icon-button'
