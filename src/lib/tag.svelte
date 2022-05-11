@@ -49,6 +49,7 @@
     tag { 
         display: grid;
         position: relative;
+        background-color: white;
         /* border: 2px solid black; */
         box-shadow: 0px 0px 1px 1px black inset;
         transform-origin: center top;
