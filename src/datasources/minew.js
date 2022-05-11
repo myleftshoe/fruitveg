@@ -77,7 +77,7 @@ async function bind(macAddress = "ac233fd0b591", id = 2084) {
                 "demoName": "Bulk Bins",
                 "templateType": "1",
                 "effect": true,
-                "mac": "ac233fd0a0ff",
+                "mac": macAddress,
                 "promotionStartTime": 1619672348299,
                 "promotionEndTime": 1619672348299,
                 "use": false
