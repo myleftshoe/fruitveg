@@ -10,18 +10,23 @@
     let open = false
     let input
 
+    onMount(() => screen.orientation.lock('portrait-primary'))
+
     function handleWindowKeypress(e) {
         if (e.key === '*') {
-            input.select()
             e.stopPropagation()
             e.preventDefault()
+            input.focus()
         }
     }
 
-    onMount(() => screen.orientation.lock('portrait-primary'))
+    function onFocus() {
+        console.log('handleInputFocus')
+        input.select()
+    }
+
     let product = {}
-    async function onInput(e) {
-        const { value } = e.target
+    async function onInput({ target: { value }}) {
         if (!isHex12(value)) return
         product = await fetchPreview(value)
     }
@@ -29,7 +34,7 @@
 <svelte:window on:keypress|capture={handleWindowKeypress}/>
 <main>
     <!-- svelte-ignore a11y-autofocus -->
-    <input bind:this={input} autofocus type="text" placeholder="mac address" on:input={onInput} on:focus={(e) => e.target.select()}/>
+    <input bind:this={input} autofocus type="text" placeholder="mac address" on:input={onInput} on:focus={onFocus}/>
     <Tag {product}/>
     <button on:click={() => open = true}>bind</button>
     <pre>{JSON.stringify(product,null,4)}</pre>
@@ -51,5 +56,10 @@
         border-bottom: 2px solid orange;
         outline: none;
         text-align: center;
+    }
+    :global(html, body, *, *::before, *::after) {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 </style>

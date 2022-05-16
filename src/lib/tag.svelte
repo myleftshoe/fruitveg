@@ -63,8 +63,4 @@
     sup { 
         font-size: .6em;
     }
-    :global(body) {
-        margin: 0;
-        padding: 0;
-    }
 </style>
