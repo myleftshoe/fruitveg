@@ -26,7 +26,8 @@
     }
 
     let product = {}
-    async function onInput({ target: { value }}) {
+    async function onInput(e) {
+        const { value } = e.target
         if (!isHex12(value)) return
         product = await fetchPreview(value)
     }
@@ -39,7 +40,7 @@
     <button on:click={() => open = true}>bind</button>
     <pre>{JSON.stringify(product,null,4)}</pre>
     {#if open}
-        <ProductDrawer bind:open/>
+        <ProductDrawer bind:open bind:selectedRow={product}/>
     {/if}
 </main>
 <style>
