@@ -1,4 +1,5 @@
 <script context=module>
+    import { onMount } from 'svelte'
     const isHex12 = (value = '') => /^([0-9A-Fa-f]{12})$/.test(value.trim())
 </script>
 <script>
@@ -7,7 +8,17 @@
     import ProductDrawer from '$lib/productDrawer.svelte'
 
     let open = false
+    let input
 
+    function handleWindowKeypress(e) {
+        if (e.key === '*') {
+            input.select()
+            e.stopPropagation()
+            e.preventDefault()
+        }
+    }
+
+    onMount(() => screen.orientation.lock('portrait-primary'))
     let product = {}
     async function onInput(e) {
         const { value } = e.target
@@ -15,9 +26,11 @@
         product = await fetchPreview(value)
     }
 </script>
+<svelte:window on:keypress|capture={handleWindowKeypress}/>
 <main>
-    <input type="text" placeholder="mac address" on:input={onInput}/>
-    <Tag/>
+    <!-- svelte-ignore a11y-autofocus -->
+    <input bind:this={input} autofocus type="text" placeholder="mac address" on:input={onInput} on:focus={(e) => e.target.select()}/>
+    <Tag {product}/>
     <button on:click={() => open = true}>bind</button>
     <pre>{JSON.stringify(product,null,4)}</pre>
     {#if open}
@@ -37,5 +50,6 @@
         border: none;
         border-bottom: 2px solid orange;
         outline: none;
+        text-align: center;
     }
 </style>

@@ -1,21 +1,22 @@
 <script>
     import demoData from '$lib/stores/demoData.json'
-    import products from '$lib/stores/product.json'
-    console.log(JSON.stringify(demoData, null, 2))
+    // console.log(JSON.stringify(demoData, null, 2))
 
+    export let product = {}
     const data = demoData[0]
 
     const { height, width } = data.size
     const text = Object.entries(data.text)
     const dollar = data.icons?.icon1 
 
-    const product = products[1]
-    console.log(text)
+    // console.log(text)
+    console.log(product)
 
     let innerWidth
     $: scale = innerWidth/width
 </script>
 <svelte:window bind:innerWidth/>
+{#if product.id}
     <tag style="height: {height}px; width: {width}px; transform: scale({scale < 1 ? scale : 1});">
         {#each text as [label, style], i}
             <span style="
@@ -41,6 +42,7 @@
             color: {dollar.color};
         ">$</span>
     </tag>
+{/if}
 <style>
     main {
         display: grid;
