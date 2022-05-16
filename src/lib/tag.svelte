@@ -13,11 +13,11 @@
     console.log(product)
 
     let innerWidth
-    $: scale = innerWidth/width
+    $: scale = Math.min(innerWidth/width, .85)
 </script>
 <svelte:window bind:innerWidth/>
 {#if product.id}
-<tag style="height: {height}px; width: {width}px; transform: scale({scale < 1 ? scale : 1});">
+<tag style="height: {height}px; width: {width}px; transform: scale({scale});">
     {#each text as [label, style], i}
         <span style="
             top: {style.y}px; 
