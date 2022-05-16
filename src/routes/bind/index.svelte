@@ -3,7 +3,7 @@
     const isHex12 = (value = '') => /^([0-9A-Fa-f]{12})$/.test(value.trim())
 </script>
 <script>
-    import products, { fetchPreview } from '$lib/productStore'
+    import { fetchPreview } from '$lib/productStore'
     import Tag from '$lib/tag.svelte'
     import ProductDrawer from '$lib/productDrawer.svelte'
 
