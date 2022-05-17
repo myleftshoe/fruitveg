@@ -1,0 +1,5 @@
+#!/bin/bash
+if [ "$(basename $PWD)" != "apidoc" ]; then 
+    cd apidoc
+fi
+nohup xdg-open ./out/index.html > /dev/null 2>&1 &

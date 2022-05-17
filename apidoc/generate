@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ "$(basename $PWD)" != "apidoc" ]; then 
+    cd apidoc
+fi
+apidoc -c ./config.json -i ./in -o ./out
+if [ "$1" == "-p" ]; then
+    ./preview
+fi
+

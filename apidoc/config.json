@@ -1,0 +1,15 @@
+{
+    "name": "example",
+    "version": "0.1.0",
+    "url": "https:/thisistheurl/v1",
+    "title": "This is the Title",
+    "description": "A basic apiDoc example",    
+    "header": {
+      "title": "My own header title",
+      "filename": "./header.md"
+    },
+    "footer": {
+      "title": "My own footer title",
+      "filename": "./footer.md"
+    }
+}
