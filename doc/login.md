@@ -47,7 +47,7 @@ body: {
 
 #### POST /api/2.2/auth/signin HTTP/1.1
 
-```json
+```js
 headers: {
     "Accept-Encoding": "Accept-Encoding: gzip, deflate"
 } 
