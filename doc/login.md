@@ -1,16 +1,3 @@
-<style>
-.heading1 {
-    color: red;
-    font-weight:700;
-    font-size: 35px;
-}
-.heading2 {
-    color: blue;
-    font-weight:700;
-    font-size: 30px;
-}
-</style>
-
 # Overview
 
 ## Overview | Login
@@ -19,7 +6,7 @@
 
 #### POST /api/2.2/auth/signin HTTP/1.1
 
-```json
+```js
 body: {
     "username": "username",
     "password": "password"
@@ -182,6 +169,3 @@ headers: {
   "errmsg": "No scene selected",
   "createTime": 157656615436
 }  
-```
-
-<img src="./svg/get.svg" alt="" /> EST
