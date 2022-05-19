@@ -1,11 +1,43 @@
+<style>
+    rest {
+        /* padding: 4px 6px 6px 6px; */
+        padding-bottom: 3px;
+        padding-left: 1px;
+        border-radius: 3px;
+        background-color: #777;
+        color: white;
+        text-transform: uppercase;
+        position: relative;
+    }
+    rest[get] {
+        background-color: #008000;
+    }
+    rest[post] {
+        background-color: #4070ec;
+    }
+    rest[success] {
+        background-color: #008000;
+    }
+    rest[error] {
+        background-color: #ed0039;
+    }
+
+</style>
+
 # Overview
 
 ## Overview | Login
 
 ### Request
 
-<span style="background-color: green; padding: 4px 6px 6px 6px; color: white; border-radius: 3px;">**`POST`**</span>
-<span style="background-color: grey; padding: 4px 6px 6px 6px; color: white; border-radius: 3px;">**`/api/2.2/auth/signin HTTP/1.1`**</span>
+<rest post>**`POST`**</rest> **`/v1/login`**
+
+<rest error>**`POST`**</rest> **`/v1/login`**
+
+<rest get>**`POST`**</rest> **`/v1/login`**
+
+
+
 ```js
 body: {
     "username": "username",
