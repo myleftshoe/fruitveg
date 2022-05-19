@@ -4,8 +4,8 @@
 
 ### Request
 
-#### POST /api/2.2/auth/signin HTTP/1.1
-
+<span style="background-color: green; padding: 4px 6px 6px 6px; color: white; border-radius: 3px;">**`POST`**</span>
+<span style="background-color: grey; padding: 4px 6px 6px 6px; color: white; border-radius: 3px;">**`/api/2.2/auth/signin HTTP/1.1`**</span>
 ```js
 body: {
     "username": "username",
@@ -15,7 +15,7 @@ body: {
 
 ### Response
 
-#### 200 OK
+**`200 OK`**
 
 ```json
 {
@@ -31,7 +31,7 @@ body: {
 }
 ```
 
-#### 400 Error
+**`400 Error`**
 
 ```json
 {
@@ -45,7 +45,7 @@ body: {
 
 ### Request
 
-#### POST /api/2.2/auth/signin HTTP/1.1
+**`POST /api/2.2/auth/signin HTTP/1.1`**
 
 ```js
 headers: {
@@ -55,7 +55,7 @@ headers: {
 
 ### Response
 
-#### 200 OK
+**`200 OK`**
 
 ```json
 {
@@ -161,7 +161,7 @@ headers: {
 }
 ``` 
 
-#### 433 Error
+**`433 Error`**
 
 ```json
 {
