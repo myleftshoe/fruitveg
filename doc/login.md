@@ -1,29 +1,3 @@
-<style>
-    rest {
-        /* padding: 4px 6px 6px 6px; */
-        padding-bottom: 3px;
-        padding-left: 1px;
-        border-radius: 3px;
-        background-color: #777;
-        color: white;
-        text-transform: uppercase;
-        position: relative;
-    }
-    rest[get] {
-        background-color: #008000;
-    }
-    rest[post] {
-        background-color: #4070ec;
-    }
-    rest[success] {
-        background-color: #008000;
-    }
-    rest[error] {
-        background-color: #ed0039;
-    }
-
-</style>
-
 # Overview
 
 ## Overview | Login
@@ -201,3 +175,30 @@ headers: {
   "errmsg": "No scene selected",
   "createTime": 157656615436
 }  
+```
+
+
+<style>
+    rest {
+        /* padding: 4px 6px 6px 6px; */
+        padding-bottom: 3px;
+        padding-left: 1px;
+        border-radius: 3px;
+        background-color: #777;
+        color: white;
+        text-transform: uppercase;
+        position: relative;
+    }
+    rest[get] {
+        background-color: #008000;
+    }
+    rest[post] {
+        background-color: #4070ec;
+    }
+    rest[success] {
+        background-color: #008000;
+    }
+    rest[error] {
+        background-color: #ed0039;
+    }
+</style>
